@@ -48,4 +48,9 @@ public class AppTest
     public void testApp2() {
         assertFalse(false);
     }
+
+    /**
+     * Test (added by Swapnil)
+     */
+    public void testApp3() {assertTrue(true);}
 }
