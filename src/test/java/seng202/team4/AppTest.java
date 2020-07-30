@@ -41,4 +41,11 @@ public class AppTest
     {
         assertTrue( true );
     }
+
+    /**
+     * Test (added by Griffin)
+     */
+    public void testApp2() {
+        assertFalse(false);
+    }
 }
