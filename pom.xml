@@ -25,4 +25,23 @@
       <version>2.2.1</version>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version> <configuration>
+        <transformers> <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+          <manifestEntries> <Main-Class>seng202.team4.App</Main-Class> <X-Compile-Source-JDK>11</X-Compile-Source-JDK>
+            <X-Compile-Target-JDK>11</X-Compile-Target-JDK> </manifestEntries> </transformer> </transformers> </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal> </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
