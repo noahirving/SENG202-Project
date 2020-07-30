@@ -53,4 +53,13 @@ public class AppTest
      * Test (added by Swapnil)
      */
     public void testApp3() {assertTrue(true);}
+
+
+    /**
+     * Test (added by Darryl)
+     */
+    public void testApp4() {
+        int x = 2;
+        assertEquals(x, 2);
+    }
 }
