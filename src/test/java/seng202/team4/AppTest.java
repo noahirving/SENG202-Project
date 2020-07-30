@@ -62,4 +62,18 @@ public class AppTest
         int x = 2;
         assertEquals(x, 2);
     }
+
+    /**
+     * Testing the tomatoes (by Kye)
+     */
+    public void testApp5(){
+        String tomato = "red";
+        int numTomatos = 5;
+
+        assertTrue(tomato instanceof String);
+
+        numTomatos --;
+        assertEquals(numTomatos, 4);
+
+    }
 }
