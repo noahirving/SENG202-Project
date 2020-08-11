@@ -10,12 +10,6 @@ public class Main {
         SampleApplication.main(args);
 
         DataLoader loader = new DataLoader();
-        try {
-            loader.loadAirportData();
-            System.out.println(loader.getRawAirportData());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 }
