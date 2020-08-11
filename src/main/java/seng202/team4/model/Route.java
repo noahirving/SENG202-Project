@@ -14,7 +14,27 @@ public class Route {
     private double carbonEmissions;
 
     public Route(String routeInfo) {
-        // To be filled out once format of route is known
+        String[] routeArray = routeInfo.split("\n");
+        this.airlineCode = routeArray[0];
+        this.airlineID = Integer.parseInt(routeArray[1]);
+        this.sourceAirportCode = routeArray[2];
+        this.sourceAirportID = Integer.parseInt(routeArray[3]);
+        this.destinationAirportCode = routeArray[4];
+        this.destinationAirportID = Integer.parseInt(routeArray[5]);
+
+        if (routeArray[6].equals("Y")) {
+            this.codeshare = true;
+        } else if (routeArray[6].equals("N")) {
+            this.codeshare = false;
+        }
+
+        this.numStops = Integer.parseInt(routeArray[7]);
+        this.planeTypeCode = routeArray[8];
+        this.carbonEmissions = calculateCarbonEmissions();
+    }
+
+    public double calculateCarbonEmissions() {
+        return 0; // To be implemented
     }
 
     public void setAirlineCode(String airlineCode) {
