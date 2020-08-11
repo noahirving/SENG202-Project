@@ -12,6 +12,30 @@ public class Airline {
     private boolean recentlyActive;
     private double carbonEmissions;
 
+    public Airline(String airlineData) {
+        String[] airlines = airlineData.split(",");
+        this.airlineID = Integer.parseInt(airlines[0]);
+        this.airlineName = airlines[1];
+        this.airlineCode = airlines[2];
+        this.airlineIATA = airlines[3];
+        this.airlineICAO = airlines[4];
+        this.airlineCallSign = airlines[5];
+        this.airlineCountry = airlines[6];
+
+        if (airlines[7].equals("Y")) {
+            this.recentlyActive = true;
+        } else {
+            this.recentlyActive = false;
+        }
+
+        this.carbonEmissions = calculateCarbonEmissions();
+
+    }
+
+    public double calculateCarbonEmissions() {
+        return 0; // To be implemented
+    }
+
     // getters
     public int getAirlineID() {
         return airlineID;
