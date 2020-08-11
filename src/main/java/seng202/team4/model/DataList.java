@@ -7,10 +7,10 @@ public class DataList {
     private ArrayList<Airport> airportDataList;
     private ArrayList<Airline> airlineDataList;
 
-    public DataList(ArrayList<Route> routeDataList, ArrayList<Airport> airportDataList, ArrayList<Airline> airlineDataList){
-        this.routeDataList = routeDataList;
-        this.airportDataList = airportDataList;
-        this.airlineDataList = airlineDataList;
+    public DataList(){
+        this.routeDataList = new ArrayList<Route>();
+        this.airportDataList = new ArrayList<Airport>();
+        this.airlineDataList = new ArrayList<Airline>();
     }
 
     //Getters and setters for DataList class - kno42
