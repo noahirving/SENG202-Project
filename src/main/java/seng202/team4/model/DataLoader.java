@@ -69,7 +69,7 @@ public class DataLoader {
             if (output.equals("AL")) { // Airline
                 this.dataList.getAirlineDataList().add(new Airline(line));
             } else if (output.equals("AP")) { // Airport
-                this.dataList.getAirportDataList().add(new Airport(line));
+//                this.dataList.getAirportDataList().add(new Airport(line));
             } else if (output.equals("RT")) { // Route
                 this.dataList.getRouteDataList().add(new Route(line));
             }
