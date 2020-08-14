@@ -1,1 +1,0 @@
-mvn archetype:generate -DgroupId=seng202.team4 -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false -DartifactId=flightTracker
