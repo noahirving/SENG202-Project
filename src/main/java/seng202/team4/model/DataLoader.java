@@ -64,14 +64,16 @@ public class DataLoader {
         String line;
         StringBuilder outputBuilder = new StringBuilder(output);
         while((line = reader.readLine()) != null) {
-            line += "\n";
-            outputBuilder.append(line);
-            if (output.equals("AL")) { // Airline
-                this.dataList.getAirlineDataList().add(new Airline(line));
-            } else if (output.equals("AP")) { // Airport
-//                this.dataList.getAirportDataList().add(new Airport(line));
-            } else if (output.equals("RT")) { // Route
-                this.dataList.getRouteDataList().add(new Route(line));
+            if (!line.equals("")) {
+                line += "\n";
+                outputBuilder.append(line);
+                if (output.equals("AL")) { // Airline
+                    this.dataList.getAirlineDataList().add(new Airline(line));
+                } else if (output.equals("AP")) { // Airport
+                    this.dataList.getAirportDataList().add(new Airport(line));
+                } else if (output.equals("RT")) { // Route
+                    this.dataList.getRouteDataList().add(new Route(line));
+                }
             }
         }
 

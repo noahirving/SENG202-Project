@@ -14,7 +14,7 @@ public class Route {
     private double carbonEmissions;
 
     public Route(String routeInfo) {
-        String[] routeArray = routeInfo.split("\n");
+        String[] routeArray = routeInfo.split(",");
         this.airlineCode = routeArray[0];
         this.airlineID = Integer.parseInt(routeArray[1]);
         this.sourceAirportCode = routeArray[2];

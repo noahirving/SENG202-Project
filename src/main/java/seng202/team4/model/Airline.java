@@ -1,6 +1,6 @@
 package seng202.team4.model;
 
-public class Airline {
+public class Airline extends DataType {
 
     private int airlineID;
     private String airlineName;
@@ -22,14 +22,11 @@ public class Airline {
         this.airlineCallSign = airlines[5];
         this.airlineCountry = airlines[6];
 
-        if (airlines[7].equals("Y")) {
-            this.recentlyActive = true;
-        } else {
-            this.recentlyActive = false;
-        }
+        this.recentlyActive = airlines[7].equals("Y");
 
         this.carbonEmissions = calculateCarbonEmissions();
 
+        addToDatabase(this);
     }
 
     public double calculateCarbonEmissions() {
