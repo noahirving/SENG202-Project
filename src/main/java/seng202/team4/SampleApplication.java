@@ -13,9 +13,9 @@ public class SampleApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/seng202.team4/sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Parent root = FXMLLoader.load(getClass().getResource("/seng202.team4/mainFlightTrackerScene.fxml"));
+        primaryStage.setTitle("Flight Companion");
+        primaryStage.setScene(new Scene(root, 750, 500));
         primaryStage.show();
     }
 

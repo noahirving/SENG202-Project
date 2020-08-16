@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="seng202.team4.controller.routeTabController"
+            fx:id="routeTabPane" minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="600.0">
+    <children>
+        <Button fx:id="routeTabUploadDataBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" />
+        <TextField fx:id="routeSearchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
+        <TableView fx:id="routeDataTable" layoutX="14.0" layoutY="50.0" prefHeight="406.0" prefWidth="474.0">
+            <columns>
+                <TableColumn fx:id="routeTabAirportColumn" prefWidth="79.0" text="Airport" />
+                <TableColumn fx:id="routeTabDepartureAirportColumn" minWidth="4.800048828125" prefWidth="79.0" text="Departure&#10;   airport" />
+                <TableColumn fx:id="routeTabDestinationAirportColumn" minWidth="4.800048828125" prefWidth="79.0" text="Destination &#10;    airport" />
+                <TableColumn fx:id="routeTabNumStopsColumn" minWidth="4.800048828125" prefWidth="79.0" text="Number of &#10;     stops" />
+                <TableColumn fx:id="routeTabPlaneTypeColumn" minWidth="4.800048828125" prefWidth="79.0" text="Plane type" />
+                <TableColumn fx:id="routeTabCarbonEmissionsColumn" minWidth="4.800048828125" prefWidth="79.0" text="  Carbon &#10;emissions" />
+            </columns>
+        </TableView>
+        <AnchorPane fx:id="routeFilterPane" layoutX="513.0" layoutY="50.0" prefHeight="406.0" prefWidth="222.0">
+            <children>
+                <Label fx:id="routeTabFilterLabel" layoutX="95.0" layoutY="14.0" text="Filters">
+                    <font>
+                        <Font size="22.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="routeAirlineFilterCombobox" layoutX="95.0" layoutY="61.0" prefHeight="36.0" prefWidth="118.0" promptText="All" />
+                <Label fx:id="routeTabAirlineLabel" layoutX="41.0" layoutY="70.0" text="Airline:" />
+                <ComboBox fx:id="routeDepartureFilterCombobox" layoutX="95.0" layoutY="123.0" prefHeight="36.0" prefWidth="118.0" promptText="All" />
+                <Label fx:id="routeTabDepartureLabel" layoutX="25.0" layoutY="132.0" text="Departure:" />
+                <ComboBox fx:id="routeDestinationFilterCombobox" layoutX="95.0" layoutY="185.0" prefHeight="36.0" prefWidth="118.0" promptText="All" />
+                <Label fx:id="routeTabDestinationLabel" layoutX="25.0" layoutY="194.0" text="Destination:" />
+                <ComboBox fx:id="routePlaneTypeFilterCombobox" layoutX="95.0" layoutY="286.0" prefHeight="36.0" prefWidth="118.0" promptText="All" />
+                <Label fx:id="routeTabPlaneTypeLabel" layoutX="25.0" layoutY="295.0" text="Plane type:" />
+                <Slider fx:id="routeStopsFilterSlider" layoutX="95.0" layoutY="245.0" prefHeight="14.0" prefWidth="118.0" />
+                <Label fx:id="routeTabStopsLabel" layoutX="52.0" layoutY="243.0" text="Stops:" />
+                <Slider fx:id="routeEmissionsFilterSlider" layoutX="93.0" layoutY="349.0" prefHeight="14.0" prefWidth="118.0" />
+                <Label fx:id="routeTabEmissionsLabel" layoutX="25.0" layoutY="347.0" text="Emissions:" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
