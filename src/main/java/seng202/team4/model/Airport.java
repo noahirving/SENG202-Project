@@ -1,16 +1,16 @@
 package seng202.team4.model;
 
-public class Airport {
+public class Airport extends DataType {
     private final int airportID;
     private String name;
     private String city;
     private String country;
     private String iata;
     private String icao;
-    private long latitude;
-    private long longitude;
-    private long altitude;
-    private float timezone;
+    private double latitude;
+    private double longitude;
+    private double altitude;
+    private double timezone;
     private char dst;
     private String tzDatabase;
     private String type;
@@ -21,18 +21,29 @@ public class Airport {
         String[] airportArr = airportData.split(",");
         this.airportID = Integer.parseInt(airportArr[0]);
         this.name = airportArr[1];
-        this.city = airportArr[2];
-        this.country = airportArr[3];
-        this.iata = airportArr[4];
-        this.icao = airportArr[5];
-        this.latitude = Long.parseLong(airportArr[6]);
-        this.longitude = Long.parseLong(airportArr[7]);
-        this.altitude = Long.parseLong(airportArr[8]);
-        this.timezone = Float.parseFloat(airportArr[9]);
-        this.dst = airportArr[10].charAt(0);
-        this.tzDatabase = airportArr[11];
-        this.type = airportArr[12];
-        this.source = airportArr[13];
+        int delta = 0;
+        if (airportArr.length == 13) { // To deal with commas in city field
+            this.city = airportArr[2] + " " + airportArr[3];
+            delta = 1;
+        }
+        else {
+            this.city = airportArr[2];
+        }
+        this.country = airportArr[3 + delta];
+        this.iata = airportArr[4 + delta];
+        this.icao = airportArr[5 + delta];
+        this.latitude = Double.parseDouble(airportArr[6 + delta]);
+        this.longitude = Double.parseDouble(airportArr[7 + delta]);
+        this.altitude = Double.parseDouble(airportArr[8 + delta]);
+        this.timezone = Double.parseDouble(airportArr[9 + delta]);
+        this.dst = airportArr[10 + delta].charAt(0);
+        this.tzDatabase = airportArr[11 + delta];
+
+        // Below parameters are not in given data.
+        //this.type = airportArr[12];
+        //this.source = airportArr[13];
+
+        addToDatabase(this);
     }
 
 
@@ -98,35 +109,35 @@ public class Airport {
         this.icao = icao;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public long getAltitude() {
+    public double getAltitude() {
         return altitude;
     }
 
-    public void setAltitude(long altitude) {
+    public void setAltitude(double altitude) {
         this.altitude = altitude;
     }
 
-    public float getTimezone() {
+    public double getTimezone() {
         return timezone;
     }
 
-    public void setTimezone(float timezone) {
+    public void setTimezone(double timezone) {
         this.timezone = timezone;
     }
 

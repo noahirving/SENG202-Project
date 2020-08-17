@@ -1,9 +1,10 @@
 package seng202.team4.model;
 
 import java.sql.*;
-import seng202.team4.model.Airline;
 
 public abstract class DataType {
+
+    private String between = "', '";
 
     public void addToDatabase(Object dataType) {
         Connection c;
@@ -23,8 +24,6 @@ public abstract class DataType {
                 sql = "INSERT INTO AIRLINES ('AIRLINE ID', 'NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLY ACTIVE') " +
                         "VALUES (";
 
-                String between = "', '";
-
                 sql += ((Airline) dataType).getAirlineID() + ", '";
                 sql += ((Airline) dataType).getAirlineName().replaceAll("'", "''") + between;
                 sql += ((Airline) dataType).getAirlineCode().replaceAll("'", "''") + between;
@@ -36,8 +35,21 @@ public abstract class DataType {
             }
 
             else if (dataType instanceof Airport) {
-                sql = "INSERT INTO AIRLINES ('AIRLINE ID', 'NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLY ACTIVE') " +
-                        "VALUES (20000, 'Test Name', 'Test Alias', 'Test IATA', 'Test ICAO', 'Test Callsign', 'Test Country', 'Test Active');";
+                sql = "INSERT INTO AIRPORT ('AIRPORT ID', 'NAME', 'CITY', 'COUNTRY ', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZ DATABASE TIME') " +
+                        "VALUES (";
+
+                sql += ((Airport) dataType).getAirportID() + ", '";
+                sql += ((Airport) dataType).getName().replaceAll("'", "''") + between;
+                sql += ((Airport) dataType).getCity().replaceAll("'", "''") + between;
+                sql += ((Airport) dataType).getCountry().replaceAll("'", "''") + between;
+                sql += ((Airport) dataType).getIata().replaceAll("'", "''") + between;
+                sql += ((Airport) dataType).getIcao().replaceAll("'", "''") + "', ";
+                sql += ((Airport) dataType).getLatitude() + ", ";
+                sql += ((Airport) dataType).getLongitude() + ", ";
+                sql += ((Airport) dataType).getAltitude() + ", ";
+                sql += ((Airport) dataType).getTimezone() + ", '";
+                sql += ((Airport) dataType).getDst() + between;
+                sql += ((Airport) dataType).getTzDatabase().replaceAll("'", "''") + "');";
             }
 
 
