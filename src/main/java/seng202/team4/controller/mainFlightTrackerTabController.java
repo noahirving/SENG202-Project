@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class routeTabController {
+public class mainFlightTrackerTabController {
 
     @FXML
     public void pressHomeButton(ActionEvent buttonPress) throws IOException {

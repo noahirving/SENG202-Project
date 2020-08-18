@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="seng202.team4.controller.routeTabController"
-            fx:id="routeTabPane" minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="600.0">
+<AnchorPane fx:id="routeTabPane" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.routeTabController">
     <children>
         <Button fx:id="routeTabUploadDataBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" />
         <TextField fx:id="routeSearchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
@@ -45,5 +45,6 @@
                 <Label fx:id="routeTabEmissionsLabel" layoutX="25.0" layoutY="347.0" text="Emissions:" />
             </children>
         </AnchorPane>
+      <Button layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#pressHomeButton" text="Home" />
     </children>
 </AnchorPane>
