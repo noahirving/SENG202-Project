@@ -29,6 +29,10 @@ public class Airline extends DataType {
         addToDatabase(this);
     }
 
+    public Airline() {
+
+    }
+
     public double calculateCarbonEmissions() {
         return 0; // To be implemented
     }

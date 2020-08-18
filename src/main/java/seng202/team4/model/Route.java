@@ -24,7 +24,7 @@ public class Route {
 
         if (routeArray[6].equals("Y")) {
             this.codeshare = true;
-        } else if (routeArray[6].equals("N")) {
+        } else {
             this.codeshare = false;
         }
 
