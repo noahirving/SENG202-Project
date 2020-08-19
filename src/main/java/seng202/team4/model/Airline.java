@@ -21,11 +21,8 @@ public class Airline extends DataType {
         this.airlineICAO = airlines[4];
         this.airlineCallSign = airlines[5];
         this.airlineCountry = airlines[6];
-
         this.recentlyActive = airlines[7].equals("Y");
-
         this.carbonEmissions = calculateCarbonEmissions();
-
         addToDatabase(this);
     }
 
