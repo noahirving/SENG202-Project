@@ -73,6 +73,8 @@ public class airlineTabController {
             System.exit(0);
         }
 
+        // This implementation of search filtering breaks the ability to order rows of data alphabetically, needs a new implementation.
+        /*
         FilteredList<Airline> filteredAirline = new FilteredList<>(airlines, p -> true);
         airlineSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredAirline.setPredicate(airline -> {
@@ -88,7 +90,7 @@ public class airlineTabController {
             });
         });
 
-        airlineDataTable.setItems(filteredAirline);
+        airlineDataTable.setItems(filteredAirline);*/
     }
 
 

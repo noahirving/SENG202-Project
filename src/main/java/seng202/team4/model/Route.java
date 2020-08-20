@@ -1,7 +1,8 @@
 package seng202.team4.model;
 
-public class Route {
+public class Route extends DataType {
 
+    private int routeID;
     private String airlineCode;
     private int airlineID;
     private String sourceAirportCode;
@@ -15,20 +16,75 @@ public class Route {
 
     public Route(String routeInfo) {
         String[] routeArray = routeInfo.split(",");
-        this.airlineCode = routeArray[0].replaceAll("\"", "");
-        this.airlineID = Integer.parseInt(routeArray[1]);
-        this.sourceAirportCode = routeArray[2].replaceAll("\"", "");
-        this.sourceAirportID = Integer.parseInt(routeArray[3]);
-        this.destinationAirportCode = routeArray[4].replaceAll("\"", "");
-        this.destinationAirportID = Integer.parseInt(routeArray[5]);
-        this.codeshare = routeArray[6].equals("Y");
-        this.numStops = Integer.parseInt(routeArray[7]);
-        this.planeTypeCode = routeArray[8].replaceAll("\"", "");
+        this.routeID = Integer.parseInt(routeArray[0]);
+        this.airlineCode = routeArray[1];
+        this.airlineID = tryReturnInt(routeArray[2]);
+        this.sourceAirportCode = routeArray[3];
+        this.sourceAirportID = tryReturnInt(routeArray[4]);
+        this.destinationAirportCode = routeArray[5];
+        this.destinationAirportID = tryReturnInt(routeArray[6]);
+        this.codeshare = routeArray[7].equals("Y");
+        this.numStops = tryReturnInt(routeArray[8]);
+        this.planeTypeCode = routeArray[9];
         this.carbonEmissions = calculateCarbonEmissions();
+
+        addToDatabase(this);
     }
 
     public double calculateCarbonEmissions() {
         return 0; // To be implemented
+    }
+
+    public int tryReturnInt(String intString) {
+        try {
+            return Integer.parseInt(intString);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
+    public int getRouteID() {
+        return routeID;
+    }
+
+    public String getAirlineCode() {
+        return airlineCode;
+    }
+
+    public int getAirlineID() {
+        return airlineID;
+    }
+
+    public String getSourceAirportCode() {
+        return sourceAirportCode;
+    }
+
+    public int getSourceAirportID() {
+        return sourceAirportID;
+    }
+
+    public String getDestinationAirportCode() {
+        return destinationAirportCode;
+    }
+
+    public int getDestinationAirportID() {
+        return destinationAirportID;
+    }
+
+    public boolean isCodeshare() {
+        return codeshare;
+    }
+
+    public int getNumStops() {
+        return numStops;
+    }
+
+    public String getPlaneTypeCode() {
+        return planeTypeCode;
+    }
+
+    public double getCarbonEmissions() {
+        return carbonEmissions;
     }
 
     public void setAirlineCode(String airlineCode) {

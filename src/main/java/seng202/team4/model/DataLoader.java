@@ -63,6 +63,7 @@ public class DataLoader {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
         StringBuilder outputBuilder = new StringBuilder(output);
+        int routeID = 0;
         while((line = reader.readLine()) != null) {
             if (!line.equals("")) {
                 line += "\n";
@@ -72,7 +73,8 @@ public class DataLoader {
                 } else if (output.equals("AP")) { // Airport
                     this.dataList.getAirportDataList().add(new Airport(line));
                 } else if (output.equals("RT")) { // Route
-                    this.dataList.getRouteDataList().add(new Route(line));
+                    this.dataList.getRouteDataList().add(new Route(routeID + "," + line));
+                    routeID += 1;
                 }
             }
         }

@@ -54,6 +54,22 @@ public abstract class DataType {
                         + "');";
             }
 
+            else if (dataType instanceof Route) {
+                Route route = (Route) dataType;
+                sql = "INSERT INTO ROUTES ('ROUTE ID', 'AIRLINE', 'AIRLINE ID', 'SOURCE AIRPORT', 'SOURCE AIRPORT ID', 'DESTINATION AIRPORT', 'DESTINATION AIRPORT ID', 'CODESHARE', 'STOPS', 'EQUIPMENT') "
+                        + "VALUES ("
+                        + route.getRouteID() + ", '"
+                        + route.getAirlineCode().replaceAll("'", "''") + between
+                        + route.getAirlineID() + between
+                        + route.getSourceAirportCode().replaceAll("'", "''") + between
+                        + route.getSourceAirportID() + between
+                        + route.getDestinationAirportCode().replaceAll("'", "''") + between
+                        + route.getDestinationAirportID() + between
+                        + route.isCodeshare() + between
+                        + route.getNumStops() + between
+                        + route.getPlaneTypeCode().replaceAll("'", "''")
+                        + "');";
+            }
 
             stmt.executeUpdate(sql);
 

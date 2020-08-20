@@ -13,6 +13,7 @@ public class Main {
         // Test
         loader.loadAirportData();
         loader.loadAirlineData();
+        loader.loadRouteData();
 
     }
 }
