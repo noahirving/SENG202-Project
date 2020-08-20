@@ -73,7 +73,7 @@ public class AppTest
         assertTrue(tomato instanceof String);
 
         numTomatos --;
-        assertEquals(numTomatos, 4);
+        assertEquals(numTomatos, 5);
 
     }
 }
