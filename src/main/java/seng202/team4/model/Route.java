@@ -15,21 +15,15 @@ public class Route {
 
     public Route(String routeInfo) {
         String[] routeArray = routeInfo.split(",");
-        this.airlineCode = routeArray[0];
+        this.airlineCode = routeArray[0].replaceAll("\"", "");
         this.airlineID = Integer.parseInt(routeArray[1]);
-        this.sourceAirportCode = routeArray[2];
+        this.sourceAirportCode = routeArray[2].replaceAll("\"", "");
         this.sourceAirportID = Integer.parseInt(routeArray[3]);
-        this.destinationAirportCode = routeArray[4];
+        this.destinationAirportCode = routeArray[4].replaceAll("\"", "");
         this.destinationAirportID = Integer.parseInt(routeArray[5]);
-
-        if (routeArray[6].equals("Y")) {
-            this.codeshare = true;
-        } else {
-            this.codeshare = false;
-        }
-
+        this.codeshare = routeArray[6].equals("Y");
         this.numStops = Integer.parseInt(routeArray[7]);
-        this.planeTypeCode = routeArray[8];
+        this.planeTypeCode = routeArray[8].replaceAll("\"", "");
         this.carbonEmissions = calculateCarbonEmissions();
     }
 

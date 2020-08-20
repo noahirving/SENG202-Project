@@ -20,24 +20,24 @@ public class Airport extends DataType {
     public Airport(String airportData) {
         String[] airportArr = airportData.split(",");
         this.airportID = Integer.parseInt(airportArr[0]);
-        this.name = airportArr[1];
+        this.name = airportArr[1].replaceAll("\"", "");
         int delta = 0;
         if (airportArr.length == 13) { // To deal with commas in city field
-            this.city = airportArr[2] + " " + airportArr[3];
+            this.city = (airportArr[2] + " " + airportArr[3]).replaceAll("\"", "");
             delta = 1;
         }
         else {
-            this.city = airportArr[2];
+            this.city = airportArr[2].replaceAll("\"", "");
         }
-        this.country = airportArr[3 + delta];
-        this.iata = airportArr[4 + delta];
-        this.icao = airportArr[5 + delta];
+        this.country = airportArr[3 + delta].replaceAll("\"", "");
+        this.iata = airportArr[4 + delta].replaceAll("\"", "");
+        this.icao = airportArr[5 + delta].replaceAll("\"", "");
         this.latitude = Double.parseDouble(airportArr[6 + delta]);
         this.longitude = Double.parseDouble(airportArr[7 + delta]);
         this.altitude = Double.parseDouble(airportArr[8 + delta]);
         this.timezone = Double.parseDouble(airportArr[9 + delta]);
-        this.dst = airportArr[10 + delta].charAt(0);
-        this.tzDatabase = airportArr[11 + delta];
+        this.dst = airportArr[10 + delta].charAt(1);
+        this.tzDatabase = airportArr[11 + delta].replaceAll("\"", "");
 
         // Below parameters are not in given data.
         //this.type = airportArr[12];
