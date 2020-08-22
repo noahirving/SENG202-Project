@@ -11,9 +11,7 @@ public class Main {
         DataLoader loader = new DataLoader();
 
         // Test
-        loader.loadAirportData();
-        loader.loadAirlineData();
-        loader.loadRouteData();
+        loader.loadAllData();
 
     }
 }

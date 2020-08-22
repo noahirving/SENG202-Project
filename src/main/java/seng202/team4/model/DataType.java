@@ -2,15 +2,18 @@ package seng202.team4.model;
 
 import java.sql.*;
 
-public abstract class DataType {
+public class DataType {
 
     private String between = "', '";
 
-    public void addToDatabase(Object dataType) {
-        Connection c;
-        Statement stmt;
-        String sql = null;
+    private Statement stmt;
+    private int dataCount = 0;
 
+    Connection c;
+    //Statement stmt = null;
+    String sql = null;
+
+    public DataType() {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
@@ -19,7 +22,15 @@ public abstract class DataType {
             //System.out.println("Opened database successfully");
 
             stmt = c.createStatement();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
 
+
+    }
+
+    public void addToDatabase(Object dataType) {
+        try {
             if (dataType instanceof Airline) {
                 Airline airline = (Airline) dataType;
                 sql = "INSERT INTO AIRLINES ('AIRLINE ID', 'NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLY ACTIVE') "
@@ -71,16 +82,30 @@ public abstract class DataType {
                         + "');";
             }
 
-            stmt.executeUpdate(sql);
+            stmt.addBatch(sql);
 
-            stmt.close();
-            c.commit();
-            c.close();
+            dataCount += 1;
+            if (dataCount % 1000 == 0) {
+                stmt.executeBatch();
+            }
 
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
         //System.out.println("Records created successfully");
+    }
+
+    public void updateDatabase() {
+        try {
+            stmt.executeBatch();
+
+            stmt.close();
+            c.commit();
+            c.close();
+        } catch (SQLException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+
     }
 }

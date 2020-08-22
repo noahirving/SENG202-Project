@@ -12,7 +12,7 @@ public class Airline extends DataType {
     private boolean recentlyActive;
     private double carbonEmissions;
 
-    public Airline(String airlineData) {
+    public Airline(String airlineData, DataType dataType) {
         String[] airlines = airlineData.split(",");
         this.airlineID = Integer.parseInt(airlines[0]);
         this.airlineName = airlines[1].replaceAll("\"", "");
@@ -23,7 +23,7 @@ public class Airline extends DataType {
         this.airlineCountry = airlines[6].replaceAll("\"", "");
         this.recentlyActive = airlines[7].equals("Y");
         this.carbonEmissions = calculateCarbonEmissions();
-        addToDatabase(this);
+        dataType.addToDatabase(this);
     }
 
     public Airline() {

@@ -17,7 +17,7 @@ public class Airport extends DataType {
     private String source;
 
 
-    public Airport(String airportData) {
+    public Airport(String airportData, DataType dataType) {
         String[] airportArr = airportData.split(",");
         this.airportID = Integer.parseInt(airportArr[0]);
         this.name = airportArr[1].replaceAll("\"", "");
@@ -43,27 +43,8 @@ public class Airport extends DataType {
         //this.type = airportArr[12];
         //this.source = airportArr[13];
 
-        addToDatabase(this);
+        dataType.addToDatabase(this);
     }
-
-
-    public Airport(int airportID, String name, String city, String country, String iata, String icao, long latitude, long longitude, long altitude, float timezone, char dst, String tzDatabase, String type, String source) {
-        this.airportID = airportID;
-        this.name = name;
-        this.city = city;
-        this.country = country;
-        this.iata = iata;
-        this.icao = icao;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
-        this.timezone = timezone;
-        this.dst = dst;
-        this.tzDatabase = tzDatabase;
-        this.type = type;
-        this.source = source;
-    }
-
 
     public int getAirportID() {
         return airportID;

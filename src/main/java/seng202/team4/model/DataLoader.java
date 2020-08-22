@@ -48,7 +48,7 @@ public class DataLoader {
      */
     public void loadAllData() throws IOException {
         loadAirlineData();
-        loadAirlineData();
+        loadAirportData();
         loadRouteData();
     }
 
@@ -59,6 +59,7 @@ public class DataLoader {
      * @throws IOException Invalid input
      */
     private void rawDataLoader(String rsc, String output) throws IOException {
+        DataType dataType = new DataType();
         InputStream inputStream = DataLoader.class.getResourceAsStream(rsc);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
@@ -69,15 +70,17 @@ public class DataLoader {
                 line += "\n";
                 outputBuilder.append(line);
                 if (output.equals("AL")) { // Airline
-                    this.dataList.getAirlineDataList().add(new Airline(line));
+                    this.dataList.getAirlineDataList().add(new Airline(line, dataType));
                 } else if (output.equals("AP")) { // Airport
-                    this.dataList.getAirportDataList().add(new Airport(line));
+                    this.dataList.getAirportDataList().add(new Airport(line, dataType));
                 } else if (output.equals("RT")) { // Route
-                    this.dataList.getRouteDataList().add(new Route(routeID + "," + line));
+                    this.dataList.getRouteDataList().add(new Route(routeID + "," + line, dataType));
                     routeID += 1;
                 }
             }
         }
+
+        dataType.updateDatabase();
 
         inputStream.close();
 

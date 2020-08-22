@@ -14,7 +14,7 @@ public class Route extends DataType {
     private String planeTypeCode;
     private double carbonEmissions;
 
-    public Route(String routeInfo) {
+    public Route(String routeInfo, DataType dataType) {
         String[] routeArray = routeInfo.split(",");
         this.routeID = Integer.parseInt(routeArray[0]);
         this.airlineCode = routeArray[1];
@@ -28,7 +28,7 @@ public class Route extends DataType {
         this.planeTypeCode = routeArray[9];
         this.carbonEmissions = calculateCarbonEmissions();
 
-        addToDatabase(this);
+        dataType.addToDatabase(this);
     }
 
     public double calculateCarbonEmissions() {
