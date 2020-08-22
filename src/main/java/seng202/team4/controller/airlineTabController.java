@@ -1,8 +1,10 @@
 package seng202.team4.controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +35,6 @@ public class airlineTabController {
     @FXML
     private TextField airlineSearchField;
 
-    private static Connection conn;
     private ObservableList<Airline> airlines = FXCollections.observableArrayList();
     private ObservableList<String> countries = FXCollections.observableArrayList();
 
@@ -50,14 +51,14 @@ public class airlineTabController {
 
     @FXML
     public void initialize() {
-        airlineTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineName"));
-        airlineTabCountryColumn.setCellValueFactory(new PropertyValueFactory<Airline, String>("airlineCountry"));
-        airlineDataTable.setItems(airlines);
-        airlineTabCountryCombobox.setItems(countries);
+        airlineTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<>("airlineName"));
+        airlineTabCountryColumn.setCellValueFactory(new PropertyValueFactory<>("airlineCountry"));
+
+        airlineTabCountryCombobox.getSelectionModel().select("---");
 
         try {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
             ResultSet rs = conn.createStatement().executeQuery("SELECT NAME, COUNTRY FROM AIRLINES");
             while (rs.next()) {
                 Airline airline = new Airline();
@@ -68,29 +69,45 @@ public class airlineTabController {
                     countries.add(rs.getString("COUNTRY"));
                 }
             }
+            conn.close();
         } catch (Exception ex) {
             System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
             System.exit(0);
         }
 
-        // This implementation of search filtering breaks the ability to order rows of data alphabetically, needs a new implementation.
-        /*
-        FilteredList<Airline> filteredAirline = new FilteredList<>(airlines, p -> true);
-        airlineSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredAirline.setPredicate(airline -> {
+        airlineDataTable.setItems(airlines);
+        countries.add("---");
+        FXCollections.sort(countries);
+        airlineTabCountryCombobox.setItems(countries);
+
+        FilteredList<Airline> countryFilter = new FilteredList<>(airlines, p -> true);
+        airlineTabCountryCombobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                countryFilter.setPredicate(airline -> {
+                    if (newValue == null || newValue.equals("---")) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+                    return airline.getAirlineCountry().toLowerCase().contains(lower);
+                }));
+
+        FilteredList<Airline> searchFilter = new FilteredList<>(countryFilter, p -> true);
+        airlineSearchField.textProperty().addListener((observable, oldValue, newValue) ->
+                searchFilter.setPredicate(airline -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
                 String lower = newValue.toLowerCase();
                 if (airline.getAirlineName().toLowerCase().contains(lower)) {
                     return true;
-                } else if (airline.getAirlineCountry().toLowerCase().contains(lower)) {
-                    return true;
-                } return false;
-            });
-        });
+                } else {
+                    return airline.getAirlineCountry().toLowerCase().contains(lower);
+                }
+            }));
 
-        airlineDataTable.setItems(filteredAirline);*/
+        SortedList<Airline> sortedAirline = new SortedList<>(searchFilter);
+        sortedAirline.comparatorProperty().bind(airlineDataTable.comparatorProperty());
+
+        airlineDataTable.setItems(sortedAirline);
     }
 
 
