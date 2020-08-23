@@ -13,14 +13,14 @@ public class Airline extends DataType {
     private double carbonEmissions;
 
     public Airline(String airlineData, DataType dataType) {
-        String[] airlines = airlineData.split(",");
+        String[] airlines = airlineData.replaceAll("\"", "").split(",");
         this.airlineID = Integer.parseInt(airlines[0]);
-        this.airlineName = airlines[1].replaceAll("\"", "");
-        this.airlineCode = airlines[2].replaceAll("\"", "");
-        this.airlineIATA = airlines[3].replaceAll("\"", "");
-        this.airlineICAO = airlines[4].replaceAll("\"", "");
-        this.airlineCallSign = airlines[5].replaceAll("\"", "");
-        this.airlineCountry = airlines[6].replaceAll("\"", "");
+        this.airlineName = airlines[1];
+        this.airlineCode = airlines[2];
+        this.airlineIATA = airlines[3];
+        this.airlineICAO = airlines[4];
+        this.airlineCallSign = airlines[5];
+        this.airlineCountry = airlines[6];
         this.recentlyActive = airlines[7].equals("Y");
         this.carbonEmissions = calculateCarbonEmissions();
         dataType.addToDatabase(this);

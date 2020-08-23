@@ -102,7 +102,7 @@ public class routeTabController {
             route.setDestinationAirportCode(rs.getString("DestinationAirport"));
             route.setNumStops(rs.getString("Stops"));
             route.setPlaneTypeCode(rs.getString("Equipment"));
-            route.setCarbonEmissions(rs.getString("CarbonEmissions"));
+            route.setCarbonEmissions(rs.getDouble("CarbonEmissions"));
             routes.add(route);
 
         }

@@ -12,7 +12,7 @@ public class Route extends DataType {
     private boolean codeshare;
     private String numStops;
     private String planeTypeCode;
-    private String carbonEmissions;
+    private double carbonEmissions;
 
     public Route(String routeInfo, DataType dataType) {
         String[] routeArray = routeInfo.split(",");
@@ -26,7 +26,7 @@ public class Route extends DataType {
         this.codeshare = routeArray[7].equals("Y");
         this.numStops = routeArray[8];
         this.planeTypeCode = routeArray[9];
-        this.carbonEmissions = "0";
+        this.carbonEmissions = calculateCarbonEmissions();
 
         dataType.addToDatabase(this);
     }
@@ -87,7 +87,7 @@ public class Route extends DataType {
         return planeTypeCode;
     }
 
-    public String getCarbonEmissions() {
+    public double getCarbonEmissions() {
         return carbonEmissions;
     }
 
@@ -127,7 +127,7 @@ public class Route extends DataType {
         this.planeTypeCode = planeTypeCode;
     }
 
-    public void setCarbonEmissions(String carbonEmissions) {
+    public void setCarbonEmissions(double carbonEmissions) {
         this.carbonEmissions = carbonEmissions;
     }
 }
