@@ -10,9 +10,9 @@ public class Route extends DataType {
     private String destinationAirportCode;
     private int destinationAirportID;
     private boolean codeshare;
-    private int numStops;
+    private String numStops;
     private String planeTypeCode;
-    private double carbonEmissions;
+    private String carbonEmissions;
 
     public Route(String routeInfo, DataType dataType) {
         String[] routeArray = routeInfo.split(",");
@@ -24,11 +24,15 @@ public class Route extends DataType {
         this.destinationAirportCode = routeArray[5];
         this.destinationAirportID = tryReturnInt(routeArray[6]);
         this.codeshare = routeArray[7].equals("Y");
-        this.numStops = tryReturnInt(routeArray[8]);
+        this.numStops = routeArray[8];
         this.planeTypeCode = routeArray[9];
-        this.carbonEmissions = calculateCarbonEmissions();
+        this.carbonEmissions = "0";
 
         dataType.addToDatabase(this);
+    }
+
+    public Route() {
+
     }
 
     public double calculateCarbonEmissions() {
@@ -75,7 +79,7 @@ public class Route extends DataType {
         return codeshare;
     }
 
-    public int getNumStops() {
+    public String getNumStops() {
         return numStops;
     }
 
@@ -83,7 +87,7 @@ public class Route extends DataType {
         return planeTypeCode;
     }
 
-    public double getCarbonEmissions() {
+    public String getCarbonEmissions() {
         return carbonEmissions;
     }
 
@@ -115,7 +119,7 @@ public class Route extends DataType {
         this.codeshare = codeshare;
     }
 
-    public void setNumStops(int numStops) {
+    public void setNumStops(String numStops) {
         this.numStops = numStops;
     }
 
@@ -123,7 +127,7 @@ public class Route extends DataType {
         this.planeTypeCode = planeTypeCode;
     }
 
-    public void setCarbonEmissions(double carbonEmissions) {
+    public void setCarbonEmissions(String carbonEmissions) {
         this.carbonEmissions = carbonEmissions;
     }
 }

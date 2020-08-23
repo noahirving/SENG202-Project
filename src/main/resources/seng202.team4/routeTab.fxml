@@ -16,7 +16,7 @@
         <TextField fx:id="routeSearchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
         <TableView fx:id="routeDataTable" layoutX="14.0" layoutY="50.0" prefHeight="406.0" prefWidth="474.0">
             <columns>
-                <TableColumn fx:id="routeTabAirportColumn" prefWidth="79.0" text="Airport" />
+                <TableColumn fx:id="routeTabAirlineColumn" prefWidth="79.0" text="Airline" />
                 <TableColumn fx:id="routeTabDepartureAirportColumn" minWidth="4.800048828125" prefWidth="79.0" text="Departure&#10;   airport" />
                 <TableColumn fx:id="routeTabDestinationAirportColumn" minWidth="4.800048828125" prefWidth="79.0" text="Destination &#10;    airport" />
                 <TableColumn fx:id="routeTabNumStopsColumn" minWidth="4.800048828125" prefWidth="79.0" text="Number of &#10;     stops" />
