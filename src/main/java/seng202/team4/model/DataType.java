@@ -33,7 +33,7 @@ public class DataType {
         try {
             if (dataType instanceof Airline) {
                 Airline airline = (Airline) dataType;
-                sql = "INSERT INTO AIRLINES ('AIRLINE ID', 'NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLY ACTIVE') "
+                sql = "INSERT INTO AIRLINES ('AirlineID', 'Name', 'Alias', 'IATA', 'ICAO', 'Callsign', 'Country', 'RecentlyActive') "
                         + "VALUES ("
                         + airline.getAirlineID() + ", '"
                         + airline.getAirlineName().replaceAll("'", "''") + between
@@ -48,7 +48,7 @@ public class DataType {
 
             else if (dataType instanceof Airport) {
                 Airport airport = (Airport) dataType;
-                sql = "INSERT INTO AIRPORT ('AIRPORT ID', 'NAME', 'CITY', 'COUNTRY ', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZ DATABASE TIME') "
+                sql = "INSERT INTO AIRPORT ('AirportID', 'Name', 'City', 'Country ', 'IATA', 'ICAO', 'Latitude', 'Longitude', 'Altitude', 'Timezone', 'DST', 'TzDatabaseTime') "
                         + "VALUES ("
                         + airport.getAirportID() + ", '"
                         + airport.getName().replaceAll("'", "''") + between
@@ -67,7 +67,7 @@ public class DataType {
 
             else if (dataType instanceof Route) {
                 Route route = (Route) dataType;
-                sql = "INSERT INTO ROUTES ('ROUTE ID', 'AIRLINE', 'AIRLINE ID', 'SOURCE AIRPORT', 'SOURCE AIRPORT ID', 'DESTINATION AIRPORT', 'DESTINATION AIRPORT ID', 'CODESHARE', 'STOPS', 'EQUIPMENT') "
+                sql = "INSERT INTO ROUTES ('RouteID', 'Airline', 'AirlineID', 'SourceAirport', 'SourceAirportID', 'DestinationAirport', 'DestinationAirportID', 'Codeshare', 'Stops', 'Equipment', 'CarbonEmissions') "
                         + "VALUES ("
                         + route.getRouteID() + ", '"
                         + route.getAirlineCode().replaceAll("'", "''") + between
@@ -78,7 +78,8 @@ public class DataType {
                         + route.getDestinationAirportID() + between
                         + route.isCodeshare() + between
                         + route.getNumStops() + between
-                        + route.getPlaneTypeCode().replaceAll("'", "''")
+                        + route.getPlaneTypeCode().replaceAll("'", "''") + between
+                        + route.getCarbonEmissions()
                         + "');";
             }
 
