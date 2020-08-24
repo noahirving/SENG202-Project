@@ -1,5 +1,7 @@
 package seng202.team4.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -36,8 +38,11 @@ public class routeTabController {
     @FXML private ComboBox<String> routeDepartureFilterCombobox;
     @FXML private ComboBox<String> routeDestinationFilterCombobox;
     @FXML private Slider routeStopsFilterSlider;
+    @FXML private Label stopsLabel;
     @FXML private ComboBox<String> routePlaneTypeFilterCombobox;
     @FXML private Slider routeEmissionsFilterSlider;
+    @FXML private Label emissionsLabel;
+
 
     @FXML private TextField routeSearchField;
 
@@ -96,7 +101,7 @@ public class routeTabController {
             route.setAirlineCode(airlineCode);
             route.setSourceAirportCode(sourceAirport);
             route.setDestinationAirportCode(destinationAirport);
-            route.setNumStops(rs.getString("Stops"));
+            route.setNumStops(rs.getInt("Stops"));
             route.setPlaneTypeCode(planeType);
             route.setCarbonEmissions(rs.getDouble("CarbonEmissions"));
             routes.add(route);
@@ -121,22 +126,38 @@ public class routeTabController {
     }
 
     private void filterData() {
+
         airlineCodes.add("---"); departureCountries.add("---"); destinationCountries.add("---"); planeTypes.add("---");
-        FXCollections.sort(airlineCodes); FXCollections.sort(departureCountries);
-        FXCollections.sort(destinationCountries); FXCollections.sort(planeTypes);
+        // Sort and set combobox items
+        FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
+        FXCollections.sort(departureCountries);routeDepartureFilterCombobox.setItems(departureCountries);
+        FXCollections.sort(destinationCountries); routeDestinationFilterCombobox.setItems(destinationCountries);
+        FXCollections.sort(planeTypes); routePlaneTypeFilterCombobox.setItems(planeTypes);
 
-        routeAirlineFilterCombobox.setItems(airlineCodes);
-        routeDepartureFilterCombobox.setItems(departureCountries);
-        routeDestinationFilterCombobox.setItems(destinationCountries);
-        routePlaneTypeFilterCombobox.setItems(planeTypes);
+        // Connect sliders to labels indicating their value
+        routeStopsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> stopsLabel.textProperty().setValue(
+                String.valueOf(newValue.intValue())));
 
+        routeEmissionsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> emissionsLabel.textProperty().setValue(
+                String.valueOf(newValue.intValue())));
+        // Connect filters to table
         FilteredList<Route> airlinesFilter = addFilter(new FilteredList<>(routes, p -> true), routeAirlineFilterCombobox, "Airline");
         FilteredList<Route> sourceFilter = addFilter(airlinesFilter, routeDepartureFilterCombobox, "Source");
-        FilteredList<Route> destinationFilter = addFilter(sourceFilter, routeDestinationFilterCombobox, "Destination");
+        FilteredList<Route> stopSliderFilter = new FilteredList<>(sourceFilter, p -> true);
+
+        stopsLabel.textProperty().addListener((observableValue, oldValue, newValue) ->
+                stopSliderFilter.setPredicate((route -> (Integer.parseInt(newValue) == route.getNumStops()))));
+
+        FilteredList<Route> destinationFilter = addFilter(stopSliderFilter, routeDestinationFilterCombobox, "Destination");
         FilteredList<Route> planeFilter = addFilter(destinationFilter, routePlaneTypeFilterCombobox, "Plane");
 
+        FilteredList<Route> emissionsSliderFilter = new FilteredList<>(planeFilter, p -> true);
+
+        emissionsLabel.textProperty().addListener((observableValue, oldValue, newValue) ->
+                emissionsSliderFilter.setPredicate((route -> (Double.parseDouble(newValue) == route.getCarbonEmissions()))));
+
         // Add search bar filter
-        FilteredList<Route> searchFilter = new FilteredList<>(planeFilter, p -> true);
+        FilteredList<Route> searchFilter = new FilteredList<>(emissionsSliderFilter, p -> true);
         routeSearchField.textProperty().addListener((observable, oldValue, newValue) ->
                 searchFilter.setPredicate(route -> {
                     if (newValue == null || newValue.isEmpty()) {

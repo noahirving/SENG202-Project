@@ -10,7 +10,7 @@ public class Route extends DataType {
     private String destinationAirportCode;
     private int destinationAirportID;
     private boolean codeshare;
-    private String numStops;
+    private int numStops;
     private String planeTypeCode;
     private double carbonEmissions;
 
@@ -24,7 +24,11 @@ public class Route extends DataType {
         this.destinationAirportCode = routeArray[5];
         this.destinationAirportID = tryReturnInt(routeArray[6]);
         this.codeshare = routeArray[7].equals("Y");
-        this.numStops = routeArray[8];
+        try {
+            this.numStops = Integer.parseInt(routeArray[8]);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         this.planeTypeCode = routeArray[9];
         this.carbonEmissions = calculateCarbonEmissions();
 
@@ -79,7 +83,7 @@ public class Route extends DataType {
         return codeshare;
     }
 
-    public String getNumStops() {
+    public int getNumStops() {
         return numStops;
     }
 
@@ -119,7 +123,7 @@ public class Route extends DataType {
         this.codeshare = codeshare;
     }
 
-    public void setNumStops(String numStops) {
+    public void setNumStops(int numStops) {
         this.numStops = numStops;
     }
 
