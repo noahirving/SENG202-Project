@@ -20,39 +20,26 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Filter;
 
 public class routeTabController {
 
-    @FXML
-    private TableView<Route> routeDataTable;
-    @FXML
-    private TableColumn<Route, String> routeTabAirlineColumn;
-    @FXML
-    private TableColumn<Route, String> routeTabDepartureAirportColumn;
-    @FXML
-    private TableColumn<Route, String> routeTabDestinationAirportColumn;
-    @FXML
-    private TableColumn<Route, Integer> routeTabNumStopsColumn;
-    @FXML
-    private TableColumn<Route, String> routeTabPlaneTypeColumn;
-    @FXML
-    private TableColumn<Route, Integer> routeTabCarbonEmissionsColumn;
+    @FXML private TableView<Route> routeDataTable;
+    @FXML private TableColumn<Route, String> routeTabAirlineColumn;
+    @FXML private TableColumn<Route, String> routeTabDepartureAirportColumn;
+    @FXML private TableColumn<Route, String> routeTabDestinationAirportColumn;
+    @FXML private TableColumn<Route, Integer> routeTabNumStopsColumn;
+    @FXML private TableColumn<Route, String> routeTabPlaneTypeColumn;
+    @FXML private TableColumn<Route, Integer> routeTabCarbonEmissionsColumn;
 
-    @FXML
-    private ComboBox<String> routeAirlineFilterCombobox;
-    @FXML
-    private ComboBox<String> routeDepartureFilterCombobox;
-    @FXML
-    private ComboBox<String> routeDestinationFilterCombobox;
-    @FXML
-    private Slider routeStopsFilterSlider;
-    @FXML
-    private ComboBox<String> routePlaneTypeFilterCombobox;
-    @FXML
-    private Slider routeEmissionsFilterSlider;
+    @FXML private ComboBox<String> routeAirlineFilterCombobox;
+    @FXML private ComboBox<String> routeDepartureFilterCombobox;
+    @FXML private ComboBox<String> routeDestinationFilterCombobox;
+    @FXML private Slider routeStopsFilterSlider;
+    @FXML private ComboBox<String> routePlaneTypeFilterCombobox;
+    @FXML private Slider routeEmissionsFilterSlider;
 
-    @FXML
-    private TextField routeSearchField;
+    @FXML private TextField routeSearchField;
 
     private ObservableList<Route> routes = FXCollections.observableArrayList();
     private ObservableList<String> airlineCodes = FXCollections.observableArrayList();
@@ -85,7 +72,7 @@ public class routeTabController {
         try {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/initialised_database.db");
-            buildData();
+            getSQLData();
             filterData();
             conn.close();
         } catch (Exception ex) {
@@ -98,8 +85,8 @@ public class routeTabController {
 
 
 
-    public void buildData() throws SQLException {
-        ResultSet rs = conn.createStatement().executeQuery("SELECT Airline, SourceAirport, DestinationAirport, Stops, Equipment, CarbonEmissions FROM Routes");
+    public void getSQLData() throws SQLException {
+        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM Routes");
         while (rs.next()) {
             Route route = new Route();
             String airlineCode = rs.getString("Airline");
@@ -131,6 +118,9 @@ public class routeTabController {
 
         routeDataTable.setItems(routes);
 
+    }
+
+    private void filterData() {
         airlineCodes.add("---"); departureCountries.add("---"); destinationCountries.add("---"); planeTypes.add("---");
         FXCollections.sort(airlineCodes); FXCollections.sort(departureCountries);
         FXCollections.sort(destinationCountries); FXCollections.sort(planeTypes);
@@ -140,53 +130,10 @@ public class routeTabController {
         routeDestinationFilterCombobox.setItems(destinationCountries);
         routePlaneTypeFilterCombobox.setItems(planeTypes);
 
-    }
-
-    private void filterData() {
-
-        // Add airlines filter
-        FilteredList<Route> airlinesFilter = new FilteredList<>(routes, p -> true);
-        routeAirlineFilterCombobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                airlinesFilter.setPredicate(route -> {
-                    if (newValue == null || newValue.equals("---")) {
-                        return true;
-                    }
-                    String lower = newValue.toLowerCase();
-                    return route.getAirlineCode().toLowerCase().contains(lower);
-                }));
-
-        // Add departure airport code filter
-        FilteredList<Route> departFilter = new FilteredList<>(airlinesFilter, p -> true);
-        routeDepartureFilterCombobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                departFilter.setPredicate(route -> {
-                    if (newValue == null || newValue.equals("---")) {
-                        return true;
-                    }
-                    String lower = newValue.toLowerCase();
-                    return route.getSourceAirportCode().toLowerCase().contains(lower);
-                }));
-
-        // Add destination airport code filter
-        FilteredList<Route> destFilter = new FilteredList<>(departFilter, p -> true);
-        routeDestinationFilterCombobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                destFilter.setPredicate(route -> {
-                    if (newValue == null || newValue.equals("---")) {
-                        return true;
-                    }
-                    String lower = newValue.toLowerCase();
-                    return route.getDestinationAirportCode().toLowerCase().contains(lower);
-                }));
-
-        // Add plane type filter
-        FilteredList<Route> planeFilter = new FilteredList<>(destFilter, p -> true);
-        routePlaneTypeFilterCombobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                planeFilter.setPredicate(route -> {
-                    if (newValue == null || newValue.equals("---")) {
-                        return true;
-                    }
-                    String lower = newValue.toLowerCase();
-                    return route.getPlaneTypeCode().toLowerCase().contains(lower);
-                }));
+        FilteredList<Route> airlinesFilter = addFilter(new FilteredList<>(routes, p -> true), routeAirlineFilterCombobox, "Airline");
+        FilteredList<Route> sourceFilter = addFilter(airlinesFilter, routeDepartureFilterCombobox, "Source");
+        FilteredList<Route> destinationFilter = addFilter(sourceFilter, routeDestinationFilterCombobox, "Destination");
+        FilteredList<Route> planeFilter = addFilter(destinationFilter, routePlaneTypeFilterCombobox, "Plane");
 
         // Add search bar filter
         FilteredList<Route> searchFilter = new FilteredList<>(planeFilter, p -> true);
@@ -211,6 +158,29 @@ public class routeTabController {
 
         routeDataTable.setItems(sortedRoute);
 
+    }
+
+    public FilteredList<Route> addFilter(FilteredList<Route> filteredList, ComboBox<String> comboBox, String filter) {
+        FilteredList<Route> newFilter = new FilteredList<>(filteredList, p -> true);
+        comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                newFilter.setPredicate(route -> {
+                    if (newValue == null || newValue.equals("---")) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+
+                    if (filter.equals("Airline")) {
+                        return route.getAirlineCode().toLowerCase().contains(lower);
+                    } else if (filter.equals("Source")) {
+                        return route.getSourceAirportCode().toLowerCase().contains(lower);
+                    } else if (filter.equals("Destination")) {
+                        return route.getDestinationAirportCode().toLowerCase().contains(lower);
+                    } else {
+                        return route.getPlaneTypeCode().toLowerCase().contains(lower);
+                    }
+
+                }));
+        return newFilter;
     }
 
 
