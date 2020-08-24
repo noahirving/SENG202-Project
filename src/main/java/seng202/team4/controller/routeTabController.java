@@ -13,11 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import seng202.team4.model.Airline;
 import seng202.team4.model.Route;
 
 import java.io.IOException;
-import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -57,6 +55,10 @@ public class routeTabController {
     private TextField routeSearchField;
 
     private ObservableList<Route> routes = FXCollections.observableArrayList();
+    private ObservableList<String> airlineCodes = FXCollections.observableArrayList();
+    private ObservableList<String> departureCountries = FXCollections.observableArrayList();
+    private ObservableList<String> destinationCountries = FXCollections.observableArrayList();
+    private ObservableList<String> planeTypes = FXCollections.observableArrayList();
 
     private Connection conn;
 
@@ -82,8 +84,9 @@ public class routeTabController {
 
         try {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/initialised_database.db");
             buildData();
+            filterData();
             conn.close();
         } catch (Exception ex) {
             System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
@@ -93,20 +96,85 @@ public class routeTabController {
 
     }
 
+
+
     public void buildData() throws SQLException {
         ResultSet rs = conn.createStatement().executeQuery("SELECT Airline, SourceAirport, DestinationAirport, Stops, Equipment, CarbonEmissions FROM Routes");
         while (rs.next()) {
             Route route = new Route();
-            route.setAirlineCode(rs.getString("Airline"));
-            route.setSourceAirportCode(rs.getString("SourceAirport"));
-            route.setDestinationAirportCode(rs.getString("DestinationAirport"));
+            String airlineCode = rs.getString("Airline");
+            String sourceAirport = rs.getString("SourceAirport");
+            String destinationAirport = rs.getString("DestinationAirport");
+            String planeType = rs.getString("Equipment");
+            route.setAirlineCode(airlineCode);
+            route.setSourceAirportCode(sourceAirport);
+            route.setDestinationAirportCode(destinationAirport);
             route.setNumStops(rs.getString("Stops"));
-            route.setPlaneTypeCode(rs.getString("Equipment"));
+            route.setPlaneTypeCode(planeType);
             route.setCarbonEmissions(rs.getDouble("CarbonEmissions"));
             routes.add(route);
 
+            if (!airlineCodes.contains(airlineCode)) {
+                airlineCodes.add(airlineCode);
+            }
+            if (!departureCountries.contains(sourceAirport)) {
+                departureCountries.add(sourceAirport);
+            }
+            if (!destinationCountries.contains(destinationAirport)) {
+                destinationCountries.add(destinationAirport);
+            }
+            if (!planeTypes.contains(planeType)) {
+                planeTypes.add(planeType);
+            }
+
         }
+
         routeDataTable.setItems(routes);
+
+        airlineCodes.add("---"); departureCountries.add("---"); destinationCountries.add("---"); planeTypes.add("---");
+        FXCollections.sort(airlineCodes); FXCollections.sort(departureCountries);
+        FXCollections.sort(destinationCountries); FXCollections.sort(planeTypes);
+
+        routeAirlineFilterCombobox.setItems(airlineCodes);
+        routeDepartureFilterCombobox.setItems(departureCountries);
+        routeDestinationFilterCombobox.setItems(destinationCountries);
+        routePlaneTypeFilterCombobox.setItems(planeTypes);
+
+    }
+
+    private void filterData() {
+
+        FilteredList<Route> airlinesFilter = new FilteredList<>(routes, p -> true);
+        routeAirlineFilterCombobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                airlinesFilter.setPredicate(route -> {
+                    if (newValue == null || newValue.equals("---")) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+                    return route.getAirlineCode().toLowerCase().contains(lower);
+                }));
+        FilteredList<Route> searchFilter = new FilteredList<>(airlinesFilter, p -> true);
+        routeSearchField.textProperty().addListener((observable, oldValue, newValue) ->
+                searchFilter.setPredicate(route -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+                    if (route.getAirlineCode().toLowerCase().contains(lower)) {
+                        return true;
+                    } else if (route.getSourceAirportCode().toLowerCase().contains(lower)) {
+                        return true;
+                    } else if (route.getDestinationAirportCode().toLowerCase().contains(lower)){
+                        return true;
+                    } else {
+                        return (route.getPlaneTypeCode().toLowerCase().contains(lower));
+                    }
+                }));
+        SortedList<Route> sortedRoute = new SortedList<>(searchFilter);
+        sortedRoute.comparatorProperty().bind(routeDataTable.comparatorProperty());
+
+        routeDataTable.setItems(sortedRoute);
+
     }
 
 
