@@ -10,9 +10,9 @@
 
 <AnchorPane fx:id="airlineTabPane" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.airlineTabController">
     <children>
-        <ComboBox fx:id="airlineTabCountryCombobox" layoutX="336.0" layoutY="12.0" prefHeight="26.0" prefWidth="137.0" promptText="All" />
+        <ComboBox fx:id="airlineTabCountryCombobox" layoutX="336.0" layoutY="12.0" onAction="#filterByCountry" prefHeight="26.0" prefWidth="137.0" promptText="All" />
         <Button fx:id="airlineTabUploadDataBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" />
-        <TextField fx:id="airlineSearchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
+        <TextField fx:id="airlineSearchField" layoutX="14.0" layoutY="14.0" onKeyTyped="#searchData" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
         <Label fx:id="airlineTabCountrySelectorLabel" layoutX="285.0" layoutY="16.0" text="Country:" />
         <TableView fx:id="airlineDataTable" layoutX="14.0" layoutY="50.0" prefHeight="406.0" prefWidth="724.0">
             <columns>

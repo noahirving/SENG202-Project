@@ -48,7 +48,7 @@ public class DataType {
 
             else if (dataType instanceof Airport) {
                 Airport airport = (Airport) dataType;
-                sql = "INSERT INTO AIRPORT ('AIRPORTID', 'NAME', 'CITY', 'COUNTRY ', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME') "
+                sql = "INSERT INTO AIRPORT ('AIRPORTID', 'NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME') "
                         + "VALUES ("
                         + airport.getAirportID() + ", '"
                         + airport.getName().replaceAll("'", "''") + between
@@ -67,7 +67,7 @@ public class DataType {
 
             else if (dataType instanceof Route) {
                 Route route = (Route) dataType;
-                sql = "INSERT INTO ROUTES ('ROUTEID', 'AIRLINE', 'AIRLINEID', SourceAirport, 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'CARBONEMISSIONS') "
+                sql = "INSERT INTO ROUTES ('ROUTEID', 'AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'CARBONEMISSIONS') "
                         + "VALUES ("
                         + route.getRouteID() + ", '"
                         + route.getAirlineCode().replaceAll("'", "''") + between
