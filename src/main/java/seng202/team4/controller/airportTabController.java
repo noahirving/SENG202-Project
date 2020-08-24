@@ -3,6 +3,7 @@ package seng202.team4.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import seng202.team4.model.Airline;
 import seng202.team4.model.Airport;
 
 import java.io.IOException;
@@ -59,7 +59,7 @@ public class airportTabController {
         airportTabAirportColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         airportTabCityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
         airportTabCountryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
-       // airportTabCoordinatesColumn.setCellValueFactory(new PropertyValueFactory<>("coordinates"));
+        airportTabCoordinatesColumn.setCellValueFactory(new PropertyValueFactory<>("coordinates"));
 
         try {
             Class.forName("org.sqlite.JDBC");
@@ -87,16 +87,20 @@ public class airportTabController {
         airportTabCountryCombobox.setItems(countries);
     }
 
+    //change country column in database
     public void getSQLData() throws Exception {
         ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM Airport");
         while (rs.next()) {
             Airport airport = new Airport();
             airport.setName(rs.getString("Name"));
-            airport.setCountry(rs.getString("Country "));
+            airport.setCountry(rs.getString("Country"));
             airport.setCity(rs.getString("City"));
+            double latitude = Double.parseDouble(rs.getString("Latitude"));
+            double longitude = Double.parseDouble(rs.getString("longitude"));
+            airport.setCoordinates(latitude, longitude);
             airports.add(airport);
-            if (!countries.contains(rs.getString("Country "))) {
-                countries.add(rs.getString("Country "));
+            if (!countries.contains(rs.getString("Country"))) {
+                countries.add(rs.getString("Country"));
             }
             if (!cities.contains(rs.getString("City"))) {
                 cities.add(rs.getString("City"));
@@ -104,15 +108,66 @@ public class airportTabController {
         }
     }
 
-    public void filterCity() {
-
+    public void filterByCity() {
+        String newValue = airportTabCityCombobox.getValue();
+        cityFilter.setPredicate(airline -> {
+            if (newValue == null || newValue.equals("---")) {
+                return true;
+            }
+            String lower = newValue.toLowerCase();
+            return airline.getCity().toLowerCase().contains(lower);
+        });
+        bindFilter(cityFilter);
     }
 
-    public void filterCountry() {
+    public void filterCity() {
+        ObservableList<String> cityInCountry = FXCollections.observableArrayList();
+        cityInCountry.add("---");
+        airportTabCityCombobox.getSelectionModel().select("---");
+        for (Airport airport : airportDataTable.getItems()) {
+            String newCity = airportTabCityColumn.getCellObservableValue(airport).getValue();
+            if (!cityInCountry.contains(newCity)) {
+                cityInCountry.add(newCity);
+            }
+        }
+        FXCollections.sort(cityInCountry);
+        airportTabCityCombobox.setItems(cityInCountry);
+    }
 
+    public void filterByCountry() {
+        String newValue = airportTabCountryCombobox.getValue();
+        countryFilter.setPredicate(airline -> {
+            if (newValue == null || newValue.equals("---")) {
+                return true;
+            }
+            String lower = newValue.toLowerCase();
+            return airline.getCountry().toLowerCase().contains(lower);
+        });
+        bindFilter(countryFilter);
+        filterCity();
     }
 
     public void searchData() {
+        String newValue = airportSearchField.getText();
+        searchFilter.setPredicate(airline -> {
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+            String lower = newValue.toLowerCase();
+            if (airline.getName().toLowerCase().contains(lower)) {
+                return true;
+            } else if (airline.getCountry().toLowerCase().contains(lower)) {
+                return true;
+            } else {
+                return airline.getCity().toLowerCase().contains(lower);
+            }
+        });
+        bindFilter(searchFilter);
+    }
 
+    public void bindFilter(FilteredList<Airport> filteredList) {
+        SortedList<Airport> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(airportDataTable.comparatorProperty());
+        airportDataTable.setItems(sortedList);
     }
 }

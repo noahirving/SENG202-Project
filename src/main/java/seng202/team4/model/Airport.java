@@ -16,6 +16,7 @@ public class Airport extends DataType {
     private String tzDatabase;
     private String type;
     private String source;
+    private String coordinates;
 
 
     public Airport(String airportData, DataType dataType) {
@@ -39,6 +40,7 @@ public class Airport extends DataType {
         this.timezone = Double.parseDouble(airportArr[9 + delta]);
         this.dst = airportArr[10 + delta].charAt(0);
         this.tzDatabase = airportArr[11 + delta];
+        setCoordinates(this.latitude, this.longitude);
 
         // Below parameters are not in given data.
         //this.type = airportArr[12];
@@ -159,4 +161,11 @@ public class Airport extends DataType {
         this.source = source;
     }
 
+    public void setCoordinates(double latitude, double longitude) {
+        this.coordinates = String.format("%.4f, %.4f", latitude, longitude);
+    }
+
+    public String getCoordinates() {
+        return coordinates;
+    }
 }

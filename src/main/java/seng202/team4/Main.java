@@ -8,10 +8,10 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         SampleApplication.main(args);
-        DataLoader loader = new DataLoader();
+        //DataLoader loader = new DataLoader();
 
         // Test
-        loader.loadAllData();
+        //loader.loadAllData();
 
     }
 }

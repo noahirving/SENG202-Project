@@ -20,9 +20,9 @@
                 <TableColumn fx:id="airportTabCoordinatesColumn" minWidth="4.800048828125" prefWidth="181.0" text="Coordinates" />
             </columns>
         </TableView>
-        <ComboBox fx:id="airportTabCityCombobox" layoutX="244.0" layoutY="15.0" onAction="#filterCity" prefHeight="26.0" prefWidth="117.0" promptText="All" />
+        <ComboBox fx:id="airportTabCityCombobox" layoutX="244.0" layoutY="15.0" onAction="#filterByCity" prefHeight="26.0" prefWidth="117.0" promptText="All" />
         <Label fx:id="airportTabCitySelectorLabel" layoutX="211.0" layoutY="19.0" text="City:" />
-        <ComboBox fx:id="airportTabCountryCombobox" layoutX="441.0" layoutY="15.0" onAction="#filterCountry" prefHeight="26.0" prefWidth="117.0" promptText="All" />
+        <ComboBox fx:id="airportTabCountryCombobox" layoutX="441.0" layoutY="15.0" onAction="#filterByCountry" prefHeight="26.0" prefWidth="117.0" promptText="All" />
         <Label fx:id="airportTabCountrySelectorLabel" layoutX="385.0" layoutY="19.0" text="Country:" />
       <Button layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#pressHomeButton" text="Home" />
     </children>
