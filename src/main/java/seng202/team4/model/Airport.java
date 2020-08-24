@@ -1,7 +1,8 @@
 package seng202.team4.model;
 
 public class Airport extends DataType {
-    private final int airportID;
+
+    private int airportID;
     private String name;
     private String city;
     private String country;
@@ -44,6 +45,10 @@ public class Airport extends DataType {
         //this.source = airportArr[13];
 
         dataType.addToDatabase(this);
+    }
+
+    public Airport() {
+
     }
 
     public int getAirportID() {
