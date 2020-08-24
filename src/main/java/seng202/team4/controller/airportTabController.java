@@ -93,14 +93,14 @@ public class airportTabController {
         while (rs.next()) {
             Airport airport = new Airport();
             airport.setName(rs.getString("Name"));
-            airport.setCountry(rs.getString("Country"));
+            airport.setCountry(rs.getString("Country "));
             airport.setCity(rs.getString("City"));
             double latitude = Double.parseDouble(rs.getString("Latitude"));
             double longitude = Double.parseDouble(rs.getString("longitude"));
             airport.setCoordinates(latitude, longitude);
             airports.add(airport);
-            if (!countries.contains(rs.getString("Country"))) {
-                countries.add(rs.getString("Country"));
+            if (!countries.contains(rs.getString("Country "))) {
+                countries.add(rs.getString("Country "));
             }
             if (!cities.contains(rs.getString("City"))) {
                 cities.add(rs.getString("City"));

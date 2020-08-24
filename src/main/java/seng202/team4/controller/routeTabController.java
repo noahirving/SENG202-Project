@@ -76,7 +76,7 @@ public class routeTabController {
 
         try {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/initialised_database.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
             getSQLData();
             filterData();
             conn.close();
