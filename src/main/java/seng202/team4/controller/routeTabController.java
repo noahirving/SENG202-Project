@@ -144,6 +144,7 @@ public class routeTabController {
 
     private void filterData() {
 
+        // Add airlines filter
         FilteredList<Route> airlinesFilter = new FilteredList<>(routes, p -> true);
         routeAirlineFilterCombobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 airlinesFilter.setPredicate(route -> {
@@ -153,7 +154,42 @@ public class routeTabController {
                     String lower = newValue.toLowerCase();
                     return route.getAirlineCode().toLowerCase().contains(lower);
                 }));
-        FilteredList<Route> searchFilter = new FilteredList<>(airlinesFilter, p -> true);
+
+        // Add departure airport code filter
+        FilteredList<Route> departFilter = new FilteredList<>(airlinesFilter, p -> true);
+        routeDepartureFilterCombobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                departFilter.setPredicate(route -> {
+                    if (newValue == null || newValue.equals("---")) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+                    return route.getSourceAirportCode().toLowerCase().contains(lower);
+                }));
+
+        // Add destination airport code filter
+        FilteredList<Route> destFilter = new FilteredList<>(departFilter, p -> true);
+        routeDestinationFilterCombobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                destFilter.setPredicate(route -> {
+                    if (newValue == null || newValue.equals("---")) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+                    return route.getDestinationAirportCode().toLowerCase().contains(lower);
+                }));
+
+        // Add plane type filter
+        FilteredList<Route> planeFilter = new FilteredList<>(destFilter, p -> true);
+        routePlaneTypeFilterCombobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                planeFilter.setPredicate(route -> {
+                    if (newValue == null || newValue.equals("---")) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+                    return route.getPlaneTypeCode().toLowerCase().contains(lower);
+                }));
+
+        // Add search bar filter
+        FilteredList<Route> searchFilter = new FilteredList<>(planeFilter, p -> true);
         routeSearchField.textProperty().addListener((observable, oldValue, newValue) ->
                 searchFilter.setPredicate(route -> {
                     if (newValue == null || newValue.isEmpty()) {
