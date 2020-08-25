@@ -12,9 +12,9 @@
 
 <AnchorPane fx:id="routeTabPane" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.routeTabController">
     <children>
-        <Button fx:id="routeTabUploadDataBtn" layoutX="611.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" />
-        <TextField fx:id="routeSearchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
-        <TableView fx:id="routeDataTable" layoutX="14.0" layoutY="50.0" prefHeight="406.0" prefWidth="501.0">
+        <Button fx:id="routeTabUploadDataBtn" layoutX="611.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" AnchorPane.rightAnchor="10.0" />
+        <TextField fx:id="routeSearchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" AnchorPane.leftAnchor="10.0" />
+        <TableView fx:id="routeDataTable" layoutX="14.0" layoutY="50.0" prefHeight="406.0" prefWidth="501.0" AnchorPane.bottomAnchor="43.60000000000002" AnchorPane.topAnchor="50.0">
             <columns>
                 <TableColumn fx:id="routeTabAirlineColumn" prefWidth="79.0" text="Airline Code" />
                 <TableColumn fx:id="routeTabDepartureAirportColumn" minWidth="4.800048828125" prefWidth="95.0" text="Departure&#10;   airport &#10;     IATA" />
@@ -47,6 +47,5 @@
             <Label fx:id="emissionsLabel" layoutX="149.0" layoutY="364.0" text="0" />
             </children>
         </AnchorPane>
-      <Button layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#pressHomeButton" text="Home" />
     </children>
 </AnchorPane>

@@ -50,6 +50,5 @@
                 <Font size="22.0" />
             </font>
         </Label>
-      <Button layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#pressHomeButton" text="Home" />
     </children>
 </AnchorPane>

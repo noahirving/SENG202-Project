@@ -10,9 +10,9 @@
 
 <AnchorPane fx:id="airportTabPane" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.airportTabController">
     <children>
-        <Button fx:id="airportTabUploadDataBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" />
-        <TextField fx:id="airportSearchField" layoutX="14.0" layoutY="14.0" onKeyTyped="#searchData" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
-        <TableView fx:id="airportDataTable" layoutX="14.0" layoutY="50.0" prefHeight="406.0" prefWidth="724.0">
+        <Button fx:id="airportTabUploadDataBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" AnchorPane.rightAnchor="10.0" />
+        <TextField fx:id="airportSearchField" layoutX="14.0" layoutY="14.0" onKeyTyped="#searchData" prefHeight="26.0" prefWidth="162.0" promptText="Search" AnchorPane.leftAnchor="10.0" />
+        <TableView fx:id="airportDataTable" layoutX="14.0" layoutY="50.0" prefHeight="406.0" prefWidth="724.0" AnchorPane.bottomAnchor="43.60000000000002" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
             <columns>
                 <TableColumn fx:id="airportTabAirportColumn" prefWidth="181.0" text="Airport" />
                 <TableColumn fx:id="airportTabCityColumn" minWidth="4.800048828125" prefWidth="181.0" text="City" />
@@ -20,10 +20,9 @@
                 <TableColumn fx:id="airportTabCoordinatesColumn" minWidth="4.800048828125" prefWidth="181.0" text="Coordinates" />
             </columns>
         </TableView>
-        <ComboBox fx:id="airportTabCityCombobox" layoutX="244.0" layoutY="15.0" onAction="#filterByCity" prefHeight="26.0" prefWidth="117.0" promptText="All" />
-        <Label fx:id="airportTabCitySelectorLabel" layoutX="211.0" layoutY="19.0" text="City:" />
-        <ComboBox fx:id="airportTabCountryCombobox" layoutX="441.0" layoutY="15.0" onAction="#filterByCountry" prefHeight="26.0" prefWidth="117.0" promptText="All" />
-        <Label fx:id="airportTabCountrySelectorLabel" layoutX="385.0" layoutY="19.0" text="Country:" />
-      <Button layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#pressHomeButton" text="Home" />
+        <ComboBox fx:id="airportTabCityCombobox" layoutX="244.0" layoutY="15.0" onAction="#filterByCity" prefHeight="26.0" prefWidth="117.0" promptText="All" AnchorPane.leftAnchor="220.0" />
+        <Label fx:id="airportTabCitySelectorLabel" layoutX="211.0" layoutY="19.0" text="City:" AnchorPane.leftAnchor="185.0" />
+        <ComboBox fx:id="airportTabCountryCombobox" layoutX="441.0" layoutY="15.0" onAction="#filterByCountry" prefHeight="26.0" prefWidth="117.0" promptText="All" AnchorPane.leftAnchor="400.0" />
+        <Label fx:id="airportTabCountrySelectorLabel" layoutX="385.0" layoutY="19.0" text="Country:" AnchorPane.leftAnchor="350.0" />
     </children>
 </AnchorPane>
