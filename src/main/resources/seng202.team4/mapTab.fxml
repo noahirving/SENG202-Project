@@ -7,11 +7,10 @@
 
 <AnchorPane fx:id="mapTabPane" minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.mapTabController">
     <children>
-        <Button fx:id="mapTabUploadDataBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" />
-        <TextField fx:id="mapSearchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
-        <Label fx:id="mapTabCoordinatesLabel" layoutX="208.0" layoutY="19.0" text="Enter coordinates:" />
-        <TextField fx:id="mapTabLatitudeField" layoutX="312.0" layoutY="14.0" prefHeight="26.0" prefWidth="106.0" promptText="Latitude" />
-        <TextField fx:id="mapTabLongitudeField" layoutX="435.0" layoutY="14.0" prefHeight="26.0" prefWidth="106.0" promptText="Longitude" />
-      <Button layoutX="14.0" layoutY="260.0" mnemonicParsing="false" onAction="#pressHomeButton" text="Home" />
+        <Button fx:id="mapTabUploadDataBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" AnchorPane.rightAnchor="10.0" />
+        <TextField fx:id="mapSearchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" AnchorPane.leftAnchor="10.0" />
+        <Label fx:id="mapTabCoordinatesLabel" layoutX="208.0" layoutY="19.0" text="Enter coordinates:" AnchorPane.leftAnchor="190.0" />
+        <TextField fx:id="mapTabLatitudeField" layoutX="312.0" layoutY="14.0" prefHeight="26.0" prefWidth="106.0" promptText="Latitude" AnchorPane.leftAnchor="295.0" />
+        <TextField fx:id="mapTabLongitudeField" layoutX="435.0" layoutY="14.0" prefHeight="26.0" prefWidth="106.0" promptText="Longitude" AnchorPane.leftAnchor="410.0" />
     </children>
 </AnchorPane>
