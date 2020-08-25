@@ -39,6 +39,24 @@ public class Route extends DataType {
 
     }
 
+    @Override
+    public String getInsertStatement() {
+        return "INSERT INTO ROUTES ('ROUTEID', 'AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'CARBONEMISSIONS') "
+                + "VALUES ('"
+                + route.getRouteID() + between
+                + route.getAirlineCode().replaceAll("'", "''") + between
+                + route.getAirlineID() + between
+                + route.getSourceAirportCode().replaceAll("'", "''") + between
+                + route.getSourceAirportID() + between
+                + route.getDestinationAirportCode().replaceAll("'", "''") + between
+                + route.getDestinationAirportID() + between
+                + route.isCodeshare() + between
+                + route.getNumStops() + between
+                + route.getPlaneTypeCode().replaceAll("'", "''") + between
+                + route.getCarbonEmissions()
+                + "');";
+    }
+
     public double calculateCarbonEmissions() {
         return 0; // To be implemented
     }

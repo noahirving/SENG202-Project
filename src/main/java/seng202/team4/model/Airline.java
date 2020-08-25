@@ -30,6 +30,21 @@ public class Airline extends DataType {
 
     }
 
+    public String getInsertStatement(){
+        String between = "', '";
+        return "INSERT INTO AIRLINES ('AIRLINEID', 'NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE') "
+                + "VALUES ('"
+                + getAirlineID() + between
+                + getAirlineName().replaceAll("'", "''") + between
+                + getAirlineCode().replaceAll("'", "''") + between
+                + getAirlineIATA().replaceAll("'", "''") + between
+                + getAirlineICAO().replaceAll("'", "''") + between
+                + getAirlineCallSign().replaceAll("'", "''") + between
+                + getAirlineCountry().replaceAll("'", "''") + between
+                + isRecentlyActive()
+                + "');";
+    }
+
     public double calculateCarbonEmissions() {
         return 0; // To be implemented
     }

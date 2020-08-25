@@ -55,7 +55,6 @@ public class DataLoader {
         DataType dataType = new DataType();
         BufferedReader reader = new BufferedReader(new FileReader(data));
         dataLoaderLines(output, dataType, reader);
-
     }
 
     /**

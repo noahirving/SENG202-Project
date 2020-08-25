@@ -53,6 +53,25 @@ public class Airport extends DataType {
 
     }
 
+    @Override
+    public String getInsertStatement() {
+        return "INSERT INTO AIRPORT ('AIRPORTID', 'NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME') "
+                + "VALUES ('"
+                + getAirportID() + between
+                + getName().replaceAll("'", "''") + between
+                + getCity().replaceAll("'", "''") + between
+                + getCountry().replaceAll("'", "''") + between
+                + getIata().replaceAll("'", "''") + between
+                + getIcao().replaceAll("'", "''") + between
+                + getLatitude() + between
+                + getLongitude() + between
+                + getAltitude() + between
+                + getTimezone() + between
+                + getDst() + between
+                + getTzDatabase().replaceAll("'", "''")
+                + "');";
+    }
+
     public int getAirportID() {
         return airportID;
     }
