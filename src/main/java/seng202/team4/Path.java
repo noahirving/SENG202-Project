@@ -1,7 +1,7 @@
 package seng202.team4;
 
 public abstract class Path {
-    public static final String database = "jdbc:sqlite:src/main/resources/database.db";
+    public static final String database = "jdbc:sqlite:src/main/resources/database_1000.db";
 
     public static final String view = "/seng202.team4";
     public static final String mainSceneFXML = view + "/mainFlightTrackerScene.fxml";
@@ -17,5 +17,6 @@ public abstract class Path {
     public static final String airlineRsc = "/airlines.txt";
     public static final String airportRsc = "/airports.txt";
     public static final String routeRsc = "/routes.txt";
+    public static final String mapRsc = "/map.html";
 
 }

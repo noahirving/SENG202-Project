@@ -1,29 +1,33 @@
 package seng202.team4.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import seng202.team4.Path;
 
-import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class mapTabController {
-    @FXML WebView googleMapView;
+public class mapTabController implements Initializable {
+    @FXML private WebView googleMapView;
+    @FXML private TextField mapSearchField;
+    @FXML private TextField mapTabLatitudeField;
+    @FXML private TextField mapTabLongitudeField;
 
-    @FXML
-    public void pressHomeButton(ActionEvent buttonPress) throws IOException {
-        Parent homeView = FXMLLoader.load(getClass().getResource(Path.homeSceneFXML));
+    private WebEngine webEngine;
 
-        Scene homeScene = new Scene(homeView);
-
-        Stage window = (Stage)((Node) buttonPress.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        initMap();
     }
+
+    private void initMap() {
+        googleMapView.getEngine().load(getClass().getResource(Path.mapRsc).toString());
+
+    }
+
+
+
 }
