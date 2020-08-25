@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import seng202.team4.Path;
 
 import java.io.IOException;
 
@@ -17,7 +18,7 @@ public class mapTabController {
 
     @FXML
     public void pressHomeButton(ActionEvent buttonPress) throws IOException {
-        Parent homeView = FXMLLoader.load(getClass().getResource("/seng202.team4/homePage.fxml"));
+        Parent homeView = FXMLLoader.load(getClass().getResource(Path.homeSceneFXML));
 
         Scene homeScene = new Scene(homeView);
 

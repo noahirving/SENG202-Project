@@ -1,5 +1,7 @@
 package seng202.team4.model;
 
+import seng202.team4.Path;
+
 import java.io.*;
 
 /**
@@ -8,9 +10,6 @@ import java.io.*;
  */
 public class DataLoader {
 
-    private static String airlineRsc = "/airlines.txt";
-    private static String airportRsc = "/airports.txt";
-    private static String routeRsc = "/routes.txt";
     private DataList dataList;
 
     public DataLoader() {
@@ -23,7 +22,7 @@ public class DataLoader {
      * @throws IOException Invalid input
      */
     public void loadAirlineData() throws IOException {
-        rawDataLoader(airlineRsc, "AL");
+        rawDataLoader(Path.airlineRsc, "AL");
     }
 
     /**
@@ -31,7 +30,7 @@ public class DataLoader {
      * @throws IOException Invalid input
      */
     public void loadAirportData() throws IOException {
-        rawDataLoader(airportRsc, "AP");
+        rawDataLoader(Path.airportRsc, "AP");
     }
 
     /**
@@ -39,7 +38,7 @@ public class DataLoader {
      * @throws IOException Invalid input
      */
     public void loadRouteData() throws IOException {
-        rawDataLoader(routeRsc, "RT");
+        rawDataLoader(Path.routeRsc, "RT");
     }
 
     /**

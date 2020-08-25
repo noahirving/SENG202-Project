@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import seng202.team4.Path;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.Route;
 
@@ -60,7 +61,7 @@ public class routeTabController {
 
     @FXML
     public void pressHomeButton(ActionEvent buttonPress) throws IOException {
-        Parent homeView = FXMLLoader.load(getClass().getResource("/seng202.team4/homePage.fxml"));
+        Parent homeView = FXMLLoader.load(getClass().getResource(Path.homeSceneFXML));
 
         Scene homeScene = new Scene(homeView);
 
@@ -87,7 +88,7 @@ public class routeTabController {
 
         try {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
+            conn = DriverManager.getConnection(Path.database);
             getSQLData();
             filterData();
             conn.close();

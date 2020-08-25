@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import seng202.team4.Path;
 
 import java.io.IOException;
 
@@ -19,7 +20,7 @@ public class homePageController {
 
     @FXML
     public void viewAllTabs(ActionEvent buttonPress) throws IOException {
-        Parent mainView = FXMLLoader.load(getClass().getResource("/seng202.team4/mainFlightTrackerScene.fxml"));
+        Parent mainView = FXMLLoader.load(getClass().getResource(Path.mainSceneFXML));
 
         Scene mainScene = new Scene(mainView);
 
@@ -30,7 +31,7 @@ public class homePageController {
 
     @FXML
     public void viewAirlinesButtonPress(ActionEvent buttonPress) throws IOException {
-        Parent airlineView = FXMLLoader.load(getClass().getResource("/seng202.team4/airlineTab.fxml"));
+        Parent airlineView = FXMLLoader.load(getClass().getResource(Path.airlineSceneFXML));
 
         Scene airlineScene = new Scene(airlineView);
 
@@ -42,7 +43,7 @@ public class homePageController {
 
     @FXML
     public void viewAirportsButtonPress(ActionEvent buttonPress) throws IOException {
-        Parent airportView = FXMLLoader.load(getClass().getResource("/seng202.team4/airportTab.fxml"));
+        Parent airportView = FXMLLoader.load(getClass().getResource(Path.airportSceneFXML));
 
         Scene airportScene = new Scene(airportView);
 
@@ -53,7 +54,7 @@ public class homePageController {
 
     @FXML
     public void viewRoutesButtonPress(ActionEvent buttonPress) throws IOException {
-        Parent routeView = FXMLLoader.load(getClass().getResource("/seng202.team4/routeTab.fxml"));
+        Parent routeView = FXMLLoader.load(getClass().getResource(Path.routeSceneFXML));
 
         Scene routesScene = new Scene(routeView);
 
@@ -64,7 +65,7 @@ public class homePageController {
 
     @FXML
     public void viewMapButtonPressed(ActionEvent buttonPress) throws IOException {
-        Parent mapView = FXMLLoader.load(getClass().getResource("/seng202.team4/mapTab.fxml"));
+        Parent mapView = FXMLLoader.load(getClass().getResource(Path.mapSceneFXML));
 
         Scene mapScene = new Scene(mapView);
 
@@ -75,7 +76,7 @@ public class homePageController {
 
     @FXML
     public void viewEmissionsButtonPressed(ActionEvent buttonPress) throws IOException {
-        Parent emissionView = FXMLLoader.load(getClass().getResource("/seng202.team4/emissionsTab.fxml"));
+        Parent emissionView = FXMLLoader.load(getClass().getResource(Path.emissionsSceneFXML));
 
         Scene emissionScene = new Scene(emissionView);
 

@@ -14,10 +14,10 @@ public class SampleApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         System.out.println("Hello");
-        Parent root = FXMLLoader.load(getClass().getResource("/seng202.team4/mainFlightTrackerScene.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(Path.mainSceneFXML));
         primaryStage.setTitle("Flight Companion");
         Scene mainScene = new Scene(root, 750, 500);
-        mainScene.getStylesheets().add("/seng202.team4/styles.css");
+        mainScene.getStylesheets().add(Path.styleSheet);
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }

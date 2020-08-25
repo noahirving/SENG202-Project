@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import seng202.team4.Path;
 
 import java.io.IOException;
 
@@ -15,7 +16,7 @@ public class emissionsTabController {
 
     @FXML
     public void pressHomeButton(ActionEvent buttonPress) throws IOException {
-        Parent homeView = FXMLLoader.load(getClass().getResource("/seng202.team4/homePage.fxml"));
+        Parent homeView = FXMLLoader.load(getClass().getResource(Path.homeSceneFXML));
 
         Scene homeScene = new Scene(homeView);
 
