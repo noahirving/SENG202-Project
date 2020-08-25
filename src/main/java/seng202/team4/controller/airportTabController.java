@@ -15,9 +15,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seng202.team4.model.Airport;
+import seng202.team4.model.DataLoader;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -169,5 +172,19 @@ public class airportTabController {
         SortedList<Airport> sortedList = new SortedList<>(filteredList);
         sortedList.comparatorProperty().bind(airportDataTable.comparatorProperty());
         airportDataTable.setItems(sortedList);
+    }
+
+    public void uploadData() throws IOException {
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt")
+                ,new FileChooser.ExtensionFilter("CSV Files", "*.csv")
+        );
+        File f = fc.showOpenDialog(null);
+        if(f != null){
+            /* Check data is valid format and then load into database */
+            DataLoader loader = new DataLoader();
+            loader.rawUserDataUploader(f, "AP");
+        }
     }
 }

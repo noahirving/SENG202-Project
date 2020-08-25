@@ -52,6 +52,30 @@ public class DataLoader {
         loadRouteData();
     }
 
+    public void rawUserDataUploader(File data, String output) throws IOException {
+        DataType dataType = new DataType();
+        BufferedReader reader = new BufferedReader(new FileReader(data));
+        String line;
+        StringBuilder outputBuilder = new StringBuilder(output);
+        int routeID = 0;
+        while((line = reader.readLine()) != null) {
+            if (line.length() > 0) {
+                outputBuilder.append(line);
+                if (output.equals("AL")) { // Airline
+                    this.dataList.getAirlineDataList().add(new Airline(line + "\n", dataType));
+                } else if (output.equals("AP")) { // Airport
+                    this.dataList.getAirportDataList().add(new Airport(line + "\n", dataType));
+                } else if (output.equals("RT")) { // Route
+                    this.dataList.getRouteDataList().add(new Route(routeID + "," + line + "\n", dataType));
+                    routeID += 1;
+                }
+            }
+        }
+
+        dataType.updateDatabase();
+
+    }
+
     /**
      * Loads raw data from files to a class String variable
      * @param rsc resource to load data from

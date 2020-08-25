@@ -10,14 +10,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seng202.team4.model.Airline;
+import seng202.team4.model.DataLoader;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 
@@ -28,6 +28,7 @@ public class airlineTabController {
     @FXML private TableColumn<Airline, String> airlineTabCountryColumn;
     @FXML private ComboBox<String> airlineTabCountryCombobox;
     @FXML private TextField airlineSearchField;
+    @FXML private Button airlineTabUploadDataBtn;
 
     private Connection conn;
     private ObservableList<Airline> airlines = FXCollections.observableArrayList();
@@ -116,5 +117,21 @@ public class airlineTabController {
         sortedAirline.comparatorProperty().bind(airlineDataTable.comparatorProperty());
         airlineDataTable.setItems(sortedAirline);
     }
+
+    public void uploadData() throws IOException {
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt")
+                ,new FileChooser.ExtensionFilter("CSV Files", "*.csv")
+        );
+        File f = fc.showOpenDialog(null);
+        if(f != null){
+            /* Check data is valid format and then load into database */
+            DataLoader loader = new DataLoader();
+            loader.rawUserDataUploader(f, "AL");
+        }
+    }
+
+
 
 }

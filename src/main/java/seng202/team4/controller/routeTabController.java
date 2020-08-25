@@ -14,9 +14,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import seng202.team4.model.DataLoader;
 import seng202.team4.model.Route;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -209,6 +212,20 @@ public class routeTabController {
 
                 }));
         return newFilter;
+    }
+
+    public void uploadData() throws IOException {
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt")
+                ,new FileChooser.ExtensionFilter("CSV Files", "*.csv")
+        );
+        File f = fc.showOpenDialog(null);
+        if(f != null){
+            /* Check data is valid format and then load into database */
+            DataLoader loader = new DataLoader();
+            loader.rawUserDataUploader(f, "RT");
+        }
     }
 
 
