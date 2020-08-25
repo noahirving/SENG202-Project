@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.WebView?>
 
 <AnchorPane fx:id="mapTabPane" minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.mapTabController">
     <children>
@@ -12,5 +13,6 @@
         <Label fx:id="mapTabCoordinatesLabel" layoutX="208.0" layoutY="19.0" text="Enter coordinates:" AnchorPane.leftAnchor="190.0" />
         <TextField fx:id="mapTabLatitudeField" layoutX="312.0" layoutY="14.0" prefHeight="26.0" prefWidth="106.0" promptText="Latitude" AnchorPane.leftAnchor="295.0" />
         <TextField fx:id="mapTabLongitudeField" layoutX="435.0" layoutY="14.0" prefHeight="26.0" prefWidth="106.0" promptText="Longitude" AnchorPane.leftAnchor="410.0" />
+      <WebView fx:id="googleMapView" layoutX="20.0" layoutY="78.0" prefHeight="352.0" prefWidth="718.0" />
     </children>
 </AnchorPane>

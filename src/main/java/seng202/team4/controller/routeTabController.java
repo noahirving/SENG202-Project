@@ -74,6 +74,14 @@ public class routeTabController {
         routeTabPlaneTypeColumn.setCellValueFactory(new PropertyValueFactory<>("planeTypeCode"));
         routeTabCarbonEmissionsColumn.setCellValueFactory(new PropertyValueFactory<>("carbonEmissions"));
 
+
+        // Connect sliders to labels indicating their value
+        routeStopsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> stopsLabel.textProperty().setValue(
+                String.valueOf(newValue.intValue())));
+
+        routeEmissionsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> emissionsLabel.textProperty().setValue(
+                String.valueOf(newValue.intValue())));
+
         try {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection("jdbc:sqlite:src/main/resources/database.db");
@@ -128,23 +136,17 @@ public class routeTabController {
     private void filterData() {
 
         airlineCodes.add("---"); departureCountries.add("---"); destinationCountries.add("---"); planeTypes.add("---");
+
         // Sort and set combobox items
         FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
         FXCollections.sort(departureCountries);routeDepartureFilterCombobox.setItems(departureCountries);
         FXCollections.sort(destinationCountries); routeDestinationFilterCombobox.setItems(destinationCountries);
         FXCollections.sort(planeTypes); routePlaneTypeFilterCombobox.setItems(planeTypes);
 
-        // Connect sliders to labels indicating their value
-        routeStopsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> stopsLabel.textProperty().setValue(
-                String.valueOf(newValue.intValue())));
-
-        routeEmissionsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> emissionsLabel.textProperty().setValue(
-                String.valueOf(newValue.intValue())));
-        // Connect filters to table
+        // Connect combobox and slider filters to table
         FilteredList<Route> airlinesFilter = addFilter(new FilteredList<>(routes, p -> true), routeAirlineFilterCombobox, "Airline");
         FilteredList<Route> sourceFilter = addFilter(airlinesFilter, routeDepartureFilterCombobox, "Source");
         FilteredList<Route> stopSliderFilter = new FilteredList<>(sourceFilter, p -> true);
-
         stopsLabel.textProperty().addListener((observableValue, oldValue, newValue) ->
                 stopSliderFilter.setPredicate((route -> (Integer.parseInt(newValue) == route.getNumStops()))));
 
@@ -152,11 +154,20 @@ public class routeTabController {
         FilteredList<Route> planeFilter = addFilter(destinationFilter, routePlaneTypeFilterCombobox, "Plane");
 
         FilteredList<Route> emissionsSliderFilter = new FilteredList<>(planeFilter, p -> true);
-
         emissionsLabel.textProperty().addListener((observableValue, oldValue, newValue) ->
                 emissionsSliderFilter.setPredicate((route -> (Double.parseDouble(newValue) == route.getCarbonEmissions()))));
 
         // Add search bar filter
+        FilteredList<Route> searchFilter = searchBarFilter(emissionsSliderFilter);
+        SortedList<Route> sortedRoute = new SortedList<>(searchFilter);
+        sortedRoute.comparatorProperty().bind(routeDataTable.comparatorProperty());
+
+        routeDataTable.setItems(sortedRoute);
+
+    }
+
+
+    private FilteredList<Route> searchBarFilter(FilteredList<Route> emissionsSliderFilter) {
         FilteredList<Route> searchFilter = new FilteredList<>(emissionsSliderFilter, p -> true);
         routeSearchField.textProperty().addListener((observable, oldValue, newValue) ->
                 searchFilter.setPredicate(route -> {
@@ -174,11 +185,7 @@ public class routeTabController {
                         return (route.getPlaneTypeCode().toLowerCase().contains(lower));
                     }
                 }));
-        SortedList<Route> sortedRoute = new SortedList<>(searchFilter);
-        sortedRoute.comparatorProperty().bind(routeDataTable.comparatorProperty());
-
-        routeDataTable.setItems(sortedRoute);
-
+        return searchFilter;
     }
 
     public FilteredList<Route> addFilter(FilteredList<Route> filteredList, ComboBox<String> comboBox, String filter) {
