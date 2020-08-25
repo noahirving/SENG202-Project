@@ -55,24 +55,7 @@ public class DataLoader {
     public void rawUserDataUploader(File data, String output) throws IOException {
         DataType dataType = new DataType();
         BufferedReader reader = new BufferedReader(new FileReader(data));
-        String line;
-        StringBuilder outputBuilder = new StringBuilder(output);
-        int routeID = 0;
-        while((line = reader.readLine()) != null) {
-            if (line.length() > 0) {
-                outputBuilder.append(line);
-                if (output.equals("AL")) { // Airline
-                    this.dataList.getAirlineDataList().add(new Airline(line + "\n", dataType));
-                } else if (output.equals("AP")) { // Airport
-                    this.dataList.getAirportDataList().add(new Airport(line + "\n", dataType));
-                } else if (output.equals("RT")) { // Route
-                    this.dataList.getRouteDataList().add(new Route(routeID + "," + line + "\n", dataType));
-                    routeID += 1;
-                }
-            }
-        }
-
-        dataType.updateDatabase();
+        dataLoaderLines(output, dataType, reader);
 
     }
 
@@ -86,9 +69,16 @@ public class DataLoader {
         DataType dataType = new DataType();
         InputStream inputStream = DataLoader.class.getResourceAsStream(rsc);
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        dataLoaderLines(output, dataType, reader);
+
+        inputStream.close();
+
+    }
+
+    private void dataLoaderLines(String output, DataType dataType, BufferedReader reader) throws IOException {
         String line;
         StringBuilder outputBuilder = new StringBuilder(output);
-        int routeID = 0;
+        int numEntries = 0;
         while((line = reader.readLine()) != null) {
             if (line.length() > 0) {
                 outputBuilder.append(line);
@@ -97,16 +87,16 @@ public class DataLoader {
                 } else if (output.equals("AP")) { // Airport
                     this.dataList.getAirportDataList().add(new Airport(line + "\n", dataType));
                 } else if (output.equals("RT")) { // Route
-                    this.dataList.getRouteDataList().add(new Route(routeID + "," + line + "\n", dataType));
-                    routeID += 1;
+                    this.dataList.getRouteDataList().add(new Route(numEntries + "," + line + "\n", dataType));
                 }
+                numEntries += 1;
+            }
+            if (numEntries >= 1000) {
+                break;
             }
         }
 
         dataType.updateDatabase();
-
-        inputStream.close();
-
     }
 
 

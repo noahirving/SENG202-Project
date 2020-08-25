@@ -86,7 +86,7 @@ public class DataType {
             stmt.addBatch(sql);
 
             dataCount += 1;
-            if (dataCount % 1000 == 0) {
+            if (dataCount % 1000 == 0) {  // To be removed once we decide the max number of entries.
                 stmt.executeBatch();
             }
 
