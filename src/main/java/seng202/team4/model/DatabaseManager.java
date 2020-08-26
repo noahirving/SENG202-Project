@@ -5,7 +5,7 @@ import seng202.team4.Path;
 import java.sql.*;
 
 
-public static class DatabaseManager {
+public abstract class DatabaseManager {
     private String between = "', '";
 
 
@@ -22,34 +22,34 @@ public static class DatabaseManager {
             Class.forName("org.sqlite.JDBC");
             Connection c = DriverManager.getConnection(Path.database);
             c.setAutoCommit(false);
-
-            stmt = c.createStatement();
             return c;
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             return null;
         }
-
     }
 
-    public void addToDatabase(DataType dataType) {
-        Connection c = connect();
-        if (c != null) {
-            try {
-                Statement stmt = c.createStatement();
-                stmt.addBatch(dataType.getInsertStatement());
-                dataCount += 1;
-                if (dataCount >= MAX_ENTRIES) {  // To be removed once we decide the max number of entries.
-                    stmt.executeBatch();
-                }
-
-            } catch (Exception e) {
-                System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                System.exit(0);
-            }
+    public static boolean disconnect(Connection c) {
+        try {
+            c.close();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
+    public static Statement getStatement(Connection c) {
+        try {
+            Statement stmt = c.createStatement();
+            return stmt;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+
+    }
+
+    /*
     public void updateDatabase() {
         try {
             stmt.executeBatch();
@@ -61,5 +61,5 @@ public static class DatabaseManager {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
 
-    }
+    }*/
 }

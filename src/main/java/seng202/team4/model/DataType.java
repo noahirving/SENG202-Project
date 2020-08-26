@@ -6,6 +6,7 @@ public abstract class DataType {
 
     public static final String between = "', '";
     public abstract String getInsertStatement();
+    public abstract DataType newDataType(String line);
 
 
 

@@ -14,7 +14,7 @@ public class Route extends DataType {
     private String planeTypeCode;
     private double carbonEmissions;
 
-    public Route(String routeInfo, DataType dataType) {
+    public Route(String routeInfo) {
         String[] routeArray = routeInfo.split(",");
         this.routeID = Integer.parseInt(routeArray[0]);
         this.airlineCode = routeArray[1];
@@ -31,8 +31,6 @@ public class Route extends DataType {
         }
         this.planeTypeCode = routeArray[9];
         this.carbonEmissions = calculateCarbonEmissions();
-
-        dataType.addToDatabase(this);
     }
 
     public Route() {
@@ -43,18 +41,23 @@ public class Route extends DataType {
     public String getInsertStatement() {
         return "INSERT INTO ROUTES ('ROUTEID', 'AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'CARBONEMISSIONS') "
                 + "VALUES ('"
-                + route.getRouteID() + between
-                + route.getAirlineCode().replaceAll("'", "''") + between
-                + route.getAirlineID() + between
-                + route.getSourceAirportCode().replaceAll("'", "''") + between
-                + route.getSourceAirportID() + between
-                + route.getDestinationAirportCode().replaceAll("'", "''") + between
-                + route.getDestinationAirportID() + between
-                + route.isCodeshare() + between
-                + route.getNumStops() + between
-                + route.getPlaneTypeCode().replaceAll("'", "''") + between
-                + route.getCarbonEmissions()
+                + getRouteID() + between
+                + getAirlineCode().replaceAll("'", "''") + between
+                + getAirlineID() + between
+                + getSourceAirportCode().replaceAll("'", "''") + between
+                + getSourceAirportID() + between
+                + getDestinationAirportCode().replaceAll("'", "''") + between
+                + getDestinationAirportID() + between
+                + isCodeshare() + between
+                + getNumStops() + between
+                + getPlaneTypeCode().replaceAll("'", "''") + between
+                + getCarbonEmissions()
                 + "');";
+    }
+
+    @Override
+    public DataType newDataType(String line) {
+        return new Route(line);
     }
 
     public double calculateCarbonEmissions() {

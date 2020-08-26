@@ -2,7 +2,10 @@ package seng202.team4.model;
 
 import seng202.team4.Path;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.sql.Connection;
+import java.sql.Statement;
 
 /**
  * Initialises the DataLoader class by reading raw data files,
@@ -10,92 +13,43 @@ import java.io.*;
  */
 public class DataLoader {
 
-    private DataList dataList;
 
-    public DataLoader() {
-        this.dataList = new DataList();
-
+    public boolean uploadAirlineData(String filePath) {
+        Airline airline = new Airline();
+        return uploadData(filePath, airline);
     }
 
-    /**
-     * Loads only airline data
-     * @throws IOException Invalid input
-     */
-    public void loadAirlineData() throws IOException {
-        rawDataLoader(Path.airlineRsc, "AL");
+    public boolean uploadAirportData(String filePath) {
+        Airport airport = new Airport();
+        return uploadData(filePath, airport);
     }
 
-    /**
-     * Loads only airport data
-     * @throws IOException Invalid input
-     */
-    public void loadAirportData() throws IOException {
-        rawDataLoader(Path.airportRsc, "AP");
+    public boolean uploadRouteData(String filePath) {
+        Route route = new Route();
+        return uploadData(filePath, route);
     }
 
-    /**
-     * Loads only route data
-     * @throws IOException Invalid input
-     */
-    public void loadRouteData() throws IOException {
-        rawDataLoader(Path.routeRsc, "RT");
-    }
-
-    /**
-     * Loads all data by calling individual data loading classes
-     * @throws IOException Invalid input
-     */
-    public void loadAllData() throws IOException {
-        loadAirlineData();
-        loadAirportData();
-        loadRouteData();
-    }
-
-    public void rawUserDataUploader(File data, String output) throws IOException {
-        DataType dataType = new DataType();
-        BufferedReader reader = new BufferedReader(new FileReader(data));
-        dataLoaderLines(output, dataType, reader);
-    }
-
-    /**
-     * Loads raw data from files to a class String variable
-     * @param rsc resource to load data from
-     * @param output output corresponding to either Airline (Int 1), Airport (Int 2), Route (Int 3)
-     * @throws IOException Invalid input
-     */
-    private void rawDataLoader(String rsc, String output) throws IOException {
-        DataType dataType = new DataType();
-        InputStream inputStream = DataLoader.class.getResourceAsStream(rsc);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        dataLoaderLines(output, dataType, reader);
-
-        inputStream.close();
-
-    }
-
-    private void dataLoaderLines(String output, DataType dataType, BufferedReader reader) throws IOException {
-        String line;
-        StringBuilder outputBuilder = new StringBuilder(output);
-        int numEntries = 0;
-        while((line = reader.readLine()) != null) {
-            if (line.length() > 0) {
-                outputBuilder.append(line);
-                if (output.equals("AL")) { // Airline
-                    this.dataList.getAirlineDataList().add(new Airline(line + "\n", dataType));
-                } else if (output.equals("AP")) { // Airport
-                    this.dataList.getAirportDataList().add(new Airport(line + "\n", dataType));
-                } else if (output.equals("RT")) { // Route
-                    this.dataList.getRouteDataList().add(new Route(numEntries + "," + line + "\n", dataType));
+    public Boolean uploadData(String filePath, DataType dataType) {
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        if (c != null && stmt != null) {
+            try {
+                BufferedReader buffer = new BufferedReader(new FileReader(filePath));
+                String line = buffer.readLine();
+                while (line != null) {
+                    DataType data = dataType.newDataType(line);
+                    stmt.addBatch(data.getInsertStatement());
                 }
-                numEntries += 1;
-            }
-            if (numEntries >= 1000) {
-                break;
+                stmt.executeBatch();
+                stmt.close();
+                c.commit();
+                return true;
+            } catch (Exception e) {
+                return  false;
+            } finally {
+                DatabaseManager.disconnect(c);
             }
         }
-
-        dataType.updateDatabase();
+        return false;
     }
-
-
 }
