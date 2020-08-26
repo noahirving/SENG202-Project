@@ -1,3 +1,9 @@
+/**
+ *
+ * This Class was made by StackOverflow users Daniel Ziltener and JulianG
+ * The StackOverlow thread: https://stackoverflow.com/questions/19924852/autocomplete-combobox-in-javafx
+ */
+
 package seng202.team4.controller;
 
 import javafx.collections.FXCollections;

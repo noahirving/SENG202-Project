@@ -29,7 +29,6 @@ public class airlineTabController {
     @FXML private TableColumn<Airline, String> airlineTabCountryColumn;
     @FXML private ComboBox<String> airlineTabCountryCombobox;
     @FXML private TextField airlineSearchField;
-    @FXML private Button airlineTabUploadDataBtn;
 
     private Connection conn;
     private ObservableList<Airline> airlines = FXCollections.observableArrayList();
@@ -69,6 +68,8 @@ public class airlineTabController {
         countries.add("---");
         FXCollections.sort(countries);
         airlineTabCountryCombobox.setItems(countries);
+        new AutoCompleteComboBoxListener<>(airlineTabCountryCombobox);
+
 
     }
 

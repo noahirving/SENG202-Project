@@ -89,6 +89,10 @@ public class airportTabController {
         countries.add("---");
         FXCollections.sort(countries);
         airportTabCountryCombobox.setItems(countries);
+
+        new AutoCompleteComboBoxListener<>(airportTabCityCombobox);
+        new AutoCompleteComboBoxListener<>(airportTabCountryCombobox);
+
     }
 
     //change country column in database
