@@ -1,21 +1,13 @@
 package seng202.team4.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import seng202.team4.Path;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.Route;
@@ -26,7 +18,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Filter;
 
 public class routeTabController {
 
@@ -58,19 +49,8 @@ public class routeTabController {
 
     private Connection conn;
 
-
-    @FXML
-    public void pressHomeButton(ActionEvent buttonPress) throws IOException {
-        Parent homeView = FXMLLoader.load(getClass().getResource(Path.homeSceneFXML));
-
-        Scene homeScene = new Scene(homeView);
-
-        Stage window = (Stage)((Node) buttonPress.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
-    }
-
     public void initialize() {
+
         routeTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<>("airlineCode"));
         routeTabDepartureAirportColumn.setCellValueFactory(new PropertyValueFactory<>("sourceAirportCode"));
         routeTabDestinationAirportColumn.setCellValueFactory(new PropertyValueFactory<>("destinationAirportCode"));
@@ -90,6 +70,7 @@ public class routeTabController {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(Path.database);
             getSQLData();
+            initialiseComboBoxes();
             filterData();
             conn.close();
         } catch (Exception ex) {
@@ -100,17 +81,34 @@ public class routeTabController {
 
     }
 
-
-
     public void getSQLData() throws SQLException {
         ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM Routes");
+        String airportNameQuery = "SELECT Name FROM Airport WHERE IATA = '%s'";
+        String airlineNameQuery = "SELECT Name FROM Airlines WHERE IATA = '%s'";
         while (rs.next()) {
             Route route = new Route();
-            String airlineCode = rs.getString("Airline");
+            String airline = rs.getString("Airline");
             String sourceAirport = rs.getString("SourceAirport");
             String destinationAirport = rs.getString("DestinationAirport");
             String planeType = rs.getString("Equipment");
-            route.setAirlineCode(airlineCode);
+
+            // Add names to airline and airport codes
+            ResultSet airlineQuery = conn.createStatement().executeQuery(String.format(airlineNameQuery, airline));
+            ResultSet sourceAirportQuery = conn.createStatement().executeQuery(String.format(airportNameQuery, sourceAirport));
+            ResultSet destAirportQuery = conn.createStatement().executeQuery(String.format(airportNameQuery, destinationAirport));
+
+            if (airlineQuery.next()) {
+                airline += String.format(" (%s)", airlineQuery.getString("Name"));
+            }
+            if (sourceAirportQuery.next()) {
+                sourceAirport += String.format(" (%s)", sourceAirportQuery.getString("Name"));
+            }
+            if (destAirportQuery.next()) {
+                destinationAirport += String.format(" (%s)", destAirportQuery.getString("Name"));
+            }
+            airlineQuery.close(); sourceAirportQuery.close(); destAirportQuery.close();
+
+            route.setAirlineCode(airline);
             route.setSourceAirportCode(sourceAirport);
             route.setDestinationAirportCode(destinationAirport);
             route.setNumStops(rs.getInt("Stops"));
@@ -118,18 +116,7 @@ public class routeTabController {
             route.setCarbonEmissions(rs.getDouble("CarbonEmissions"));
             routes.add(route);
 
-            if (!airlineCodes.contains(airlineCode)) {
-                airlineCodes.add(airlineCode);
-            }
-            if (!departureCountries.contains(sourceAirport)) {
-                departureCountries.add(sourceAirport);
-            }
-            if (!destinationCountries.contains(destinationAirport)) {
-                destinationCountries.add(destinationAirport);
-            }
-            if (!planeTypes.contains(planeType)) {
-                planeTypes.add(planeType);
-            }
+            addToComboBoxes(airline, sourceAirport, destinationAirport, planeType);
 
         }
 
@@ -137,15 +124,25 @@ public class routeTabController {
 
     }
 
+    private void addToComboBoxes(String airline, String sourceAirport, String destinationAirport, String planeType) {
+        if (!airlineCodes.contains(airline)) {
+            airlineCodes.add(airline);
+        }
+        if (!departureCountries.contains(sourceAirport)) {
+            departureCountries.add(sourceAirport);
+        }
+        if (!destinationCountries.contains(destinationAirport)) {
+            destinationCountries.add(destinationAirport);
+        }
+        if (!planeTypes.contains(planeType)) {
+            planeTypes.add(planeType);
+        }
+
+
+    }
+
     private void filterData() {
-
         airlineCodes.add("---"); departureCountries.add("---"); destinationCountries.add("---"); planeTypes.add("---");
-
-        // Sort and set combobox items
-        FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
-        FXCollections.sort(departureCountries);routeDepartureFilterCombobox.setItems(departureCountries);
-        FXCollections.sort(destinationCountries); routeDestinationFilterCombobox.setItems(destinationCountries);
-        FXCollections.sort(planeTypes); routePlaneTypeFilterCombobox.setItems(planeTypes);
 
         // Connect combobox and slider filters to table
         FilteredList<Route> airlinesFilter = addFilter(new FilteredList<>(routes, p -> true), routeAirlineFilterCombobox, "Airline");
@@ -168,6 +165,24 @@ public class routeTabController {
 
         routeDataTable.setItems(sortedRoute);
 
+    }
+
+    private void initialiseComboBoxes() {
+        // Sort and set combobox items
+        FXCollections.sort(airlineCodes);
+        routeAirlineFilterCombobox.setItems(airlineCodes);
+        FXCollections.sort(departureCountries);
+        routeDepartureFilterCombobox.setItems(departureCountries);
+        FXCollections.sort(destinationCountries);
+        routeDestinationFilterCombobox.setItems(destinationCountries);
+        FXCollections.sort(planeTypes);
+        routePlaneTypeFilterCombobox.setItems(planeTypes);
+
+        // Make combobox searching autocomplete
+        new AutoCompleteComboBoxListener<>(routeAirlineFilterCombobox);
+        new AutoCompleteComboBoxListener<>(routeDepartureFilterCombobox);
+        new AutoCompleteComboBoxListener<>(routeDestinationFilterCombobox);
+        new AutoCompleteComboBoxListener<>(routePlaneTypeFilterCombobox);
     }
 
 
