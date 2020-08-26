@@ -16,7 +16,9 @@ public class SampleApplication extends Application {
         System.out.println("Hello");
         Parent root = FXMLLoader.load(getClass().getResource(Path.mainSceneFXML));
         primaryStage.setTitle("Flight Companion");
-        Scene mainScene = new Scene(root, 750, 500);
+        primaryStage.setMinHeight(500);
+        primaryStage.setMinWidth(780);
+        Scene mainScene = new Scene(root, 760, 460);
         mainScene.getStylesheets().add(Path.styleSheet);
         primaryStage.setScene(mainScene);
         primaryStage.show();
