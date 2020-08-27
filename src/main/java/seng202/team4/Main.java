@@ -10,13 +10,15 @@ import java.net.URL;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        SampleApplication.main(args);
+
         //DataLoader loader = new DataLoader();
 
         Main m = new Main();
-        //m.deleteDB();
-        //m.newDB();
-        //m.loadTest();
+        m.deleteDB();
+        m.newDB();
+        m.loadTest();
+
+        SampleApplication.main(args);
     }
 
     public void loadTest() {
