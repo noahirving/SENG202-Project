@@ -13,8 +13,11 @@ public class Route extends DataType {
     private int numStops;
     private String planeTypeCode;
     private double carbonEmissions;
+    private static int count = 0;
 
-    public Route(String routeInfo, DataType dataType) {
+    public Route(String routeInfo) {
+        routeInfo = count + "," + routeInfo;
+        count++;
         String[] routeArray = routeInfo.split(",");
         this.routeID = Integer.parseInt(routeArray[0]);
         this.airlineCode = routeArray[1];
@@ -29,14 +32,39 @@ public class Route extends DataType {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        this.planeTypeCode = routeArray[9];
+        if (routeArray.length == 10) {
+            this.planeTypeCode = routeArray[9];
+        } else {
+            this.planeTypeCode = "";
+        }
         this.carbonEmissions = calculateCarbonEmissions();
-
-        dataType.addToDatabase(this);
     }
 
     public Route() {
 
+    }
+
+    @Override
+    public String getInsertStatement() {
+        return "INSERT INTO ROUTES ('ROUTEID', 'AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'CARBONEMISSIONS') "
+                + "VALUES ('"
+                + getRouteID() + between
+                + getAirlineCode().replaceAll("'", "''") + between
+                + getAirlineID() + between
+                + getSourceAirportCode().replaceAll("'", "''") + between
+                + getSourceAirportID() + between
+                + getDestinationAirportCode().replaceAll("'", "''") + between
+                + getDestinationAirportID() + between
+                + isCodeshare() + between
+                + getNumStops() + between
+                + getPlaneTypeCode().replaceAll("'", "''") + between
+                + getCarbonEmissions()
+                + "');";
+    }
+
+    @Override
+    public DataType newDataType(String line) {
+        return new Route(line);
     }
 
     public double calculateCarbonEmissions() {

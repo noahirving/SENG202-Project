@@ -16,10 +16,9 @@ public class Airport extends DataType {
     private String tzDatabase;
     private String type;
     private String source;
-    private String coordinates;
 
 
-    public Airport(String airportData, DataType dataType) {
+    public Airport(String airportData) {
         String[] airportArr = airportData.replaceAll("\"", "").split(",");
         this.airportID = Integer.parseInt(airportArr[0]);
         this.name = airportArr[1];
@@ -40,17 +39,38 @@ public class Airport extends DataType {
         this.timezone = Double.parseDouble(airportArr[9 + delta]);
         this.dst = airportArr[10 + delta].charAt(0);
         this.tzDatabase = airportArr[11 + delta];
-        setCoordinates(this.latitude, this.longitude);
 
         // Below parameters are not in given data.
         //this.type = airportArr[12];
         //this.source = airportArr[13];
-
-        dataType.addToDatabase(this);
     }
 
     public Airport() {
 
+    }
+
+    @Override
+    public String getInsertStatement() {
+        return "INSERT INTO AIRPORT ('AIRPORTID', 'NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME') "
+                + "VALUES ('"
+                + getAirportID() + between
+                + getName().replaceAll("'", "''") + between
+                + getCity().replaceAll("'", "''") + between
+                + getCountry().replaceAll("'", "''") + between
+                + getIata().replaceAll("'", "''") + between
+                + getIcao().replaceAll("'", "''") + between
+                + getLatitude() + between
+                + getLongitude() + between
+                + getAltitude() + between
+                + getTimezone() + between
+                + getDst() + between
+                + getTzDatabase().replaceAll("'", "''")
+                + "');";
+    }
+
+    @Override
+    public DataType newDataType(String line) {
+        return new Airport(line);
     }
 
     public int getAirportID() {
@@ -161,11 +181,7 @@ public class Airport extends DataType {
         this.source = source;
     }
 
-    public void setCoordinates(double latitude, double longitude) {
-        this.coordinates = String.format("%.4f, %.4f", latitude, longitude);
-    }
-
     public String getCoordinates() {
-        return coordinates;
+        return String.format("%.4f, %.4f", latitude, longitude);
     }
 }

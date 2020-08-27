@@ -12,7 +12,7 @@ public class Airline extends DataType {
     private boolean recentlyActive;
     private double carbonEmissions;
 
-    public Airline(String airlineData, DataType dataType) {
+    public Airline(String airlineData) {
         String[] airlines = airlineData.replaceAll("\"", "").split(",");
         this.airlineID = Integer.parseInt(airlines[0]);
         this.airlineName = airlines[1];
@@ -23,11 +23,30 @@ public class Airline extends DataType {
         this.airlineCountry = airlines[6];
         this.recentlyActive = airlines[7].equals("Y");
         this.carbonEmissions = calculateCarbonEmissions();
-        dataType.addToDatabase(this);
     }
 
     public Airline() {
 
+    }
+
+    @Override
+    public String getInsertStatement(){
+        return "INSERT INTO AIRLINES ('AIRLINEID', 'NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE') "
+                + "VALUES ('"
+                + getAirlineID() + between
+                + getAirlineName().replaceAll("'", "''") + between
+                + getAirlineCode().replaceAll("'", "''") + between
+                + getAirlineIATA().replaceAll("'", "''") + between
+                + getAirlineICAO().replaceAll("'", "''") + between
+                + getAirlineCallSign().replaceAll("'", "''") + between
+                + getAirlineCountry().replaceAll("'", "''") + between
+                + isRecentlyActive()
+                + "');";
+    }
+
+    @Override
+    public DataType newDataType(String line) {
+        return new Airline(line);
     }
 
     public double calculateCarbonEmissions() {
