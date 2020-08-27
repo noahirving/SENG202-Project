@@ -18,6 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seng202.team4.Path;
 import seng202.team4.model.DataLoader;
+import seng202.team4.model.DataType;
 import seng202.team4.model.Route;
 
 import java.io.File;
@@ -28,8 +29,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Filter;
 
-public class routeTabController {
+public class routeTabController extends DataController{
 
+    public Route dataType = new Route();
     @FXML private TableView<Route> routeDataTable;
     @FXML private TableColumn<Route, String> routeTabAirlineColumn;
     @FXML private TableColumn<Route, String> routeTabDepartureAirportColumn;
@@ -58,18 +60,6 @@ public class routeTabController {
 
     private Connection conn;
 
-
-    @FXML
-    public void pressHomeButton(ActionEvent buttonPress) throws IOException {
-        Parent homeView = FXMLLoader.load(getClass().getResource(Path.homeSceneFXML));
-
-        Scene homeScene = new Scene(homeView);
-
-        Stage window = (Stage)((Node) buttonPress.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
-    }
-
     public void initialize() {
         routeTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<>("airlineCode"));
         routeTabDepartureAirportColumn.setCellValueFactory(new PropertyValueFactory<>("sourceAirportCode"));
@@ -87,59 +77,20 @@ public class routeTabController {
                 String.valueOf(newValue.intValue())));
 
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(Path.database);
-            getSQLData();
-            filterData();
-            conn.close();
+            setTable();
         } catch (Exception ex) {
             System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
             System.exit(0);
         }
-
-
-    }
-
-
-
-    public void getSQLData() throws SQLException {
-        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM Routes");
-        while (rs.next()) {
-            Route route = new Route();
-            String airlineCode = rs.getString("Airline");
-            String sourceAirport = rs.getString("SourceAirport");
-            String destinationAirport = rs.getString("DestinationAirport");
-            String planeType = rs.getString("Equipment");
-            route.setAirlineCode(airlineCode);
-            route.setSourceAirportCode(sourceAirport);
-            route.setDestinationAirportCode(destinationAirport);
-            route.setNumStops(rs.getInt("Stops"));
-            route.setPlaneTypeCode(planeType);
-            route.setCarbonEmissions(rs.getDouble("CarbonEmissions"));
-            routes.add(route);
-
-            if (!airlineCodes.contains(airlineCode)) {
-                airlineCodes.add(airlineCode);
-            }
-            if (!departureCountries.contains(sourceAirport)) {
-                departureCountries.add(sourceAirport);
-            }
-            if (!destinationCountries.contains(destinationAirport)) {
-                destinationCountries.add(destinationAirport);
-            }
-            if (!planeTypes.contains(planeType)) {
-                planeTypes.add(planeType);
-            }
-
-        }
-
         routeDataTable.setItems(routes);
-
     }
 
     private void filterData() {
 
-        airlineCodes.add("---"); departureCountries.add("---"); destinationCountries.add("---"); planeTypes.add("---");
+        airlineCodes.add("---");
+        departureCountries.add("---");
+        destinationCountries.add("---");
+        planeTypes.add("---");
 
         // Sort and set combobox items
         FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
@@ -215,18 +166,44 @@ public class routeTabController {
         return newFilter;
     }
 
-    public void uploadData() throws IOException {
-        FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt")
-                ,new FileChooser.ExtensionFilter("CSV Files", "*.csv")
-        );
-        File f = fc.showOpenDialog(null);
-        if(f != null){
-            /* Check data is valid format and then load into database */
-            DataLoader.uploadRouteData(f);
-        }
+    @Override
+    public DataType getDataType() {
+        return new Route();
     }
 
+    @Override
+    public String getTableQuery() {
+        return "SELECT * FROM Routes";
+    }
 
+    @Override
+    public void setTableData(ResultSet rs) throws Exception {
+        while (rs.next()) {
+            Route route = new Route();
+            String airlineCode = rs.getString("Airline");
+            String sourceAirport = rs.getString("SourceAirport");
+            String destinationAirport = rs.getString("DestinationAirport");
+            String planeType = rs.getString("Equipment");
+            route.setAirlineCode(airlineCode);
+            route.setSourceAirportCode(sourceAirport);
+            route.setDestinationAirportCode(destinationAirport);
+            route.setNumStops(rs.getInt("Stops"));
+            route.setPlaneTypeCode(planeType);
+            route.setCarbonEmissions(rs.getDouble("CarbonEmissions"));
+            routes.add(route);
+
+            if (!airlineCodes.contains(airlineCode)) {
+                airlineCodes.add(airlineCode);
+            }
+            if (!departureCountries.contains(sourceAirport)) {
+                departureCountries.add(sourceAirport);
+            }
+            if (!destinationCountries.contains(destinationAirport)) {
+                destinationCountries.add(destinationAirport);
+            }
+            if (!planeTypes.contains(planeType)) {
+                planeTypes.add(planeType);
+            }
+        }
+    }
 }

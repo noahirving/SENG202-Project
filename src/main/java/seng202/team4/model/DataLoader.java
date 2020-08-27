@@ -10,7 +10,7 @@ import java.sql.Statement;
  * Initialises the DataLoader class by reading raw data files,
  * creating datatype classes, and adding them to a DataList class.
  */
-public class DataLoader {
+public abstract class DataLoader {
 
 
     public static boolean uploadAirlineData(File filePath) {

@@ -15,15 +15,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seng202.team4.Path;
-import seng202.team4.model.Airline;
-import seng202.team4.model.DataLoader;
+import seng202.team4.model.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 
 
-public class airlineTabController {
+public class airlineTabController extends DataController {
+    public Airline dataType = new Airline();
     @FXML private TableView<Airline> airlineDataTable;
     @FXML private TableColumn<Airline, String> airlineTabAirlineColumn;
     @FXML private TableColumn<Airline, String> airlineTabCountryColumn;
@@ -38,26 +38,12 @@ public class airlineTabController {
     private FilteredList<Airline> searchFilter = new FilteredList<>(countryFilter, p -> true);
 
     @FXML
-    public void pressHomeButton(ActionEvent buttonPress) throws IOException {
-        Parent homeView = FXMLLoader.load(getClass().getResource(Path.homeSceneFXML));
-
-        Scene homeScene = new Scene(homeView);
-
-        Stage window = (Stage)((Node) buttonPress.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
-    }
-
-    @FXML
     public void initialize() {
         airlineTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<>("airlineName"));
         airlineTabCountryColumn.setCellValueFactory(new PropertyValueFactory<>("airlineCountry"));
 
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(Path.database);
-            getSQLData();
-            conn.close();
+            setTable();
         } catch (Exception ex) {
             System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
             System.exit(0);
@@ -72,8 +58,13 @@ public class airlineTabController {
 
     }
 
-    public void getSQLData() throws Exception {
-        ResultSet rs = conn.createStatement().executeQuery("SELECT Name, Country FROM AIRLINES");
+    @Override
+    public String getTableQuery() {
+        return "SELECT Name, Country FROM AIRLINES";
+    }
+
+    @Override
+    public void setTableData(ResultSet rs) throws Exception{
         while (rs.next()) {
             Airline airline = new Airline();
             airline.setAirlineName(rs.getString("Name"));
@@ -119,19 +110,9 @@ public class airlineTabController {
         airlineDataTable.setItems(sortedAirline);
     }
 
-    public void uploadData() throws IOException {
-        FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt")
-                ,new FileChooser.ExtensionFilter("CSV Files", "*.csv")
-        );
-        File f = fc.showOpenDialog(null);
-        if(f != null){
-            /* Check data is valid format and then load into database */
-            DataLoader.uploadAirlineData(f);
-        }
+
+    @Override
+    public DataType getDataType() {
+        return new Airline();
     }
-
-
-
 }

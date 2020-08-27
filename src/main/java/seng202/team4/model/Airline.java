@@ -31,10 +31,9 @@ public class Airline extends DataType {
 
     @Override
     public String getInsertStatement(){
-        String between = "', '";
         return "INSERT INTO AIRLINES ('AIRLINEID', 'NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE') "
-                + "VALUES ("
-                + getAirlineID() + ", '"
+                + "VALUES ('"
+                + getAirlineID() + between
                 + getAirlineName().replaceAll("'", "''") + between
                 + getAirlineCode().replaceAll("'", "''") + between
                 + getAirlineIATA().replaceAll("'", "''") + between

@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 import seng202.team4.Path;
 import seng202.team4.model.Airport;
 import seng202.team4.model.DataLoader;
+import seng202.team4.model.DataType;
+import seng202.team4.model.Route;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +29,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 
-public class airportTabController {
+public class airportTabController extends DataController {
+
+    public Airport dataType = new Airport();
     @FXML private TableView<Airport> airportDataTable;
     @FXML private TableColumn<Airport, String> airportTabAirportColumn;
     @FXML private TableColumn<Airport, String> airportTabCityColumn;
@@ -48,17 +52,6 @@ public class airportTabController {
     private FilteredList<Airport> searchFilter = new FilteredList<>(cityFilter, p -> true);
 
     @FXML
-    public void pressHomeButton(ActionEvent buttonPress) throws IOException {
-        Parent homeView = FXMLLoader.load(getClass().getResource(Path.homeSceneFXML));
-
-        Scene homeScene = new Scene(homeView);
-
-        Stage window = (Stage)((Node) buttonPress.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
-    }
-
-    @FXML
     public void initialize() {
         airportTabAirportColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         airportTabCityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
@@ -66,10 +59,7 @@ public class airportTabController {
         airportTabCoordinatesColumn.setCellValueFactory(new PropertyValueFactory<>("coordinates"));
 
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(Path.database);
-            getSQLData();
-            conn.close();
+            setTable();
         } catch (Exception ex) {
             System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
             System.exit(0);
@@ -89,24 +79,6 @@ public class airportTabController {
         countries.add("---");
         FXCollections.sort(countries);
         airportTabCountryCombobox.setItems(countries);
-    }
-
-    //change country column in database
-    public void getSQLData() throws Exception {
-        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM Airport");
-        while (rs.next()) {
-            Airport airport = new Airport();
-            airport.setName(rs.getString("Name"));
-            airport.setCountry(rs.getString("Country"));
-            airport.setCity(rs.getString("City"));
-            airports.add(airport);
-            if (!countries.contains(rs.getString("Country"))) {
-                countries.add(rs.getString("Country"));
-            }
-            if (!cities.contains(rs.getString("City"))) {
-                cities.add(rs.getString("City"));
-            }
-        }
     }
 
     public void filterByCity() {
@@ -172,16 +144,31 @@ public class airportTabController {
         airportDataTable.setItems(sortedList);
     }
 
-    public void uploadData() throws IOException {
-        FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt")
-                ,new FileChooser.ExtensionFilter("CSV Files", "*.csv")
-        );
-        File f = fc.showOpenDialog(null);
-        if(f != null){
-            /* Check data is valid format and then load into database */
-            DataLoader.uploadAirportData(f);
+
+    @Override
+    public DataType getDataType() {
+        return new Airport();
+    }
+
+    @Override
+    public String getTableQuery() {
+        return "SELECT * FROM Airport";
+    }
+
+    @Override
+    public void setTableData(ResultSet rs) throws Exception {
+        while (rs.next()) {
+            Airport airport = new Airport();
+            airport.setName(rs.getString("Name"));
+            airport.setCountry(rs.getString("Country"));
+            airport.setCity(rs.getString("City"));
+            airports.add(airport);
+            if (!countries.contains(rs.getString("Country"))) {
+                countries.add(rs.getString("Country"));
+            }
+            if (!cities.contains(rs.getString("City"))) {
+                cities.add(rs.getString("City"));
+            }
         }
     }
 }
