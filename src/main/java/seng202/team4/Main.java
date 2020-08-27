@@ -22,9 +22,9 @@ public class Main {
     }
 
     public void loadTest() {
-        File airport = new File(getClass().getResource(Path.airportRsc).getPath());
-        File airline = new File(getClass().getResource(Path.airlineRsc).getPath());
-        File route = new File(getClass().getResource(Path.routeRsc).getPath());
+        File airport = new File(Path.airportRsc);
+        File airline = new File(Path.airlineRsc);
+        File route = new File(Path.routeRsc);
         DataLoader.uploadAirportData(airport);
         DataLoader.uploadAirlineData(airline);
         DataLoader.uploadRouteData(route);
@@ -38,7 +38,7 @@ public class Main {
                 System.out.println(file.getName() + " deleted");
             }
             else {
-                System.out.println("failed");
+                System.out.println("Delete failed");
             }
         }
         catch(Exception e)
