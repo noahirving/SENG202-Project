@@ -224,8 +224,7 @@ public class routeTabController {
         File f = fc.showOpenDialog(null);
         if(f != null){
             /* Check data is valid format and then load into database */
-            DataLoader loader = new DataLoader();
-            loader.rawUserDataUploader(f, "RT");
+            DataLoader.uploadRouteData(f);
         }
     }
 

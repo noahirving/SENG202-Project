@@ -13,8 +13,11 @@ public class Route extends DataType {
     private int numStops;
     private String planeTypeCode;
     private double carbonEmissions;
+    private static int count = 0;
 
     public Route(String routeInfo) {
+        routeInfo = count + "," + routeInfo;
+        count++;
         String[] routeArray = routeInfo.split(",");
         this.routeID = Integer.parseInt(routeArray[0]);
         this.airlineCode = routeArray[1];
@@ -29,7 +32,11 @@ public class Route extends DataType {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        this.planeTypeCode = routeArray[9];
+        if (routeArray.length == 10) {
+            this.planeTypeCode = routeArray[9];
+        } else {
+            this.planeTypeCode = "";
+        }
         this.carbonEmissions = calculateCarbonEmissions();
     }
 

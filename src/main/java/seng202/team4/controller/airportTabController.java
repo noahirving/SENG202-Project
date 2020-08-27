@@ -99,9 +99,6 @@ public class airportTabController {
             airport.setName(rs.getString("Name"));
             airport.setCountry(rs.getString("Country"));
             airport.setCity(rs.getString("City"));
-            double latitude = Double.parseDouble(rs.getString("Latitude"));
-            double longitude = Double.parseDouble(rs.getString("longitude"));
-            airport.setCoordinates(latitude, longitude);
             airports.add(airport);
             if (!countries.contains(rs.getString("Country"))) {
                 countries.add(rs.getString("Country"));
@@ -184,8 +181,7 @@ public class airportTabController {
         File f = fc.showOpenDialog(null);
         if(f != null){
             /* Check data is valid format and then load into database */
-            DataLoader loader = new DataLoader();
-            loader.rawUserDataUploader(f, "AP");
+            DataLoader.uploadAirportData(f);
         }
     }
 }
