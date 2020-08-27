@@ -24,7 +24,7 @@ public abstract class DatabaseManager {
             c.setAutoCommit(false);
             return c;
         } catch (SQLException | ClassNotFoundException e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            e.printStackTrace();
             return null;
         }
     }
@@ -34,6 +34,7 @@ public abstract class DatabaseManager {
             c.close();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

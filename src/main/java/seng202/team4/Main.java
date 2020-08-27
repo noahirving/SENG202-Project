@@ -43,17 +43,20 @@ public class Main {
         }
         catch(Exception e)
         {
+            System.out.println("Invalid File to delete");
             e.printStackTrace();
         }
     }
 
     public void newDB() {
-        File src = new File("src/main/resources/database_empty.db");
-        File dst = new File("src/main/resources/database.db");
+
         try {
+            File src = new File("src/main/resources/database_empty.db");
+            File dst = new File("src/main/resources/database.db");
             FileUtils.copyFile(src, dst);
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Could not copy DB");
         }
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seng202.team4.Path;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 

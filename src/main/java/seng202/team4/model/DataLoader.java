@@ -46,8 +46,7 @@ public abstract class DataLoader {
                 c.commit();
                 return true;
             } catch (Exception e) {
-                System.out.println("Caught exception: " + e.toString());
-                System.out.println("Stack trace: \n" + e.getMessage());
+                e.printStackTrace();
                 return  false;
             } finally {
                 DatabaseManager.disconnect(c);

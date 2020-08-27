@@ -43,8 +43,8 @@ public class airlineTabController extends DataController {
 
         try {
             setTable();
-        } catch (Exception ex) {
-            System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
+        } catch (Exception e) {
+            e.printStackTrace();
             System.exit(0);
         }
 

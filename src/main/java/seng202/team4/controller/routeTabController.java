@@ -11,14 +11,12 @@ import javafx.stage.FileChooser;
 import seng202.team4.Path;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
+import seng202.team4.model.DatabaseManager;
 import seng202.team4.model.Route;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class routeTabController extends DataController{
 
@@ -71,48 +69,11 @@ public class routeTabController extends DataController{
             setTable();
             initialiseComboBoxes();
             filterData();
-        } catch (Exception ex) {
-            System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
+        } catch (Exception e) {
+            e.printStackTrace();
             System.exit(0);
         }
 
-
-    }
-
-
-
-    public void getSQLData() throws SQLException {
-        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM Routes");
-        while (rs.next()) {
-            Route route = new Route();
-            String airlineCode = rs.getString("Airline");
-            String sourceAirport = rs.getString("SourceAirport");
-            String destinationAirport = rs.getString("DestinationAirport");
-            String planeType = rs.getString("Equipment");
-            route.setAirlineCode(airlineCode);
-            route.setSourceAirportCode(sourceAirport);
-            route.setDestinationAirportCode(destinationAirport);
-            route.setNumStops(rs.getInt("Stops"));
-            route.setPlaneTypeCode(planeType);
-            route.setCarbonEmissions(rs.getDouble("CarbonEmissions"));
-            routes.add(route);
-
-            if (!airlineCodes.contains(airlineCode)) {
-                airlineCodes.add(airlineCode);
-            }
-            if (!departureCountries.contains(sourceAirport)) {
-                departureCountries.add(sourceAirport);
-            }
-            if (!destinationCountries.contains(destinationAirport)) {
-                destinationCountries.add(destinationAirport);
-            }
-            if (!planeTypes.contains(planeType)) {
-                planeTypes.add(planeType);
-            }
-
-        }
-
-        routeDataTable.setItems(routes);
 
     }
 
@@ -238,9 +199,10 @@ public class routeTabController extends DataController{
 
     @Override
     public void setTableData(ResultSet rs) throws Exception {
-        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM Routes");
         String airportNameQuery = "SELECT Name FROM Airport WHERE IATA = '%s'";
         String airlineNameQuery = "SELECT Name FROM Airlines WHERE IATA = '%s'";
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
         while (rs.next()) {
             Route route = new Route();
             String airline = rs.getString("Airline");
@@ -249,9 +211,11 @@ public class routeTabController extends DataController{
             String planeType = rs.getString("Equipment");
 
             // Add names to airline and airport codes
-            ResultSet airlineQuery = conn.createStatement().executeQuery(String.format(airlineNameQuery, airline));
-            ResultSet sourceAirportQuery = conn.createStatement().executeQuery(String.format(airportNameQuery, sourceAirport));
-            ResultSet destAirportQuery = conn.createStatement().executeQuery(String.format(airportNameQuery, destinationAirport));
+
+            /*
+            ResultSet airlineQuery = stmt.executeQuery(String.format(airlineNameQuery, airline));
+            ResultSet sourceAirportQuery = stmt.executeQuery(String.format(airportNameQuery, sourceAirport));
+            ResultSet destAirportQuery = stmt.executeQuery(String.format(airportNameQuery, destinationAirport));
 
             if (airlineQuery.next()) {
                 airline += String.format(" (%s)", airlineQuery.getString("Name"));
@@ -262,7 +226,10 @@ public class routeTabController extends DataController{
             if (destAirportQuery.next()) {
                 destinationAirport += String.format(" (%s)", destAirportQuery.getString("Name"));
             }
-            airlineQuery.close(); sourceAirportQuery.close(); destAirportQuery.close();
+            airlineQuery.close();
+            sourceAirportQuery.close();
+            destAirportQuery.close();
+             */
 
             route.setAirlineCode(airline);
             route.setSourceAirportCode(sourceAirport);
@@ -275,6 +242,8 @@ public class routeTabController extends DataController{
             addToComboBoxes(airline, sourceAirport, destinationAirport, planeType);
 
         }
+        stmt.close();
+        DatabaseManager.disconnect(c);
 
     }
 }
