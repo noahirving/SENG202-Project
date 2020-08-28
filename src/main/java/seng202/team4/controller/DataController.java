@@ -53,11 +53,12 @@ public abstract class DataController {
         if(f != null){
             /* Check data is valid format and then load into database */
             DataLoader.uploadData(f, getDataType());
+            try {
+                setTable();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        try {
-            setTable();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 }
