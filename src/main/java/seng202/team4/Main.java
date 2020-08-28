@@ -14,16 +14,16 @@ public class Main {
 
         Main m = new Main();
         m.deleteDB();
-        m.newDB();
+        //m.newDB();
         m.loadTest();
 
         MainApplication.main(args);
     }
 
     public void loadTest() {
-        File airport = new File(Path.airportRsc);
-        File airline = new File(Path.airlineRsc);
-        File route = new File(Path.routeRsc);
+        File airport = new File(getClass().getResource(Path.airportRsc).getPath());
+        File airline = new File(getClass().getResource(Path.airlineRsc).getPath());
+        File route = new File(getClass().getResource(Path.routeRsc).getPath());
         DataLoader.uploadAirportData(airport);
         DataLoader.uploadAirlineData(airline);
         DataLoader.uploadRouteData(route);
@@ -32,7 +32,7 @@ public class Main {
     public void deleteDB() {
         try
         {
-            File file = new File("src/main/resources/database.db");
+            File file = new File(getClass().getResource("/").getPath() + Path.database);
             if(file.delete()) {
                 System.out.println(file.getName() + " deleted");
             }
@@ -50,8 +50,10 @@ public class Main {
     public void newDB() {
 
         try {
-            File src = new File("src/main/resources/database_empty.db");
-            File dst = new File("src/main/resources/database.db");
+            File src = new File(getClass().getResource(Path.emptyDatabase).getPath());
+            File dst = new File(getClass().getResource("/").getPath() + Path.database);
+            System.out.println(dst.toString());
+            System.out.println(src.toString());
             FileUtils.copyFile(src, dst);
         } catch (IOException e) {
             e.printStackTrace();
