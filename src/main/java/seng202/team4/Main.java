@@ -5,7 +5,6 @@ import seng202.team4.model.DataLoader;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 public class Main {
 
@@ -18,7 +17,7 @@ public class Main {
         m.newDB();
         m.loadTest();
 
-        SampleApplication.main(args);
+        MainApplication.main(args);
     }
 
     public void loadTest() {
