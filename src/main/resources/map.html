@@ -19,64 +19,32 @@
 <div id="map"></div>
 <script>
     var map;
-    var marker1;
-    var marker2;
-    var path;
+    var gmarkers = [];
+    var paths = [];
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 25, lng: -10},
-            zoom: 1.6
+            zoom: 1.6,
+            disableDefaultUI: true,
         });
 
     }
 
-    function displayRoute(flightPath) {
-        // CLEAR EXISTING MARKERS
-        if (marker1 !== undefined && marker2 !== undefined && path !== undefined) {
-            marker1.setMap(null);
-            marker2.setMap(null);
-            path.setMap(null);
-        }
 
-        if (flightPath.length < 2) {
-            return;
-        }
-
-        // CREATE MARKERS AT START AND FINISH
-        marker1 = new google.maps.Marker({
-            position: flightPath[0],
-            map: map
+    function addAirport(coordinates, title) {
+        var marker = new google.maps.Marker({
+            position: coordinates,
+            map: map,
+            title: title
         });
-
-        marker2 = new google.maps.Marker({
-            position: flightPath[flightPath.length - 1],
-            map: map
-        });
-
-        // DRAW POLYLINE FOR ROUTE
-        path = new google.maps.Polyline({
-            path: flightPath,
-            geodesic: true,
-            strokeColor: '#ff0000',
-            strokeOpacity: 1.0,
-            strokeWeight: 2
-        });
-
-        path.setMap(map);
-
-        repositionMap(flightPath);
+        gmarkers.push(marker);
     }
-    function addRoute(flightPath) {
-        var mark1 = new google.maps.Marker({
-            position: flightPath[0],
-            map: map
-        });
 
-        var mark2 = new google.maps.Marker({
-            position: flightPath[flightPath.length - 1],
-            map: map
-        });
+    function addRoute(flightPath, title1, title2) {
+        addAirport(flightPath[0], title1);
+        addAirport(flightPath[flightPath.length - 1], title2);
+
 
         path = new google.maps.Polyline({
             path: flightPath,
@@ -85,9 +53,31 @@
             strokeOpacity: 1.0,
             strokeWeight: 2
         });
+        paths.push(path);
 
         path.setMap(map);
 
+    }
+
+
+    function resetMap() {
+        if (gmarkers.length > 0) {
+            for (var i=0; i<gmarkers.length; i++) {
+                if (gmarkers[i] != null) {
+                    gmarkers[i].setMap(null);
+                }
+            }
+        }
+        gmarkers = [];
+
+        if (paths.length > 0) {
+            for (var i=0; i<paths.length; i++) {
+                if (paths[i] != null) {
+                    paths[i].setMap(null);
+                }
+            }
+        }
+        paths = [];
     }
 
     function repositionMap(flightPath) {

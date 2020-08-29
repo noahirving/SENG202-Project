@@ -1,20 +1,16 @@
 package seng202.team4.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seng202.team4.Path;
+import seng202.team4.model.DatabaseManager;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class MapTabController implements Initializable {
@@ -22,77 +18,111 @@ public class MapTabController implements Initializable {
     @FXML private TextField mapSearchField;
     @FXML private TextField mapTabLatitudeField;
     @FXML private TextField mapTabLongitudeField;
+    @FXML private Button showAllAirportsButton;
+    @FXML private Button selectedRoutesButton;
+    @FXML private Button clearMapButton;
 
     private WebEngine webEngine;
-    private Connection conn;
+    private static String airportCoordQuery = "SELECT Longitude, Latitude, Name FROM Airport WHERE IATA = '%s'";
 
     public MapTabController() {
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(Path.databaseConnection);
             initMap();
-            conn.close();
-        } catch (Exception ex) {
-            System.err.println( ex.getClass().getName() + ": " + ex.getMessage() );
-            System.exit(0);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-
-
     }
 
     private void initMap() throws SQLException {
         webEngine = googleMapView.getEngine();
-
         webEngine.load(getClass().getResource(Path.mapRsc).toExternalForm());
-        showAllRoutes();
     }
 
-    private void showAllRoutes() throws SQLException {
-        ResultSet routesResultSet = conn.createStatement().executeQuery("SELECT SourceAirport, DestinationAirport FROM Routes");
-        String airportCoordQuery = "SELECT Longitude, Latitude FROM Airport WHERE IATA = '%s'";
+    @FXML
+    private void showSelectedRoutes() throws SQLException {
+        resetMap();
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        ResultSet routesResultSet = stmt.executeQuery("SELECT SourceAirport, DestinationAirport FROM Routes");
         int count = 0;
         while (routesResultSet.next() && count <= 400) {
-            showOneRoute(routesResultSet, airportCoordQuery);
+            showOneRoute(routesResultSet, c);
             count++;
         }
+        stmt.close();
+        DatabaseManager.disconnect(c);
     }
 
-    private void showOneRoute(ResultSet routesResultSet, String airportCoordQuery) throws SQLException {
+    private void showOneRoute(ResultSet routesResultSet, Connection c) throws SQLException {
+
 
         String sourceAirportIATA = routesResultSet.getString("SourceAirport");
         String destinationAirportIATA = routesResultSet.getString("DestinationAirport");
-        ResultSet sourceAirportQuery = conn.createStatement().executeQuery(String.format(airportCoordQuery, sourceAirportIATA));
-        ResultSet destAirportQuery = conn.createStatement().executeQuery(String.format(airportCoordQuery, destinationAirportIATA));
+        ResultSet sourceAirportQuery = c.createStatement().executeQuery(String.format(airportCoordQuery, sourceAirportIATA));
+        ResultSet destAirportQuery = c.createStatement().executeQuery(String.format(airportCoordQuery, destinationAirportIATA));
 
         if (sourceAirportQuery.next() && destAirportQuery.next()) {
 
             double sourceLatitude = (sourceAirportQuery.getDouble("Latitude"));
             double sourceLongitude = (sourceAirportQuery.getDouble("Longitude"));
+            String sourceName = (sourceAirportQuery.getString("Name"));
 
             double destLatitude = (destAirportQuery.getDouble("Latitude"));
             double destLongitude = (destAirportQuery.getDouble("Longitude"));
+            String destName = (destAirportQuery.getString("Name"));
 
             String routePoints = String.format("[{lat: %f, lng: %f}, {lat: %f, lng: %f}, ]",
                     sourceLatitude, sourceLongitude, destLatitude, destLongitude);
 
-            String scriptToExecute = "addRoute(" + routePoints + ");";
+            String scriptToExecute = "addRoute(" + routePoints + ", '" + sourceName + "', '" + destName + "');";
+            executeScript(scriptToExecute);
 
-            webEngine.getLoadWorker().stateProperty().addListener(
-                    (ov, oldState, newState) -> {
-                        if (newState == Worker.State.SUCCEEDED) {
-                            webEngine.executeScript(scriptToExecute);
-                        }
-                    });
 
         }
 
 
     }
+    @FXML
+    public void showAllAirports() throws SQLException {
+        resetMap();
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        ResultSet airportResultSet = stmt.executeQuery("SELECT Longitude, Latitude, Name FROM Airport");
+
+        while (airportResultSet.next()) {
+            double sourceLatitude = (airportResultSet.getDouble("Latitude"));
+            double sourceLongitude = (airportResultSet.getDouble("Longitude"));
+            String sourceName = (airportResultSet.getString("Name"));
+            String airportPoint = String.format("{lat: %f, lng: %f}", sourceLatitude, sourceLongitude);
+            String scriptToExecute = "addAirport(" + airportPoint + ", \"" + sourceName + "\");";
+            executeScript(scriptToExecute);
+        }
+        stmt.close();
+        DatabaseManager.disconnect(c);
+
+    }
+
+    @FXML
+    private void clearMap() {
+        resetMap();
+    }
+
+    private void resetMap() {
+        String scriptToExecute = "resetMap();";
+        executeScript(scriptToExecute);
+    }
+
+
+
+    public void executeScript(String scriptToExecute) {
+        webEngine.executeScript(scriptToExecute);
+
+    }
+
 
 
 }
