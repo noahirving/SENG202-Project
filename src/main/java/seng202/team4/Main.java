@@ -3,8 +3,8 @@ package seng202.team4;
 import org.apache.commons.io.FileUtils;
 import seng202.team4.model.DataLoader;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.StandardCopyOption;
 
 public class Main {
 
@@ -13,17 +13,23 @@ public class Main {
         //DataLoader loader = new DataLoader();
 
         Main m = new Main();
+        m.createDirectory();
         m.deleteDB();
-        //m.newDB();
+        m.newDB();
         m.loadTest();
 
         MainApplication.main(args);
     }
 
-    public void loadTest() {
-        File airport = new File(getClass().getResource(Path.airportRsc).getPath());
-        File airline = new File(getClass().getResource(Path.airlineRsc).getPath());
-        File route = new File(getClass().getResource(Path.routeRsc).getPath());
+    public void loadTest() throws IOException {
+        copyToFolder(Path.airportRsc);
+        copyToFolder(Path.airlineRsc);
+        copyToFolder(Path.routeRsc);
+
+        File airport = new File(Path.directory + "\\airports.txt");
+        File airline = new File(Path.directory + "\\airlines.txt");
+        File route = new File(Path.directory + "\\routes.txt");
+
         DataLoader.uploadAirportData(airport);
         DataLoader.uploadAirlineData(airline);
         DataLoader.uploadRouteData(route);
@@ -32,7 +38,7 @@ public class Main {
     public void deleteDB() {
         try
         {
-            File file = new File(getClass().getResource("/").getPath() + Path.database);
+            File file = new File(Path.database);
             if(file.delete()) {
                 System.out.println(file.getName() + " deleted");
             }
@@ -50,14 +56,28 @@ public class Main {
     public void newDB() {
 
         try {
-            File src = new File(getClass().getResource(Path.emptyDatabase).getPath());
-            File dst = new File(getClass().getResource("/").getPath() + Path.database);
-            System.out.println(dst.toString());
-            System.out.println(src.toString());
+            copyToFolder(Path.emptyDatabase);
+            File src = new File(Path.directory + "\\database_empty.db");
+            File dst = new File(Path.database);
             FileUtils.copyFile(src, dst);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Could not copy DB");
+        }
+    }
+
+    public void copyToFolder(String filename) throws IOException {
+
+        InputStream initialStream = (this.getClass().getResourceAsStream("/" + filename));
+        File targetFile = new File(Path.directory + "\\" + filename);
+
+        java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    public void createDirectory() {
+        File folder = new File(Path.directory);
+        if (!folder.exists()) {
+            folder.mkdir();
         }
     }
 }

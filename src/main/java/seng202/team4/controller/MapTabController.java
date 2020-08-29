@@ -34,7 +34,7 @@ public class MapTabController implements Initializable {
 
         try {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(Path.database);
+            conn = DriverManager.getConnection(Path.databaseConnection);
             initMap();
             conn.close();
         } catch (Exception ex) {

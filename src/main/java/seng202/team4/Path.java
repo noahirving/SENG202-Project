@@ -1,8 +1,9 @@
 package seng202.team4;
 
 public abstract class Path {
-    public static final String emptyDatabase = "/database_empty.db";
-    public static final String database = "database.db";
+    public static final String emptyDatabase = "database_empty.db";
+    public static final String database = System.getProperty("user.home") + "\\flight_tracker\\database.db";
+    public static final String directory = System.getProperty("user.home") + "\\flight_tracker";
     public static final String databaseConnection = "jdbc:sqlite:" + database;
 
     public static final String view = "/seng202.team4";
@@ -16,9 +17,9 @@ public abstract class Path {
 
     public static final String styleSheet = view +  "/styles.css";
 
-    public static final String airlineRsc = "/airlines.txt";
-    public static final String airportRsc = "/airports.txt";
-    public static final String routeRsc = "/routes.txt";
+    public static final String airlineRsc = "airlines.txt";
+    public static final String airportRsc = "airports.txt";
+    public static final String routeRsc = "routes.txt";
     public static final String mapRsc = "/map.html";
 
 
