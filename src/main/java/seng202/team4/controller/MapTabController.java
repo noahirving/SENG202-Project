@@ -1,13 +1,16 @@
 package seng202.team4.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seng202.team4.Path;
 import seng202.team4.model.DatabaseManager;
+import seng202.team4.model.Route;
 
 import java.net.URL;
 import java.sql.*;
@@ -15,12 +18,30 @@ import java.util.ResourceBundle;
 
 public class MapTabController implements Initializable {
     @FXML private WebView googleMapView;
-    @FXML private TextField mapSearchField;
-    @FXML private TextField mapTabLatitudeField;
-    @FXML private TextField mapTabLongitudeField;
-    @FXML private Button showAllAirportsButton;
-    @FXML private Button selectedRoutesButton;
-    @FXML private Button clearMapButton;
+    @FXML private RadioButton routeFilterRadio;
+    @FXML private RadioButton airportFilterRadio;
+    @FXML private RadioButton airlineFilterRadio;
+    @FXML private ToggleGroup filterSelection;
+    @FXML private GridPane routeFilterGrid;
+    @FXML private GridPane airportAirlineFilterGrid;
+
+    @FXML private ComboBox routeAirlineFilterCombobox;
+    @FXML private ComboBox routeAirportFilterCombobox;
+    @FXML private ComboBox routePlaneTypeFilterCombobox;
+
+    @FXML private ComboBox airportCountryFilterCombobox;
+    @FXML private ComboBox airlineCountryFilterCombobox;
+
+    private ObservableList<String> airlineCodes = FXCollections.observableArrayList();
+    private ObservableList<String> departureCountries = FXCollections.observableArrayList();
+    private ObservableList<String> planeTypes = FXCollections.observableArrayList();
+
+    private ObservableList<String> airportCountries = FXCollections.observableArrayList();
+    private ObservableList<String> airlineCountries = FXCollections.observableArrayList();
+
+
+
+
 
     private WebEngine webEngine;
     private static String airportCoordQuery = "SELECT Longitude, Latitude, Name FROM Airport WHERE IATA = '%s'";
@@ -30,11 +51,90 @@ public class MapTabController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         try {
             initMap();
+            initialiseRadioButtons();
+            initialiseComboboxes();
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    private void initialiseRadioButtons() {
+        filterSelection.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == routeFilterRadio) {
+                displayRouteFilters();
+            } else {
+                displayAirportAirlineFilters();
+            }
+
+        });
+    }
+
+    private void initialiseComboboxes() throws SQLException {
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        initialiseRouteComboboxes(stmt);
+
+        ResultSet airportResultSet = stmt.executeQuery("SELECT Country FROM Airport");
+        while (airportResultSet.next()) {
+            String country = airportResultSet.getString("Country");
+            if (!airportCountries.contains(country)) {
+                airportCountries.add(country);
+            }
+        }
+        ResultSet airlineResultSet = stmt.executeQuery("SELECT Country FROM Airlines");
+        while (airlineResultSet.next()) {
+            String country = airlineResultSet.getString("Country");
+            if (!airlineCountries.contains(country)) {
+                airlineCountries.add(country);
+            }
+        }
+        FXCollections.sort(airportCountries); airportCountryFilterCombobox.setItems(airportCountries);
+        FXCollections.sort(airlineCountries); airlineCountryFilterCombobox.setItems(airlineCountries);
+        new AutoCompleteComboBoxListener<>(airportCountryFilterCombobox);
+        new AutoCompleteComboBoxListener<>(airlineCountryFilterCombobox);
+
+
+    }
+
+    private void initialiseRouteComboboxes(Statement stmt) throws SQLException {
+        ResultSet routesResultSet = stmt.executeQuery("SELECT Airline, SourceAirport, Equipment FROM Routes");
+        while (routesResultSet.next()) {
+            String airline = routesResultSet.getString("Airline");
+            String sourceAirport = routesResultSet.getString("SourceAirport");
+            String planeType = routesResultSet.getString("Equipment");
+
+            if (!airlineCodes.contains(airline)) {
+                airlineCodes.add(airline);
+            }
+            if (!departureCountries.contains(sourceAirport)) {
+                departureCountries.add(sourceAirport);
+            }
+            if (!planeTypes.contains(planeType)) {
+                planeTypes.add(planeType);
+            }
+        }
+        FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
+        FXCollections.sort(departureCountries); routeAirportFilterCombobox.setItems(departureCountries);
+        FXCollections.sort(planeTypes); routePlaneTypeFilterCombobox.setItems(planeTypes);
+        // Make combobox searching autocomplete
+        new AutoCompleteComboBoxListener<>(routeAirlineFilterCombobox);
+        new AutoCompleteComboBoxListener<>(routeAirportFilterCombobox);
+        new AutoCompleteComboBoxListener<>(routePlaneTypeFilterCombobox);
+    }
+
+
+    private void displayRouteFilters() {
+        routeFilterGrid.setVisible(true);
+        airportAirlineFilterGrid.setVisible(false);
+    }
+
+    private void displayAirportAirlineFilters() {
+        routeFilterGrid.setVisible(false);
+        airportAirlineFilterGrid.setVisible(true);
     }
 
     private void initMap() throws SQLException {
@@ -86,8 +186,9 @@ public class MapTabController implements Initializable {
 
 
     }
+
     @FXML
-    public void showAllAirports() throws SQLException {
+    public void showSelectedAirports() throws SQLException {
         resetMap();
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
@@ -115,8 +216,6 @@ public class MapTabController implements Initializable {
         String scriptToExecute = "resetMap();";
         executeScript(scriptToExecute);
     }
-
-
 
     public void executeScript(String scriptToExecute) {
         webEngine.executeScript(scriptToExecute);

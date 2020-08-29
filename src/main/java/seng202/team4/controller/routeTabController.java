@@ -77,22 +77,7 @@ public class routeTabController extends DataController{
 
     }
 
-    private void addToComboBoxes(String airline, String sourceAirport, String destinationAirport, String planeType) {
-        if (!airlineCodes.contains(airline)) {
-            airlineCodes.add(airline);
-        }
-        if (!departureCountries.contains(sourceAirport)) {
-            departureCountries.add(sourceAirport);
-        }
-        if (!destinationCountries.contains(destinationAirport)) {
-            destinationCountries.add(destinationAirport);
-        }
-        if (!planeTypes.contains(planeType)) {
-            planeTypes.add(planeType);
-        }
 
-
-    }
 
     private void filterData() {
 
@@ -124,16 +109,28 @@ public class routeTabController extends DataController{
 
     }
 
+    private void addToComboBoxes(String airline, String sourceAirport, String destinationAirport, String planeType) {
+        if (!airlineCodes.contains(airline)) {
+            airlineCodes.add(airline);
+        }
+        if (!departureCountries.contains(sourceAirport)) {
+            departureCountries.add(sourceAirport);
+        }
+        if (!destinationCountries.contains(destinationAirport)) {
+            destinationCountries.add(destinationAirport);
+        }
+        if (!planeTypes.contains(planeType)) {
+            planeTypes.add(planeType);
+        }
+
+
+    }
     private void initialiseComboBoxes() {
         // Sort and set combobox items
-        FXCollections.sort(airlineCodes);
-        routeAirlineFilterCombobox.setItems(airlineCodes);
-        FXCollections.sort(departureCountries);
-        routeDepartureFilterCombobox.setItems(departureCountries);
-        FXCollections.sort(destinationCountries);
-        routeDestinationFilterCombobox.setItems(destinationCountries);
-        FXCollections.sort(planeTypes);
-        routePlaneTypeFilterCombobox.setItems(planeTypes);
+        FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
+        FXCollections.sort(departureCountries); routeDepartureFilterCombobox.setItems(departureCountries);
+        FXCollections.sort(destinationCountries); routeDestinationFilterCombobox.setItems(destinationCountries);
+        FXCollections.sort(planeTypes); routePlaneTypeFilterCombobox.setItems(planeTypes);
 
         // Make combobox searching autocomplete
         new AutoCompleteComboBoxListener<>(routeAirlineFilterCombobox);
@@ -199,8 +196,8 @@ public class routeTabController extends DataController{
 
     @Override
     public void setTableData(ResultSet rs) throws Exception {
-        String airportNameQuery = "SELECT Name FROM Airport WHERE IATA = '%s'";
-        String airlineNameQuery = "SELECT Name FROM Airlines WHERE IATA = '%s'";
+//        String airportNameQuery = "SELECT Name FROM Airport WHERE IATA = '%s'";
+//        String airlineNameQuery = "SELECT Name FROM Airlines WHERE IATA = '%s'";
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
         while (rs.next()) {

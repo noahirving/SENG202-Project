@@ -24,16 +24,6 @@ public abstract class DataController {
     public abstract DataType getDataType();
     public abstract String getTableQuery();
     public abstract void setTableData(ResultSet rs) throws Exception;
-    @FXML
-    public void pressHomeButton(ActionEvent buttonPress) throws IOException {
-        Parent homeView = FXMLLoader.load(getClass().getResource(Path.homeSceneFXML));
-
-        Scene homeScene = new Scene(homeView);
-
-        Stage window = (Stage)((Node) buttonPress.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
-    }
 
     public void setTable() throws Exception {
         Connection c = DatabaseManager.connect();
