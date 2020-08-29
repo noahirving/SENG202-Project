@@ -10,7 +10,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seng202.team4.Path;
 import seng202.team4.model.DatabaseManager;
-import seng202.team4.model.Route;
 
 import java.net.URL;
 import java.sql.*;
@@ -30,7 +29,6 @@ public class MapTabController implements Initializable {
     @FXML private ComboBox routePlaneTypeFilterCombobox;
 
     @FXML private ComboBox airportCountryFilterCombobox;
-    @FXML private ComboBox airlineCountryFilterCombobox;
 
     private ObservableList<String> airlineCodes = FXCollections.observableArrayList();
     private ObservableList<String> departureCountries = FXCollections.observableArrayList();
@@ -39,7 +37,7 @@ public class MapTabController implements Initializable {
     private ObservableList<String> airportCountries = FXCollections.observableArrayList();
     private ObservableList<String> airlineCountries = FXCollections.observableArrayList();
 
-
+    private static final int ROUTELIMIT = 400;
 
 
 
@@ -93,9 +91,7 @@ public class MapTabController implements Initializable {
             }
         }
         FXCollections.sort(airportCountries); airportCountryFilterCombobox.setItems(airportCountries);
-        FXCollections.sort(airlineCountries); airlineCountryFilterCombobox.setItems(airlineCountries);
         new AutoCompleteComboBoxListener<>(airportCountryFilterCombobox);
-        new AutoCompleteComboBoxListener<>(airlineCountryFilterCombobox);
 
 
     }
@@ -149,16 +145,16 @@ public class MapTabController implements Initializable {
         Statement stmt = DatabaseManager.getStatement(c);
         ResultSet routesResultSet = stmt.executeQuery("SELECT SourceAirport, DestinationAirport FROM Routes");
         int count = 0;
-        while (routesResultSet.next() && count <= 400) {
-            showOneRoute(routesResultSet, c);
+        while (routesResultSet.next() && count <= ROUTELIMIT) {
+            showOneRoute(routesResultSet);
             count++;
         }
         stmt.close();
         DatabaseManager.disconnect(c);
     }
 
-    private void showOneRoute(ResultSet routesResultSet, Connection c) throws SQLException {
-
+    private void showOneRoute(ResultSet routesResultSet) throws SQLException {
+        Connection c = DatabaseManager.connect();
 
         String sourceAirportIATA = routesResultSet.getString("SourceAirport");
         String destinationAirportIATA = routesResultSet.getString("DestinationAirport");
@@ -178,12 +174,14 @@ public class MapTabController implements Initializable {
             String routePoints = String.format("[{lat: %f, lng: %f}, {lat: %f, lng: %f}, ]",
                     sourceLatitude, sourceLongitude, destLatitude, destLongitude);
 
+            sourceName = sourceName.replaceAll("'", "");
+            destName = destName.replaceAll("'", "");
+
             String scriptToExecute = "addRoute(" + routePoints + ", '" + sourceName + "', '" + destName + "');";
+
             executeScript(scriptToExecute);
 
-
         }
-
 
     }
 
@@ -195,21 +193,77 @@ public class MapTabController implements Initializable {
         ResultSet airportResultSet = stmt.executeQuery("SELECT Longitude, Latitude, Name FROM Airport");
 
         while (airportResultSet.next()) {
-            double sourceLatitude = (airportResultSet.getDouble("Latitude"));
-            double sourceLongitude = (airportResultSet.getDouble("Longitude"));
-            String sourceName = (airportResultSet.getString("Name"));
-            String airportPoint = String.format("{lat: %f, lng: %f}", sourceLatitude, sourceLongitude);
-            String scriptToExecute = "addAirport(" + airportPoint + ", \"" + sourceName + "\");";
-            executeScript(scriptToExecute);
+            addOneAirport(airportResultSet);
         }
         stmt.close();
         DatabaseManager.disconnect(c);
 
     }
 
+    private void addOneAirport(ResultSet airportResultSet) throws SQLException {
+        double sourceLatitude = (airportResultSet.getDouble("Latitude"));
+        double sourceLongitude = (airportResultSet.getDouble("Longitude"));
+        String sourceName = (airportResultSet.getString("Name"));
+        String airportPoint = String.format("{lat: %f, lng: %f}", sourceLatitude, sourceLongitude);
+        String scriptToExecute = "addAirport(" + airportPoint + ", \"" + sourceName + "\");";
+        executeScript(scriptToExecute);
+    }
+
     @FXML
     private void clearMap() {
         resetMap();
+    }
+
+    @FXML
+    private void routeApplyFilter() throws SQLException {
+        resetMap();
+        String airline = (String) routeAirlineFilterCombobox.getValue();
+        String airport = (String) routeAirportFilterCombobox.getValue();
+        String planeType = (String) routePlaneTypeFilterCombobox.getValue();
+
+        /* If airline/airport/planeType == "null" this mean that no value is entered in the combobox(es) so
+        it means 'all' of that type are chosen, so in SQL this means 'is not null' for getting every value.
+         */
+        airline = checkValidInput(airline);
+        airport = checkValidInput(airport);
+
+        planeType = checkValidInput(planeType);
+
+        String query = String.format("SELECT SourceAirport, DestinationAirport FROM Routes WHERE Airline is %s and SourceAirport is %s and Equipment is %s",
+                airline, airport, planeType);
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        ResultSet filteredResultSet = stmt.executeQuery(query);
+        int count = 0;
+        while (filteredResultSet.next() && count < ROUTELIMIT) {
+            showOneRoute(filteredResultSet);
+            count++;
+        }
+
+    }
+
+    @FXML
+    private void airportApplyFilter() throws SQLException {
+        resetMap();
+        String country = (String) airportCountryFilterCombobox.getValue();
+        country = checkValidInput(country);
+        String query = String.format("SELECT Longitude, Latitude, Name FROM Airport WHERE Country is %s", country);
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        ResultSet airportResultSet = stmt.executeQuery(query);
+
+        while (airportResultSet.next()) {
+            addOneAirport(airportResultSet);
+        }
+    }
+
+
+    private String checkValidInput(String inputString) {
+        if (inputString == null || inputString.length() == 0) {
+            return "not null";
+        } else {
+            return String.format("'%s'", inputString);
+        }
     }
 
     private void resetMap() {
