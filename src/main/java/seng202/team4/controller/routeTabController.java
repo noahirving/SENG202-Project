@@ -28,6 +28,7 @@ public class routeTabController extends DataController{
     @FXML private TableColumn<Route, Integer> routeTabNumStopsColumn;
     @FXML private TableColumn<Route, String> routeTabPlaneTypeColumn;
     @FXML private TableColumn<Route, Integer> routeTabCarbonEmissionsColumn;
+    @FXML private TableColumn<Route, Boolean> routeTabSelectedRoute;
 
     @FXML private ComboBox<String> routeAirlineFilterCombobox;
     @FXML private ComboBox<String> routeDepartureFilterCombobox;
@@ -56,7 +57,7 @@ public class routeTabController extends DataController{
         routeTabNumStopsColumn.setCellValueFactory(new PropertyValueFactory<>("numStops"));
         routeTabPlaneTypeColumn.setCellValueFactory(new PropertyValueFactory<>("planeTypeCode"));
         routeTabCarbonEmissionsColumn.setCellValueFactory(new PropertyValueFactory<>("carbonEmissions"));
-
+        routeTabSelectedRoute.setCellValueFactory(new PropertyValueFactory<>("select"));
 
         // Connect sliders to labels indicating their value
         routeStopsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> stopsLabel.textProperty().setValue(
@@ -201,6 +202,7 @@ public class routeTabController extends DataController{
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
         while (rs.next()) {
+            CheckBox check = new CheckBox();
             Route route = new Route();
             String airline = rs.getString("Airline");
             String sourceAirport = rs.getString("SourceAirport");
@@ -234,6 +236,7 @@ public class routeTabController extends DataController{
             route.setNumStops(rs.getInt("Stops"));
             route.setPlaneTypeCode(planeType);
             route.setCarbonEmissions(rs.getDouble("CarbonEmissions"));
+            route.setSelect(check);
             routes.add(route);
 
             addToComboBoxes(airline, sourceAirport, destinationAirport, planeType);
