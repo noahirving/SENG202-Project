@@ -22,13 +22,9 @@ public class Main {
     }
 
     public void loadTest() throws IOException {
-        copyToFolder(Path.airportRsc);
-        copyToFolder(Path.airlineRsc);
-        copyToFolder(Path.routeRsc);
-
-        File airport = new File(Path.directory + "\\airports.txt");
-        File airline = new File(Path.directory + "\\airlines.txt");
-        File route = new File(Path.directory + "\\routes.txt");
+        File airport = copyToFolder(Path.airportRsc);
+        File airline = copyToFolder(Path.airlineRsc);
+        File route = copyToFolder(Path.routeRsc);
 
         DataLoader.uploadAirportData(airport);
         DataLoader.uploadAirlineData(airline);
@@ -56,8 +52,8 @@ public class Main {
     public void newDB() {
 
         try {
-            copyToFolder(Path.emptyDatabase);
-            File src = new File(Path.directory + "\\database_empty.db");
+
+            File src = copyToFolder(Path.emptyDatabase);
             File dst = new File(Path.database);
             FileUtils.copyFile(src, dst);
         } catch (IOException e) {
@@ -66,12 +62,13 @@ public class Main {
         }
     }
 
-    public void copyToFolder(String filename) throws IOException {
+    public File copyToFolder(String filename) throws IOException {
 
-        InputStream initialStream = (this.getClass().getResourceAsStream("/" + filename));
-        File targetFile = new File(Path.directory + "\\" + filename);
+        InputStream initialStream = (this.getClass().getResourceAsStream(filename));
+        File targetFile = new File(Path.directory + filename);
 
         java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        return targetFile;
     }
 
     public void createDirectory() {
