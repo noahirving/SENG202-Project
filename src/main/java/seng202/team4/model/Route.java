@@ -1,5 +1,7 @@
 package seng202.team4.model;
 
+import javafx.scene.control.CheckBox;
+
 public class Route extends DataType {
 
     private int routeID;
@@ -13,6 +15,7 @@ public class Route extends DataType {
     private int numStops;
     private String planeTypeCode;
     private double carbonEmissions;
+    private CheckBox select;
     private static int count = 0;
 
     public Route(String routeInfo) {
@@ -161,5 +164,13 @@ public class Route extends DataType {
 
     public void setCarbonEmissions(double carbonEmissions) {
         this.carbonEmissions = carbonEmissions;
+    }
+
+    public CheckBox getSelect() {
+        return select;
+    }
+
+    public void setSelect(CheckBox select) {
+        this.select = select;
     }
 }
