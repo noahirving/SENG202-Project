@@ -2,9 +2,11 @@ package seng202.team4;
 
 import org.apache.commons.io.FileUtils;
 import seng202.team4.model.DataLoader;
+import seng202.team4.model.DatabaseManager;
 
 import java.io.*;
 import java.nio.file.StandardCopyOption;
+import java.sql.*;
 
 public class Main {
 
@@ -49,16 +51,77 @@ public class Main {
         }
     }
 
-    public void newDB() {
+    public void newDB () {
+        Connection c = DatabaseManager.connect();
+        if (c != null) {
+            try {
+                DatabaseMetaData metaData = c.getMetaData();
+                System.out.println("The driver name is " + metaData.getDriverName());
+                System.out.println("A new database has been created.");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            DatabaseManager.disconnect(c);
 
-        try {
+            String airlineTable = "CREATE TABLE \"Airline\" (" +
+                    "\"AirlineID\" INTEGER NOT NULL UNIQUE," +
+                    "\"Name\" STRING," +
+                    "\"Alias\" STRING," +
+                    "\"IATA\" STRING," +
+                    "\"ICAO\" STRING," +
+                    "\"Callsign\" STRING," +
+                    "\"Country\" STRING," +
+                    "\"RecentlyActive\" STRING," +
+                    "PRIMARY KEY(\"AirlineID\" AUTOINCREMENT)" +
+                    ")";
+            String airportTable = "CREATE TABLE \"Airport\" (" +
+                    "\"ID\" INTEGER NOT NULL UNIQUE," +
+                    "\"Name\" STRING," +
+                    "\"City\" STRING," +
+                    "\"Country\" STRING," +
+                    "\"IATA\" STRING," +
+                    "\"ICAO\" STRING," +
+                    "\"Latitude\" DOUBLE," +
+                    "\"Longitude\" DOUBLE," +
+                    "\"Altitude\" DOUBLE," +
+                    "\"Timezone\" DOUBLE," +
+                    "\"DST\"\tSTRING," +
+                    "\"TzDatabaseTime\" STRING," +
+                    "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
+                    ")";
+            String routeTable = "CREATE TABLE \"Route\" (" +
+                    "\"ID\"\tINTEGER NOT NULL UNIQUE," +
+                    "\"Airline\" STRING," +
+                    "\"AirlineID\" INTEGER," +
+                    "\"SourceAirport\" STRING," +
+                    "\"SourceAirportID\" INTEGER," +
+                    "\"DestinationAirport\" STRING," +
+                    "\"DestinationAirportID\" INTEGER," +
+                    "\"Codeshare\" STRING," +
+                    "\"Stops\" INTEGER," +
+                    "\"Equipment\" STRING," +
+                    "\"CarbonEmissions\" INTEGER," +
+                    "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
+                    ")";
 
-            File src = copyToFolder(Path.emptyDatabase);
-            File dst = new File(Path.database);
-            FileUtils.copyFile(src, dst);
-        } catch (IOException e) {
+
+            createNewTable(airlineTable);
+            createNewTable(airportTable);
+            createNewTable(routeTable);
+        }
+    }
+
+    public static void createNewTable(String table) {
+
+        try (Connection c = DriverManager.getConnection(Path.databaseConnection);
+             Statement stmt = c.createStatement()
+        ) {
+            stmt.execute(table);
+            stmt.close();
+            c.close();
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Could not copy DB");
         }
     }
 

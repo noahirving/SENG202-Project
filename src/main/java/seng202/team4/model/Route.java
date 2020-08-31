@@ -49,9 +49,8 @@ public class Route extends DataType {
 
     @Override
     public String getInsertStatement() {
-        return "INSERT INTO ROUTES ('ROUTEID', 'AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'CARBONEMISSIONS') "
+        return "INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'CARBONEMISSIONS') "
                 + "VALUES ('"
-                + getRouteID() + between
                 + getAirlineCode().replaceAll("'", "''") + between
                 + getAirlineID() + between
                 + getSourceAirportCode().replaceAll("'", "''") + between

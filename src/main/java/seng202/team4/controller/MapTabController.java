@@ -83,7 +83,7 @@ public class MapTabController implements Initializable {
                 airportCountries.add(country);
             }
         }
-        ResultSet airlineResultSet = stmt.executeQuery("SELECT Country FROM Airlines");
+        ResultSet airlineResultSet = stmt.executeQuery("SELECT Country FROM Airline");
         while (airlineResultSet.next()) {
             String country = airlineResultSet.getString("Country");
             if (!airlineCountries.contains(country)) {
@@ -97,7 +97,7 @@ public class MapTabController implements Initializable {
     }
 
     private void initialiseRouteComboboxes(Statement stmt) throws SQLException {
-        ResultSet routesResultSet = stmt.executeQuery("SELECT Airline, SourceAirport, Equipment FROM Routes");
+        ResultSet routesResultSet = stmt.executeQuery("SELECT Airline, SourceAirport, Equipment FROM Route");
         while (routesResultSet.next()) {
             String airline = routesResultSet.getString("Airline");
             String sourceAirport = routesResultSet.getString("SourceAirport");
@@ -143,7 +143,7 @@ public class MapTabController implements Initializable {
         resetMap();
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
-        ResultSet routesResultSet = stmt.executeQuery("SELECT SourceAirport, DestinationAirport FROM Routes");
+        ResultSet routesResultSet = stmt.executeQuery("SELECT SourceAirport, DestinationAirport FROM Route");
         int count = 0;
         while (routesResultSet.next() && count <= ROUTELIMIT) {
             showOneRoute(routesResultSet);
@@ -229,7 +229,7 @@ public class MapTabController implements Initializable {
 
         planeType = checkValidInput(planeType);
 
-        String query = String.format("SELECT SourceAirport, DestinationAirport FROM Routes WHERE Airline is %s and SourceAirport is %s and Equipment is %s",
+        String query = String.format("SELECT SourceAirport, DestinationAirport FROM Route WHERE Airline is %s and SourceAirport is %s and Equipment is %s",
                 airline, airport, planeType);
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);

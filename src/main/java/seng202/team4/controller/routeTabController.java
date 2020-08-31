@@ -192,7 +192,7 @@ public class routeTabController extends DataController{
 
     @Override
     public String getTableQuery() {
-        return "SELECT * FROM Routes";
+        return "SELECT * FROM Route";
     }
 
     @Override

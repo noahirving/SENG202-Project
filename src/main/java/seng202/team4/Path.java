@@ -1,7 +1,6 @@
 package seng202.team4;
 
 public abstract class Path {
-    public static final String emptyDatabase = "/database_empty.db";
     public static final String directory = System.getProperty("user.home") + "/flight_tracker";
     public static final String database = directory + "/database.db";
     public static final String databaseConnection = "jdbc:sqlite:" + database;
