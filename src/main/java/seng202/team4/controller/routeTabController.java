@@ -14,8 +14,6 @@ import seng202.team4.model.DataType;
 import seng202.team4.model.DatabaseManager;
 import seng202.team4.model.Route;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.*;
 
 public class routeTabController extends DataController{

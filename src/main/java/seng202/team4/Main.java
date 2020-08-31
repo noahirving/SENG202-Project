@@ -19,6 +19,9 @@ public class Main {
         m.loadTest();
 
         MainApplication.main(args);
+
+        FlightPlanner fp = new FlightPlanner();
+        fp.searchFlight();
     }
 
     public void loadTest() throws IOException {
