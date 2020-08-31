@@ -61,7 +61,7 @@ public class airlineTabController extends DataController {
 
     @Override
     public String getTableQuery() {
-        return "SELECT Name, Country FROM AIRLINES";
+        return "SELECT Name, Country FROM \"Airline\"";
     }
 
     @Override

@@ -2,9 +2,11 @@ package seng202.team4;
 
 import org.apache.commons.io.FileUtils;
 import seng202.team4.model.DataLoader;
+import seng202.team4.model.DatabaseManager;
 
 import java.io.*;
 import java.nio.file.StandardCopyOption;
+import java.sql.*;
 
 public class Main {
 
@@ -25,13 +27,9 @@ public class Main {
     }
 
     public void loadTest() throws IOException {
-        copyToFolder(Path.airportRsc);
-        copyToFolder(Path.airlineRsc);
-        copyToFolder(Path.routeRsc);
-
-        File airport = new File(Path.directory + "\\airports.txt");
-        File airline = new File(Path.directory + "\\airlines.txt");
-        File route = new File(Path.directory + "\\routes.txt");
+        File airport = copyToFolder(Path.airportRsc);
+        File airline = copyToFolder(Path.airlineRsc);
+        File route = copyToFolder(Path.routeRsc);
 
         DataLoader.uploadAirportData(airport);
         DataLoader.uploadAirlineData(airline);
@@ -56,25 +54,87 @@ public class Main {
         }
     }
 
-    public void newDB() {
+    public void newDB () {
+        Connection c = DatabaseManager.connect();
+        if (c != null) {
+            try {
+                DatabaseMetaData metaData = c.getMetaData();
+                System.out.println("The driver name is " + metaData.getDriverName());
+                System.out.println("A new database has been created.");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            DatabaseManager.disconnect(c);
 
-        try {
-            copyToFolder(Path.emptyDatabase);
-            File src = new File(Path.directory + "\\database_empty.db");
-            File dst = new File(Path.database);
-            FileUtils.copyFile(src, dst);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Could not copy DB");
+            String airlineTable = "CREATE TABLE \"Airline\" (" +
+                    "\"AirlineID\" INTEGER NOT NULL UNIQUE," +
+                    "\"Name\" STRING," +
+                    "\"Alias\" STRING," +
+                    "\"IATA\" STRING," +
+                    "\"ICAO\" STRING," +
+                    "\"Callsign\" STRING," +
+                    "\"Country\" STRING," +
+                    "\"RecentlyActive\" STRING," +
+                    "PRIMARY KEY(\"AirlineID\" AUTOINCREMENT)" +
+                    ")";
+            String airportTable = "CREATE TABLE \"Airport\" (" +
+                    "\"ID\" INTEGER NOT NULL UNIQUE," +
+                    "\"Name\" STRING," +
+                    "\"City\" STRING," +
+                    "\"Country\" STRING," +
+                    "\"IATA\" STRING," +
+                    "\"ICAO\" STRING," +
+                    "\"Latitude\" DOUBLE," +
+                    "\"Longitude\" DOUBLE," +
+                    "\"Altitude\" DOUBLE," +
+                    "\"Timezone\" DOUBLE," +
+                    "\"DST\"\tSTRING," +
+                    "\"TzDatabaseTime\" STRING," +
+                    "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
+                    ")";
+            String routeTable = "CREATE TABLE \"Route\" (" +
+                    "\"ID\"\tINTEGER NOT NULL UNIQUE," +
+                    "\"Airline\" STRING," +
+                    "\"AirlineID\" INTEGER," +
+                    "\"SourceAirport\" STRING," +
+                    "\"SourceAirportID\" INTEGER," +
+                    "\"DestinationAirport\" STRING," +
+                    "\"DestinationAirportID\" INTEGER," +
+                    "\"Codeshare\" STRING," +
+                    "\"Stops\" INTEGER," +
+                    "\"Equipment\" STRING," +
+                    "\"CarbonEmissions\" INTEGER," +
+                    "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
+                    ")";
+
+
+            createNewTable(airlineTable);
+            createNewTable(airportTable);
+            createNewTable(routeTable);
         }
     }
 
-    public void copyToFolder(String filename) throws IOException {
+    public static void createNewTable(String table) {
 
-        InputStream initialStream = (this.getClass().getResourceAsStream("/" + filename));
-        File targetFile = new File(Path.directory + "\\" + filename);
+        try (Connection c = DriverManager.getConnection(Path.databaseConnection);
+             Statement stmt = c.createStatement()
+        ) {
+            stmt.execute(table);
+            stmt.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public File copyToFolder(String filename) throws IOException {
+
+        InputStream initialStream = (this.getClass().getResourceAsStream(filename));
+        File targetFile = new File(Path.directory + filename);
 
         java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        return targetFile;
     }
 
     public void createDirectory() {

@@ -51,9 +51,8 @@ public class Airport extends DataType {
 
     @Override
     public String getInsertStatement() {
-        return "INSERT INTO AIRPORT ('AIRPORTID', 'NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME') "
+        return "INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME') "
                 + "VALUES ('"
-                + getAirportID() + between
                 + getName().replaceAll("'", "''") + between
                 + getCity().replaceAll("'", "''") + between
                 + getCountry().replaceAll("'", "''") + between
