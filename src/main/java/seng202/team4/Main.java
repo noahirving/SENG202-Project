@@ -132,6 +132,7 @@ public class Main {
             createNewTable(airportTable);
             createNewTable(routeTable);
         }
+        DatabaseManager.disconnect(c);
     }
 
     public static void createNewTable(String table) {
@@ -141,7 +142,7 @@ public class Main {
         ) {
             stmt.execute(table);
             stmt.close();
-            c.close();
+            DatabaseManager.disconnect(c);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -76,7 +76,7 @@ public abstract class DataLoader {
             stmt.addBatch("INSERT INTO AIRLINESET ('NAME') VALUES ('BOB');");
             stmt.executeBatch();
             stmt.close();
-            c.close();
+            DatabaseManager.disconnect(c);
         }
         catch (Exception e) {
             e.printStackTrace();
