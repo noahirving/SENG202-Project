@@ -14,6 +14,7 @@ public class Airport extends DataType {
     private double timezone;
     private char dst;
     private String tzDatabase;
+    private int routeNum;
     private String type;
     private String source;
 
@@ -168,6 +169,14 @@ public class Airport extends DataType {
 
     public void setTzDatabase(String tzDatabase) {
         this.tzDatabase = tzDatabase;
+    }
+
+    public int getRouteNum() {
+        return routeNum;
+    }
+
+    public void setRouteNum(int routeNum) {
+        this.routeNum = routeNum;
     }
 
     public String getType() {

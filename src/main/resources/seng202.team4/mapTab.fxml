@@ -22,7 +22,7 @@
       <RowConstraints maxHeight="468.0" minHeight="10.0" prefHeight="468.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <GridPane fx:id="routeFilterGrid" prefHeight="467.0" prefWidth="195.0" visible="false" GridPane.columnIndex="1">
+      <GridPane fx:id="routeFilterGrid" prefHeight="467.0" prefWidth="195.0" GridPane.columnIndex="1">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
          </columnConstraints>
@@ -102,9 +102,10 @@
                </font>
             </Label>
             <Label text="(From Routes Tab)" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+            <Button mnemonicParsing="false" onAction="#clearMap" text="Clear Map" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
          </children>
       </GridPane>
-      <GridPane fx:id="airportAirlineFilterGrid" prefHeight="467.0" prefWidth="195.0" GridPane.columnIndex="1">
+      <GridPane fx:id="airportAirlineFilterGrid" focusTraversable="true" prefHeight="467.0" prefWidth="195.0" visible="false" GridPane.columnIndex="1">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
          </columnConstraints>
@@ -152,6 +153,7 @@
                </GridPane.margin>
             </Button>
             <Label text="(From Airports Tab)" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" />
+            <Button fx:id="clearMapButton" mnemonicParsing="false" onAction="#clearMap" text="Clear Map" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
          </children>
       </GridPane>
       <GridPane>
@@ -165,7 +167,6 @@
          <children>
             <ToolBar prefHeight="40.0" prefWidth="512.0" GridPane.valignment="TOP">
                <items>
-                  <Button fx:id="clearMapButton" mnemonicParsing="false" onAction="#clearMap" text="Clear Map" />
                   <RadioButton fx:id="routeFilterRadio" mnemonicParsing="false" text="Route Filters">
                   <toggleGroup>
                      <ToggleGroup fx:id="filterSelection" />
