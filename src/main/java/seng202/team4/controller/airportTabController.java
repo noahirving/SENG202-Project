@@ -62,7 +62,6 @@ public class airportTabController extends DataController {
             System.exit(0);
         }
 
-        airportDataTable.setItems(airports);
         initCombobox();
 
     }
@@ -158,6 +157,7 @@ public class airportTabController extends DataController {
 
     @Override
     public void setTableData(ResultSet rs) throws Exception {
+        airports = FXCollections.observableArrayList();
         while (rs.next()) {
             Airport airport = new Airport();
             airport.setName(rs.getString("Name"));
@@ -174,6 +174,7 @@ public class airportTabController extends DataController {
                 cities.add(rs.getString("City"));
             }
         }
+        airportDataTable.setItems(airports);
     }
 
     private int getRouteNum(String iata) throws SQLException {

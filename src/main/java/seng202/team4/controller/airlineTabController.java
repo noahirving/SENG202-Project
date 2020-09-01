@@ -48,8 +48,7 @@ public class airlineTabController extends DataController {
             System.exit(0);
         }
 
-        airlineDataTable.setItems(airlines);
-
+        //
         airlineTabCountryCombobox.getSelectionModel().select("---");
         countries.add("---");
         FXCollections.sort(countries);
@@ -66,6 +65,7 @@ public class airlineTabController extends DataController {
 
     @Override
     public void setTableData(ResultSet rs) throws Exception{
+        airlines = FXCollections.observableArrayList();
         while (rs.next()) {
             Airline airline = new Airline();
             airline.setAirlineName(rs.getString("Name"));
@@ -75,6 +75,7 @@ public class airlineTabController extends DataController {
                 countries.add(rs.getString("Country"));
             }
         }
+        airlineDataTable.setItems(airlines);
     }
 
     public void filterByCountry() {
