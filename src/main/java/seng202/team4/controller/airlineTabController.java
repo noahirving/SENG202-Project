@@ -23,7 +23,7 @@ import java.sql.*;
 
 
 public class airlineTabController extends DataController {
-    public Airline dataType = new Airline();
+
     @FXML private TableView<Airline> airlineDataTable;
     @FXML private TableColumn<Airline, String> airlineTabAirlineColumn;
     @FXML private TableColumn<Airline, String> airlineTabCountryColumn;

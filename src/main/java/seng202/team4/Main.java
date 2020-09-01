@@ -18,7 +18,7 @@ public class Main {
         m.createDirectory();
         m.deleteDB();
         m.newDB();
-        m.loadTest();
+        //m.loadTest();
 
         MainApplication.main(args);
     }
@@ -64,8 +64,17 @@ public class Main {
             }
             DatabaseManager.disconnect(c);
 
+            String setTable =
+                    "(" +
+                    "\"ID\" INTEGER NOT NULL UNIQUE," +
+                    "\"Name\" STRING NOT NULL," +
+                    "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
+                    ")";
+
+
+            String airlineSetTable = "CREATE TABLE \"AirlineSet\" " + setTable;
             String airlineTable = "CREATE TABLE \"Airline\" (" +
-                    "\"AirlineID\" INTEGER NOT NULL UNIQUE," +
+                    "\"ID\" INTEGER NOT NULL UNIQUE," +
                     "\"Name\" STRING," +
                     "\"Alias\" STRING," +
                     "\"IATA\" STRING," +
@@ -73,8 +82,13 @@ public class Main {
                     "\"Callsign\" STRING," +
                     "\"Country\" STRING," +
                     "\"RecentlyActive\" STRING," +
-                    "PRIMARY KEY(\"AirlineID\" AUTOINCREMENT)" +
+                    "\"SetID\" INTEGER NOT NULL," +
+                    "FOREIGN KEY (SetID) REFERENCES AirlineSet (SetID)," +
+                    "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
+
+
+            String airportSetTable = "CREATE TABLE \"AirportSet\" " + setTable;
             String airportTable = "CREATE TABLE \"Airport\" (" +
                     "\"ID\" INTEGER NOT NULL UNIQUE," +
                     "\"Name\" STRING," +
@@ -88,8 +102,12 @@ public class Main {
                     "\"Timezone\" DOUBLE," +
                     "\"DST\"\tSTRING," +
                     "\"TzDatabaseTime\" STRING," +
+                    "\"SetID\" INTEGER NOT NULL," +
+                    "FOREIGN KEY (SetID) REFERENCES AirportSet (SetID)," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
+
+            String routeSetTable = "CREATE TABLE \"RouteSet\" " + setTable;
             String routeTable = "CREATE TABLE \"Route\" (" +
                     "\"ID\"\tINTEGER NOT NULL UNIQUE," +
                     "\"Airline\" STRING," +
@@ -102,10 +120,14 @@ public class Main {
                     "\"Stops\" INTEGER," +
                     "\"Equipment\" STRING," +
                     "\"CarbonEmissions\" INTEGER," +
+                    "\"SetID\" INTEGER NOT NULL," +
+                    "FOREIGN KEY (SetID) REFERENCES RouteSet (SetID)," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
 
-
+            createNewTable(airlineSetTable);
+            createNewTable(airportSetTable);
+            createNewTable(routeSetTable);
             createNewTable(airlineTable);
             createNewTable(airportTable);
             createNewTable(routeTable);

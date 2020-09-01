@@ -48,8 +48,8 @@ public class Route extends DataType {
     }
 
     @Override
-    public String getInsertStatement() {
-        return "INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'CARBONEMISSIONS') "
+    public String getInsertStatement(int setID) {
+        return "INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'CARBONEMISSIONS', 'SETID') "
                 + "VALUES ('"
                 + getAirlineCode().replaceAll("'", "''") + between
                 + getAirlineID() + between
@@ -60,13 +60,19 @@ public class Route extends DataType {
                 + isCodeshare() + between
                 + getNumStops() + between
                 + getPlaneTypeCode().replaceAll("'", "''") + between
-                + getCarbonEmissions()
+                + getCarbonEmissions() + between
+                + setID
                 + "');";
     }
 
     @Override
     public DataType newDataType(String line) {
         return new Route(line);
+    }
+
+    @Override
+    public String getSetName() {
+        return "RouteSet";
     }
 
     public double calculateCarbonEmissions() {

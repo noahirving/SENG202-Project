@@ -30,25 +30,28 @@ public abstract class DataController {
         Statement stmt = DatabaseManager.getStatement(c);
         ResultSet rs = stmt.executeQuery(getTableQuery());
         setTableData(rs);
+        rs.close();
+        stmt.close();
         DatabaseManager.disconnect(c);
     }
 
     public void uploadData() throws IOException {
-        FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt")
-                ,new FileChooser.ExtensionFilter("CSV Files", "*.csv")
-        );
-        File f = fc.showOpenDialog(null);
-        if(f != null){
-            /* Check data is valid format and then load into database */
-            DataLoader.uploadData(f, getDataType());
-            try {
-                setTable();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        Stage stage = new Stage();
+        stage.setTitle("Upload file");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.view + "/fileUpload.fxml"));
+        stage.setScene(new Scene(loader.load()));
+        stage.show();
+        FileUploadController controller = loader.getController();
+        controller.setDataController(this);
+        controller.setStage(stage);
+    }
 
+    public void newData(String name, File file) {
+        DataLoader.uploadData(name, file, getDataType());
+        try {
+            setTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

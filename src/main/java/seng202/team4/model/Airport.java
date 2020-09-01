@@ -50,8 +50,8 @@ public class Airport extends DataType {
     }
 
     @Override
-    public String getInsertStatement() {
-        return "INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME') "
+    public String getInsertStatement(int setID) {
+        return "INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME', 'SETID') "
                 + "VALUES ('"
                 + getName().replaceAll("'", "''") + between
                 + getCity().replaceAll("'", "''") + between
@@ -63,13 +63,19 @@ public class Airport extends DataType {
                 + getAltitude() + between
                 + getTimezone() + between
                 + getDst() + between
-                + getTzDatabase().replaceAll("'", "''")
+                + getTzDatabase().replaceAll("'", "''") + between
+                + setID
                 + "');";
     }
 
     @Override
     public DataType newDataType(String line) {
         return new Airport(line);
+    }
+
+    @Override
+    public String getSetName() {
+        return "AirportSet";
     }
 
     public int getAirportID() {

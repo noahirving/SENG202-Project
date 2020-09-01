@@ -30,8 +30,8 @@ public class Airline extends DataType {
     }
 
     @Override
-    public String getInsertStatement(){
-        return "INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE') "
+    public String getInsertStatement(int setID){
+        return "INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') "
                 + "VALUES ('"
                 + getAirlineName().replaceAll("'", "''") + between
                 + getAirlineCode().replaceAll("'", "''") + between
@@ -39,13 +39,19 @@ public class Airline extends DataType {
                 + getAirlineICAO().replaceAll("'", "''") + between
                 + getAirlineCallSign().replaceAll("'", "''") + between
                 + getAirlineCountry().replaceAll("'", "''") + between
-                + isRecentlyActive()
+                + isRecentlyActive() + between
+                + setID
                 + "');";
     }
 
     @Override
     public DataType newDataType(String line) {
         return new Airline(line);
+    }
+
+    @Override
+    public String getSetName() {
+        return "AirlineSet";
     }
 
     public double calculateCarbonEmissions() {

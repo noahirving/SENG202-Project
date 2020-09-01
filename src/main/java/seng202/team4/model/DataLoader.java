@@ -1,10 +1,11 @@
 package seng202.team4.model;
 
+import seng202.team4.Path;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Initialises the DataLoader class by reading raw data files,
@@ -15,30 +16,42 @@ public abstract class DataLoader {
 
     public static boolean uploadAirlineData(File filePath) {
         Airline airline = new Airline();
-        return uploadData(filePath, airline);
+        return uploadData("default", filePath, airline);
     }
 
     public static boolean uploadAirportData(File filePath) {
         Airport airport = new Airport();
-        return uploadData(filePath, airport);
+        return uploadData("default", filePath, airport);
     }
 
     public static boolean uploadRouteData(File filePath) {
         Route route = new Route();
-        return uploadData(filePath, route);
+        return uploadData("default", filePath, route);
     }
 
-    public static Boolean uploadData(File filePath, DataType dataType) {
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
+    public static Boolean uploadData(String name, File filePath, DataType dataType) {
+        makeSet(name);
+        //Connection c = DatabaseManager.connect();
+        /*Statement stmt = DatabaseManager.getStatement(c);
         if (c != null && stmt != null) {
             try {
+                String setInsertStatement = "INSERT INTO " + dataType.getSetName() + " ('NAME') VALUES ('" + name + "');";
+                //System.out.println(setInsertStatement);
+
+                c.close();/*
+                c= DatabaseManager.connect();
+                stmt = DatabaseManager.getStatement(c);
+                String idQuery = "SELECT ID FROM " + dataType.getSetName() + " WHERE 'Name = " + name + "';";
+                ResultSet rs = stmt.executeQuery("SELECT * FROM AirlineSet;");
+                rs.next();
+                System.out.println(rs.getInt("ID"));
+                int SetID = rs.getInt("ID");
                 BufferedReader buffer = new BufferedReader(new FileReader(filePath));
 
                 String line = buffer.readLine();
                 while (line != null && line.trim().length() > 0) {
                     DataType data = dataType.newDataType(line);
-                    stmt.addBatch(data.getInsertStatement());
+                    stmt.addBatch(data.getInsertStatement(SetID));
                     line = buffer.readLine();
                 }
                 stmt.executeBatch();
@@ -51,7 +64,22 @@ public abstract class DataLoader {
             } finally {
                 DatabaseManager.disconnect(c);
             }
-        }
+        }*/
         return false;
+    }
+
+    public static void makeSet(String name) {
+        try (Connection c = DriverManager.getConnection(Path.databaseConnection);
+             Statement stmt = c.createStatement()
+        ) {
+            System.out.println(c.toString());
+            stmt.addBatch("INSERT INTO AIRLINESET ('NAME') VALUES ('BOB');");
+            stmt.executeBatch();
+            stmt.close();
+            c.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
