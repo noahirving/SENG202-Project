@@ -18,7 +18,7 @@ public class Main {
         m.createDirectory();
         m.deleteDB();
         m.newDB();
-        //m.loadTest();
+        m.loadTest();
 
         MainApplication.main(args);
     }

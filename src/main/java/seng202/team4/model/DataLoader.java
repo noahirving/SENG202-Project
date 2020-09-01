@@ -36,19 +36,18 @@ public abstract class DataLoader {
         if (c != null && stmt != null) {
             try {
                 String setInsertStatement = "INSERT INTO " + dataType.getSetName() + " ('NAME') VALUES ('" + name + "');";
-                //System.out.println(setInsertStatement);
-
+                String idQuery = "SELECT ID FROM " + dataType.getSetName() + " WHERE Name = '" + name + "';";
                 stmt.executeUpdate(setInsertStatement);
-                String idQuery = "SELECT 'ID' FROM " + dataType.getSetName() + " WHERE 'Name = " + name + "';";
                 ResultSet rs = stmt.executeQuery(idQuery);
                 rs.next();
-                int SetID = 1; //rs.getInt("ID");
+                int setID = rs.getInt("ID");
+
                 BufferedReader buffer = new BufferedReader(new FileReader(filePath));
 
                 String line = buffer.readLine();
                 while (line != null && line.trim().length() > 0) {
                     DataType data = dataType.newDataType(line);
-                    stmt.addBatch(data.getInsertStatement(SetID));
+                    stmt.addBatch(data.getInsertStatement(setID));
                     line = buffer.readLine();
                 }
                 stmt.executeBatch();
@@ -64,19 +63,4 @@ public abstract class DataLoader {
         }
         return false;
     }
-    /*
-    public static void makeSet(String name) {
-        try (Connection c = DriverManager.getConnection(Path.databaseConnection);
-             Statement stmt = c.createStatement()
-        ) {
-            System.out.println(c.toString());
-            stmt.executeUpdate("INSERT INTO " + dataType.getSetName() + "AIRLINESET ('NAME') VALUES ('" + name + "');");
-            stmt.executeBatch();
-            stmt.close();
-            DatabaseManager.disconnect(c);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 }
