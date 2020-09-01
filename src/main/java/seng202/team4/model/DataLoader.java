@@ -42,7 +42,7 @@ public abstract class DataLoader {
                 String idQuery = "SELECT 'ID' FROM " + dataType.getSetName() + " WHERE 'Name = " + name + "';";
                 ResultSet rs = stmt.executeQuery(idQuery);
                 rs.next();
-                int SetID = 1;//rs.getInt("ID");
+                int SetID = 1; //rs.getInt("ID");
                 BufferedReader buffer = new BufferedReader(new FileReader(filePath));
 
                 String line = buffer.readLine();
