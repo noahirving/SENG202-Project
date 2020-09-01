@@ -197,8 +197,9 @@ public class routeTabController extends DataController{
     public void setTableData(ResultSet rs) throws Exception {
 //        String airportNameQuery = "SELECT Name FROM Airport WHERE IATA = '%s'";
 //        String airlineNameQuery = "SELECT Name FROM Airlines WHERE IATA = '%s'";
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
+        //Connection c = DatabaseManager.connect();
+        //Statement stmt = DatabaseManager.getStatement(c);
+        routes = FXCollections.observableArrayList();
         while (rs.next()) {
             CheckBox check = new CheckBox();
             Route route = new Route();
@@ -240,8 +241,9 @@ public class routeTabController extends DataController{
             addToComboBoxes(airline, sourceAirport, destinationAirport, planeType);
 
         }
-        stmt.close();
-        DatabaseManager.disconnect(c);
+        routeDataTable.setItems(routes);
+        //stmt.close();
+        //DatabaseManager.disconnect(c);
 
     }
 }

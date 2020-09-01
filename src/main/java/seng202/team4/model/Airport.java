@@ -14,6 +14,7 @@ public class Airport extends DataType {
     private double timezone;
     private char dst;
     private String tzDatabase;
+    private int routeNum;
     private String type;
     private String source;
 
@@ -50,8 +51,8 @@ public class Airport extends DataType {
     }
 
     @Override
-    public String getInsertStatement() {
-        return "INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME') "
+    public String getInsertStatement(int setID) {
+        return "INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME', 'SETID') "
                 + "VALUES ('"
                 + getName().replaceAll("'", "''") + between
                 + getCity().replaceAll("'", "''") + between
@@ -63,13 +64,19 @@ public class Airport extends DataType {
                 + getAltitude() + between
                 + getTimezone() + between
                 + getDst() + between
-                + getTzDatabase().replaceAll("'", "''")
+                + getTzDatabase().replaceAll("'", "''") + between
+                + setID
                 + "');";
     }
 
     @Override
     public DataType newDataType(String line) {
         return new Airport(line);
+    }
+
+    @Override
+    public String getSetName() {
+        return "AirportSet";
     }
 
     public int getAirportID() {
@@ -162,6 +169,14 @@ public class Airport extends DataType {
 
     public void setTzDatabase(String tzDatabase) {
         this.tzDatabase = tzDatabase;
+    }
+
+    public int getRouteNum() {
+        return routeNum;
+    }
+
+    public void setRouteNum(int routeNum) {
+        this.routeNum = routeNum;
     }
 
     public String getType() {

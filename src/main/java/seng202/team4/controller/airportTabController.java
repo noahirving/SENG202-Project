@@ -18,16 +18,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seng202.team4.Path;
-import seng202.team4.model.Airport;
-import seng202.team4.model.DataLoader;
-import seng202.team4.model.DataType;
-import seng202.team4.model.Route;
+import seng202.team4.model.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class airportTabController extends DataController {
 
@@ -37,12 +32,12 @@ public class airportTabController extends DataController {
     @FXML private TableColumn<Airport, String> airportTabCityColumn;
     @FXML private TableColumn<Airport, String> airportTabCountryColumn;
     @FXML private TableColumn<Airport, String> airportTabCoordinatesColumn;
+    @FXML private TableColumn<Airport , Integer> airportTabRoutesColumn;
 
     @FXML private ComboBox<String> airportTabCityCombobox;
     @FXML private ComboBox<String> airportTabCountryCombobox;
     @FXML private TextField airportSearchField;
 
-    private Connection conn;
     private ObservableList<Airport> airports = FXCollections.observableArrayList();
     private ObservableList<String> countries = FXCollections.observableArrayList();
     private ObservableList<String> cities = FXCollections.observableArrayList();
@@ -57,6 +52,8 @@ public class airportTabController extends DataController {
         airportTabCityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
         airportTabCountryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
         airportTabCoordinatesColumn.setCellValueFactory(new PropertyValueFactory<>("coordinates"));
+        airportTabRoutesColumn.setCellValueFactory(new PropertyValueFactory<>("routeNum"));
+
 
         try {
             setTable();
@@ -65,7 +62,6 @@ public class airportTabController extends DataController {
             System.exit(0);
         }
 
-        airportDataTable.setItems(airports);
         initCombobox();
 
     }
@@ -161,11 +157,15 @@ public class airportTabController extends DataController {
 
     @Override
     public void setTableData(ResultSet rs) throws Exception {
+        airports = FXCollections.observableArrayList();
         while (rs.next()) {
             Airport airport = new Airport();
             airport.setName(rs.getString("Name"));
             airport.setCountry(rs.getString("Country"));
             airport.setCity(rs.getString("City"));
+//            String iata = rs.getString("IATA");
+//            int routeNum = getRouteNum(iata);
+//            airport.setRouteNum(routeNum);
             airports.add(airport);
             if (!countries.contains(rs.getString("Country"))) {
                 countries.add(rs.getString("Country"));
@@ -174,5 +174,16 @@ public class airportTabController extends DataController {
                 cities.add(rs.getString("City"));
             }
         }
+        airportDataTable.setItems(airports);
+    }
+
+    private int getRouteNum(String iata) throws SQLException {
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        ResultSet routeNumQuery = stmt.executeQuery("SELECT COUNT() FROM Route WHERE SourceAirport = '" + iata + "'");
+        int routeNum = routeNumQuery.getInt("COUNT()");
+        DatabaseManager.disconnect(c);
+        return routeNum;
+
     }
 }

@@ -92,8 +92,8 @@ public class MapTabController implements Initializable {
         }
         FXCollections.sort(airportCountries); airportCountryFilterCombobox.setItems(airportCountries);
         new AutoCompleteComboBoxListener<>(airportCountryFilterCombobox);
-
-
+        DatabaseManager.disconnect(c);
+        DatabaseManager.disconnect(c);
     }
 
     private void initialiseRouteComboboxes(Statement stmt) throws SQLException {
@@ -182,7 +182,8 @@ public class MapTabController implements Initializable {
             executeScript(scriptToExecute);
 
         }
-
+        DatabaseManager.disconnect(c);
+        DatabaseManager.disconnect(c);
     }
 
     @FXML
@@ -239,6 +240,7 @@ public class MapTabController implements Initializable {
             showOneRoute(filteredResultSet);
             count++;
         }
+        DatabaseManager.disconnect(c);
 
     }
 
@@ -255,6 +257,7 @@ public class MapTabController implements Initializable {
         while (airportResultSet.next()) {
             addOneAirport(airportResultSet);
         }
+        DatabaseManager.disconnect(c);
     }
 
 
