@@ -30,22 +30,19 @@ public abstract class DataLoader {
     }
 
     public static Boolean uploadData(String name, File filePath, DataType dataType) {
-        makeSet(name);
-        //Connection c = DatabaseManager.connect();
-        /*Statement stmt = DatabaseManager.getStatement(c);
+        //makeSet(name);
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
         if (c != null && stmt != null) {
             try {
                 String setInsertStatement = "INSERT INTO " + dataType.getSetName() + " ('NAME') VALUES ('" + name + "');";
                 //System.out.println(setInsertStatement);
 
-                c.close();/*
-                c= DatabaseManager.connect();
-                stmt = DatabaseManager.getStatement(c);
-                String idQuery = "SELECT ID FROM " + dataType.getSetName() + " WHERE 'Name = " + name + "';";
-                ResultSet rs = stmt.executeQuery("SELECT * FROM AirlineSet;");
+                stmt.executeUpdate(setInsertStatement);
+                String idQuery = "SELECT 'ID' FROM " + dataType.getSetName() + " WHERE 'Name = " + name + "';";
+                ResultSet rs = stmt.executeQuery(idQuery);
                 rs.next();
-                System.out.println(rs.getInt("ID"));
-                int SetID = rs.getInt("ID");
+                int SetID = 1;//rs.getInt("ID");
                 BufferedReader buffer = new BufferedReader(new FileReader(filePath));
 
                 String line = buffer.readLine();
@@ -64,16 +61,16 @@ public abstract class DataLoader {
             } finally {
                 DatabaseManager.disconnect(c);
             }
-        }*/
+        }
         return false;
     }
-
+    /*
     public static void makeSet(String name) {
         try (Connection c = DriverManager.getConnection(Path.databaseConnection);
              Statement stmt = c.createStatement()
         ) {
             System.out.println(c.toString());
-            stmt.addBatch("INSERT INTO AIRLINESET ('NAME') VALUES ('BOB');");
+            stmt.executeUpdate("INSERT INTO " + dataType.getSetName() + "AIRLINESET ('NAME') VALUES ('" + name + "');");
             stmt.executeBatch();
             stmt.close();
             DatabaseManager.disconnect(c);
@@ -81,5 +78,5 @@ public abstract class DataLoader {
         catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
