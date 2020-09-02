@@ -1,5 +1,6 @@
 package seng202.team4.controller;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -7,8 +8,10 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import seng202.team4.Path;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
@@ -16,6 +19,7 @@ import seng202.team4.model.DatabaseManager;
 import seng202.team4.model.Route;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class RouteTabController extends DataController{
 
@@ -26,7 +30,7 @@ public class RouteTabController extends DataController{
     @FXML private TableColumn<Route, String> routeTabDestinationAirportColumn;
     @FXML private TableColumn<Route, Integer> routeTabNumStopsColumn;
     @FXML private TableColumn<Route, String> routeTabPlaneTypeColumn;
-    @FXML private TableColumn<Route, Integer> routeTabCarbonEmissionsColumn;
+    @FXML private TableColumn<Route, Integer> routeTabDistanceColumn;
     @FXML private TableColumn<Route, Boolean> routeTabSelectedRoute;
 
     @FXML private ComboBox<String> routeAirlineFilterCombobox;
@@ -42,6 +46,7 @@ public class RouteTabController extends DataController{
     @FXML private TextField routeSearchField;
 
     private ObservableList<Route> routes = FXCollections.observableArrayList();
+    private ObservableList<Route> selectedRoutes = FXCollections.observableArrayList();
     private ObservableList<String> airlineCodes = FXCollections.observableArrayList();
     private ObservableList<String> departureCountries = FXCollections.observableArrayList();
     private ObservableList<String> destinationCountries = FXCollections.observableArrayList();
@@ -54,9 +59,19 @@ public class RouteTabController extends DataController{
         routeTabDestinationAirportColumn.setCellValueFactory(new PropertyValueFactory<>("destinationAirportCode"));
         routeTabNumStopsColumn.setCellValueFactory(new PropertyValueFactory<>("numStops"));
         routeTabPlaneTypeColumn.setCellValueFactory(new PropertyValueFactory<>("planeTypeCode"));
-        routeTabCarbonEmissionsColumn.setCellValueFactory(new PropertyValueFactory<>("carbonEmissions"));
-        routeTabSelectedRoute.setCellValueFactory(new PropertyValueFactory<>("select"));
-
+        routeTabDistanceColumn.setCellValueFactory(new PropertyValueFactory<>("distance"));
+        //routeTabSelectedRoute.setCellValueFactory(new PropertyValueFactory<>("select"));
+        routeDataTable.setEditable(true);
+        routeTabSelectedRoute.setCellFactory(CheckBoxTableCell.forTableColumn(new Callback<Integer, ObservableValue<Boolean>>() {
+            @Override
+            public ObservableValue<Boolean> call(Integer param) {
+                ObservableValue<Boolean> current = routes.get(param).selectedProperty();
+                //routes.get(param).setSelected(!routes.get(param).isSelected());
+                selectedRoutes.add(routes.get(param));
+                //System.out.println(selectedRoutes);
+                return current;
+            }
+        }));
         // Connect sliders to labels indicating their value
         routeStopsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> stopsLabel.textProperty().setValue(
                 String.valueOf(newValue.intValue())));
@@ -65,6 +80,7 @@ public class RouteTabController extends DataController{
                 String.valueOf(newValue.intValue())));
 
         try {
+            getMaxStops();
             setTable(); // Super class method which calls setTableData
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,8 +105,11 @@ public class RouteTabController extends DataController{
             route.setDestinationAirportCode(destinationAirport);
             route.setNumStops(rs.getInt("Stops"));
             route.setPlaneTypeCode(planeType);
-            route.setCarbonEmissions(rs.getDouble("CarbonEmissions"));
-            route.setSelect(check);
+            route.setDistance(0);
+//            if(numStops == 0){
+//                route.setSelect(check);
+//            }
+            //route.setSelect(check);
             routes.add(route);
 
             addToComboBoxList(airlineCodes, airline);
@@ -135,7 +154,7 @@ public class RouteTabController extends DataController{
 
         FilteredList<Route> emissionsSliderFilter = new FilteredList<>(planeFilter, p -> true);
         emissionsLabel.textProperty().addListener((observableValue, oldValue, newValue) ->
-                emissionsSliderFilter.setPredicate((route -> (Double.parseDouble(newValue) == route.getCarbonEmissions()))));
+                emissionsSliderFilter.setPredicate((route -> (Double.parseDouble(newValue) == route.getDistance()))));
 
         // Add search bar filter
         FilteredList<Route> searchFilter = searchBarFilter(emissionsSliderFilter);
@@ -188,6 +207,64 @@ public class RouteTabController extends DataController{
 
                 }));
         return newFilter;
+    }
+
+    public void carbonEmissions(){
+
+    }
+
+    public double calculateDistance(String airportCodeOne, String airportCodeTwo) throws SQLException {
+        Double lat1;
+        Double lat2;
+        Double long1;
+        Double long2;
+
+        String query = "SELECT Latitude,Longitude from Airport WHERE IATA = '" + airportCodeOne + "' OR IATA = '" + airportCodeTwo + "'";
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        ResultSet result = stmt.executeQuery(query);
+        ArrayList<Double> lats = new ArrayList<Double>();
+        ArrayList<Double> longs = new ArrayList<Double>();
+        while (result.next()){
+            lats.add(result.getDouble("Latitude"));
+            longs.add(result.getDouble("Longitude"));
+        }
+        stmt.close();
+        //Get latitude and longitude of airports in route
+        try{
+            lat1 = Math.toRadians(lats.get(0));
+            lat2 = Math.toRadians(lats.get(1));
+            long1 = Math.toRadians(longs.get(0));
+            long2 = Math.toRadians(longs.get(1));
+        } catch(Exception e){
+            return 0.0;
+        }
+
+
+        //Calculate distance between airports
+        // Haversine formula
+        double dlon = long2 - long1;
+        double dlat = lat2 - lat1;
+        double a = Math.pow(Math.sin(dlat / 2), 2)
+                + Math.cos(lat1) * Math.cos(lat2)
+                * Math.pow(Math.sin(dlon / 2),2);
+
+        double c = 2 * Math.asin(Math.sqrt(a));
+        // Radius of earth in kilometers. Use 3956
+        // for miles
+        double r = 6371;
+        //return distance to be stored in DB
+        return(r * c);
+    }
+
+    public void getMaxStops() throws Exception {
+        String query = "SELECT max(STOPS) FROM Route";
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        ResultSet result = stmt.executeQuery(query);
+        Integer maxStop = result.getInt("max(STOPS)");
+        routeStopsFilterSlider.setMax(maxStop);
+        stmt.close();
     }
 
     @Override

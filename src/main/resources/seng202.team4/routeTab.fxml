@@ -56,7 +56,7 @@
                       <TableColumn fx:id="routeTabDestinationAirportColumn" minWidth="4.800048828125" prefWidth="94.0" text="Destination &#10;    airport&#10;      IATA&#10;" />
                       <TableColumn fx:id="routeTabNumStopsColumn" minWidth="4.800048828125" prefWidth="83.0" text="Number of &#10;     stops" />
                       <TableColumn fx:id="routeTabPlaneTypeColumn" minWidth="4.800048828125" text="Plane type" />
-                      <TableColumn fx:id="routeTabCarbonEmissionsColumn" minWidth="4.800048828125" prefWidth="69.0" text="  Carbon &#10;emissions" />
+                      <TableColumn fx:id="routeTabDistanceColumn" minWidth="4.800048828125" prefWidth="69.0" text="Distance" />
                       <TableColumn fx:id="routeTabSelectedRoute" minWidth="4.800048828125" prefWidth="69.0" text="Select &#10;Route" />
                   </columns>
               </TableView>

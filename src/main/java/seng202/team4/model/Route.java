@@ -1,6 +1,16 @@
 package seng202.team4.model;
 
 import javafx.scene.control.CheckBox;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
+
+import java.awt.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Route extends DataType {
 
@@ -14,8 +24,8 @@ public class Route extends DataType {
     private boolean codeshare;
     private int numStops;
     private String planeTypeCode;
-    private double carbonEmissions;
-    private CheckBox select;
+    private double distance;
+    private BooleanProperty select;
 
     public Route(String routeInfo) {
         String[] routeArray = routeInfo.split(",");
@@ -36,7 +46,13 @@ public class Route extends DataType {
         } else {
             this.planeTypeCode = "";
         }
-        this.carbonEmissions = calculateCarbonEmissions();
+        try {
+            this.distance = Double.parseDouble(routeArray[10]);
+        }
+        catch (Exception e) {
+            this.distance = 0.00;
+        }
+        this.select = new SimpleBooleanProperty(false);
     }
 
     public Route() {
@@ -45,7 +61,7 @@ public class Route extends DataType {
 
     @Override
     public String getInsertStatement(int setID) {
-        return "INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'CARBONEMISSIONS', 'SETID') "
+        return "INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'DISTANCE', 'SETID') "
                 + "VALUES ('"
                 + getAirlineCode().replaceAll("'", "''") + between
                 + getAirlineID() + between
@@ -56,10 +72,11 @@ public class Route extends DataType {
                 + isCodeshare() + between
                 + getNumStops() + between
                 + getPlaneTypeCode().replaceAll("'", "''") + between
-                + getCarbonEmissions() + between
+                + getDistance() + between
                 + setID
                 + "');";
     }
+
 
     @Override
     public DataType newDataType(String line) {
@@ -123,8 +140,12 @@ public class Route extends DataType {
         return planeTypeCode;
     }
 
-    public double getCarbonEmissions() {
-        return carbonEmissions;
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     public void setAirlineCode(String airlineCode) {
@@ -163,15 +184,15 @@ public class Route extends DataType {
         this.planeTypeCode = planeTypeCode;
     }
 
-    public void setCarbonEmissions(double carbonEmissions) {
-        this.carbonEmissions = carbonEmissions;
+    public boolean isSelected() {
+        return this.select.get();
     }
 
-    public CheckBox getSelect() {
+    public BooleanProperty selectedProperty() {
         return select;
     }
 
-    public void setSelect(CheckBox select) {
-        this.select = select;
+    public void setSelected(boolean select) {
+        this.select.set(select);
     }
 }

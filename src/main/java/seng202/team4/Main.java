@@ -122,7 +122,7 @@ public class Main {
                     "\"Codeshare\" STRING," +
                     "\"Stops\" INTEGER," +
                     "\"Equipment\" STRING," +
-                    "\"CarbonEmissions\" INTEGER," +
+                    "\"Distance\" INTEGER," +
                     "\"SetID\" INTEGER NOT NULL," +
                     "FOREIGN KEY (SetID) REFERENCES RouteSet (SetID)," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
