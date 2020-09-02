@@ -1,11 +1,14 @@
 package seng202.team4.controller;
 
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seng202.team4.Path;
@@ -33,6 +36,12 @@ public abstract class DataController {
         rs.close();
         stmt.close();
         DatabaseManager.disconnect(c);
+    }
+
+    public void addToComboBoxList(ObservableList comboBoxList, String dataName) {
+        if (!comboBoxList.contains(dataName)) {
+            comboBoxList.add(dataName);
+        }
     }
 
     public void uploadData() throws IOException {

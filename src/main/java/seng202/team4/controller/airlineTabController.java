@@ -30,9 +30,9 @@ public class airlineTabController extends DataController {
     @FXML private ComboBox<String> airlineTabCountryCombobox;
     @FXML private TextField airlineSearchField;
 
-    private Connection conn;
     private ObservableList<Airline> airlines = FXCollections.observableArrayList();
     private ObservableList<String> countries = FXCollections.observableArrayList();
+
     private FilteredList<Airline> countryFilter = new FilteredList<>(airlines, p -> true);
     private FilteredList<Airline> searchFilter = new FilteredList<>(countryFilter, p -> true);
 
@@ -43,24 +43,13 @@ public class airlineTabController extends DataController {
 
         try {
             setTable();
+            initialiseComboBoxes();
+            filterData();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
         }
 
-        //
-        airlineTabCountryCombobox.getSelectionModel().select("---");
-        countries.add("---");
-        FXCollections.sort(countries);
-        airlineTabCountryCombobox.setItems(countries);
-        new AutoCompleteComboBoxListener<>(airlineTabCountryCombobox);
-
-
-    }
-
-    @Override
-    public String getTableQuery() {
-        return "SELECT Name, Country FROM \"Airline\"";
     }
 
     @Override
@@ -68,53 +57,80 @@ public class airlineTabController extends DataController {
         airlines = FXCollections.observableArrayList();
         while (rs.next()) {
             Airline airline = new Airline();
-            airline.setAirlineName(rs.getString("Name"));
-            airline.setAirlineCountry(rs.getString("Country"));
+            String airlineName = rs.getString("Name");
+            String airlineCountry = rs.getString("Country");
+
+            airline.setAirlineName(airlineName);
+            airline.setAirlineCountry(airlineCountry);
             airlines.add(airline);
-            if (!countries.contains(rs.getString("Country"))) {
-                countries.add(rs.getString("Country"));
-            }
+
+            addToComboBoxList(countries, airlineCountry);
         }
         airlineDataTable.setItems(airlines);
     }
 
-    public void filterByCountry() {
-        String newValue = airlineTabCountryCombobox.getValue();
-        countryFilter.setPredicate(airline -> {
-            if (newValue == null || newValue.equals("---")) {
-                return true;
-            }
-            String lower = newValue.toLowerCase();
-            return airline.getAirlineCountry().toLowerCase().contains(lower);
-        });
+    private void initialiseComboBoxes() {
+        // Sort and set combobox items
+        FXCollections.sort(countries); airlineTabCountryCombobox.setItems(countries);
 
-        SortedList<Airline> sortedAirline = new SortedList<>(countryFilter);
-        sortedAirline.comparatorProperty().bind(airlineDataTable.comparatorProperty());
-        airlineDataTable.setItems(sortedAirline);
+        // Make combobox searching autocomplete
+        new AutoCompleteComboBoxListener<>(airlineTabCountryCombobox);
+
     }
 
-    public void searchData() {
-        String newValue = airlineSearchField.getText();
-        searchFilter.setPredicate(airline -> {
-            if (newValue == null || newValue.isEmpty()) {
-                return true;
-            }
-            String lower = newValue.toLowerCase();
-            if (airline.getAirlineName().toLowerCase().contains(lower)) {
-                return true;
-            } else {
-                return airline.getAirlineCountry().toLowerCase().contains(lower);
-            }
-        });
+    private void filterData() {
 
-        SortedList<Airline> sortedAirline = new SortedList<>(searchFilter);
-        sortedAirline.comparatorProperty().bind(airlineDataTable.comparatorProperty());
-        airlineDataTable.setItems(sortedAirline);
+        // Connect combobox and slider filters to table
+        FilteredList<Airline> countryFilter = addFilter(new FilteredList<>(airlines, p -> true), airlineTabCountryCombobox, "Country");
+
+        // Add search bar filter
+        FilteredList<Airline> searchFilter = searchBarFilter(countryFilter);
+        SortedList<Airline> sortedRoute = new SortedList<>(searchFilter);
+        sortedRoute.comparatorProperty().bind(airlineDataTable.comparatorProperty());
+
+        airlineDataTable.setItems(sortedRoute);
+
     }
 
+    public FilteredList<Airline> addFilter(FilteredList<Airline> filteredList, ComboBox<String> comboBox, String filter) {
+        FilteredList<Airline> newFilter = new FilteredList<>(filteredList, p -> true);
+        comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                newFilter.setPredicate(airline -> {
+                    if (newValue == null) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+                    if (filter.equals("Country")) {
+                        return airline.getAirlineCountry().toLowerCase().contains(lower);
+                    }
+                    return false;
+                }));
+        return newFilter;
+    }
+
+    private FilteredList<Airline> searchBarFilter(FilteredList<Airline> countryFilter) {
+        FilteredList<Airline> searchFilter = new FilteredList<>(countryFilter, p -> true);
+        airlineSearchField.textProperty().addListener((observable, oldValue, newValue) ->
+                searchFilter.setPredicate(airline -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+                    if (airline.getAirlineName().toLowerCase().contains(lower)) {
+                        return true;
+                    } else if (airline.getAirlineCountry().toLowerCase().contains(lower)) {
+                        return true;
+                    }
+                    return false;
+                }));
+        return searchFilter;
+    }
 
     @Override
-    public DataType getDataType() {
-        return new Airline();
+    public DataType getDataType() { return new Airline(); }
+
+    @Override
+    public String getTableQuery() {
+        return "SELECT Name, Country FROM Airline";
     }
 }
