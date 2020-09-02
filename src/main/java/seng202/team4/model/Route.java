@@ -16,27 +16,23 @@ public class Route extends DataType {
     private String planeTypeCode;
     private double carbonEmissions;
     private CheckBox select;
-    private static int count = 0;
 
     public Route(String routeInfo) {
-        routeInfo = count + "," + routeInfo;
-        count++;
         String[] routeArray = routeInfo.split(",");
-        this.routeID = Integer.parseInt(routeArray[0]);
-        this.airlineCode = routeArray[1];
-        this.airlineID = tryReturnInt(routeArray[2]);
-        this.sourceAirportCode = routeArray[3];
-        this.sourceAirportID = tryReturnInt(routeArray[4]);
-        this.destinationAirportCode = routeArray[5];
-        this.destinationAirportID = tryReturnInt(routeArray[6]);
-        this.codeshare = routeArray[7].equals("Y");
+        this.airlineCode = routeArray[0];
+        this.airlineID = tryReturnInt(routeArray[1]);
+        this.sourceAirportCode = routeArray[2];
+        this.sourceAirportID = tryReturnInt(routeArray[3]);
+        this.destinationAirportCode = routeArray[4];
+        this.destinationAirportID = tryReturnInt(routeArray[5]);
+        this.codeshare = routeArray[6].equals("Y");
         try {
-            this.numStops = Integer.parseInt(routeArray[8]);
+            this.numStops = Integer.parseInt(routeArray[7]);
         } catch(Exception e) {
             e.printStackTrace();
         }
-        if (routeArray.length == 10) {
-            this.planeTypeCode = routeArray[9];
+        if (routeArray.length == 9) {
+            this.planeTypeCode = routeArray[8];
         } else {
             this.planeTypeCode = "";
         }
