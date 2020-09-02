@@ -38,6 +38,7 @@ public abstract class DataController {
         rs.close();
         stmt.close();
         DatabaseManager.disconnect(c);
+        initialiseComboBoxes();
     }
 
     public void addToComboBoxList(ObservableList comboBoxList, String dataName) {

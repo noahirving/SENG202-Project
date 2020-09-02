@@ -54,8 +54,6 @@ public class AirportTabController extends DataController {
 
         try {
             setTable(); // Super class method which calls setTableData
-            initialiseComboBoxes();
-            filterData();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -65,6 +63,8 @@ public class AirportTabController extends DataController {
 
     @Override
     public void setTableData(ResultSet rs) throws Exception {
+        airports = FXCollections.observableArrayList();
+
         while (rs.next()) {
             Airport airport = new Airport();
             String airportName = rs.getString("Name");
@@ -95,6 +95,9 @@ public class AirportTabController extends DataController {
         // Make combobox searching autocomplete
         new AutoCompleteComboBoxListener<>(airportTabCityCombobox);
         new AutoCompleteComboBoxListener<>(airportTabCountryCombobox);
+
+        filterData();
+
     }
 
     @Override

@@ -66,8 +66,6 @@ public class RouteTabController extends DataController{
 
         try {
             setTable(); // Super class method which calls setTableData
-            initialiseComboBoxes();
-            filterData();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -77,6 +75,7 @@ public class RouteTabController extends DataController{
 
     @Override
     public void setTableData(ResultSet rs) throws Exception {
+        routes = FXCollections.observableArrayList();
         while (rs.next()) {
             CheckBox check = new CheckBox();
             Route route = new Route();
@@ -117,6 +116,9 @@ public class RouteTabController extends DataController{
         new AutoCompleteComboBoxListener<>(routeDepartureFilterCombobox);
         new AutoCompleteComboBoxListener<>(routeDestinationFilterCombobox);
         new AutoCompleteComboBoxListener<>(routePlaneTypeFilterCombobox);
+
+        filterData();
+
     }
 
     @Override

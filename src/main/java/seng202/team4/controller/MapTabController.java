@@ -39,8 +39,6 @@ public class MapTabController implements Initializable {
 
     private static final int ROUTELIMIT = 400;
 
-
-
     private WebEngine webEngine;
     private static String airportCoordQuery = "SELECT Longitude, Latitude, Name FROM Airport WHERE IATA = '%s'";
 
@@ -49,11 +47,15 @@ public class MapTabController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        init();
+    }
 
+    @FXML
+    private void init() {
         try {
             initMap();
             initialiseRadioButtons();
-            initialiseComboboxes();
+            initialiseComboBoxes();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -71,7 +73,7 @@ public class MapTabController implements Initializable {
         });
     }
 
-    private void initialiseComboboxes() throws SQLException {
+    private void initialiseComboBoxes() throws SQLException {
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
         initialiseRouteComboboxes(stmt);
@@ -92,7 +94,6 @@ public class MapTabController implements Initializable {
         }
         FXCollections.sort(airportCountries); airportCountryFilterCombobox.setItems(airportCountries);
         new AutoCompleteComboBoxListener<>(airportCountryFilterCombobox);
-        DatabaseManager.disconnect(c);
         DatabaseManager.disconnect(c);
     }
 

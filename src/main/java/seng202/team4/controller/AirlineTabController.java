@@ -43,8 +43,6 @@ public class AirlineTabController extends DataController {
 
         try {
             setTable();
-            initialiseComboBoxes();
-            filterData();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -68,7 +66,6 @@ public class AirlineTabController extends DataController {
         }
         airlineDataTable.setItems(airlines);
     }
-
     @Override
     public void initialiseComboBoxes() {
         // Sort and set combobox items
@@ -77,8 +74,9 @@ public class AirlineTabController extends DataController {
         // Make combobox searching autocomplete
         new AutoCompleteComboBoxListener<>(airlineTabCountryCombobox);
 
-    }
+        filterData();
 
+    }
     @Override
     public void filterData() {
         // Connect combobox and slider filters to table
