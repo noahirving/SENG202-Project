@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.airportTabController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.AirportTabController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -33,12 +33,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-              <Label fx:id="airportTabCountrySelectorLabel" text="Country:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
-              <ComboBox fx:id="airportTabCountryCombobox" maxWidth="250.0" onAction="#filterByCountry" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="4" GridPane.halignment="LEFT" />
-              <TextField fx:id="airportSearchField" maxWidth="200.0" onKeyTyped="#searchData" prefHeight="26.0" prefWidth="162.0" promptText="Search" GridPane.halignment="LEFT" />
-              <ComboBox fx:id="airportTabCityCombobox" maxWidth="250.0" onAction="#filterByCity" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT" />
+              <Label fx:id="airportTabCountrySelectorLabel" text="Country:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+              <ComboBox fx:id="airportTabCountryCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT" />
+              <TextField fx:id="airportSearchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" GridPane.halignment="LEFT" />
+              <ComboBox fx:id="airportTabCityCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="4" GridPane.halignment="LEFT" />
               <Button fx:id="airportTabUploadDataBtn" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="125.0" text="Upload Airport Data" GridPane.columnIndex="5" GridPane.halignment="RIGHT" />
-              <Label fx:id="airportTabCitySelectorLabel" text="City:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+              <Label fx:id="airportTabCitySelectorLabel" text="City:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
          </children>
          <padding>
             <Insets left="15.0" right="15.0" />

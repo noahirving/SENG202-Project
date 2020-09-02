@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.sql.*;
 
 
-public class airlineTabController extends DataController {
+public class AirlineTabController extends DataController {
 
     @FXML private TableView<Airline> airlineDataTable;
     @FXML private TableColumn<Airline, String> airlineTabAirlineColumn;
@@ -79,16 +79,15 @@ public class airlineTabController extends DataController {
     }
 
     private void filterData() {
-
         // Connect combobox and slider filters to table
         FilteredList<Airline> countryFilter = addFilter(new FilteredList<>(airlines, p -> true), airlineTabCountryCombobox, "Country");
 
         // Add search bar filter
         FilteredList<Airline> searchFilter = searchBarFilter(countryFilter);
-        SortedList<Airline> sortedRoute = new SortedList<>(searchFilter);
-        sortedRoute.comparatorProperty().bind(airlineDataTable.comparatorProperty());
+        SortedList<Airline> sortedAirline = new SortedList<>(searchFilter);
+        sortedAirline.comparatorProperty().bind(airlineDataTable.comparatorProperty());
 
-        airlineDataTable.setItems(sortedRoute);
+        airlineDataTable.setItems(sortedAirline);
 
     }
 

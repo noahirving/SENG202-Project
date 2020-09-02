@@ -16,7 +16,7 @@ import seng202.team4.model.Route;
 
 import java.sql.*;
 
-public class routeTabController extends DataController{
+public class RouteTabController extends DataController{
 
     public Route dataType = new Route();
     @FXML private TableView<Route> routeDataTable;
@@ -76,7 +76,6 @@ public class routeTabController extends DataController{
 
     @Override
     public void setTableData(ResultSet rs) throws Exception {
-        routes = FXCollections.observableArrayList();
         while (rs.next()) {
             CheckBox check = new CheckBox();
             Route route = new Route();
@@ -104,7 +103,6 @@ public class routeTabController extends DataController{
 
     }
 
-
     private void initialiseComboBoxes() {
         // Sort and set combobox items
         FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
@@ -120,7 +118,6 @@ public class routeTabController extends DataController{
     }
 
     private void filterData() {
-
         // Connect combobox and slider filters to table
         FilteredList<Route> airlinesFilter = addFilter(new FilteredList<>(routes, p -> true), routeAirlineFilterCombobox, "Airline");
         FilteredList<Route> sourceFilter = addFilter(airlinesFilter, routeDepartureFilterCombobox, "Source");
