@@ -69,7 +69,8 @@ public class AirlineTabController extends DataController {
         airlineDataTable.setItems(airlines);
     }
 
-    private void initialiseComboBoxes() {
+    @Override
+    public void initialiseComboBoxes() {
         // Sort and set combobox items
         FXCollections.sort(countries); airlineTabCountryCombobox.setItems(countries);
 
@@ -78,7 +79,8 @@ public class AirlineTabController extends DataController {
 
     }
 
-    private void filterData() {
+    @Override
+    public void filterData() {
         // Connect combobox and slider filters to table
         FilteredList<Airline> countryFilter = addFilter(new FilteredList<>(airlines, p -> true), airlineTabCountryCombobox, "Country");
 

@@ -86,7 +86,8 @@ public class AirportTabController extends DataController {
         airportDataTable.setItems(airports);
     }
 
-    private void initialiseComboBoxes() {
+    @Override
+    public void initialiseComboBoxes() {
         // Sort and set combobox items
         FXCollections.sort(countries); airportTabCountryCombobox.setItems(countries);
         FXCollections.sort(cities); airportTabCityCombobox.setItems(cities);
@@ -96,7 +97,8 @@ public class AirportTabController extends DataController {
         new AutoCompleteComboBoxListener<>(airportTabCountryCombobox);
     }
 
-    private void filterData() {
+    @Override
+    public void filterData() {
         // Connect combobox and slider filters to table
         FilteredList<Airport> countryFilter = addFilter(new FilteredList<>(airports, p -> true), airportTabCountryCombobox, "Country");
         FilteredList<Airport> cityFilter = addFilter(countryFilter, airportTabCityCombobox, "City");

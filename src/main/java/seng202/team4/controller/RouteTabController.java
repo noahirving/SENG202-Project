@@ -103,7 +103,8 @@ public class RouteTabController extends DataController{
 
     }
 
-    private void initialiseComboBoxes() {
+    @Override
+    public void initialiseComboBoxes() {
         // Sort and set combobox items
         FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
         FXCollections.sort(departureCountries); routeDepartureFilterCombobox.setItems(departureCountries);
@@ -117,7 +118,8 @@ public class RouteTabController extends DataController{
         new AutoCompleteComboBoxListener<>(routePlaneTypeFilterCombobox);
     }
 
-    private void filterData() {
+    @Override
+    public void filterData() {
         // Connect combobox and slider filters to table
         FilteredList<Route> airlinesFilter = addFilter(new FilteredList<>(routes, p -> true), routeAirlineFilterCombobox, "Airline");
         FilteredList<Route> sourceFilter = addFilter(airlinesFilter, routeDepartureFilterCombobox, "Source");

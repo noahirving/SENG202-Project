@@ -27,6 +27,8 @@ public abstract class DataController {
     public abstract DataType getDataType();
     public abstract String getTableQuery();
     public abstract void setTableData(ResultSet rs) throws Exception;
+    public abstract void initialiseComboBoxes();
+    public abstract void filterData();
 
     public void setTable() throws Exception {
         Connection c = DatabaseManager.connect();
