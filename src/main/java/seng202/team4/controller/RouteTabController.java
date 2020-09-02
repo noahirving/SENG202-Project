@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -198,4 +199,7 @@ public class RouteTabController extends DataController{
     }
 
 
+    public void carbonEmissions(ActionEvent actionEvent) {
+        // To implement
+    }
 }
