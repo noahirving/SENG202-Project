@@ -26,11 +26,12 @@ public class FileUploadController {
     }
 
     public void getName() {
-        if (!nameField.getText().isBlank()) {
-            name = nameField.getText();
+        String name = nameField.getText().trim();
+        if (!name.isBlank() && !name.toLowerCase().equals(DataController.ALL.toLowerCase())) { // Name doesn't equal keyword All
+            this.name = name;
         }
         else {
-            name = null;
+            this.name = null;
         }
     }
 
