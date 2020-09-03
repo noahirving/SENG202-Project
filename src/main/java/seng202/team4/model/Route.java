@@ -84,6 +84,11 @@ public class Route extends DataType {
     }
 
     @Override
+    public String getTypeName() {
+        return "Route";
+    }
+
+    @Override
     public String getSetName() {
         return "RouteSet";
     }

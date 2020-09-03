@@ -1,6 +1,7 @@
 package seng202.team4.controller;
 
 import javafx.beans.Observable;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,16 +25,56 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public abstract class DataController {
+
     public abstract DataType getDataType();
     public abstract String getTableQuery();
     public abstract void setTableData(ResultSet rs) throws Exception;
     public abstract void initialiseComboBoxes();
     public abstract void filterData();
+    @FXML private ComboBox dataSetComboBox;
+    public final static String ALL = "All";
 
-    public void setTable() throws Exception {
+    public void setDataSetComboBox() throws Exception{
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
-        ResultSet rs = stmt.executeQuery(getTableQuery());
+        ResultSet rs = stmt.executeQuery("Select Name from " + getDataType().getSetName());
+        ObservableList<String> dataSetNames = FXCollections.observableArrayList();
+        dataSetNames.add(ALL);
+        while (rs.next()) {
+            dataSetNames.add(rs.getString("Name"));
+        }
+        dataSetComboBox.setItems(dataSetNames);
+        rs.close();
+        stmt.close();
+        DatabaseManager.disconnect(c);
+    }
+
+    public void setDataSet() throws Exception{
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        String dataSetName = dataSetComboBox.getValue().toString();
+        String query = "Select * from " + getDataType().getTypeName() + " ";
+        if (dataSetName != ALL) {
+            String idQuery = "Select ID from " + getDataType().getSetName() + " Where Name = '" + dataSetName + "';";
+            ResultSet rs = stmt.executeQuery(idQuery);
+            rs.next(); // Need to check no null
+
+            query +=  "WHERE SetID = '" + rs.getInt("ID") + "'";
+        }
+        setTable(query);
+        System.out.println("Table updated");
+        stmt.close();
+        DatabaseManager.disconnect(c);
+    }
+
+    public void setTable() throws Exception {
+        setTable(getTableQuery());
+    }
+
+    public void setTable(String query) throws Exception {
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        ResultSet rs = stmt.executeQuery(query);
         setTableData(rs);
         rs.close();
         stmt.close();
@@ -62,6 +103,7 @@ public abstract class DataController {
         DataLoader.uploadData(name, file, getDataType());
         try {
             setTable();
+            setDataSetComboBox();
         } catch (Exception e) {
             e.printStackTrace();
         }

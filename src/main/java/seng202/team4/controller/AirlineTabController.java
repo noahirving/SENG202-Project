@@ -42,6 +42,7 @@ public class AirlineTabController extends DataController {
         airlineTabCountryColumn.setCellValueFactory(new PropertyValueFactory<>("airlineCountry"));
 
         try {
+            setDataSetComboBox();
             setTable();
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,7 +70,8 @@ public class AirlineTabController extends DataController {
     @Override
     public void initialiseComboBoxes() {
         // Sort and set combobox items
-        FXCollections.sort(countries); airlineTabCountryCombobox.setItems(countries);
+        FXCollections.sort(countries);
+        airlineTabCountryCombobox.setItems(countries);
 
         // Make combobox searching autocomplete
         new AutoCompleteComboBoxListener<>(airlineTabCountryCombobox);

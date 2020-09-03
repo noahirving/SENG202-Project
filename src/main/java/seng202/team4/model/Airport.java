@@ -75,6 +75,11 @@ public class Airport extends DataType {
     }
 
     @Override
+    public String getTypeName() {
+        return "Airport";
+    }
+
+    @Override
     public String getSetName() {
         return "AirportSet";
     }

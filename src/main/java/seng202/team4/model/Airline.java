@@ -50,6 +50,11 @@ public class Airline extends DataType {
     }
 
     @Override
+    public String getTypeName() {
+        return "Airline";
+    }
+
+    @Override
     public String getSetName() {
         return "AirlineSet";
     }

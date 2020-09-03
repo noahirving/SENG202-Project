@@ -80,6 +80,7 @@ public class RouteTabController extends DataController{
                 String.valueOf(newValue.intValue())));
 
         try {
+            setDataSetComboBox();
             getMaxStops();
             setTable(); // Super class method which calls setTableData
         } catch (Exception e) {

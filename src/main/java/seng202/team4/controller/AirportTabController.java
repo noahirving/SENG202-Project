@@ -53,6 +53,7 @@ public class AirportTabController extends DataController {
         airportTabRoutesColumn.setCellValueFactory(new PropertyValueFactory<>("routeNum"));
 
         try {
+            setDataSetComboBox();
             setTable(); // Super class method which calls setTableData
         } catch (Exception e) {
             e.printStackTrace();

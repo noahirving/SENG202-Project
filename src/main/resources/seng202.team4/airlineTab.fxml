@@ -26,15 +26,19 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
               <TextField fx:id="airlineSearchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
-              <Button fx:id="airlineTabUploadDataBtn" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="125.0" text="Upload Airline Data" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
+              <Button fx:id="airlineTabUploadDataBtn" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="125.0" text="Upload Airline Data" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
               <ComboBox fx:id="airlineTabCountryCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
               <Label fx:id="airlineTabCountrySelectorLabel" alignment="CENTER" text="Country:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+            <Label fx:id="airlineTabCountrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="3" />
+            <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" onAction="#setDataSet" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="4" />
          </children>
          <padding>
             <Insets left="15.0" right="15.0" />

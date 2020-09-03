@@ -27,14 +27,18 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-              <Button fx:id="routeTabUploadDataBtn" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="125.0" text="Upload Route Data" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
+              <Button fx:id="routeTabUploadDataBtn" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="125.0" text="Upload Route Data" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
               <TextField fx:id="routeSearchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
             <Button fx:id="routeTabCarbonEmissionsBtn" mnemonicParsing="false" onAction="#carbonEmissions" text="Carbon Emissions Information" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <Label fx:id="airlineTabCountrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="2" />
+            <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" onAction="#setDataSet" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="3" />
          </children>
          <padding>
             <Insets left="15.0" right="15.0" />

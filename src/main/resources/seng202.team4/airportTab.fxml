@@ -28,6 +28,8 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" percentWidth="20.0" prefWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -37,8 +39,10 @@
               <ComboBox fx:id="airportTabCountryCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT" />
               <TextField fx:id="airportSearchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" GridPane.halignment="LEFT" />
               <ComboBox fx:id="airportTabCityCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="4" GridPane.halignment="LEFT" />
-              <Button fx:id="airportTabUploadDataBtn" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="125.0" text="Upload Airport Data" GridPane.columnIndex="5" GridPane.halignment="RIGHT" />
+              <Button fx:id="airportTabUploadDataBtn" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="125.0" text="Upload Airport Data" GridPane.columnIndex="7" GridPane.halignment="RIGHT" />
               <Label fx:id="airportTabCitySelectorLabel" text="City:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
+            <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" onAction="#setDataSet" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="6" />
+            <Label fx:id="airlineTabCountrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="5" />
          </children>
          <padding>
             <Insets left="15.0" right="15.0" />
