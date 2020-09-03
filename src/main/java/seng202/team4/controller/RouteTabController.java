@@ -274,6 +274,16 @@ public class RouteTabController extends DataController{
         Statement stmt = DatabaseManager.getStatement(con);
         String between = "', '";
         for(Route route: selectedRoutes) {
+            Double distance = 0.0;
+            String sourceAirport = route.getSourceAirportCode();
+            String destAirport = route.getDestinationAirportCode();
+            try {
+                distance = calculateDistance(sourceAirport, destAirport);
+                route.setDistance(distance);
+                //System.out.println(routes.get(index).getDistance());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             Double carbonEmitted = calculateEmissions(route);
             String query = "INSERT INTO RoutesSelected ('Airline', 'SourceAirport', 'DestinationAirport', 'Equipment', 'Distance', 'CarbonEmissions') "
                     + "VALUES ('"
@@ -286,18 +296,16 @@ public class RouteTabController extends DataController{
                     + "');";
             stmt.executeUpdate(query);
             System.out.println(route);
-
+            con.commit();
         }
-
         stmt.close();
         DatabaseManager.disconnect(con);
-
-
-
-
     }
 
-    public double calculateDistance(String airportCodeOne, String airportCodeTwo) throws SQLException {
+
+
+
+        public double calculateDistance(String airportCodeOne, String airportCodeTwo) throws SQLException {
         Double lat1;
         Double lat2;
         Double long1;
