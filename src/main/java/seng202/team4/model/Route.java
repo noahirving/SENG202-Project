@@ -26,6 +26,7 @@ public class Route extends DataType {
     private String planeTypeCode;
     private double distance;
     private BooleanProperty select;
+    private double carbonEmissions;
 
     public Route(String routeInfo) {
         String[] routeArray = routeInfo.split(",");
@@ -88,14 +89,20 @@ public class Route extends DataType {
         return "Route";
     }
 
+
     @Override
     public String getSetName() {
         return "RouteSet";
     }
 
-    public double calculateCarbonEmissions() {
-        return 0; // To be implemented
+    public void setCarbonEmissions(double emissions) {
+        this.carbonEmissions = emissions;
     }
+
+    public double getCarbonEmissions() {
+        return carbonEmissions;
+    }
+
 
     public int tryReturnInt(String intString) {
         try {

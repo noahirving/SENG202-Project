@@ -127,13 +127,23 @@ public class Main {
                     "FOREIGN KEY (SetID) REFERENCES RouteSet (SetID)," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
-
+            String routeSelectedTable = "CREATE TABLE \"RoutesSelected\" (" +
+                    "\"ID\"\tINTEGER NOT NULL UNIQUE," +
+                    "\"Airline\" STRING," +
+                    "\"SourceAirport\" STRING," +
+                    "\"DestinationAirport\" STRING," +
+                    "\"Equipment\" STRING," +
+                    "\"Distance\" INTEGER," +
+                    "\"CarbonEmissions\" INTEGER," +
+                    "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
+                    ")";
             createNewTable(airlineSetTable);
             createNewTable(airportSetTable);
             createNewTable(routeSetTable);
             createNewTable(airlineTable);
             createNewTable(airportTable);
             createNewTable(routeTable);
+            createNewTable(routeSelectedTable);
         }
         DatabaseManager.disconnect(c);
     }

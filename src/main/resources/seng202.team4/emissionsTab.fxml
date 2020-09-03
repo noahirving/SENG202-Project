@@ -11,36 +11,41 @@
 <AnchorPane fx:id="emissionsTabPane" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.emissionsTabController">
     <children>
         <TextField fx:id="emissionsSearchField" layoutX="14.0" layoutY="61.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
-        <TableView fx:id="emissionsDataTable" layoutX="14.0" layoutY="94.0" prefHeight="362.0" prefWidth="350.0">
+        <TableView fx:id="emissionsDataTable" layoutX="14.0" layoutY="94.0" prefHeight="362.0" prefWidth="450.0">
             <columns>
-                <TableColumn fx:id="emissionsTabRoutesAndEmissionsColumn" prefWidth="350.0" text="Routes and Emissions" />
+                <TableColumn fx:id="emissionsTabAirlineColumn" prefWidth="75.0" text="Airline" />
+            <TableColumn fx:id="emissionsTabSourceColumn" prefWidth="75.0" text="Source" />
+            <TableColumn fx:id="emissionsTabDestinationColumn" prefWidth="75.0" text="Destination" />
+            <TableColumn fx:id="emissionsTabPlaneColumn" prefWidth="75.0" text="Plane" />
+            <TableColumn fx:id="emissionsTabDistanceColumn" prefWidth="75.0" text="Distance" />
+            <TableColumn fx:id="emissionsTabEmissionsColumn" prefWidth="75.0" text="C02 Emitted" />
             </columns>
         </TableView>
-        <AnchorPane fx:id="environmentalImpactPane" layoutX="385.0" layoutY="64.0" prefHeight="392.0" prefWidth="350.0">
+        <AnchorPane fx:id="environmentalImpactPane" layoutX="468.0" layoutY="62.0" prefHeight="392.0" prefWidth="267.0">
             <children>
-                <Label fx:id="offsetEmissionsLabel" layoutX="95.0" layoutY="14.0" text="Offset Emissions">
+                <Label fx:id="offsetEmissionsLabel" layoutX="72.0" layoutY="14.0" text="Offset Emissions">
                     <font>
                         <Font size="22.0" />
                     </font>
                 </Label>
-                <Button fx:id="environmentalDonationBtn" layoutX="24.0" layoutY="71.0" mnemonicParsing="false" onAction="#pressEnvironmentalDonationButton" prefHeight="56.0" prefWidth="142.0" text="Environmental&#10;Donation" textAlignment="CENTER" />
-                <Button fx:id="treesEquivalentBtn" layoutX="183.0" layoutY="71.0" mnemonicParsing="false" onAction="#pressTreesEquivalentButton" prefHeight="56.0" prefWidth="142.0" text="Trees Equivalent" />
-                <Label fx:id="reduceEmissionsLabel" layoutX="95.0" layoutY="195.0" text="Reduce Emissions">
+                <Button fx:id="environmentalDonationBtn" layoutX="24.0" layoutY="71.0" mnemonicParsing="false" onAction="#pressEnvironmentalDonationButton" prefHeight="56.0" prefWidth="96.0" text="Environmental&#10;Donation" textAlignment="CENTER" />
+                <Button fx:id="treesEquivalentBtn" layoutX="158.0" layoutY="71.0" mnemonicParsing="false" onAction="#pressTreesEquivalentButton" prefHeight="56.0" prefWidth="96.0" text="Trees Equivalent" />
+                <Label fx:id="reduceEmissionsLabel" layoutX="59.0" layoutY="196.0" text="Reduce Emissions">
                     <font>
                         <Font size="22.0" />
                     </font>
                 </Label>
-                <Button fx:id="alternativeRoutesBtn" layoutX="24.0" layoutY="252.0" mnemonicParsing="false" onAction="#pressAlternativeRoutesButton" prefHeight="56.0" prefWidth="142.0" text="Alternative Routes" />
-                <Button fx:id="alternativeAircraftTypeBtn" layoutX="183.0" layoutY="252.0" mnemonicParsing="false" onAction="#pressAlternativeAircraftTypeButton" prefHeight="56.0" prefWidth="142.0" text="Alternative Aircraft&#10;Types" textAlignment="CENTER" />
+                <Button fx:id="alternativeRoutesBtn" layoutX="24.0" layoutY="252.0" mnemonicParsing="false" onAction="#pressAlternativeRoutesButton" prefHeight="56.0" prefWidth="96.0" text="Alternative Routes" />
+                <Button fx:id="alternativeAircraftTypeBtn" layoutX="158.0" layoutY="252.0" mnemonicParsing="false" onAction="#pressAlternativeAircraftTypeButton" prefHeight="56.0" prefWidth="96.0" text="Alternative Aircraft&#10;Types" textAlignment="CENTER" />
             </children>
         </AnchorPane>
-        <Button fx:id="emissionsTabModifyRoutesBtn" layoutX="222.0" layoutY="62.0" mnemonicParsing="false" text="Modify Selected Routes" />
+        <Button fx:id="emissionsTabLoadRoutesBtn" layoutX="222.0" layoutY="62.0" mnemonicParsing="false" onAction="#updateTable" text="Modify Selected Routes" />
         <Label fx:id="currentEmissionsLabel" layoutX="189.0" layoutY="14.0" text="Current Emissions:">
             <font>
                 <Font size="22.0" />
             </font>
         </Label>
-        <Label fx:id="currentEmissionsValue" layoutX="381.0" layoutY="14.0" text="val">
+        <Label fx:id="currentEmissionsValue" layoutX="381.0" layoutY="14.0" text="0.00">
             <font>
                 <Font size="22.0" />
             </font>

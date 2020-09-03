@@ -1,14 +1,16 @@
 package seng202.team4.controller;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
@@ -17,6 +19,7 @@ import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
 import seng202.team4.model.DatabaseManager;
 import seng202.team4.model.Route;
+import seng202.team4.controller.CheckBoxCell;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ public class RouteTabController extends DataController{
     @FXML private TableColumn<Route, Integer> routeTabNumStopsColumn;
     @FXML private TableColumn<Route, String> routeTabPlaneTypeColumn;
     @FXML private TableColumn<Route, Integer> routeTabDistanceColumn;
-    @FXML private TableColumn<Route, Boolean> routeTabSelectedRoute;
+    @FXML private TableColumn<Route, Route> routeTabSelectedRoute;
 
     @FXML private ComboBox<String> routeAirlineFilterCombobox;
     @FXML private ComboBox<String> routeDepartureFilterCombobox;
@@ -41,12 +44,13 @@ public class RouteTabController extends DataController{
     @FXML private ComboBox<String> routePlaneTypeFilterCombobox;
     @FXML private Slider routeEmissionsFilterSlider;
     @FXML private Label emissionsLabel;
-
+    @FXML private Button routeTabCarbonEmissionsBtn;
+    @FXML private Button routeTabDistanceBtn;
 
     @FXML private TextField routeSearchField;
 
     private ObservableList<Route> routes = FXCollections.observableArrayList();
-    private ObservableList<Route> selectedRoutes = FXCollections.observableArrayList();
+    private ObservableSet<Route> selectedRoutes = FXCollections.observableSet();
     private ObservableList<String> airlineCodes = FXCollections.observableArrayList();
     private ObservableList<String> departureCountries = FXCollections.observableArrayList();
     private ObservableList<String> destinationCountries = FXCollections.observableArrayList();
@@ -62,16 +66,43 @@ public class RouteTabController extends DataController{
         routeTabDistanceColumn.setCellValueFactory(new PropertyValueFactory<>("distance"));
         //routeTabSelectedRoute.setCellValueFactory(new PropertyValueFactory<>("select"));
         routeDataTable.setEditable(true);
-        routeTabSelectedRoute.setCellFactory(CheckBoxTableCell.forTableColumn(new Callback<Integer, ObservableValue<Boolean>>() {
+        routeTabSelectedRoute = new TableColumn<>("Select Route");
+
+        routeTabSelectedRoute.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Route,Route>, ObservableValue<Route>>() {
+
             @Override
-            public ObservableValue<Boolean> call(Integer param) {
-                ObservableValue<Boolean> current = routes.get(param).selectedProperty();
-                //routes.get(param).setSelected(!routes.get(param).isSelected());
-                selectedRoutes.add(routes.get(param));
-                //System.out.println(selectedRoutes);
-                return current;
+            public ObservableValue<Route> call(TableColumn.CellDataFeatures<Route, Route> data) {
+                return new ReadOnlyObjectWrapper<>(data.getValue());
             }
-        }));
+        });
+
+        routeTabSelectedRoute.setCellFactory(new Callback<TableColumn<Route, Route>, TableCell<Route, Route>>() {
+
+            @Override
+            public TableCell<Route, Route> call(
+                    TableColumn<Route, Route> param) {
+                return new CheckBoxCell(selectedRoutes);
+            }
+        });
+
+        routeDataTable.getColumns().add(routeTabSelectedRoute);
+
+        routeTabCarbonEmissionsBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    addToSelectedRoute();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                //System.out.println(route.getDestinationAirportCode());
+
+            }
+        });
+
+
+
         // Connect sliders to labels indicating their value
         routeStopsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> stopsLabel.textProperty().setValue(
                 String.valueOf(newValue.intValue())));
@@ -87,6 +118,30 @@ public class RouteTabController extends DataController{
             e.printStackTrace();
             System.exit(0);
         }
+        routeTabDistanceBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                Double distance;
+                for (Route route : selectedRoutes) {
+                    Integer index = routes.indexOf(route);
+                    String sourceAirport = route.getSourceAirportCode();
+                    String destAirport = route.getDestinationAirportCode();
+                    try {
+                        distance = calculateDistance(sourceAirport, destAirport);
+                        route.setDistance(distance);
+                        routes.get(index).setDistance(distance);
+                        //System.out.println(routes.get(index).getDistance());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                    System.out.println(route.getDistance());
+                }
+            }
+        });
+
 
     }
 
@@ -110,7 +165,6 @@ public class RouteTabController extends DataController{
 //            if(numStops == 0){
 //                route.setSelect(check);
 //            }
-            //route.setSelect(check);
             routes.add(route);
 
             addToComboBoxList(airlineCodes, airline);
@@ -210,7 +264,36 @@ public class RouteTabController extends DataController{
         return newFilter;
     }
 
-    public void carbonEmissions(){
+    private Double calculateEmissions(Route route) {
+        Double distance = route.getDistance();
+        return distance * 20;
+    }
+
+    private void addToSelectedRoute() throws SQLException {
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        String between = "', '";
+        for(Route route: selectedRoutes) {
+            Double carbonEmitted = calculateEmissions(route);
+            String query = "INSERT INTO RoutesSelected ('Airline', 'SourceAirport', 'DestinationAirport', 'Equipment', 'Distance', 'CarbonEmissions') "
+                    + "VALUES ('"
+                    + route.getAirlineCode().replaceAll("'", "''") + between
+                    + route.getSourceAirportCode().replaceAll("'", "''") + between
+                    + route.getDestinationAirportCode().replaceAll("'", "''") + between
+                    + route.getPlaneTypeCode().replaceAll("'", "''") + between
+                    + route.getDistance() + between
+                    + carbonEmitted
+                    + "');";
+            stmt.executeUpdate(query);
+            System.out.println(route);
+
+        }
+
+        stmt.close();
+        DatabaseManager.disconnect(con);
+
+
+
 
     }
 
@@ -281,7 +364,4 @@ public class RouteTabController extends DataController{
     }
 
 
-    public void carbonEmissions(ActionEvent actionEvent) {
-        // To implement
-    }
 }
