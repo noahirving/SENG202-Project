@@ -254,6 +254,7 @@ public class RouteTabController extends DataController{
         // for miles
         double r = 6371;
         //return distance to be stored in DB
+        DatabaseManager.disconnect(con);
         return(r * c);
     }
 
@@ -265,6 +266,7 @@ public class RouteTabController extends DataController{
         Integer maxStop = result.getInt("max(STOPS)");
         routeStopsFilterSlider.setMax(maxStop);
         stmt.close();
+        DatabaseManager.disconnect(c);
     }
 
     @Override

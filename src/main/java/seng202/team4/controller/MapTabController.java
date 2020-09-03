@@ -184,7 +184,6 @@ public class MapTabController implements Initializable {
 
         }
         DatabaseManager.disconnect(c);
-        DatabaseManager.disconnect(c);
     }
 
     @FXML
