@@ -6,7 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
+import seng202.team4.model.DatabaseManager;
 import seng202.team4.model.Route;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class CheckBoxCell extends TableCell<Route, Route> {
 
@@ -26,8 +31,14 @@ public class CheckBoxCell extends TableCell<Route, Route> {
             public void handle(ActionEvent event) {
                 if (checkBox.isSelected()) {
                     selectedRoute.add(getItem());
+                    try {
+                        addToSelectedRoute(getItem());
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
                 } else {
                     selectedRoute.remove(getItem());
+
                 }
             }
         });
@@ -56,5 +67,37 @@ public class CheckBoxCell extends TableCell<Route, Route> {
             checkBox.setSelected(selectedRoute.contains(route));
             setGraphic(checkBox);
         }
+    }
+
+    private void addToSelectedRoute(Route route) throws SQLException {
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        String between = "', '";
+
+        Double distance = 0.0;
+        String sourceAirport = route.getSourceAirportCode();
+        String destAirport = route.getDestinationAirportCode();
+        try {
+            distance = Calculations.calculateDistance(sourceAirport, destAirport);
+            route.setDistance(distance);
+            //System.out.println(routes.get(index).getDistance());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Double carbonEmitted = Calculations.calculateEmissions(route);
+        String query = "INSERT INTO RoutesSelected ('Airline', 'SourceAirport', 'DestinationAirport', 'Equipment', 'Distance', 'CarbonEmissions') "
+                + "VALUES ('"
+                + route.getAirlineCode().replaceAll("'", "''") + between
+                + route.getSourceAirportCode().replaceAll("'", "''") + between
+                + route.getDestinationAirportCode().replaceAll("'", "''") + between
+                + route.getPlaneTypeCode().replaceAll("'", "''") + between
+                + route.getDistance() + between
+                + carbonEmitted
+                + "');";
+        stmt.executeUpdate(query);
+
+        con.commit();
+        stmt.close();
+        DatabaseManager.disconnect(con);
     }
 }

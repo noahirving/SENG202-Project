@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 public class emissionsTabController extends DataController {
     public Route dataType = new Route();
 
-    private ObservableList<Route> selectedRoutes = FXCollections.observableArrayList();
+    private ObservableList<Route> selectedRoutes;
 
     @FXML TableView<Route> emissionsDataTable;
     @FXML private TableColumn<Route, String> emissionsTabAirlineColumn;

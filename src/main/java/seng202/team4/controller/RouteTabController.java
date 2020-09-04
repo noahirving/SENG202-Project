@@ -87,21 +87,6 @@ public class RouteTabController extends DataController{
 
         routeDataTable.getColumns().add(routeTabSelectedRoute);
 
-        routeTabCarbonEmissionsBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    addToSelectedRoute();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-                //System.out.println(route.getDestinationAirportCode());
-
-            }
-        });
-
-
 
         // Connect sliders to labels indicating their value
         routeStopsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> stopsLabel.textProperty().setValue(
@@ -128,7 +113,7 @@ public class RouteTabController extends DataController{
                     String sourceAirport = route.getSourceAirportCode();
                     String destAirport = route.getDestinationAirportCode();
                     try {
-                        distance = calculateDistance(sourceAirport, destAirport);
+                        distance = Calculations.calculateDistance(sourceAirport, destAirport);
                         route.setDistance(distance);
                         routes.get(index).setDistance(distance);
                         //System.out.println(routes.get(index).getDistance());
@@ -262,92 +247,6 @@ public class RouteTabController extends DataController{
 
                 }));
         return newFilter;
-    }
-
-    private Double calculateEmissions(Route route) {
-        Double distance = route.getDistance();
-        return distance * 20;
-    }
-
-    private void addToSelectedRoute() throws SQLException {
-        Connection con = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(con);
-        String between = "', '";
-        for(Route route: selectedRoutes) {
-            Double distance = 0.0;
-            String sourceAirport = route.getSourceAirportCode();
-            String destAirport = route.getDestinationAirportCode();
-            try {
-                distance = calculateDistance(sourceAirport, destAirport);
-                route.setDistance(distance);
-                //System.out.println(routes.get(index).getDistance());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Double carbonEmitted = calculateEmissions(route);
-            String query = "INSERT INTO RoutesSelected ('Airline', 'SourceAirport', 'DestinationAirport', 'Equipment', 'Distance', 'CarbonEmissions') "
-                    + "VALUES ('"
-                    + route.getAirlineCode().replaceAll("'", "''") + between
-                    + route.getSourceAirportCode().replaceAll("'", "''") + between
-                    + route.getDestinationAirportCode().replaceAll("'", "''") + between
-                    + route.getPlaneTypeCode().replaceAll("'", "''") + between
-                    + route.getDistance() + between
-                    + carbonEmitted
-                    + "');";
-            stmt.executeUpdate(query);
-            System.out.println(route);
-            con.commit();
-        }
-        stmt.close();
-        DatabaseManager.disconnect(con);
-    }
-
-
-
-
-        public double calculateDistance(String airportCodeOne, String airportCodeTwo) throws SQLException {
-        Double lat1;
-        Double lat2;
-        Double long1;
-        Double long2;
-
-        String query = "SELECT Latitude,Longitude from Airport WHERE IATA = '" + airportCodeOne + "' OR IATA = '" + airportCodeTwo + "'";
-        Connection con = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(con);
-        ResultSet result = stmt.executeQuery(query);
-        ArrayList<Double> lats = new ArrayList<Double>();
-        ArrayList<Double> longs = new ArrayList<Double>();
-        while (result.next()){
-            lats.add(result.getDouble("Latitude"));
-            longs.add(result.getDouble("Longitude"));
-        }
-        stmt.close();
-        //Get latitude and longitude of airports in route
-        try{
-            lat1 = Math.toRadians(lats.get(0));
-            lat2 = Math.toRadians(lats.get(1));
-            long1 = Math.toRadians(longs.get(0));
-            long2 = Math.toRadians(longs.get(1));
-        } catch(Exception e){
-            return 0.0;
-        }
-
-
-        //Calculate distance between airports
-        // Haversine formula
-        double dlon = long2 - long1;
-        double dlat = lat2 - lat1;
-        double a = Math.pow(Math.sin(dlat / 2), 2)
-                + Math.cos(lat1) * Math.cos(lat2)
-                * Math.pow(Math.sin(dlon / 2),2);
-
-        double c = 2 * Math.asin(Math.sqrt(a));
-        // Radius of earth in kilometers. Use 3956
-        // for miles
-        double r = 6371;
-        //return distance to be stored in DB
-        DatabaseManager.disconnect(con);
-        return(r * c);
     }
 
     public void getMaxStops() throws Exception {

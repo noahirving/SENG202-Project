@@ -76,7 +76,7 @@ public class MapTabController implements Initializable {
     private void initialiseComboBoxes() throws SQLException {
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
-        initialiseRouteComboboxes(stmt);
+        initialiseRouteComboBoxes(stmt);
 
         ResultSet airportResultSet = stmt.executeQuery("SELECT Country FROM Airport");
         while (airportResultSet.next()) {
@@ -97,7 +97,7 @@ public class MapTabController implements Initializable {
         DatabaseManager.disconnect(c);
     }
 
-    private void initialiseRouteComboboxes(Statement stmt) throws SQLException {
+    private void initialiseRouteComboBoxes(Statement stmt) throws SQLException {
         ResultSet routesResultSet = stmt.executeQuery("SELECT Airline, SourceAirport, Equipment FROM Route");
         while (routesResultSet.next()) {
             String airline = routesResultSet.getString("Airline");
@@ -144,7 +144,7 @@ public class MapTabController implements Initializable {
         resetMap();
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
-        ResultSet routesResultSet = stmt.executeQuery("SELECT SourceAirport, DestinationAirport FROM Route");
+        ResultSet routesResultSet = stmt.executeQuery("SELECT SourceAirport, DestinationAirport FROM RoutesSelected");
         int count = 0;
         while (routesResultSet.next() && count <= ROUTELIMIT) {
             showOneRoute(routesResultSet);
@@ -227,7 +227,6 @@ public class MapTabController implements Initializable {
          */
         airline = checkValidInput(airline);
         airport = checkValidInput(airport);
-
         planeType = checkValidInput(planeType);
 
         String query = String.format("SELECT SourceAirport, DestinationAirport FROM Route WHERE Airline is %s and SourceAirport is %s and Equipment is %s",
