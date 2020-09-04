@@ -91,8 +91,10 @@ public abstract class DataController {
     public void uploadData() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Upload file");
+        stage.setMinHeight(290);
+        stage.setMinWidth(720);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.view + "/fileUpload.fxml"));
-        stage.setScene(new Scene(loader.load()));
+        stage.setScene(new Scene(loader.load(), 700, 250));
         stage.show();
         FileUploadController controller = loader.getController();
         controller.setDataController(this);
