@@ -32,6 +32,7 @@ public class emissionsTabController extends DataController {
     @FXML private TableColumn<Route, Integer> emissionsTabDistanceColumn;
     @FXML private TableColumn<Route, Integer> emissionsTabEmissionsColumn;
     @FXML private Button emissionsTabLoadRoutesBtn;
+    @FXML private Label currentEmissionsValue;
 
 
     @FXML
@@ -88,7 +89,6 @@ public class emissionsTabController extends DataController {
 
         try {
             setTable();
-            setTotalEmissions();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -96,11 +96,11 @@ public class emissionsTabController extends DataController {
     }
 
     private void setTotalEmissions() {
-
+        Double sumEmissions = 0.0;
         for(Route route: selectedRoutes){
-
+            sumEmissions += route.getCarbonEmissions();
         }
-
+        currentEmissionsValue.setText(Double.toString(sumEmissions));
     }
 
     @FXML
@@ -108,6 +108,7 @@ public class emissionsTabController extends DataController {
         try {
             //emissionsDataTable.setItems(selectedRoutes);
             setTable();
+            setTotalEmissions();
         } catch (Exception e) {
             e.printStackTrace();
         }
