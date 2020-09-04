@@ -78,7 +78,7 @@ public class CheckBoxCell extends TableCell<Route, Route> {
         String sourceAirport = route.getSourceAirportCode();
         String destAirport = route.getDestinationAirportCode();
         try {
-            distance = Calculations.calculateDistance(sourceAirport, destAirport);
+            distance = Calculations.calculateDistance(sourceAirport, destAirport, con);
             route.setDistance(distance);
             //System.out.println(routes.get(index).getDistance());
         } catch (Exception e) {

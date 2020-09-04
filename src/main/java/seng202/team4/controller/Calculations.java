@@ -16,14 +16,13 @@ public class Calculations {
         return distance * 20;
     }
 
-    public static double calculateDistance(String airportCodeOne, String airportCodeTwo) throws SQLException {
+    public static double calculateDistance(String airportCodeOne, String airportCodeTwo, Connection con) throws SQLException {
         Double lat1;
         Double lat2;
         Double long1;
         Double long2;
 
         String query = "SELECT Latitude,Longitude from Airport WHERE IATA = '" + airportCodeOne + "' OR IATA = '" + airportCodeTwo + "'";
-        Connection con = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(con);
         ResultSet result = stmt.executeQuery(query);
         ArrayList<Double> lats = new ArrayList<Double>();
@@ -57,7 +56,6 @@ public class Calculations {
         // for miles
         double r = 6371;
         //return distance to be stored in DB
-        DatabaseManager.disconnect(con);
         return(r * c);
     }
 }

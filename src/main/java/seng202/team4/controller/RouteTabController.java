@@ -44,7 +44,6 @@ public class RouteTabController extends DataController{
     @FXML private ComboBox<String> routePlaneTypeFilterCombobox;
     @FXML private Slider routeEmissionsFilterSlider;
     @FXML private Label emissionsLabel;
-    @FXML private Button routeTabCarbonEmissionsBtn;
     @FXML private Button routeTabDistanceBtn;
 
     @FXML private TextField routeSearchField;
@@ -113,10 +112,12 @@ public class RouteTabController extends DataController{
                     String sourceAirport = route.getSourceAirportCode();
                     String destAirport = route.getDestinationAirportCode();
                     try {
-                        distance = Calculations.calculateDistance(sourceAirport, destAirport);
+                        Connection con = DatabaseManager.connect();
+                        distance = Calculations.calculateDistance(sourceAirport, destAirport, con);
                         route.setDistance(distance);
                         routes.get(index).setDistance(distance);
                         //System.out.println(routes.get(index).getDistance());
+                        DatabaseManager.disconnect(con);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
