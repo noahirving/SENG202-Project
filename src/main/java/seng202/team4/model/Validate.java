@@ -22,13 +22,7 @@ public interface Validate {
     }
 
     static boolean isAlphaNumeric(String string) {
-        char[] chars = string.toCharArray();
-        for (char c: chars) {
-            if (!Character.isLetterOrDigit(c) && !Character.isSpaceChar(c)) {
-                return false;
-            }
-        }
-        return true;
+        return isNumeric(string) && isAlpha(string);
     }
 
 }
