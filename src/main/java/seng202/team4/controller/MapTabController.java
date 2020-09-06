@@ -191,17 +191,17 @@ public class MapTabController implements Initializable {
         resetMap();
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
-        ResultSet airportResultSet = stmt.executeQuery("SELECT Longitude, Latitude, Name FROM Airport");
+        ResultSet airportResultSet = stmt.executeQuery("SELECT Name, Longitude, Latitude FROM AirportsSelected");
 
         while (airportResultSet.next()) {
-            addOneAirport(airportResultSet);
+            showOneAirport(airportResultSet);
         }
         stmt.close();
         DatabaseManager.disconnect(c);
 
     }
 
-    private void addOneAirport(ResultSet airportResultSet) throws SQLException {
+    private void showOneAirport(ResultSet airportResultSet) throws SQLException {
         double sourceLatitude = (airportResultSet.getDouble("Latitude"));
         double sourceLongitude = (airportResultSet.getDouble("Longitude"));
         String sourceName = (airportResultSet.getString("Name"));
@@ -254,7 +254,7 @@ public class MapTabController implements Initializable {
         ResultSet airportResultSet = stmt.executeQuery(query);
 
         while (airportResultSet.next()) {
-            addOneAirport(airportResultSet);
+            showOneAirport(airportResultSet);
         }
         DatabaseManager.disconnect(c);
     }

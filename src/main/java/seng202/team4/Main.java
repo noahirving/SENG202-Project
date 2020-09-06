@@ -1,6 +1,5 @@
 package seng202.team4;
 
-import org.apache.commons.io.FileUtils;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DatabaseManager;
 
@@ -127,7 +126,7 @@ public class Main {
                     "FOREIGN KEY (SetID) REFERENCES RouteSet (SetID)," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
-            String routeSelectedTable = "CREATE TABLE \"RoutesSelected\" (" +
+            String routesSelectedTable = "CREATE TABLE \"RoutesSelected\" (" +
                     "\"ID\"\tINTEGER NOT NULL UNIQUE," +
                     "\"Airline\" STRING," +
                     "\"SourceAirport\" STRING," +
@@ -137,13 +136,22 @@ public class Main {
                     "\"CarbonEmissions\" INTEGER," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
+
+            String airportsSelectedTable = "CREATE TABLE \"AirportsSelected\" (" +
+                    "\"ID\"\tINTEGER NOT NULL UNIQUE," +
+                    "\"Name\" STRING," +
+                    "\"Longitude\" DOUBLE," +
+                    "\"Latitude\" DOUBLE," +
+                    "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
+                    ")";
             createNewTable(airlineSetTable);
             createNewTable(airportSetTable);
             createNewTable(routeSetTable);
             createNewTable(airlineTable);
             createNewTable(airportTable);
             createNewTable(routeTable);
-            createNewTable(routeSelectedTable);
+            createNewTable(routesSelectedTable);
+            createNewTable(airportsSelectedTable);
         }
         DatabaseManager.disconnect(c);
     }

@@ -2,8 +2,6 @@ package seng202.team4.controller;
 
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import seng202.team4.model.DatabaseManager;
@@ -15,43 +13,39 @@ import java.sql.Statement;
 
 public class CheckBoxCell extends TableCell<Route, Route> {
 
-    private final ObservableSet<Route> selectedRoute ;
+    private final ObservableSet<Route> selectedRoutes;
     private final CheckBox checkBox ;
 
-    public CheckBoxCell(ObservableSet<Route> selectedRoute) {
-        this.selectedRoute = selectedRoute ;
+    public CheckBoxCell(ObservableSet<Route> selectedRoutes) {
+        this.selectedRoutes = selectedRoutes;
         this.checkBox = new CheckBox() ;
 
 
         // listener to update the set of selected items when the
         // check box is checked or unchecked:
-        checkBox.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                if (checkBox.isSelected()) {
-                    selectedRoute.add(getItem());
-                    try {
-                        addToSelectedRoute(getItem());
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                } else {
-                    selectedRoute.remove(getItem());
-
+        checkBox.setOnAction(event -> {
+            if (checkBox.isSelected()) {
+                selectedRoutes.add(getItem());
+                try {
+                    addToRoutesSelectedDatabase(getItem());
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
+            } else {
+                selectedRoutes.remove(getItem());
+
             }
         });
 
         // listener to update the check box when the collection of selected
         // items changes:
-        selectedRoute.addListener(new SetChangeListener<Route>() {
+        selectedRoutes.addListener(new SetChangeListener<Route>() {
 
             @Override
             public void onChanged(SetChangeListener.Change<? extends Route> change) {
                 Route route = getItem();
                 if (route != null) {
-                    checkBox.setSelected(selectedRoute.contains(route));
+                    checkBox.setSelected(selectedRoutes.contains(route));
                 }
             }
 
@@ -64,12 +58,12 @@ public class CheckBoxCell extends TableCell<Route, Route> {
         if (empty) {
             setGraphic(null);
         } else {
-            checkBox.setSelected(selectedRoute.contains(route));
+            checkBox.setSelected(selectedRoutes.contains(route));
             setGraphic(checkBox);
         }
     }
 
-    private void addToSelectedRoute(Route route) throws SQLException {
+    private void addToRoutesSelectedDatabase(Route route) throws SQLException {
         Connection con = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(con);
         String between = "', '";

@@ -50,11 +50,10 @@
       </GridPane>
         <TableView fx:id="airportDataTable" prefHeight="406.0" prefWidth="724.0" GridPane.rowIndex="1">
             <columns>
-                <TableColumn fx:id="airportTabAirportColumn" prefWidth="181.0" text="Airport" />
-                <TableColumn fx:id="airportTabCityColumn" minWidth="4.800048828125" prefWidth="181.0" text="City" />
-                <TableColumn fx:id="airportTabCountryColumn" minWidth="4.800048828125" prefWidth="181.0" text="Country" />
+                <TableColumn fx:id="airportTabAirportColumn" prefWidth="320.0" text="Airport" />
+                <TableColumn fx:id="airportTabCityColumn" minWidth="4.800048828125" prefWidth="279.0" text="City" />
+                <TableColumn fx:id="airportTabCountryColumn" minWidth="4.800048828125" prefWidth="140.0" text="Country" />
                 <TableColumn fx:id="airportTabCoordinatesColumn" minWidth="4.800048828125" prefWidth="181.0" text="Coordinates" />
-            <TableColumn fx:id="airportTabRoutesColumn" prefWidth="117.0" text="Select Airport" />
             </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

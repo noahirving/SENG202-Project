@@ -1,5 +1,8 @@
 package seng202.team4.model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Airport extends DataType {
 
     private int airportID;
@@ -10,6 +13,7 @@ public class Airport extends DataType {
     private String icao;
     private double latitude;
     private double longitude;
+    private String coordinates;
     private double altitude;
     private double timezone;
     private char dst;
@@ -17,11 +21,11 @@ public class Airport extends DataType {
     private int routeNum;
     private String type;
     private String source;
+    private BooleanProperty select = new SimpleBooleanProperty(false);
 
 
     public Airport(String airportData) {
         String[] airportArr = airportData.replaceAll("\"", "").split(",");
-        this.airportID = Integer.parseInt(airportArr[0]);
         this.name = airportArr[1];
         int delta = 0;
         if (airportArr.length == 13) { // To deal with commas in city field
@@ -36,10 +40,12 @@ public class Airport extends DataType {
         this.icao = airportArr[5 + delta];
         this.latitude = Double.parseDouble(airportArr[6 + delta]);
         this.longitude = Double.parseDouble(airportArr[7 + delta]);
+        setCoordinates(this.longitude, this.latitude);
         this.altitude = Double.parseDouble(airportArr[8 + delta]);
         this.timezone = Double.parseDouble(airportArr[9 + delta]);
         this.dst = airportArr[10 + delta].charAt(0);
         this.tzDatabase = airportArr[11 + delta];
+        this.select = new SimpleBooleanProperty(false);
 
         // Below parameters are not in given data.
         //this.type = airportArr[12];
@@ -68,6 +74,7 @@ public class Airport extends DataType {
                 + setID
                 + "');";
     }
+
 
     @Override
     public DataType newDataType(String line) {
@@ -200,7 +207,22 @@ public class Airport extends DataType {
         this.source = source;
     }
 
+    public void setCoordinates(double longitude, double latitude) {
+        this.coordinates = String.format("%.4f, %.4f", latitude, longitude);
+    }
     public String getCoordinates() {
-        return String.format("%.4f, %.4f", latitude, longitude);
+        return coordinates;
+    }
+
+    public boolean isSelect() {
+        return select.get();
+    }
+
+    public BooleanProperty selectProperty() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select.set(select);
     }
 }

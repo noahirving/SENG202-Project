@@ -1,5 +1,6 @@
 package seng202.team4.controller;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,9 +15,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import seng202.team4.Path;
 import seng202.team4.model.*;
 
@@ -32,7 +35,6 @@ public class AirportTabController extends DataController {
     @FXML private TableColumn<Airport, String> airportTabCityColumn;
     @FXML private TableColumn<Airport, String> airportTabCountryColumn;
     @FXML private TableColumn<Airport, String> airportTabCoordinatesColumn;
-    @FXML private TableColumn<Airport , Integer> airportTabRoutesColumn;
 
     @FXML private ComboBox<String> airportTabCityCombobox;
     @FXML private ComboBox<String> airportTabCountryCombobox;
@@ -50,7 +52,9 @@ public class AirportTabController extends DataController {
         airportTabCityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
         airportTabCountryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
         airportTabCoordinatesColumn.setCellValueFactory(new PropertyValueFactory<>("coordinates"));
-        airportTabRoutesColumn.setCellValueFactory(new PropertyValueFactory<>("routeNum"));
+
+        // Make and connect checkbox column to AirportsSelected database table
+        makeCheckboxColumn();
 
         try {
             setDataSetComboBox();
@@ -62,6 +66,68 @@ public class AirportTabController extends DataController {
 
     }
 
+    private void makeCheckboxColumn() {
+        final TableColumn<Airport, Boolean> airportTabSelectColumn = new TableColumn<>("Select");
+        airportDataTable.getColumns().addAll(airportTabSelectColumn);
+        airportTabSelectColumn.setCellValueFactory(new PropertyValueFactory<>("select"));
+        airportTabSelectColumn.setCellFactory(CheckBoxTableCell.forTableColumn(airportTabSelectColumn));
+        airportTabSelectColumn.setEditable(true);
+        airportDataTable.setEditable(true);
+
+        airportTabSelectColumn.setCellFactory(CheckBoxTableCell.forTableColumn(param -> {
+            if (airports.get(param).isSelect()) {
+                addToAirportsSelectedDatabase(airports.get(param));
+            } else {
+                removeFromAirportsSelectedDatabase(airports.get(param));
+            }
+
+            return airports.get(param).selectProperty();
+        }));
+    }
+
+    private void addToAirportsSelectedDatabase(Airport airport) {
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        String between = "', '";
+
+        String query = "INSERT INTO AirportsSelected ('Name', 'Longitude', 'Latitude') "
+                + "VALUES ('"
+                + airport.getName().replaceAll("'", "''") + between
+                + airport.getLongitude() + between
+                + airport.getLatitude()
+                + "');";
+        try {
+            stmt.executeUpdate(query);
+            con.commit();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        DatabaseManager.disconnect(con);
+
+    }
+
+    private void removeFromAirportsSelectedDatabase(Airport airport) {
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        String between = "' and ";
+
+        String query = "DELETE FROM AirportsSelected WHERE "
+                + "Name = '" + airport.getName() + between
+                + "Longitude = '" + airport.getLongitude() + between
+                + "Latitude = '" + airport.getLatitude() + "'";
+        try {
+            stmt.executeUpdate(query);
+            con.commit();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        DatabaseManager.disconnect(con);
+    }
+
     @Override
     public void setTableData(ResultSet rs) throws Exception {
         airports = FXCollections.observableArrayList();
@@ -71,13 +137,16 @@ public class AirportTabController extends DataController {
             String airportName = rs.getString("Name");
             String airportCountry = rs.getString("Country");
             String airportCity = rs.getString("City");
-            // String iata = rs.getString("IATA");
-            // int routeNum = getRouteNum(iata);
-            // airport.setRouteNum(routeNum);
+            double airportLongitude = rs.getDouble("Longitude");
+            double airportLatitude = rs.getDouble("Latitude");
 
             airport.setName(airportName);
             airport.setCountry(airportCountry);
             airport.setCity(airportCity);
+            airport.setLongitude(airportLongitude);
+            airport.setLatitude(airportLatitude);
+            airport.setCoordinates(airportLongitude, airportLatitude);
+
             airports.add(airport);
 
             addToComboBoxList(countries, airportCountry);
@@ -163,14 +232,4 @@ public class AirportTabController extends DataController {
     @Override
     public String getTableQuery() { return "SELECT * FROM Airport"; }
 
-    // Not used becuase too slow
-    private int getRouteNum(String iata) throws SQLException {
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
-        ResultSet routeNumQuery = stmt.executeQuery("SELECT COUNT() FROM Route WHERE SourceAirport = '" + iata + "'");
-        int routeNum = routeNumQuery.getInt("COUNT()");
-        DatabaseManager.disconnect(c);
-        return routeNum;
-
-    }
 }
