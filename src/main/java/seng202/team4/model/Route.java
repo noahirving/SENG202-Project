@@ -25,7 +25,7 @@ public class Route extends DataType {
     private int numStops;
     private String planeTypeCode;
     private double distance;
-    private BooleanProperty select;
+    private BooleanProperty select = new SimpleBooleanProperty(false);
     private double carbonEmissions;
 
     public Route(String routeInfo) {
@@ -196,15 +196,15 @@ public class Route extends DataType {
         this.planeTypeCode = planeTypeCode;
     }
 
-    public boolean isSelected() {
+    public boolean isSelect() {
         return this.select.get();
     }
 
-    public BooleanProperty selectedProperty() {
+    public BooleanProperty selectProperty() {
         return select;
     }
 
-    public void setSelected(boolean select) {
+    public void setSelect(boolean select) {
         this.select.set(select);
     }
 }

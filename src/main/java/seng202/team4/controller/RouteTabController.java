@@ -11,14 +11,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import seng202.team4.Path;
-import seng202.team4.model.DataLoader;
-import seng202.team4.model.DataType;
-import seng202.team4.model.DatabaseManager;
-import seng202.team4.model.Route;
+import seng202.team4.model.*;
 import seng202.team4.controller.CheckBoxCell;
 
 import java.sql.*;
@@ -65,26 +63,23 @@ public class RouteTabController extends DataController{
         routeTabDistanceColumn.setCellValueFactory(new PropertyValueFactory<>("distance"));
         //routeTabSelectedRoute.setCellValueFactory(new PropertyValueFactory<>("select"));
         routeDataTable.setEditable(true);
-        routeTabSelectedRoute = new TableColumn<>("Select Route");
 
-        routeTabSelectedRoute.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Route,Route>, ObservableValue<Route>>() {
-
-            @Override
-            public ObservableValue<Route> call(TableColumn.CellDataFeatures<Route, Route> data) {
-                return new ReadOnlyObjectWrapper<>(data.getValue());
-            }
-        });
-
-        routeTabSelectedRoute.setCellFactory(new Callback<TableColumn<Route, Route>, TableCell<Route, Route>>() {
-
-            @Override
-            public TableCell<Route, Route> call(
-                    TableColumn<Route, Route> param) {
-                return new CheckBoxCell(selectedRoutes);
-            }
-        });
-
-        routeDataTable.getColumns().add(routeTabSelectedRoute);
+        makeCheckboxColumn();
+//        routeTabSelectedRoute = new TableColumn<>("Select Route");
+//        routeTabSelectedRoute.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Route,Route>, ObservableValue<Route>>() {
+//            @Override
+//            public ObservableValue<Route> call(TableColumn.CellDataFeatures<Route, Route> data) {
+//                return new ReadOnlyObjectWrapper<>(data.getValue());
+//            }
+//        });
+//        routeTabSelectedRoute.setCellFactory(new Callback<TableColumn<Route, Route>, TableCell<Route, Route>>() {
+//            @Override
+//            public TableCell<Route, Route> call(
+//                    TableColumn<Route, Route> param) {
+//                return new CheckBoxCell(selectedRoutes);
+//            }
+//        });
+//        routeDataTable.getColumns().add(routeTabSelectedRoute);
 
 
         // Connect sliders to labels indicating their value
@@ -129,6 +124,81 @@ public class RouteTabController extends DataController{
         });
 
 
+    }
+
+    private void makeCheckboxColumn() {
+        final TableColumn<Route, Boolean> routeTabSelectedRoute = new TableColumn<>("Select");
+        routeDataTable.getColumns().addAll(routeTabSelectedRoute);
+        routeTabSelectedRoute.setCellValueFactory(new PropertyValueFactory<>("select"));
+        routeTabSelectedRoute.setCellFactory(CheckBoxTableCell.forTableColumn(routeTabSelectedRoute));
+        routeTabSelectedRoute.setEditable(true);
+        routeDataTable.setEditable(true);
+
+        routeTabSelectedRoute.setCellFactory(CheckBoxTableCell.forTableColumn(param -> {
+            if (routes.get(param).isSelect()) {
+                addToAirportsSelectedDatabase(routes.get(param));
+            } else {
+                removeFromAirportsSelectedDatabase(routes.get(param));
+            }
+
+            return routes.get(param).selectProperty();
+        }));
+    }
+
+    private void addToAirportsSelectedDatabase(Route route) {
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        String between = "', '";
+
+        Double distance = 0.0;
+        String sourceAirport = route.getSourceAirportCode();
+        String destAirport = route.getDestinationAirportCode();
+        try {
+            distance = Calculations.calculateDistance(sourceAirport, destAirport, con);
+            route.setDistance(distance);
+            //System.out.println(routes.get(index).getDistance());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Double carbonEmitted = Calculations.calculateEmissions(route);
+        String query = "INSERT INTO RoutesSelected ('Airline', 'SourceAirport', 'DestinationAirport', 'Equipment', 'Distance', 'CarbonEmissions') "
+                + "VALUES ('"
+                + route.getAirlineCode().replaceAll("'", "''") + between
+                + route.getSourceAirportCode().replaceAll("'", "''") + between
+                + route.getDestinationAirportCode().replaceAll("'", "''") + between
+                + route.getPlaneTypeCode().replaceAll("'", "''") + between
+                + route.getDistance() + between
+                + carbonEmitted
+                + "');";
+        try {
+            stmt.executeUpdate(query);
+            con.commit();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        DatabaseManager.disconnect(con);
+    }
+
+    private void removeFromAirportsSelectedDatabase(Route route) {
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        String between = "' and ";
+
+        String query = "DELETE FROM RoutesSelected WHERE "
+                + "Airline = '" + route.getAirlineCode().replaceAll("'", "''") + between
+                + "SourceAirport = '" + route.getSourceAirportCode().replaceAll("'", "''") + between
+                + "DestinationAirport = '" + route.getDestinationAirportCode().replaceAll("'", "''") + between
+                + "Equipment = '" + route.getPlaneTypeCode().replaceAll("'", "''") + "'";
+        try {
+            stmt.executeUpdate(query);
+            con.commit();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        DatabaseManager.disconnect(con);
     }
 
     @Override

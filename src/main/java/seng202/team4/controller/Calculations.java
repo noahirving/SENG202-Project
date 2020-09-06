@@ -13,7 +13,7 @@ public class Calculations {
 
     static double calculateEmissions(Route route) {
         Double distance = route.getDistance();
-        return distance * 20;
+        return distance * 0.115;
     }
 
     public static double calculateDistance(String airportCodeOne, String airportCodeTwo, Connection con) throws SQLException {

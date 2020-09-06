@@ -23,6 +23,9 @@ public class emissionsTabController extends DataController {
     public Route dataType = new Route();
 
     private ObservableList<Route> selectedRoutes;
+    private Double sumEmissions = 0.0;
+    private Double dollarOffset = 0.0;
+    private Double treeOffset = 0.0;
 
     @FXML TableView<Route> emissionsDataTable;
     @FXML private TableColumn<Route, String> emissionsTabAirlineColumn;
@@ -48,8 +51,7 @@ public class emissionsTabController extends DataController {
 
     @FXML
     public void pressEnvironmentalDonationButton(ActionEvent buttonPress) {
-        double tempDonationAmount = 10;
-        String donationDollarsCents = String.format("%.2f", tempDonationAmount);
+        String donationDollarsCents = String.format("%.2f", dollarOffset);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Environmental Donation Equivalent");
@@ -60,11 +62,10 @@ public class emissionsTabController extends DataController {
 
     @FXML
     public void pressTreesEquivalentButton(ActionEvent buttonPress) {
-        int tempTreesAmount = 10;
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Trees Equivalent");
-        alert.setHeaderText("Trees Equivalent: " + tempTreesAmount);
+        alert.setHeaderText("Trees Equivalent: " + treeOffset);
         alert.setContentText("Donations for planting trees can be made on the following sites...");
         alert.show();
     }
@@ -96,11 +97,13 @@ public class emissionsTabController extends DataController {
     }
 
     private void setTotalEmissions() {
-        Double sumEmissions = 0.0;
         for(Route route: selectedRoutes){
             sumEmissions += route.getCarbonEmissions();
         }
-        currentEmissionsValue.setText(Double.toString(sumEmissions));
+        dollarOffset = sumEmissions * 0.01;
+        treeOffset = Math.ceil(dollarOffset);
+        //String emissionsLabel = Double.toString();
+        currentEmissionsValue.setText(String.format("%.2f", sumEmissions));
     }
 
     @FXML

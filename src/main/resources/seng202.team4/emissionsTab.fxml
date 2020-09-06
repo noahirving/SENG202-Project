@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
 <GridPane prefHeight="567.0" prefWidth="817.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.emissionsTabController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -82,7 +81,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                          <Button fx:id="emissionsTabLoadRoutesBtn" mnemonicParsing="false" onAction="#updateTable" prefWidth="162.0" text="Modify Selected Routes" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                          <Button fx:id="emissionsTabLoadRoutesBtn" mnemonicParsing="false" onAction="#updateTable" prefWidth="162.0" text="Load Selected Routes" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                           <TextField fx:id="emissionsSearchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>
