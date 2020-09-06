@@ -19,7 +19,7 @@ import seng202.team4.model.Route;
 import java.io.IOException;
 import java.sql.ResultSet;
 
-public class emissionsTabController extends DataController {
+public class EmissionsTabController extends DataController {
     public Route dataType = new Route();
 
     private ObservableList<Route> selectedRoutes;

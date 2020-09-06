@@ -11,7 +11,7 @@ import seng202.team4.Path;
 
 import java.io.IOException;
 
-public class dataTabController {
+public class MainFlightTrackerTabController {
 
     @FXML
     public void pressHomeButton(ActionEvent buttonPress) throws IOException {

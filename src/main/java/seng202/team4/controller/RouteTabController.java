@@ -1,7 +1,5 @@
 package seng202.team4.controller;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
@@ -13,14 +11,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.FileChooser;
-import javafx.util.Callback;
-import seng202.team4.Path;
 import seng202.team4.model.*;
-import seng202.team4.controller.CheckBoxCell;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class RouteTabController extends DataController{
 
@@ -65,22 +58,6 @@ public class RouteTabController extends DataController{
         routeDataTable.setEditable(true);
 
         makeCheckboxColumn();
-//        routeTabSelectedRoute = new TableColumn<>("Select Route");
-//        routeTabSelectedRoute.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Route,Route>, ObservableValue<Route>>() {
-//            @Override
-//            public ObservableValue<Route> call(TableColumn.CellDataFeatures<Route, Route> data) {
-//                return new ReadOnlyObjectWrapper<>(data.getValue());
-//            }
-//        });
-//        routeTabSelectedRoute.setCellFactory(new Callback<TableColumn<Route, Route>, TableCell<Route, Route>>() {
-//            @Override
-//            public TableCell<Route, Route> call(
-//                    TableColumn<Route, Route> param) {
-//                return new CheckBoxCell(selectedRoutes);
-//            }
-//        });
-//        routeDataTable.getColumns().add(routeTabSelectedRoute);
-
 
         // Connect sliders to labels indicating their value
         routeStopsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> stopsLabel.textProperty().setValue(

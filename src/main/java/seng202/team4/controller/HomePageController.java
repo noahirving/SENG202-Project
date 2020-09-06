@@ -11,7 +11,7 @@ import seng202.team4.Path;
 
 import java.io.IOException;
 
-public class homePageController {
+public class HomePageController {
 
 
     @FXML
