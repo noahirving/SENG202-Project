@@ -125,6 +125,8 @@ public class AirportTabController extends DataController {
     public void setTableData(ResultSet rs) throws Exception {
         airports = FXCollections.observableArrayList();
 
+        countries.clear(); cities.clear();
+        countries.add(""); cities.add("");
         while (rs.next()) {
             Airport airport = new Airport();
             String airportName = rs.getString("Name");

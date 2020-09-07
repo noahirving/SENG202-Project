@@ -97,6 +97,7 @@ public class EmissionsTabController extends DataController {
     }
 
     private void setTotalEmissions() {
+        sumEmissions = 0.0;
         for(Route route: selectedRoutes){
             sumEmissions += route.getCarbonEmissions();
         }

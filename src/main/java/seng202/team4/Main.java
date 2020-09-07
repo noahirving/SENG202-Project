@@ -21,8 +21,8 @@ public class Main {
 
         MainApplication.main(args);
 
-        FlightPlanner fp = new FlightPlanner();
-        fp.searchFlight();
+        //FlightPlanner fp = new FlightPlanner();
+        //fp.searchFlight();
     }
 
     public void loadTest() throws IOException {
