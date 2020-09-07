@@ -111,6 +111,7 @@ public class EmissionsTabController extends DataController {
         try {
             //emissionsDataTable.setItems(selectedRoutes);
             setTable();
+            sumEmissions = 0.0;
             setTotalEmissions();
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,7 +124,7 @@ public class EmissionsTabController extends DataController {
 
     @Override
     public String getTableQuery() {
-        return "Select * from RoutesSelected";
+        return "Select distinct Airline, SourceAirport, DestinationAirport, Equipment, distance, carbonEmissions from RoutesSelected";
     }
 
     @Override
@@ -142,7 +143,6 @@ public class EmissionsTabController extends DataController {
             route.setPlaneTypeCode(planeType);
             route.setDistance(rs.getDouble("distance"));
             route.setCarbonEmissions(rs.getDouble("carbonEmissions"));
-
             selectedRoutes.add(route);
 
         }
