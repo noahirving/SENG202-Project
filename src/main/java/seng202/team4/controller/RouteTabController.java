@@ -35,7 +35,7 @@ public class RouteTabController extends DataController{
     @FXML private ComboBox<String> routePlaneTypeFilterCombobox;
     @FXML private Slider routeEmissionsFilterSlider;
     @FXML private Label emissionsLabel;
-    @FXML private Button routeTabDistanceBtn;
+    //@FXML private Button routeTabDistanceBtn;
 
     @FXML private TextField routeSearchField;
 
@@ -53,7 +53,7 @@ public class RouteTabController extends DataController{
         routeTabDestinationAirportColumn.setCellValueFactory(new PropertyValueFactory<>("destinationAirportCode"));
         routeTabNumStopsColumn.setCellValueFactory(new PropertyValueFactory<>("numStops"));
         routeTabPlaneTypeColumn.setCellValueFactory(new PropertyValueFactory<>("planeTypeCode"));
-        routeTabDistanceColumn.setCellValueFactory(new PropertyValueFactory<>("distance"));
+        //routeTabDistanceColumn.setCellValueFactory(new PropertyValueFactory<>("distance"));
         //routeTabSelectedRoute.setCellValueFactory(new PropertyValueFactory<>("select"));
         routeDataTable.setEditable(true);
 
@@ -74,31 +74,31 @@ public class RouteTabController extends DataController{
             e.printStackTrace();
             System.exit(0);
         }
-        routeTabDistanceBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                Double distance;
-                for (Route route : selectedRoutes) {
-                    Integer index = routes.indexOf(route);
-                    String sourceAirport = route.getSourceAirportCode();
-                    String destAirport = route.getDestinationAirportCode();
-                    try {
-                        Connection con = DatabaseManager.connect();
-                        distance = Calculations.calculateDistance(sourceAirport, destAirport, con);
-                        route.setDistance(distance);
-                        routes.get(index).setDistance(distance);
-                        //System.out.println(routes.get(index).getDistance());
-                        DatabaseManager.disconnect(con);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-
-                    System.out.println(route.getDistance());
-                }
-            }
-        });
+//        routeTabDistanceBtn.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event) {
+//                Double distance;
+//                for (Route route : selectedRoutes) {
+//                    Integer index = routes.indexOf(route);
+//                    String sourceAirport = route.getSourceAirportCode();
+//                    String destAirport = route.getDestinationAirportCode();
+//                    try {
+//                        Connection con = DatabaseManager.connect();
+//                        distance = Calculations.calculateDistance(sourceAirport, destAirport, con);
+//                        route.setDistance(distance);
+//                        routes.get(index).setDistance(distance);
+//                        //System.out.println(routes.get(index).getDistance());
+//                        DatabaseManager.disconnect(con);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//
+//
+//                    System.out.println(route.getDistance());
+//                }
+//            }
+//        });
 
 
     }

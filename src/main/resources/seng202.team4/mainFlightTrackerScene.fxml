@@ -14,7 +14,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TabPane fx:id="mainTabPane" prefHeight="500.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="92.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <TabPane fx:id="mainTabPane" prefHeight="500.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="110.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
         <tabs>
             <Tab fx:id="homeTabButton" text="Home">
                 <content>
