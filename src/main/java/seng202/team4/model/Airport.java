@@ -210,6 +210,7 @@ public class Airport extends DataType {
     public void setCoordinates(double longitude, double latitude) {
         this.coordinates = String.format("%.4f, %.4f", latitude, longitude);
     }
+
     public String getCoordinates() {
         return coordinates;
     }
