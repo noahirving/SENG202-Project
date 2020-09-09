@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.AirlineTabController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="461.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.AirlineTabController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -26,9 +26,9 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="14.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
@@ -42,7 +42,7 @@
               <ComboBox fx:id="airlineTabCountryCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
               <Label fx:id="airlineTabCountrySelectorLabel" alignment="CENTER" text="Country:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
             <Label fx:id="airlineTabCountrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="3" />
-            <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" onAction="#setDataSet" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="4" />
+            <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="4" />
          </children>
          <padding>
             <Insets left="15.0" right="15.0" />

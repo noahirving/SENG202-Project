@@ -43,6 +43,7 @@ public class AirlineTabController extends DataController {
 
         try {
             setDataSetComboBox();
+            setDataSetListener();
             setTable();
         } catch (Exception e) {
             e.printStackTrace();

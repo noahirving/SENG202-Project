@@ -68,6 +68,7 @@ public class RouteTabController extends DataController{
 
         try {
             setDataSetComboBox();
+            setDataSetListener();
             getMaxStops();
             setTable(); // Super class method which calls setTableData
         } catch (Exception e) {

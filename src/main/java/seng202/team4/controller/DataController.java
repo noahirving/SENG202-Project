@@ -34,6 +34,19 @@ public abstract class DataController {
     @FXML private ComboBox dataSetComboBox;
     public final static String ALL = "All";
 
+
+    public void setDataSetListener() {
+        dataSetComboBox.valueProperty().addListener((obs, oldItem, newItem) -> {
+            if (newItem != null) {
+                try {
+                    setDataSet(newItem.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     public void setDataSetComboBox() throws Exception{
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
@@ -49,10 +62,9 @@ public abstract class DataController {
         DatabaseManager.disconnect(c);
     }
 
-    public void setDataSet() throws Exception{
+    public void setDataSet(String dataSetName) throws Exception{
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
-        String dataSetName = dataSetComboBox.getValue().toString();
         String query = "Select * from " + getDataType().getTypeName() + " ";
         if (dataSetName != ALL) {
             String idQuery = "Select ID from " + getDataType().getSetName() + " Where Name = '" + dataSetName + "';";
@@ -61,6 +73,7 @@ public abstract class DataController {
 
             query +=  "WHERE SetID = '" + rs.getInt("ID") + "'";
         }
+        System.out.println(query);
         setTable(query);
         System.out.println("Table updated");
         stmt.close();
@@ -109,5 +122,10 @@ public abstract class DataController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public ComboBox getDataSetComboBox() {
+        return dataSetComboBox;
     }
 }

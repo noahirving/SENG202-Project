@@ -51,6 +51,7 @@ public class AirportTabController extends DataController {
 
         try {
             setDataSetComboBox();
+            setDataSetListener();
             setTable(); // Super class method which calls setTableData
         } catch (Exception e) {
             e.printStackTrace();

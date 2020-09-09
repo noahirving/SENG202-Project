@@ -1,6 +1,7 @@
 package seng202.team4.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -12,6 +13,7 @@ public class FileUploadController {
 
     @FXML private TextField nameField;
     @FXML private Text filePath;
+    @FXML private Label errorText;
     private String name;
     private File file;
     private DataController controller;
@@ -45,6 +47,7 @@ public class FileUploadController {
         if (f != null) {
             file = f;
             filePath.setText(file.toString());
+            errorText.setText("");
         }
     }
 
@@ -53,14 +56,18 @@ public class FileUploadController {
     }
 
     public void confirm() {
-        if (name != null && file != null) {
+        if (name == null) {
+            errorText.setText("*Pick a name");
+        } else if (file == null) {
+            errorText.setText("*Pick a file");
+        } else if (controller.getDataSetComboBox().getItems().contains(nameField.getText())) {
+            errorText.setText("*Dataset name already chosen");
+        } else {
             System.out.println("Confirmed");
             controller.newData(name, file);
             stage.close();
         }
-        else {
-            System.out.println("Invalid");
-        }
+
     }
 
 

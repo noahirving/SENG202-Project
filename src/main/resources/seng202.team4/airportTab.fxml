@@ -45,7 +45,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
               <Label fx:id="airportTabCitySelectorLabel" text="City:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
-            <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" onAction="#setDataSet" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="6" />
+            <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="6" />
             <Label fx:id="airlineTabCountrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="5" />
          </children>
          <padding>
