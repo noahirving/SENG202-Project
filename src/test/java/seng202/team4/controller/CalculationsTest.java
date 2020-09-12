@@ -1,69 +1,83 @@
 package seng202.team4.controller;
 
-import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.*;
+import seng202.team4.Main;
 import seng202.team4.model.DatabaseManager;
 import seng202.team4.model.Route;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-public class CalculationsTest extends TestCase {
+public class CalculationsTest {
 
-    private Connection con;
-    private ResultSet rs;
+    private static Connection con;
+    private static ResultSet rs;
 
-    public void setUp() throws Exception {
-        super.setUp();
-        con = DatabaseManager.connect();
-        String query = "SELECT Latitude,Longitude from Airport WHERE IATA = 'GKA' OR IATA = 'MAG'";
-        Statement stmt = DatabaseManager.getStatement(con);
-        rs = stmt.executeQuery(query);
+    String query1 = "SELECT Latitude,Longitude from Airport WHERE IATA = 'GKA'";
+    String query2 = "SELECT Latitude,Longitude from Airport WHERE IATA = 'MAG'";
+
+    public ResultSet getResultSet(String query) throws SQLException {
+        rs = con.createStatement().executeQuery(query);
+        return rs;
     }
 
-    public void tearDown() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
+        Main m = new Main();
+        m.createDirectory();
+        m.deleteDB();
+        m.newDB();
+        m.loadTest();
+
+        con = DatabaseManager.connect();
+    }
+
+    @AfterClass
+    public static void teardown() throws Exception {
+        rs.close();
         DatabaseManager.disconnect(con);
     }
 
     @Test
     public void testLat1() throws Exception {
+        rs = getResultSet(query1);
         double lat1 = rs.getDouble("Latitude");
-        assertEquals(-6.081689, lat1);
+        Assert.assertEquals(-6.081689, lat1, 0);
     }
 
     @Test
     public void testLong1() throws Exception {
+        rs = getResultSet(query1);
         double long1 = rs.getDouble("Longitude");
-        assertEquals(145.391881, long1);
+        Assert.assertEquals(145.391881, long1, 0);
     }
 
     @Test
     public void testLat2() throws Exception {
-        rs.next(); rs.next();
+        rs = getResultSet(query2);
         double lat2 = rs.getDouble("Latitude");
-        assertEquals(-5.207083, lat2);
+        Assert.assertEquals(-5.207083, lat2, 0);
     }
 
     @Test
     public void testLong2() throws Exception {
-        rs.next(); rs.next();
+        rs = getResultSet(query2);
         double long2 = rs.getDouble("Longitude");
-        assertEquals(145.7887, long2);
+        Assert.assertEquals(145.7887, long2, 0);
     }
 
     @Test
     public void testCalculateDistance() throws Exception {
         double distance = Calculations.calculateDistance("GKA", "MAG", con);
-        assertEquals(106.70511125420559, distance);
+        Assert.assertEquals(106.70511125420559, distance, 0);
     }
 
     @Test
-    public void testCalculateEmissions() throws Exception {
+    public void testCalculateEmissions() {
         Route route = new Route();
         route.setDistance(1000.0);
         double emissions = Calculations.calculateEmissions(route);
-        assertEquals(115.0, emissions);
+        Assert.assertEquals(115.0, emissions, 0);
     }
 }
