@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 public class Airport extends DataType {
 
-    private int airportID;
+    private int id;
     private String name;
     private String city;
     private String country;
@@ -91,8 +91,8 @@ public class Airport extends DataType {
         return "AirportSet";
     }
 
-    public int getAirportID() {
-        return airportID;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
