@@ -2,6 +2,8 @@ package seng202.team4.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +37,7 @@ public class EmissionsTabController extends DataController {
     @FXML private TableColumn<Route, Integer> emissionsTabDistanceColumn;
     @FXML private TableColumn<Route, Integer> emissionsTabEmissionsColumn;
     @FXML private Button emissionsTabLoadRoutesBtn;
+    @FXML private TextField emissionsSearchField;
     @FXML private Label currentEmissionsValue;
 
 
@@ -151,13 +154,62 @@ public class EmissionsTabController extends DataController {
 
     }
 
+    private FilteredList<Route> searchBarFilter() {
+        FilteredList<Route> searchFilter = new FilteredList<>(selectedRoutes, p -> true);
+        emissionsSearchField.textProperty().addListener((observable, oldValue, newValue) ->
+                searchFilter.setPredicate(route -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+                    if (route.getAirlineCode().toLowerCase().contains(lower)) {
+                        return true;
+                    } else if (route.getSourceAirportCode().toLowerCase().contains(lower)) {
+                        return true;
+                    } else if (route.getDestinationAirportCode().toLowerCase().contains(lower)){
+                        return true;
+                    } else {
+                        return (route.getPlaneTypeCode().toLowerCase().contains(lower));
+                    }
+                }));
+        return searchFilter;
+    }
+
     @Override
     public void initialiseComboBoxes() {
+        filterData();
+    }
 
+    public FilteredList<Route> addFilter(FilteredList<Route> filteredList, ComboBox<String> comboBox, String filter) {
+        FilteredList<Route> newFilter = new FilteredList<>(filteredList, p -> true);
+        comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                newFilter.setPredicate(route -> {
+                    if (newValue == null || newValue.equals("---")) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+
+                    if (filter.equals("Airline")) {
+                        return route.getAirlineCode().toLowerCase().contains(lower);
+                    } else if (filter.equals("Source")) {
+                        return route.getSourceAirportCode().toLowerCase().contains(lower);
+                    } else if (filter.equals("Destination")) {
+                        return route.getDestinationAirportCode().toLowerCase().contains(lower);
+                    } else {
+                        return route.getPlaneTypeCode().toLowerCase().contains(lower);
+                    }
+
+                }));
+        return newFilter;
     }
 
     @Override
     public void filterData() {
+        FilteredList<Route> searchFilter = searchBarFilter();
+        SortedList<Route> sortedRoute = new SortedList<>(searchFilter);
+        sortedRoute.comparatorProperty().bind(emissionsDataTable.comparatorProperty());
+
+        emissionsDataTable.setItems(sortedRoute);
 
     }
 
