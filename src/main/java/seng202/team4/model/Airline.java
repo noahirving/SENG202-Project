@@ -1,26 +1,29 @@
 package seng202.team4.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Airline extends DataType {
 
-    private int airlineID;
-    private String airlineName;
-    private String airlineCode;
-    private String airlineIATA;
-    private String airlineICAO;
-    private String airlineCallSign;
-    private String airlineCountry;
+    private int id;
+    private String name;
+    private String code;
+    private String iata;
+    private String icao;
+    private String callSign;
+    private String country;
     private boolean recentlyActive;
     private double carbonEmissions;
 
     public Airline(String airlineData) {
         String[] airlines = airlineData.replaceAll("\"", "").split(",");
-        this.airlineID = Integer.parseInt(airlines[0]);
-        this.airlineName = airlines[1];
-        this.airlineCode = airlines[2];
-        this.airlineIATA = airlines[3];
-        this.airlineICAO = airlines[4];
-        this.airlineCallSign = airlines[5];
-        this.airlineCountry = airlines[6];
+        this.id = Integer.parseInt(airlines[0]);
+        this.name = airlines[1];
+        this.code = airlines[2];
+        this.iata = airlines[3];
+        this.icao = airlines[4];
+        this.callSign = airlines[5];
+        this.country = airlines[6];
         this.recentlyActive = airlines[7].equals("Y");
         this.carbonEmissions = calculateCarbonEmissions();
     }
@@ -33,12 +36,12 @@ public class Airline extends DataType {
     public String getInsertStatement(int setID){
         return "INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') "
                 + "VALUES ('"
-                + getAirlineName().replaceAll("'", "''") + between
-                + getAirlineCode().replaceAll("'", "''") + between
-                + getAirlineIATA().replaceAll("'", "''") + between
-                + getAirlineICAO().replaceAll("'", "''") + between
-                + getAirlineCallSign().replaceAll("'", "''") + between
-                + getAirlineCountry().replaceAll("'", "''") + between
+                + getName().replaceAll("'", "''") + between
+                + getCode().replaceAll("'", "''") + between
+                + getIata().replaceAll("'", "''") + between
+                + getIcao().replaceAll("'", "''") + between
+                + getCallSign().replaceAll("'", "''") + between
+                + getCountry().replaceAll("'", "''") + between
                 + isRecentlyActive() + between
                 + setID
                 + "');";
@@ -64,32 +67,32 @@ public class Airline extends DataType {
     }
 
     // getters
-    public int getAirlineID() {
-        return airlineID;
+    public int getId() {
+        return id;
     }
 
-    public String getAirlineName() {
-        return airlineName;
+    public String getName() {
+        return name;
     }
 
-    public String getAirlineCode() {
-        return airlineCode;
+    public String getCode() {
+        return code;
     }
 
-    public String getAirlineIATA() {
-        return airlineIATA;
+    public String getIata() {
+        return iata;
     }
 
-    public String getAirlineICAO() {
-        return airlineICAO;
+    public String getIcao() {
+        return icao;
     }
 
-    public String getAirlineCallSign() {
-        return airlineCallSign;
+    public String getCallSign() {
+        return callSign;
     }
 
-    public String getAirlineCountry() {
-        return airlineCountry;
+    public String getCountry() {
+        return country;
     }
 
     public boolean isRecentlyActive() {
@@ -102,32 +105,32 @@ public class Airline extends DataType {
 
 
     //setters
-    public void setAirlineID(int airlineID) {
-        this.airlineID = airlineID;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setAirlineName(String airlineName) {
-        this.airlineName = airlineName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setAirlineCode(String airlineCode) {
-        this.airlineCode = airlineCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public void setAirlineIATA(String airlineIATA) {
-        this.airlineIATA = airlineIATA;
+    public void setIata(String iata) {
+        this.iata = iata;
     }
 
-    public void setAirlineICAO(String airlineICAO) {
-        this.airlineICAO = airlineICAO;
+    public void setIcao(String icao) {
+        this.icao = icao;
     }
 
-    public void setAirlineCallSign(String airlineCallSign) {
-        this.airlineCallSign = airlineCallSign;
+    public void setCallSign(String callSign) {
+        this.callSign = callSign;
     }
 
-    public void setAirlineCountry(String airlineCountry) {
-        this.airlineCountry = airlineCountry;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public void setRecentlyActive(boolean recentlyActive) {

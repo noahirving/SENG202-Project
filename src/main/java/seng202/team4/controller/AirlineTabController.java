@@ -38,8 +38,8 @@ public class AirlineTabController extends DataController {
 
     @FXML
     public void initialize() {
-        airlineTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<>("airlineName"));
-        airlineTabCountryColumn.setCellValueFactory(new PropertyValueFactory<>("airlineCountry"));
+        airlineTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        airlineTabCountryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
 
         try {
             setDataSetComboBox();
@@ -57,14 +57,14 @@ public class AirlineTabController extends DataController {
         airlines = FXCollections.observableArrayList();
         while (rs.next()) {
             Airline airline = new Airline();
-            String airlineName = rs.getString("Name");
-            String airlineCountry = rs.getString("Country");
+            String name = rs.getString("Name");
+            String country = rs.getString("Country");
 
-            airline.setAirlineName(airlineName);
-            airline.setAirlineCountry(airlineCountry);
+            airline.setName(name);
+            airline.setCountry(country);
             airlines.add(airline);
 
-            addToComboBoxList(countries, airlineCountry);
+            addToComboBoxList(countries, country);
         }
         airlineDataTable.setItems(airlines);
     }
@@ -103,7 +103,7 @@ public class AirlineTabController extends DataController {
                     }
                     String lower = newValue.toLowerCase();
                     if (filter.equals("Country")) {
-                        return airline.getAirlineCountry().toLowerCase().contains(lower);
+                        return airline.getCountry().toLowerCase().contains(lower);
                     }
                     return false;
                 }));
@@ -118,9 +118,9 @@ public class AirlineTabController extends DataController {
                         return true;
                     }
                     String lower = newValue.toLowerCase();
-                    if (airline.getAirlineName().toLowerCase().contains(lower)) {
+                    if (airline.getName().toLowerCase().contains(lower)) {
                         return true;
-                    } else if (airline.getAirlineCountry().toLowerCase().contains(lower)) {
+                    } else if (airline.getCountry().toLowerCase().contains(lower)) {
                         return true;
                     }
                     return false;
