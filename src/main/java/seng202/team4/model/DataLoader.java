@@ -1,6 +1,7 @@
 package seng202.team4.model;
 
 import seng202.team4.Path;
+import seng202.team4.controller.Calculations;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -82,4 +83,102 @@ public abstract class DataLoader {
         }
     }
 
+    public static void addToAirportsSelectedDatabase(Route route) {
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        String between = "', '";
+
+        Double distance = 0.0;
+        String sourceAirport = route.getSourceAirportCode();
+        String destAirport = route.getDestinationAirportCode();
+        try {
+            distance = Calculations.calculateDistance(sourceAirport, destAirport, con);
+            route.setDistance(distance);
+            //System.out.println(routes.get(index).getDistance());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Double carbonEmitted = Calculations.calculateEmissions(route);
+        String query = "INSERT INTO RoutesSelected ('Airline', 'SourceAirport', 'DestinationAirport', 'Equipment', 'Distance', 'CarbonEmissions') "
+                + "VALUES ('"
+                + route.getAirlineCode().replaceAll("'", "''") + between
+                + route.getSourceAirportCode().replaceAll("'", "''") + between
+                + route.getDestinationAirportCode().replaceAll("'", "''") + between
+                + route.getPlaneTypeCode().replaceAll("'", "''") + between
+                + route.getDistance() + between
+                + carbonEmitted
+                + "');";
+        try {
+            stmt.executeUpdate(query);
+            con.commit();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        DatabaseManager.disconnect(con);
+    }
+
+    public static void removeFromAirportsSelectedDatabase(Route route) {
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        String between = "' and ";
+
+        String query = "DELETE FROM RoutesSelected WHERE "
+                + "Airline = '" + route.getAirlineCode().replaceAll("'", "''") + between
+                + "SourceAirport = '" + route.getSourceAirportCode().replaceAll("'", "''") + between
+                + "DestinationAirport = '" + route.getDestinationAirportCode().replaceAll("'", "''") + between
+                + "Equipment = '" + route.getPlaneTypeCode().replaceAll("'", "''") + "'";
+        try {
+            stmt.executeUpdate(query);
+            con.commit();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        DatabaseManager.disconnect(con);
+    }
+
+    public static void addToAirportsSelectedDatabase(Airport airport) {
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        String between = "', '";
+
+        String query = "INSERT INTO AirportsSelected ('Name', 'Longitude', 'Latitude') "
+                + "VALUES ('"
+                + airport.getName().replaceAll("'", "''") + between
+                + airport.getLongitude() + between
+                + airport.getLatitude()
+                + "');";
+        try {
+            stmt.executeUpdate(query);
+            con.commit();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        DatabaseManager.disconnect(con);
+
+    }
+
+    public static void removeFromAirportsSelectedDatabase(Airport airport) {
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        String between = "' and ";
+
+        String query = "DELETE FROM AirportsSelected WHERE "
+                + "Name = '" + airport.getName() + between
+                + "Longitude = '" + airport.getLongitude() + between
+                + "Latitude = '" + airport.getLatitude() + "'";
+        try {
+            stmt.executeUpdate(query);
+            con.commit();
+            stmt.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        DatabaseManager.disconnect(con);
+    }
 }
