@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Route extends DataType {
 
-    private int routeID;
+    private int id;
     private String airlineCode;
     private int airlineID;
     private String sourceAirportCode;
@@ -112,8 +112,8 @@ public class Route extends DataType {
         }
     }
 
-    public int getRouteID() {
-        return routeID;
+    public int getId() {
+        return id;
     }
 
     public String getAirlineCode() {
