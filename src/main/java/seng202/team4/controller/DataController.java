@@ -125,6 +125,16 @@ public abstract class DataController {
     }
 
 
+    public void newRecord() throws IOException {
+        Stage stage = new Stage();
+        stage.setTitle("New Record");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.view + "/newAirport.fxml"));
+        stage.setScene(new Scene(loader.load(), 700, 250));
+        stage.show();
+        NewAirport controller = loader.getController();
+        controller.setUp(stage, this);
+    }
+
     public ComboBox getDataSetComboBox() {
         return dataSetComboBox;
     }

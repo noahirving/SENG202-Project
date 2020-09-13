@@ -3,6 +3,8 @@ package seng202.team4.model;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
+import java.util.ArrayList;
+
 public class Airport extends DataType {
 
     private int id;
@@ -15,7 +17,7 @@ public class Airport extends DataType {
     private double longitude;
     private String coordinates;
     private double altitude;
-    private double timezone;
+    private float timezone;
     private char dst;
     private String tzDatabase;
     private int routeNum;
@@ -42,7 +44,7 @@ public class Airport extends DataType {
         this.longitude = Double.parseDouble(airportArr[7 + delta]);
         setCoordinates(this.longitude, this.latitude);
         this.altitude = Double.parseDouble(airportArr[8 + delta]);
-        this.timezone = Double.parseDouble(airportArr[9 + delta]);
+        this.timezone = Float.parseFloat(airportArr[9 + delta]);
         this.dst = airportArr[10 + delta].charAt(0);
         this.tzDatabase = airportArr[11 + delta];
         this.select = new SimpleBooleanProperty(false);
@@ -53,6 +55,93 @@ public class Airport extends DataType {
     }
 
     public Airport() {
+
+    }
+    public Airport (String name, String city, String country, String iata, String icao, double latitude, double longitude, double altitude, float timeZone, char dst, String tzDatabase) {
+        this.name = name;
+        this.city = city;
+        this.country = country;
+        this.iata = iata;
+        this.icao = icao;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.altitude = altitude;
+        this.timezone = timeZone;
+        this.dst = dst;
+        this.tzDatabase = tzDatabase;
+    }
+
+    public static Airport getValid(ArrayList<String> errorMessage, String name, String city, String country, String iata, String icao, String latitude, String longitude, String altitude, String timeZone, String dst, String tzDatabase) {
+        boolean valid = true;
+        if (!Validate.isAlphaNumeric(name)) {
+            errorMessage.add("Invalid name");
+            valid = false;
+        }
+        if (!Validate.isAlpha(city)) {
+            errorMessage.add("Invalid city");
+            valid = false;
+        }
+        if (!Validate.isAlpha(country)) {
+            errorMessage.add("Invalid country");
+            valid = false;
+        }
+        if (!Validate.isAlphaNumeric(iata)) {
+            errorMessage.add("Invalid IATA");
+            valid = false;
+        }
+        if (!Validate.isAlphaNumeric(icao)) {
+            errorMessage.add("Invalid  ICAO");
+            valid = false;
+        }
+        //TODO: Implement validate floats
+        /*
+        if (!Validate.isNumeric(latitude)) {
+            errorMessage.add("Invalid latitude");
+            valid = false;
+        }
+        if (!Validate.isNumeric(longitude)) {
+            errorMessage.add("Invalid longitude");
+            valid = false;
+        }
+        if (!Validate.isNumeric(altitude)) {
+            errorMessage.add("Invalid altitude");
+            valid = false;
+        }
+        if (!Validate.isNumeric(timeZone)) {
+            errorMessage.add("Invalid time zone");
+            valid = false;
+        }
+        */
+        char dstChar = 'N';
+        if (dst.length() == 1) {
+            dstChar = dst.charAt(0);
+            if (!(dstChar == 'E' || dstChar == 'A' || dstChar == 'S' || dstChar == 'O' || dstChar == 'Z' || dstChar == 'N' || dstChar == 'U')) {
+                errorMessage.add("Invalid daylight savings time");
+                valid = false;
+            }
+        }
+        else {
+            errorMessage.add("Invalid daylight savings time");
+            valid = false;
+        }
+
+
+        //TODO: Implement '/' and alpha validator for tz database
+        /*
+        if (!Validate.isAlpha(tzDatabase)) {
+            errorMessage.add("Invalid tz database");
+            valid = false;
+        }
+         */
+
+        if (valid) {
+            return new Airport(name, city, country, iata, icao, Double.parseDouble(latitude), Double.parseDouble(longitude), Double.parseDouble(altitude), Float.parseFloat(timeZone), dstChar, tzDatabase);
+        }
+        else {
+            return null;
+        }
+
+
 
     }
 
@@ -163,7 +252,7 @@ public class Airport extends DataType {
         return timezone;
     }
 
-    public void setTimezone(double timezone) {
+    public void setTimezone(float timezone) {
         this.timezone = timezone;
     }
 

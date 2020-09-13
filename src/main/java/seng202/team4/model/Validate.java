@@ -22,7 +22,7 @@ public interface Validate {
     }
 
     static boolean isAlphaNumeric(String string) {
-        return isNumeric(string) && isAlpha(string);
+        return isNumeric(string) || isAlpha(string);
     }
 
 }

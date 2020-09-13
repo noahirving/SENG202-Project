@@ -2,7 +2,7 @@ package seng202.team4.model;
 
 
 
-public abstract class DataType {
+public abstract class DataType implements Validate {
 
     public static final String between = "', '";
     public abstract String getInsertStatement(int setID);

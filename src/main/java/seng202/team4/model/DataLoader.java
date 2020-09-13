@@ -63,4 +63,23 @@ public abstract class DataLoader {
         }
         return false;
     }
+
+    public static void addNewRecord(DataType dataType, String setName){
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        try {
+            String setIdQuery = "SELECT ID FROM " + dataType.getSetName() + " WHERE Name = '" + setName + "';";
+            ResultSet rs = stmt.executeQuery(setIdQuery);
+            rs.next();
+            int setID = rs.getInt("ID");
+            stmt.executeUpdate(dataType.getInsertStatement(setID));
+            stmt.close();
+            c.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseManager.disconnect(c);
+        }
+    }
+
 }
