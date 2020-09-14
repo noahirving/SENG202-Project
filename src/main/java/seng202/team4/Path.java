@@ -13,6 +13,9 @@ public abstract class Path {
     public static final String routeSceneFXML = view + "/routeTab.fxml";
     public static final String mapSceneFXML = view + "/mapTab.fxml";
     public static final String emissionsSceneFXML = view + "/emissionsTab.fxml";
+    public static final String newAirlineFXML = view + "/newAirline.fxml";
+    public static final String newAirportFXML = view + "/newAirport.fxml";
+    public static final String newRouteFXML = view + "/newRoute.fxml";
 
     public static final String styleSheet = view +  "/styles.css";
 

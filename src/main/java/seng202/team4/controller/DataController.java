@@ -31,6 +31,7 @@ public abstract class DataController {
     public abstract void setTableData(ResultSet rs) throws Exception;
     public abstract void initialiseComboBoxes();
     public abstract void filterData();
+    public abstract String getNewRecordFXML();
     @FXML private ComboBox dataSetComboBox;
     public final static String ALL = "All";
 
@@ -128,10 +129,10 @@ public abstract class DataController {
     public void newRecord() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("New Record");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.view + "/newAirport.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(getNewRecordFXML()));
         stage.setScene(new Scene(loader.load(), 700, 250));
         stage.show();
-        NewAirport controller = loader.getController();
+        NewRecord controller = loader.getController();
         controller.setUp(stage, this);
     }
 

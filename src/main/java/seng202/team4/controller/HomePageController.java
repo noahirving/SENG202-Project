@@ -66,4 +66,9 @@ public class HomePageController extends DataController {
     public void filterData() {
 
     }
+
+    @Override
+    public String getNewRecordFXML() {
+        return null;
+    }
 }

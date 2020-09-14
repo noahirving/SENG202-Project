@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import seng202.team4.Path;
 import seng202.team4.model.Airport;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
@@ -138,6 +139,11 @@ public class AirportTabController extends DataController {
         sortedRoute.comparatorProperty().bind(airportDataTable.comparatorProperty());
         airportDataTable.setItems(sortedRoute);
 
+    }
+
+    @Override
+    public String getNewRecordFXML() {
+        return Path.newAirportFXML;
     }
 
     public FilteredList<Airport> addFilter(FilteredList<Airport> filteredList, ComboBox<String> comboBox, String filter) {

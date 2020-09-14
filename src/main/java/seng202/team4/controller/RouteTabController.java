@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import seng202.team4.Path;
 import seng202.team4.model.*;
 
 import java.sql.*;
@@ -165,6 +166,11 @@ public class RouteTabController extends DataController{
 
         routeDataTable.setItems(sortedRoute);
 
+    }
+
+    @Override
+    public String getNewRecordFXML() {
+        return Path.newRouteFXML;
     }
 
     private FilteredList<Route> searchBarFilter(FilteredList<Route> emissionsSliderFilter) {

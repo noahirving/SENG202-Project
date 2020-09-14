@@ -213,4 +213,9 @@ public class EmissionsTabController extends DataController {
 
     }
 
+    @Override
+    public String getNewRecordFXML() {
+        return null;
+    }
+
 }

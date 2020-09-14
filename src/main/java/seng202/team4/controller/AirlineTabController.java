@@ -94,6 +94,11 @@ public class AirlineTabController extends DataController {
 
     }
 
+    @Override
+    public String getNewRecordFXML() {
+        return Path.newAirlineFXML;
+    }
+
     public FilteredList<Airline> addFilter(FilteredList<Airline> filteredList, ComboBox<String> comboBox, String filter) {
         FilteredList<Airline> newFilter = new FilteredList<>(filteredList, p -> true);
         comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
