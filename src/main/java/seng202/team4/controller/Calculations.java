@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Calculations {
 
-    static double calculateEmissions(Route route) {
+    public static double calculateEmissions(Route route) {
         Double distance = route.getDistance();
         return distance * 0.115;
     }

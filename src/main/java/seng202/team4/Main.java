@@ -134,7 +134,7 @@ public class Main {
                     "\"Equipment\" STRING," +
                     "\"Distance\" INTEGER," +
                     "\"CarbonEmissions\" INTEGER," +
-                    "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
+                    "PRIMARY KEY(\"ID\")" +
                     ")";
 
             String airportsSelectedTable = "CREATE TABLE \"AirportsSelected\" (" +

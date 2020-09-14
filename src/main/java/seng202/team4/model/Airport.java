@@ -149,7 +149,7 @@ public class Airport extends DataType {
     public String getInsertStatement(int setID) {
         return "INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME', 'SETID') "
                 + "VALUES ('"
-                + getName().replaceAll("'", "''") + between
+                + getName().replaceAll("'", "''''") + between
                 + getCity().replaceAll("'", "''") + between
                 + getCountry().replaceAll("'", "''") + between
                 + getIata().replaceAll("'", "''") + between

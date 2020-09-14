@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import seng202.team4.model.Airport;
+import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
 import seng202.team4.model.DatabaseManager;
 
@@ -70,57 +71,16 @@ public class AirportTabController extends DataController {
 
         airportTabSelectColumn.setCellFactory(CheckBoxTableCell.forTableColumn(param -> {
             if (airports.get(param).isSelect()) {
-                addToAirportsSelectedDatabase(airports.get(param));
+                DataLoader.addToAirportsSelectedDatabase(airports.get(param));
             } else {
-                removeFromAirportsSelectedDatabase(airports.get(param));
+                DataLoader.removeFromAirportsSelectedDatabase(airports.get(param));
             }
 
             return airports.get(param).selectProperty();
         }));
     }
 
-    private void addToAirportsSelectedDatabase(Airport airport) {
-        Connection con = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(con);
-        String between = "', '";
 
-        String query = "INSERT INTO AirportsSelected ('Name', 'Longitude', 'Latitude') "
-                + "VALUES ('"
-                + airport.getName().replaceAll("'", "''") + between
-                + airport.getLongitude() + between
-                + airport.getLatitude()
-                + "');";
-        try {
-            stmt.executeUpdate(query);
-            con.commit();
-            stmt.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        DatabaseManager.disconnect(con);
-
-    }
-
-    private void removeFromAirportsSelectedDatabase(Airport airport) {
-        Connection con = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(con);
-        String between = "' and ";
-
-        String query = "DELETE FROM AirportsSelected WHERE "
-                + "Name = '" + airport.getName() + between
-                + "Longitude = '" + airport.getLongitude() + between
-                + "Latitude = '" + airport.getLatitude() + "'";
-        try {
-            stmt.executeUpdate(query);
-            con.commit();
-            stmt.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-
-        DatabaseManager.disconnect(con);
-    }
 
     @Override
     public void setTableData(ResultSet rs) throws Exception {

@@ -24,8 +24,6 @@ public class RouteTabController extends DataController{
     @FXML private TableColumn<Route, String> routeTabDestinationAirportColumn;
     @FXML private TableColumn<Route, Integer> routeTabNumStopsColumn;
     @FXML private TableColumn<Route, String> routeTabPlaneTypeColumn;
-    @FXML private TableColumn<Route, Integer> routeTabDistanceColumn;
-    @FXML private TableColumn<Route, Route> routeTabSelectedRoute;
 
     @FXML private ComboBox<String> routeAirlineFilterCombobox;
     @FXML private ComboBox<String> routeDepartureFilterCombobox;
@@ -35,12 +33,10 @@ public class RouteTabController extends DataController{
     @FXML private ComboBox<String> routePlaneTypeFilterCombobox;
     @FXML private Slider routeEmissionsFilterSlider;
     @FXML private Label emissionsLabel;
-    //@FXML private Button routeTabDistanceBtn;
 
     @FXML private TextField routeSearchField;
 
     private ObservableList<Route> routes = FXCollections.observableArrayList();
-    private ObservableSet<Route> selectedRoutes = FXCollections.observableSet();
     private ObservableList<String> airlineCodes = FXCollections.observableArrayList();
     private ObservableList<String> departureCountries = FXCollections.observableArrayList();
     private ObservableList<String> destinationCountries = FXCollections.observableArrayList();
@@ -53,8 +49,6 @@ public class RouteTabController extends DataController{
         routeTabDestinationAirportColumn.setCellValueFactory(new PropertyValueFactory<>("destinationAirportCode"));
         routeTabNumStopsColumn.setCellValueFactory(new PropertyValueFactory<>("numStops"));
         routeTabPlaneTypeColumn.setCellValueFactory(new PropertyValueFactory<>("planeTypeCode"));
-        //routeTabDistanceColumn.setCellValueFactory(new PropertyValueFactory<>("distance"));
-        //routeTabSelectedRoute.setCellValueFactory(new PropertyValueFactory<>("select"));
         routeDataTable.setEditable(true);
 
         makeCheckboxColumn();
@@ -75,32 +69,6 @@ public class RouteTabController extends DataController{
             e.printStackTrace();
             System.exit(0);
         }
-//        routeTabDistanceBtn.setOnAction(new EventHandler<ActionEvent>() {
-//
-//            @Override
-//            public void handle(ActionEvent event) {
-//                Double distance;
-//                for (Route route : selectedRoutes) {
-//                    Integer index = routes.indexOf(route);
-//                    String sourceAirport = route.getSourceAirportCode();
-//                    String destAirport = route.getDestinationAirportCode();
-//                    try {
-//                        Connection con = DatabaseManager.connect();
-//                        distance = Calculations.calculateDistance(sourceAirport, destAirport, con);
-//                        route.setDistance(distance);
-//                        routes.get(index).setDistance(distance);
-//                        //System.out.println(routes.get(index).getDistance());
-//                        DatabaseManager.disconnect(con);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//
-//
-//                    System.out.println(route.getDistance());
-//                }
-//            }
-//        });
-
 
     }
 
@@ -114,70 +82,18 @@ public class RouteTabController extends DataController{
 
         routeTabSelectedRoute.setCellFactory(CheckBoxTableCell.forTableColumn(param -> {
             if (routes.get(param).isSelect()) {
-                addToAirportsSelectedDatabase(routes.get(param));
+                DataLoader.addToAirportsSelectedDatabase(routes.get(param));
             } else {
-                removeFromAirportsSelectedDatabase(routes.get(param));
+                DataLoader.removeFromAirportsSelectedDatabase(routes.get(param));
             }
 
             return routes.get(param).selectProperty();
         }));
     }
 
-    private void addToAirportsSelectedDatabase(Route route) {
-        Connection con = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(con);
-        String between = "', '";
 
-        Double distance = 0.0;
-        String sourceAirport = route.getSourceAirportCode();
-        String destAirport = route.getDestinationAirportCode();
-        try {
-            distance = Calculations.calculateDistance(sourceAirport, destAirport, con);
-            route.setDistance(distance);
-            //System.out.println(routes.get(index).getDistance());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Double carbonEmitted = Calculations.calculateEmissions(route);
-        String query = "INSERT INTO RoutesSelected ('Airline', 'SourceAirport', 'DestinationAirport', 'Equipment', 'Distance', 'CarbonEmissions') "
-                + "VALUES ('"
-                + route.getAirlineCode().replaceAll("'", "''") + between
-                + route.getSourceAirportCode().replaceAll("'", "''") + between
-                + route.getDestinationAirportCode().replaceAll("'", "''") + between
-                + route.getPlaneTypeCode().replaceAll("'", "''") + between
-                + route.getDistance() + between
-                + carbonEmitted
-                + "');";
-        try {
-            stmt.executeUpdate(query);
-            con.commit();
-            stmt.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        DatabaseManager.disconnect(con);
-    }
 
-    private void removeFromAirportsSelectedDatabase(Route route) {
-        Connection con = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(con);
-        String between = "' and ";
 
-        String query = "DELETE FROM RoutesSelected WHERE "
-                + "Airline = '" + route.getAirlineCode().replaceAll("'", "''") + between
-                + "SourceAirport = '" + route.getSourceAirportCode().replaceAll("'", "''") + between
-                + "DestinationAirport = '" + route.getDestinationAirportCode().replaceAll("'", "''") + between
-                + "Equipment = '" + route.getPlaneTypeCode().replaceAll("'", "''") + "'";
-        try {
-            stmt.executeUpdate(query);
-            con.commit();
-            stmt.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        DatabaseManager.disconnect(con);
-    }
 
     @Override
     public void setTableData(ResultSet rs) throws Exception {
@@ -196,9 +112,6 @@ public class RouteTabController extends DataController{
             route.setNumStops(rs.getInt("Stops"));
             route.setPlaneTypeCode(planeType);
             route.setDistance(0);
-//            if(numStops == 0){
-//                route.setSelect(check);
-//            }
             routes.add(route);
 
             addToComboBoxList(airlineCodes, airline);

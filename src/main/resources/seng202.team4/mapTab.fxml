@@ -83,9 +83,9 @@
                         <Label fx:id="airportLabel" text="Airport: " GridPane.halignment="RIGHT" />
                         <ComboBox fx:id="routeAirportFilterCombobox" prefHeight="36.0" prefWidth="118.0" promptText="All" GridPane.columnIndex="1" />
                         <Label text="(Routes Per Airport)" GridPane.columnIndex="1">
-                           <padding>
+                           <GridPane.margin>
                               <Insets top="60.0" />
-                           </padding>
+                           </GridPane.margin>
                         </Label>
                      </children>
                   </GridPane>
@@ -235,7 +235,7 @@
       </RadioButton>
       <Button mnemonicParsing="false" onAction="#init" text="Update Map">
          <GridPane.margin>
-            <Insets left="375.0" />
+            <Insets left="325.0" />
          </GridPane.margin>
          <cursor>
             <Cursor fx:constant="HAND" />
