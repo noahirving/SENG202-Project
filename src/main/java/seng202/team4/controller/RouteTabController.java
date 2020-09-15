@@ -24,30 +24,86 @@ import java.sql.*;
  * SENG202 Team 4
  * Description written on 15/09/2020
  */
-public class RouteTabController extends DataController{
+public class RouteTabController extends DataController {
 
+    /**
+     * Data type (Route) used for this controller.
+     */
     public Route dataType = new Route();
-    @FXML private TableView<Route> routeDataTable;
-    @FXML private TableColumn<Route, String> routeTabAirlineColumn;
-    @FXML private TableColumn<Route, String> routeTabDepartureAirportColumn;
-    @FXML private TableColumn<Route, String> routeTabDestinationAirportColumn;
-    @FXML private TableColumn<Route, Integer> routeTabNumStopsColumn;
-    @FXML private TableColumn<Route, String> routeTabPlaneTypeColumn;
+    /**
+     * TableView of the route raw data table.
+     */
+    @FXML private TableView<Route> dataTable;
+    /**
+     * Airline code column of the raw data table.
+     */
+    @FXML private TableColumn<Route, String> airlineColumn;
+    /**
+     * Departure airport IATA column of the raw data table.
+     */
+    @FXML private TableColumn<Route, String> departureAirportColumn;
+    /**
+     * Destination airport IATA column of the raw data table.
+     */
+    @FXML private TableColumn<Route, String> destinationAirportColumn;
+    /**
+     * Number of stops column of the raw data table.
+     */
+    @FXML private TableColumn<Route, Integer> numStopsColumn;
+    /**
+     * Plane type column of the raw data table.
+     */
+    @FXML private TableColumn<Route, String> planeTypeColumn;
 
-    @FXML private ComboBox<String> routeAirlineFilterCombobox;
-    @FXML private ComboBox<String> routeDepartureFilterCombobox;
-    @FXML private ComboBox<String> routeDestinationFilterCombobox;
-    @FXML private Slider routeStopsFilterSlider;
+    /**
+     * Searchable combobox for filtering by airline code.
+     */
+    @FXML private ComboBox<String> airlineFilterCombobox;
+    /**
+     * Searchable combobox for filtering by departure IATA.
+     */
+    @FXML private ComboBox<String> departureFilterCombobox;
+    /**
+     * Searchable combobox for filtering by destination IATA.
+     */
+    @FXML private ComboBox<String> destinationFilterCombobox;
+    /**
+     * Slider for filtering by number of stops for a route.
+     */
+    @FXML private Slider stopsFilterSlider;
+    /**
+     * Label that shows how many stops are selected by stopsFilterSlider.
+     */
     @FXML private Label stopsLabel;
-    @FXML private ComboBox<String> routePlaneTypeFilterCombobox;
+    /**
+     * Searchable combobox for filtering by plane type.
+     */
+    @FXML private ComboBox<String> planeTypeFilterCombobox;
+    /**
+     * Text field used to search data table.
+     */
+    @FXML private TextField searchField;
 
-    @FXML private TextField routeSearchField;
-
-    private ObservableList<Route> routes = FXCollections.observableArrayList();
-    private ObservableList<String> airlineCodes = FXCollections.observableArrayList();
-    private ObservableList<String> departureCountries = FXCollections.observableArrayList();
-    private ObservableList<String> destinationCountries = FXCollections.observableArrayList();
-    private ObservableList<String> planeTypes = FXCollections.observableArrayList();
+    /**
+     * Mutable ObservableList containing Route objects.
+     */
+    private ObservableList<Route> routes;
+    /**
+     * Mutable ObservableList containing a list of airline codes for the airlineFilterCombobox.
+     */
+    private ObservableList<String> airlineCodes;
+    /**
+     * Mutable ObservableList containing a list of departure country IATAs for the departureFilterCombobox.
+     */
+    private ObservableList<String> departureCountries;
+    /**
+     * Mutable ObservableList containing a list of destination country IATAs for the destinationFilterCombobox.
+     */
+    private ObservableList<String> destinationCountries;
+    /**
+     * Mutable ObservableList containing a list of plane types for the planeTypeFilterCombobox.
+     */
+    private ObservableList<String> planeTypes;
 
     /**
      * Holds the high level logic (set of instructions) for initialisation.
@@ -72,24 +128,24 @@ public class RouteTabController extends DataController{
      * Also makes the checkbox column for selecting specific rows.
      */
     private void initialiseColumns() {
-        routeTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<>("airlineCode"));
-        routeTabDepartureAirportColumn.setCellValueFactory(new PropertyValueFactory<>("sourceAirportCode"));
-        routeTabDestinationAirportColumn.setCellValueFactory(new PropertyValueFactory<>("destinationAirportCode"));
-        routeTabNumStopsColumn.setCellValueFactory(new PropertyValueFactory<>("numStops"));
-        routeTabPlaneTypeColumn.setCellValueFactory(new PropertyValueFactory<>("planeTypeCode"));
-        routeDataTable.setEditable(true);
+        airlineColumn.setCellValueFactory(new PropertyValueFactory<>("airlineCode"));
+        departureAirportColumn.setCellValueFactory(new PropertyValueFactory<>("sourceAirportCode"));
+        destinationAirportColumn.setCellValueFactory(new PropertyValueFactory<>("destinationAirportCode"));
+        numStopsColumn.setCellValueFactory(new PropertyValueFactory<>("numStops"));
+        planeTypeColumn.setCellValueFactory(new PropertyValueFactory<>("planeTypeCode"));
+        dataTable.setEditable(true);
 
         makeCheckboxColumn();
     }
 
     /**
-     * Connect sliders to their respective columns; sliders' maximum values are their corresponding column's max values
+     * Connect sliders to their respective columns; sliders' maximum values are their corresponding column's max values.
      */
     private void initialiseSliders() {
-        routeStopsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> stopsLabel.textProperty().setValue(
+        stopsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> stopsLabel.textProperty().setValue(
                 String.valueOf(newValue.intValue())));
 
-        getMaxStops();
+        setSliderMaxStops();
 
     }
 
@@ -99,12 +155,12 @@ public class RouteTabController extends DataController{
      */
     private void makeCheckboxColumn() {
         final TableColumn<Route, Boolean> routeTabSelectedRoute = new TableColumn<>("Select");
-        routeDataTable.getColumns().addAll(routeTabSelectedRoute);
+        dataTable.getColumns().addAll(routeTabSelectedRoute);
         routeTabSelectedRoute.setCellValueFactory(new PropertyValueFactory<>("select"));
         routeTabSelectedRoute.setCellFactory(CheckBoxTableCell.forTableColumn(routeTabSelectedRoute));
         routeTabSelectedRoute.setEditable(true);
-        routeDataTable.setEditable(true);
-
+        dataTable.setEditable(true);
+        // Add listener for adding/removing a specific route to the RoutesSelected Database table
         routeTabSelectedRoute.setCellFactory(CheckBoxTableCell.forTableColumn(param -> {
             if (routes.get(param).isSelect()) {
                 DataLoader.addToRoutesSelectedDatabase(routes.get(param));
@@ -118,7 +174,7 @@ public class RouteTabController extends DataController{
 
     /**
      * Sets the JavaFX Airport table with rows from the 'Airports' table from the database.
-     * @param rs SQL ResultSet obtained from querying the Database Airport table and is used to set the rows
+     * @param rs JDBC ResultSet obtained from querying the Database Airport table and is used to set the rows
      *           of the JavaFX airport table by creating N Route objects from the query that results in N tuples.
      */
     @Override
@@ -154,84 +210,72 @@ public class RouteTabController extends DataController{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        routeDataTable.setItems(routes);
+        dataTable.setItems(routes);
         initialiseSliders();
 
     }
 
     /**
-     *
+     * Sorts and sets the FX observable lists to each respective combobox and
+     * uses class AutoCompleteComboBoxListener to make these comboboxes searchable.
+     * filterdata() is also called here because filtering of the table is based on combobox selections
+     * and is required to be refreshed whenever a new dataset is chosen to be displayed.
      */
     @Override
     public void initialiseComboBoxes() {
         // Sort and set combobox items
-        FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
-        FXCollections.sort(departureCountries); routeDepartureFilterCombobox.setItems(departureCountries);
-        FXCollections.sort(destinationCountries); routeDestinationFilterCombobox.setItems(destinationCountries);
-        FXCollections.sort(planeTypes); routePlaneTypeFilterCombobox.setItems(planeTypes);
+        FXCollections.sort(airlineCodes); airlineFilterCombobox.setItems(airlineCodes);
+        FXCollections.sort(departureCountries); departureFilterCombobox.setItems(departureCountries);
+        FXCollections.sort(destinationCountries); destinationFilterCombobox.setItems(destinationCountries);
+        FXCollections.sort(planeTypes); planeTypeFilterCombobox.setItems(planeTypes);
 
         // Make combobox searching autocomplete
-        new AutoCompleteComboBoxListener<>(routeAirlineFilterCombobox);
-        new AutoCompleteComboBoxListener<>(routeDepartureFilterCombobox);
-        new AutoCompleteComboBoxListener<>(routeDestinationFilterCombobox);
-        new AutoCompleteComboBoxListener<>(routePlaneTypeFilterCombobox);
+        new AutoCompleteComboBoxListener<>(airlineFilterCombobox);
+        new AutoCompleteComboBoxListener<>(departureFilterCombobox);
+        new AutoCompleteComboBoxListener<>(destinationFilterCombobox);
+        new AutoCompleteComboBoxListener<>(planeTypeFilterCombobox);
 
         filterData();
 
     }
 
+    /**
+     * Filtering of table data is done here by initialising then iteratively adding each combobox/slider filter
+     * to a FilteredList<Route> object. Each filter requires addFilter(). Then the search bar filter
+     * is added through addSearchBar(). Finally the resulting SortedList is bound to the TableView dataTable
+     * and the result of the filtering is shown to the user.
+     */
     @Override
     public void filterData() {
         // Connect combobox and slider filters to table
-        FilteredList<Route> airlinesFilter = addFilter(new FilteredList<>(routes, p -> true), routeAirlineFilterCombobox, "Airline");
-        FilteredList<Route> sourceFilter = addFilter(airlinesFilter, routeDepartureFilterCombobox, "Source");
+        FilteredList<Route> airlinesFilter = addFilter(new FilteredList<>(routes, p -> true), airlineFilterCombobox, "Airline");
+        FilteredList<Route> sourceFilter = addFilter(airlinesFilter, departureFilterCombobox, "Source");
         FilteredList<Route> stopSliderFilter = new FilteredList<>(sourceFilter, p -> true);
         stopsLabel.textProperty().addListener((observableValue, oldValue, newValue) ->
                 stopSliderFilter.setPredicate((route -> (Integer.parseInt(newValue) == route.getNumStops()))));
 
-        FilteredList<Route> destinationFilter = addFilter(stopSliderFilter, routeDestinationFilterCombobox, "Destination");
-        FilteredList<Route> planeFilter = addFilter(destinationFilter, routePlaneTypeFilterCombobox, "Plane");
+        FilteredList<Route> destinationFilter = addFilter(stopSliderFilter, destinationFilterCombobox, "Destination");
+        FilteredList<Route> planeFilter = addFilter(destinationFilter, planeTypeFilterCombobox, "Plane");
 
 
         // Add search bar filter
         FilteredList<Route> searchFilter = addSearchBarFilter(planeFilter);
         SortedList<Route> sortedRoute = new SortedList<>(searchFilter);
-        sortedRoute.comparatorProperty().bind(routeDataTable.comparatorProperty());
+        sortedRoute.comparatorProperty().bind(dataTable.comparatorProperty());
 
-        routeDataTable.setItems(sortedRoute);
+        dataTable.setItems(sortedRoute);
 
-    }
-
-
-
-    private FilteredList<Route> addSearchBarFilter(FilteredList<Route> emissionsSliderFilter) {
-        FilteredList<Route> searchFilter = new FilteredList<>(emissionsSliderFilter, p -> true);
-        routeSearchField.textProperty().addListener((observable, oldValue, newValue) ->
-                searchFilter.setPredicate(route -> {
-                    if (newValue == null || newValue.isEmpty()) {
-                        return true;
-                    }
-                    String lower = newValue.toLowerCase();
-                    if (route.getAirlineCode().toLowerCase().contains(lower)) {
-                        return true;
-                    } else if (route.getSourceAirportCode().toLowerCase().contains(lower)) {
-                        return true;
-                    } else if (route.getDestinationAirportCode().toLowerCase().contains(lower)){
-                        return true;
-                    } else {
-                        return (route.getPlaneTypeCode().toLowerCase().contains(lower));
-                    }
-                }));
-        return searchFilter;
     }
 
     /**
-     * Add filter filtered list.
+     * Adds a combobox filter, comboBox, to an input FilteredList, filteredList through
+     * adding a listener to comboBox (which works with combobox searching as well). The result is
+     * a new FilteredList which has the comboBox filter applied.
      *
-     * @param filteredList the filtered list
-     * @param comboBox     the combo box
-     * @param filter       the filter
-     * @return the filtered list
+     * @param filteredList the filtered list to add a filter to.
+     * @param comboBox     the searchable combobox filter that is added to the filteredList.
+     * @param filter       a String parameter used to specify which filter is being applied.
+     * @return the FilteredList with the new filter added.
      */
     public FilteredList<Route> addFilter(FilteredList<Route> filteredList, ComboBox<String> comboBox, String filter) {
         FilteredList<Route> newFilter = new FilteredList<>(filteredList, p -> true);
@@ -257,9 +301,38 @@ public class RouteTabController extends DataController{
     }
 
     /**
-     * Gets max stops.
+     * Adds holistic search bar filter which searches the route's Airline Code, Source Airport Code, Destination Airport
+     * Code, and Plant Type Code.
+     * @param filteredList the last filter to be added to before the search bar.
+     * @return the FilteredList with the search bar filter added.
      */
-    public void getMaxStops() {
+    private FilteredList<Route> addSearchBarFilter(FilteredList<Route> filteredList) {
+        FilteredList<Route> searchFilter = new FilteredList<>(filteredList, p -> true);
+        searchField.textProperty().addListener((observable, oldValue, newValue) ->
+                searchFilter.setPredicate(route -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lower = newValue.toLowerCase();
+                    if (route.getAirlineCode().toLowerCase().contains(lower)) {
+                        return true;
+                    } else if (route.getSourceAirportCode().toLowerCase().contains(lower)) {
+                        return true;
+                    } else if (route.getDestinationAirportCode().toLowerCase().contains(lower)){
+                        return true;
+                    } else {
+                        return (route.getPlaneTypeCode().toLowerCase().contains(lower));
+                    }
+                }));
+        return searchFilter;
+    }
+
+
+    /**
+     * Gets maximum number of stops present in the 'Route' table of the database. Used to set the maximum
+     * value in the 'stops' slider filter.
+     */
+    public void setSliderMaxStops() {
         String query = "SELECT max(STOPS) FROM Route";
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
@@ -267,7 +340,7 @@ public class RouteTabController extends DataController{
         try {
             result = stmt.executeQuery(query);
             Integer maxStop = result.getInt("max(STOPS)");
-            routeStopsFilterSlider.setMax(maxStop);
+            stopsFilterSlider.setMax(maxStop);
             stmt.close();
 
         } catch (SQLException throwables) {
@@ -277,14 +350,26 @@ public class RouteTabController extends DataController{
         DatabaseManager.disconnect(c);
     }
 
+    /**
+     * Override the parent's abstract class as to return the new record FXML file relating to the Route class.
+     * @return the path to the newRouteFXML file.
+     */
     @Override
     public String getNewRecordFXML() { return Path.newRouteFXML; }
 
+    /**
+     * Returns the 'Route' datatype specifically used for this controller.
+     * @return a new Route object.
+     */
     @Override
     public DataType getDataType() {
         return new Route();
     }
 
+    /**
+     * Returns the JDBC/SQL query for selecting all rows from the 'Route' table.
+     * @return the String for the  JDBC/SQL query for selecting all rows from the 'Route' table.
+     */
     @Override
     public String getTableQuery() {
         return "SELECT * FROM Route";
