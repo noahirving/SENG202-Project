@@ -1,15 +1,8 @@
 package seng202.team4.model;
 
-import javafx.scene.control.CheckBox;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
 
-import java.awt.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Route extends DataType {
@@ -93,6 +86,11 @@ public class Route extends DataType {
     @Override
     public String getSetName() {
         return "RouteSet";
+    }
+
+    @Override
+    public DataType getValid(String[] record, ArrayList<String> errorMessage) {
+        return null;
     }
 
     public void setCarbonEmissions(double emissions) {

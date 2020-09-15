@@ -25,7 +25,7 @@ public class NewAirport extends NewRecord {
     public DataController controller;
 
     @Override
-    public Airport getRecordData(ArrayList<String> errorMessage) {
+    public String[] getRecordData() {
         String name = nameField.getText().trim();
         String city = nameField.getText().trim();
         String country = countryField.getText().trim();
@@ -37,8 +37,7 @@ public class NewAirport extends NewRecord {
         String timeZone = timeZoneField.getText().trim();
         String dst = dstField.getText().trim();
         String tzDatabase = tzDatabaseField.getText().trim();
-
-        Airport airport = Airport.getValid(errorMessage, name, city, country, iata, icao, latitude, longitude, altitude, timeZone, dst, tzDatabase);
-        return airport;
+        String[] recordData = {name, city, country, iata, icao, latitude, longitude, altitude, timeZone, dst, tzDatabase};
+        return recordData;
     }
 }

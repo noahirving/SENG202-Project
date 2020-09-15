@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
@@ -16,10 +18,11 @@ import java.util.ArrayList;
 
 public abstract class NewRecord {
     public ComboBox setComboBox;
+    public Text errorText;
     public Stage stage;
     public DataController controller;
 
-    public abstract DataType getRecordData(ArrayList<String> errorMessage);
+    public abstract String[] getRecordData();
 
     public void setUp(Stage stage, DataController controller) {
         this.controller = controller;
@@ -48,9 +51,13 @@ public abstract class NewRecord {
 
     public void confirm(ActionEvent actionEvent) throws Exception {
         ArrayList<String> errorMessage = new ArrayList<String>();
-        DataType record = getRecordData(errorMessage);
-
+        String[] recordData = getRecordData();
+        DataType record = controller.getDataType().getValid(recordData, errorMessage);
         if (record == null) {
+            if (errorMessage.size() > 0) {
+                errorText.setText(errorMessage.get(0));
+                errorText.setVisible(true);
+            }
             for (String s: errorMessage) {
                 System.out.println(s);
             }

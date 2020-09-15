@@ -1,7 +1,6 @@
 package seng202.team4.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Airline extends DataType {
 
@@ -32,6 +31,17 @@ public class Airline extends DataType {
 
     }
 
+    public Airline(String name, String code, String iata, String icao, String callSign, String country, String recentlyActive) {
+        this.name = name;
+        this.code = code;
+        this.iata = iata;
+        this.icao = icao;
+        this.callSign = callSign;
+        this.country = country;
+        this.recentlyActive = recentlyActive.equals("Y");
+        this.carbonEmissions = calculateCarbonEmissions();
+    }
+
     @Override
     public String getInsertStatement(int setID){
         return "INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') "
@@ -60,6 +70,56 @@ public class Airline extends DataType {
     @Override
     public String getSetName() {
         return "AirlineSet";
+    }
+
+    public static Airline getValid(String name, String code, String iata, String icao, String callSign, String country, String recentlyActive, ArrayList<String> errorMessage) {
+        boolean valid = true;
+        //TODO: Add missing validation
+        if (!Validate.isAlphaNumeric(name)) {
+            errorMessage.add("Invalid name");
+            valid = false;
+        }
+        if (!Validate.isAlphaNumeric(code)) {
+            errorMessage.add("Invalid code");
+            valid = false;
+        }
+        if (!Validate.isAlphaNumeric(iata)) {
+            errorMessage.add("Invalid IATA");
+            valid = false;
+        }
+        if (!Validate.isAlphaNumeric(icao)) {
+            errorMessage.add("Invalid ICAO");
+            valid = false;
+        }
+        if (!Validate.isAlphaNumeric(callSign)) {
+            errorMessage.add("Invalid call sign");
+            valid = false;
+        }
+        if (!Validate.isAlpha(country)) {
+            errorMessage.add("Invalid country");
+            valid = false;
+        }
+        if (!recentlyActive.equals("Y") && !recentlyActive.equals("N")) {
+            errorMessage.add("Invalid recently active");
+            valid = false;
+        }
+        if (valid) {
+            return new Airline(name, code, iata, icao, callSign, country, recentlyActive);
+        }
+        else {
+            return null;
+        }
+    }
+    @Override
+    public Airline getValid(String[] record, ArrayList<String> errorMessage) {
+        String name = record[0];
+        String code = record[1];
+        String iata = record[2];
+        String icao = record[3];
+        String callSign = record[4];
+        String country = record[5];
+        String recentlyActive = record[6];
+        return getValid(name, code, iata, icao, callSign, country, recentlyActive, errorMessage);
     }
 
     public double calculateCarbonEmissions() {
