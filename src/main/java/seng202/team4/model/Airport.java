@@ -85,16 +85,15 @@ public class Airport extends DataType {
             errorMessage.add("Invalid country");
             valid = false;
         }
-        if (!Validate.isAlphaNumeric(iata)) {
+        if (!Validate.isValidIATA(iata)) {
             errorMessage.add("Invalid IATA");
             valid = false;
         }
-        if (!Validate.isAlphaNumeric(icao)) {
-            errorMessage.add("Invalid  ICAO");
+        if (!Validate.isValidICAO(icao)) {
+            errorMessage.add("Invalid ICAO");
             valid = false;
         }
-        //TODO: Implement validate floats
-        /*
+
         if (!Validate.isNumeric(latitude)) {
             errorMessage.add("Invalid latitude");
             valid = false;
@@ -111,7 +110,7 @@ public class Airport extends DataType {
             errorMessage.add("Invalid time zone");
             valid = false;
         }
-        */
+
         char dstChar = 'N';
         if (dst.length() == 1) {
             dstChar = dst.charAt(0);

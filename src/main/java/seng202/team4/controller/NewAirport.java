@@ -27,7 +27,7 @@ public class NewAirport extends NewRecord {
     @Override
     public Airport getRecordData(ArrayList<String> errorMessage) {
         String name = nameField.getText().trim();
-        String city = nameField.getText().trim();
+        String city = cityField.getText().trim();
         String country = countryField.getText().trim();
         String iata = iataField.getText().trim();
         String icao = icaoField.getText().trim();
