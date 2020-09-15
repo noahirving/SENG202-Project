@@ -1,9 +1,3 @@
-/**
- *
- * This Class was made by StackOverflow users Daniel Ziltener and JulianG
- * The StackOverlow thread: https://stackoverflow.com/questions/19924852/autocomplete-combobox-in-javafx
- */
-
 package seng202.team4.controller;
 
 import javafx.collections.FXCollections;
@@ -12,7 +6,10 @@ import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
+/**
+ * This Class was made by StackOverflow users Daniel Ziltener and JulianG
+ * The StackOverlow thread: https://stackoverflow.com/questions/19924852/autocomplete-combobox-in-javafx
+ */
 public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
 
     private ComboBox comboBox;
