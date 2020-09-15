@@ -36,6 +36,7 @@ public abstract class DataController {
             if (newItem != null) {
                 try {
                     setDataSet(newItem.toString());
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -114,7 +115,8 @@ public abstract class DataController {
     public void newData(String name, File file) {
         DataLoader.uploadData(name, file, getDataType());
         try {
-            setTable();
+            setDataSet(name);
+            dataSetComboBox.getSelectionModel().select(name);
             setDataSetComboBox();
         } catch (Exception e) {
             e.printStackTrace();

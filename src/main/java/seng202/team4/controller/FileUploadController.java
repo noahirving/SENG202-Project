@@ -19,7 +19,6 @@ public class FileUploadController {
     private File file;
     private DataController controller;
     private Stage ownerStage;
-    private Stage fileUploadStage = new Stage();
 
     public void setDataController(DataController controller) {
         this.controller = controller;
