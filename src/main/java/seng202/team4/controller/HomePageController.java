@@ -1,6 +1,7 @@
 package seng202.team4.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import seng202.team4.Path;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 
 public class HomePageController extends DataController {
 
+    @FXML private Button loadDefaultDatabaseButton;
 
     @FXML
     public void searchButtonPressed() {
@@ -31,6 +33,9 @@ public class HomePageController extends DataController {
         DataLoader.uploadAirportData(airport);
         DataLoader.uploadAirlineData(airline);
         DataLoader.uploadRouteData(route);
+
+        loadDefaultDatabaseButton.disableProperty().setValue(true);
+
     }
 
     public File copyToFolder(String filename) throws IOException {

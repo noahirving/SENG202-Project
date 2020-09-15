@@ -71,7 +71,7 @@ public class Airport extends DataType {
         this.tzDatabase = tzDatabase;
     }
 
-    public static Airport getValid(ArrayList<String> errorMessage, String name, String city, String country, String iata, String icao, String latitude, String longitude, String altitude, String timeZone, String dst, String tzDatabase) {
+    public static Airport getValid(String name, String city, String country, String iata, String icao, String latitude, String longitude, String altitude, String timeZone, String dst, String tzDatabase, ArrayList<String> errorMessage) {
         boolean valid = true;
         if (!Validate.isAlphaNumeric(name)) {
             errorMessage.add("Invalid name");
@@ -177,6 +177,23 @@ public class Airport extends DataType {
     @Override
     public String getSetName() {
         return "AirportSet";
+    }
+
+    @Override
+    public DataType getValid(String[] record, ArrayList<String> errorMessage) {
+        String name = record[0];
+        String city = record[1];
+        String country = record[2];
+        String iata = record[3];
+        String icao = record[4];
+        String latitude = record[5];
+        String longitude = record[6];
+        String altitude = record[7];
+        String timeZone = record[8];
+        String dst = record[9];
+        String tzDatabase = record[10];
+
+        return getValid(name, city, country, iata, icao, latitude, longitude, altitude, timeZone, dst, tzDatabase, errorMessage);
     }
 
     public int getId() {

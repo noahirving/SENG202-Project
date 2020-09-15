@@ -83,7 +83,7 @@ public abstract class DataLoader {
         }
     }
 
-    public static void addToAirportsSelectedDatabase(Route route) {
+    public static void addToRoutesSelectedDatabase(Route route) {
         Connection con = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(con);
         String between = "', '";
@@ -118,7 +118,7 @@ public abstract class DataLoader {
         DatabaseManager.disconnect(con);
     }
 
-    public static void removeFromAirportsSelectedDatabase(Route route) {
+    public static void removeFromRoutesSelectedDatabase(Route route) {
         Connection con = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(con);
         String between = "' and ";

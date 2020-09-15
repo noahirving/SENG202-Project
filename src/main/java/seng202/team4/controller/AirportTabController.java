@@ -86,6 +86,9 @@ public class AirportTabController extends DataController {
     @Override
     public void setTableData(ResultSet rs) throws Exception {
         airports = FXCollections.observableArrayList();
+        countries = FXCollections.observableArrayList();
+        cities = FXCollections.observableArrayList();
+        airports = FXCollections.observableArrayList();
 
         countries.clear(); cities.clear();
         countries.add(""); cities.add("");
