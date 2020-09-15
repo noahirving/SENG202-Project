@@ -21,6 +21,10 @@ import seng202.team4.model.Route;
 import java.io.IOException;
 import java.sql.ResultSet;
 
+/**
+ * Controller for the emissions tab, 'emissionsTab.fxml'
+ * extends the DataController class
+ */
 public class EmissionsTabController extends DataController {
     public Route dataType = new Route();
 
@@ -41,17 +45,13 @@ public class EmissionsTabController extends DataController {
     @FXML private Label currentEmissionsValue;
 
 
-    @FXML
-    public void pressHomeButton(ActionEvent buttonPress) throws IOException {
-        Parent homeView = FXMLLoader.load(getClass().getResource(Path.homeSceneFXML));
-
-        Scene homeScene = new Scene(homeView);
-
-        Stage window = (Stage)((Node) buttonPress.getSource()).getScene().getWindow();
-        window.setScene(homeScene);
-        window.show();
-    }
-
+    /**
+     *  On Action method for the 'Environmental Donation' button
+     *  Gets the calculated donation amount and displays this
+     *  in a new Alert window
+     *
+     * @param buttonPress
+     */
     @FXML
     public void pressEnvironmentalDonationButton(ActionEvent buttonPress) {
         String donationDollarsCents = String.format("%.2f", dollarOffset);
@@ -63,6 +63,12 @@ public class EmissionsTabController extends DataController {
         alert.show();
     }
 
+    /**
+     * On Action method for the 'Trees Equivalent' button
+     * Gets how many trees the user could plant with the donation amount
+     * and displays this in a new Alert window
+     * @param buttonPress
+     */
     @FXML
     public void pressTreesEquivalentButton(ActionEvent buttonPress) {
 
@@ -73,16 +79,34 @@ public class EmissionsTabController extends DataController {
         alert.show();
     }
 
+    /**
+     * On Action method for the 'Alternative Routes' button
+     * This feature will be implemented in a later release.
+     * This will display alternative routes that complete the same
+     * route, but cause less damage to the environment
+     * @param buttonPress
+     */
     @FXML
     public void pressAlternativeRoutesButton(ActionEvent buttonPress) {
         // To implement
     }
 
+    /**
+     * On Action method for the 'Alternative Aircraft' button
+     * This feature will be implemented in a later release.
+     * This will display alternative aircrafts to the aircraft types used
+     * by the selected routes. The displayed aircraft will be more economically
+     * efficient and cause less damage to the environment
+     * @param buttonPress
+     */
     @FXML
     public void pressAlternativeAircraftTypeButton(ActionEvent buttonPress) {
         // To implement
     }
 
+    /**
+     * Initializes the emissions tab
+     */
     public void initialize() {
         emissionsTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<>("airlineCode"));
         emissionsTabSourceColumn.setCellValueFactory(new PropertyValueFactory<>("sourceAirportCode"));
@@ -99,6 +123,11 @@ public class EmissionsTabController extends DataController {
         }
     }
 
+    /**
+     * Sets the total carbon emissions for the selected routes
+     * The recommended donation to offset the emissions
+     * figure is calculated aswell
+     */
     private void setTotalEmissions() {
         sumEmissions = 0.0;
         for(Route route: selectedRoutes){
@@ -110,6 +139,13 @@ public class EmissionsTabController extends DataController {
         currentEmissionsValue.setText(String.format("%.2f", sumEmissions));
     }
 
+    /**
+     * On action method for the 'Load Selected Routes' button
+     * updates the table to display the routes selected by the user
+     * on the 'Routes' tab, throws an IOException if this fails
+     * @param buttonPress
+     * @throws IOException
+     */
     @FXML
     public void updateTable(ActionEvent buttonPress) throws IOException{
         try {
@@ -121,16 +157,32 @@ public class EmissionsTabController extends DataController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Required method from the abstract DataController class
+     * @return the dataType, in this case it is of type 'Route'
+     */
     @Override
     public DataType getDataType() {
         return new Route();
     }
 
+    /**
+     * Required method from the abstract DataController class
+     * @return the query the javaFX tableview on this tab
+     */
     @Override
     public String getTableQuery() {
         return "Select distinct Airline, SourceAirport, DestinationAirport, Equipment, distance, carbonEmissions from RoutesSelected";
     }
 
+    /**
+     * Sets the table data by displaying each route in the 'RoutesSelected' database
+     * in the table view. This is done using the table query and assigning each record
+     * to a row in the table
+     * @param rs result of the table query
+     * @throws Exception if the query fails
+     */
     @Override
     public void setTableData(ResultSet rs) throws Exception {
         selectedRoutes = FXCollections.observableArrayList();
@@ -154,6 +206,13 @@ public class EmissionsTabController extends DataController {
 
     }
 
+    /**
+     * Filtering functionality for the Search field.
+     * Filters the routes in the table view that have a value in
+     * either of the: airlineCode, sourceAirportCode, destinationAirportCode or planeTypeCode
+     * columns that matches the users search input
+     * @return the FilteredList of routes that match the input
+     */
     private FilteredList<Route> searchBarFilter() {
         FilteredList<Route> searchFilter = new FilteredList<>(selectedRoutes, p -> true);
         emissionsSearchField.textProperty().addListener((observable, oldValue, newValue) ->
@@ -175,11 +234,16 @@ public class EmissionsTabController extends DataController {
         return searchFilter;
     }
 
+    /**
+     * Required method from the abstract DataController class
+     * calls the filterData method, to apply the filters selected
+     * by the user
+     */
     @Override
     public void initialiseComboBoxes() {
         filterData();
     }
-
+    /*
     public FilteredList<Route> addFilter(FilteredList<Route> filteredList, ComboBox<String> comboBox, String filter) {
         FilteredList<Route> newFilter = new FilteredList<>(filteredList, p -> true);
         comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
@@ -201,8 +265,11 @@ public class EmissionsTabController extends DataController {
 
                 }));
         return newFilter;
-    }
+    }*/
 
+    /** Required method from the abstract DataController class
+     * applies the search filter to the data table view
+     */
     @Override
     public void filterData() {
         FilteredList<Route> searchFilter = searchBarFilter();
@@ -213,6 +280,11 @@ public class EmissionsTabController extends DataController {
 
     }
 
+    /**
+     * Required method from the abstract DataController class
+     * @return an empty record, which will be assigned values
+     * and added to the table?
+     */
     @Override
     public String getNewRecordFXML() {
         return null;
