@@ -53,6 +53,14 @@ public class Route extends DataType {
 
     }
 
+    public Route(String airline, String srcAirport, String dstAirport, boolean codeshare, int stops, String equipment) {
+        this.airlineCode = airline;
+        this.sourceAirportCode = srcAirport;
+        this.destinationAirportCode = dstAirport;
+        this.codeshare = codeshare;
+        this.numStops = stops;
+        this.planeTypeCode = equipment;
+    }
     @Override
     public String getInsertStatement(int setID) {
         return "INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'DISTANCE', 'SETID') "
@@ -88,9 +96,50 @@ public class Route extends DataType {
         return "RouteSet";
     }
 
+    public static DataType getValid(String airline, String srcAirport, String dstAirport, String codeshare, String stops, String equipment, ArrayList<String> errorMessage) {
+        // TODO: Finish validating, get IDs
+        boolean valid = true;
+        if (!Validate.isAlphaNumeric(airline)) {
+            errorMessage.add("Invalid airline");
+            valid = false;
+        }
+        if (!Validate.isAlphaNumeric(srcAirport)) {
+            errorMessage.add("Invalid source airport");
+            valid = false;
+        }
+        if (!Validate.isAlphaNumeric(dstAirport)) {
+            errorMessage.add("Invalid destination airport");
+            valid = false;
+        }
+        if (!codeshare.equals("Y") && !codeshare.equals("")) {
+            errorMessage.add("Invalid codeshare");
+            valid = false;
+        }
+        if (!Validate.isNumeric(stops)) {
+            errorMessage.add("Invalid stops");
+            valid = false;
+        }
+        if (!Validate.isAlpha(equipment)) {
+            errorMessage.add("Invalid equipment");
+            valid = false;
+        }
+        if (valid) {
+            return new Route(airline, srcAirport, dstAirport, codeshare.equals("Y"), Integer.parseInt(stops), equipment);
+        }
+        else {
+            return null;
+        }
+    }
+
     @Override
     public DataType getValid(String[] record, ArrayList<String> errorMessage) {
-        return null;
+        String airline = record[0];
+        String srcAirport = record[1];
+        String dstAirport = record[2];
+        String codeshare = record[3];
+        String stops = record[4];
+        String equipment = record[5];
+        return getValid(airline, srcAirport, dstAirport, codeshare, stops, equipment, errorMessage);
     }
 
     public void setCarbonEmissions(double emissions) {
