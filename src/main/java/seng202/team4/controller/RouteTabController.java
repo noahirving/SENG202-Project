@@ -2,11 +2,8 @@ package seng202.team4.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -83,9 +80,9 @@ public class RouteTabController extends DataController{
 
         routeTabSelectedRoute.setCellFactory(CheckBoxTableCell.forTableColumn(param -> {
             if (routes.get(param).isSelect()) {
-                DataLoader.addToAirportsSelectedDatabase(routes.get(param));
+                DataLoader.addToRoutesSelectedDatabase(routes.get(param));
             } else {
-                DataLoader.removeFromAirportsSelectedDatabase(routes.get(param));
+                DataLoader.removeFromRoutesSelectedDatabase(routes.get(param));
             }
 
             return routes.get(param).selectProperty();
@@ -160,7 +157,7 @@ public class RouteTabController extends DataController{
                 emissionsSliderFilter.setPredicate((route -> (Double.parseDouble(newValue) == route.getDistance()))));
 
         // Add search bar filter
-        FilteredList<Route> searchFilter = searchBarFilter(emissionsSliderFilter);
+        FilteredList<Route> searchFilter = addSearchBarFilter(emissionsSliderFilter);
         SortedList<Route> sortedRoute = new SortedList<>(searchFilter);
         sortedRoute.comparatorProperty().bind(routeDataTable.comparatorProperty());
 
@@ -173,7 +170,7 @@ public class RouteTabController extends DataController{
         return Path.newRouteFXML;
     }
 
-    private FilteredList<Route> searchBarFilter(FilteredList<Route> emissionsSliderFilter) {
+    private FilteredList<Route> addSearchBarFilter(FilteredList<Route> emissionsSliderFilter) {
         FilteredList<Route> searchFilter = new FilteredList<>(emissionsSliderFilter, p -> true);
         routeSearchField.textProperty().addListener((observable, oldValue, newValue) ->
                 searchFilter.setPredicate(route -> {

@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -17,14 +18,15 @@ public class FileUploadController {
     private String name;
     private File file;
     private DataController controller;
-    private Stage stage;
+    private Stage ownerStage;
+    private Stage fileUploadStage = new Stage();
 
     public void setDataController(DataController controller) {
         this.controller = controller;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    public void setOwnerStage(Stage ownerStage) {
+        this.ownerStage = ownerStage;
     }
 
     public void getName() {
@@ -38,12 +40,14 @@ public class FileUploadController {
     }
 
     public void getFile() {
+
+
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt"),
                 new FileChooser.ExtensionFilter("CSV Files", "*.csv")
         );
-        File f = fc.showOpenDialog(null);
+        File f = fc.showOpenDialog(ownerStage);
         if (f != null) {
             file = f;
             filePath.setText(file.toString());
@@ -52,7 +56,7 @@ public class FileUploadController {
     }
 
     public void cancel() {
-        stage.close();
+        ownerStage.close();
     }
 
     public void confirm() {
@@ -65,7 +69,7 @@ public class FileUploadController {
         } else {
             System.out.println("Confirmed");
             controller.newData(name, file);
-            stage.close();
+            ownerStage.close();
         }
 
     }

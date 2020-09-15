@@ -1,16 +1,12 @@
 package seng202.team4.controller;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seng202.team4.Path;
 import seng202.team4.model.DataLoader;
@@ -21,7 +17,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 public abstract class DataController {
@@ -109,10 +104,11 @@ public abstract class DataController {
         stage.setMinWidth(720);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.view + "/fileUpload.fxml"));
         stage.setScene(new Scene(loader.load(), 700, 250));
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
         FileUploadController controller = loader.getController();
         controller.setDataController(this);
-        controller.setStage(stage);
+        controller.setOwnerStage(stage);
     }
 
     public void newData(String name, File file) {
@@ -131,6 +127,7 @@ public abstract class DataController {
         stage.setTitle("New Record");
         FXMLLoader loader = new FXMLLoader(getClass().getResource(getNewRecordFXML()));
         stage.setScene(new Scene(loader.load(), 700, 250));
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
         NewRecord controller = loader.getController();
         controller.setUp(stage, this);
