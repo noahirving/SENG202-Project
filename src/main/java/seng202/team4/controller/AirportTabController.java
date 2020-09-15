@@ -22,6 +22,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Controller for the airport tab, 'airportTab.fxml'
+ * extends the abstract DataController class
+ */
 public class AirportTabController extends DataController {
 
     public Airport dataType = new Airport();
@@ -40,6 +44,9 @@ public class AirportTabController extends DataController {
     private ObservableList<String> cities = FXCollections.observableArrayList();
 
 
+    /**
+     * Initializes the airport tab
+     */
     @FXML
     public void initialize() {
         // Initialise columns to data type attributes
@@ -62,6 +69,12 @@ public class AirportTabController extends DataController {
 
     }
 
+    /**
+     * Adds an extra column, with a checkbox for each airport record, to the table
+     * Whenever this checkbox is toggled, the selected airport will be either added
+     * or removed from the 'AirportsSelected' database table. This feature enables
+     * selected airports to be displayed on the map, on the 'Map' tab
+     */
     private void makeCheckboxColumn() {
         final TableColumn<Airport, Boolean> airportTabSelectColumn = new TableColumn<>("Select");
         airportDataTable.getColumns().addAll(airportTabSelectColumn);
@@ -82,14 +95,18 @@ public class AirportTabController extends DataController {
     }
 
 
-
+    /**
+     * Sets the table data by displaying each airport in the 'airport' database table
+     * in the table view. This is done using the table query and assigning each record
+     * to a row in the table
+     * @param rs result of the table query
+     * @throws Exception if the query fails
+     */
     @Override
     public void setTableData(ResultSet rs) throws Exception {
         airports = FXCollections.observableArrayList();
         countries = FXCollections.observableArrayList();
         cities = FXCollections.observableArrayList();
-        airports = FXCollections.observableArrayList();
-
         countries.clear(); cities.clear();
         countries.add(""); cities.add("");
         while (rs.next()) {
@@ -116,6 +133,11 @@ public class AirportTabController extends DataController {
         airportDataTable.setItems(airports);
     }
 
+    /**
+     * Required method from the abstract DataController class
+     * initializes the combo boxes with all the possible values
+     * for each column
+     */
     @Override
     public void initialiseComboBoxes() {
         // Sort and set combobox items
@@ -130,6 +152,11 @@ public class AirportTabController extends DataController {
 
     }
 
+    /**
+     * Required method from the abstract DataController class
+     * Connects the combo boxes and slider filters to the table
+     * Updates the table with values accepted by the filters
+     */
     @Override
     public void filterData() {
         // Connect combobox and slider filters to table
@@ -144,11 +171,23 @@ public class AirportTabController extends DataController {
 
     }
 
+    /**
+     * Required method from the abstract DataController class
+     * Gets the fxml file for adding a new airport record
+     * @return the path to the fxml file
+     */
     @Override
     public String getNewRecordFXML() {
         return Path.newAirportFXML;
     }
 
+    /**
+     *
+     * @param filteredList
+     * @param comboBox
+     * @param filter
+     * @return
+     */
     public FilteredList<Airport> addFilter(FilteredList<Airport> filteredList, ComboBox<String> comboBox, String filter) {
         FilteredList<Airport> newFilter = new FilteredList<>(filteredList, p -> true);
         comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
@@ -167,6 +206,11 @@ public class AirportTabController extends DataController {
         return newFilter;
     }
 
+    /**
+     *
+     * @param countryFilter
+     * @return
+     */
     private FilteredList<Airport> searchBarFilter(FilteredList<Airport> countryFilter) {
         FilteredList<Airport> searchFilter = new FilteredList<>(countryFilter, p -> true);
         airportSearchField.textProperty().addListener((observable, oldValue, newValue) ->
@@ -191,9 +235,18 @@ public class AirportTabController extends DataController {
         return searchFilter;
     }
 
+    /**
+     * Required method from the abstract DataController class
+     * @return the dataType, the model 'Airport' class in this case
+     */
     @Override
     public DataType getDataType() { return new Airport(); }
 
+    /**
+     * Required method from the abstract DataController class
+     * @return the query for generating a results set of all airports from the
+     * database that will populate the table view
+     */
     @Override
     public String getTableQuery() { return "SELECT * FROM Airport"; }
 

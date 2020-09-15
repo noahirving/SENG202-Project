@@ -21,7 +21,10 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 
-
+/**
+ * Controller for the airline tab, 'airlineTab.fxml'
+ * extends the abstract DataController class
+ */
 public class AirlineTabController extends DataController {
 
     @FXML private TableView<Airline> airlineDataTable;
@@ -36,6 +39,9 @@ public class AirlineTabController extends DataController {
     private FilteredList<Airline> countryFilter = new FilteredList<>(airlines, p -> true);
     private FilteredList<Airline> searchFilter = new FilteredList<>(countryFilter, p -> true);
 
+    /**
+     * Initializes the airline tab
+     */
     @FXML
     public void initialize() {
         airlineTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -52,11 +58,17 @@ public class AirlineTabController extends DataController {
 
     }
 
+    /**
+     * Sets the table data by displaying each airline in the 'airline' database table
+     * in the table view. This is done using the table query and assigning each record
+     * to a row in the table
+     * @param rs result of the table query
+     * @throws Exception if the query fails
+     */
     @Override
     public void setTableData(ResultSet rs) throws Exception{
         airlines = FXCollections.observableArrayList();
         countries = FXCollections.observableArrayList();
-        airlines = FXCollections.observableArrayList();
         while (rs.next()) {
             Airline airline = new Airline();
             String name = rs.getString("Name");
@@ -70,6 +82,12 @@ public class AirlineTabController extends DataController {
         }
         airlineDataTable.setItems(airlines);
     }
+
+    /**
+     * Required method from the abstract DataController class
+     * initializes the combo boxes with all the possible values
+     * for each column
+     */
     @Override
     public void initialiseComboBoxes() {
         // Sort and set combobox items
@@ -82,6 +100,12 @@ public class AirlineTabController extends DataController {
         filterData();
 
     }
+
+    /**
+     * Required method from the abstract DataController class
+     * Connects the combo boxes and slider filters to the table
+     * Updates the table with values accepted by the filters
+     */
     @Override
     public void filterData() {
         // Connect combobox and slider filters to table
@@ -96,11 +120,22 @@ public class AirlineTabController extends DataController {
 
     }
 
+    /**
+     * Gets the fxml file for adding a new airline record
+     * @return the path to the fxml file
+     */
     @Override
     public String getNewRecordFXML() {
         return Path.newAirlineFXML;
     }
 
+    /**
+     *
+     * @param filteredList
+     * @param comboBox
+     * @param filter
+     * @return
+     */
     public FilteredList<Airline> addFilter(FilteredList<Airline> filteredList, ComboBox<String> comboBox, String filter) {
         FilteredList<Airline> newFilter = new FilteredList<>(filteredList, p -> true);
         comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
@@ -117,6 +152,11 @@ public class AirlineTabController extends DataController {
         return newFilter;
     }
 
+    /**
+     *
+     * @param countryFilter
+     * @return
+     */
     private FilteredList<Airline> searchBarFilter(FilteredList<Airline> countryFilter) {
         FilteredList<Airline> searchFilter = new FilteredList<>(countryFilter, p -> true);
         airlineSearchField.textProperty().addListener((observable, oldValue, newValue) ->
@@ -135,9 +175,18 @@ public class AirlineTabController extends DataController {
         return searchFilter;
     }
 
+    /**
+     * Required method from the abstract DataController class
+     * @return the dataType, the model 'Airline' class in this case
+     */
     @Override
     public DataType getDataType() { return new Airline(); }
 
+    /**
+     * Required method from the abstract DataController class
+     * @return the query for generating a results set of all airlines from the
+     * database that will populate the table view
+     */
     @Override
     public String getTableQuery() {
         return "SELECT Name, Country FROM Airline";

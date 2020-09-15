@@ -23,7 +23,7 @@ import java.sql.ResultSet;
 
 /**
  * Controller for the emissions tab, 'emissionsTab.fxml'
- * extends the DataController class
+ * extends the abstract DataController class
  */
 public class EmissionsTabController extends DataController {
     public Route dataType = new Route();
@@ -169,7 +169,8 @@ public class EmissionsTabController extends DataController {
 
     /**
      * Required method from the abstract DataController class
-     * @return the query the javaFX tableview on this tab
+     * @return the query for generating a results set that will
+     * populate the table view
      */
     @Override
     public String getTableQuery() {
@@ -177,7 +178,7 @@ public class EmissionsTabController extends DataController {
     }
 
     /**
-     * Sets the table data by displaying each route in the 'RoutesSelected' database
+     * Sets the table data by displaying each route in the 'RoutesSelected' database table
      * in the table view. This is done using the table query and assigning each record
      * to a row in the table
      * @param rs result of the table query
