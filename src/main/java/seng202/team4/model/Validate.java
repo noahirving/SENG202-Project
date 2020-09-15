@@ -2,27 +2,42 @@ package seng202.team4.model;
 
 public interface Validate {
     static boolean isNumeric(String string) {
-        char[] chars = string.toCharArray();
-        for (char c: chars) {
-            if (!Character.isDigit(c)) {
-                return false;
-            }
+        if (string == null) {
+            return false;
         }
-        return true;
+        return string.matches("-?\\d+(\\.\\d+)?");
     }
 
     static boolean isAlpha(String string) {
-        char[] chars = string.toCharArray();
-        for (char c: chars) {
-            if (!Character.isLetter(c) && !Character.isSpaceChar(c)) {
-                return false;
-            }
+        if (string == null) {
+            return false;
         }
-        return true;
+        return string.matches("[A-Za-z][A-Za-z\\s]*");
     }
 
     static boolean isAlphaNumeric(String string) {
-        return isNumeric(string) || isAlpha(string);
+        if (string == null) {
+            return false;
+        }
+        return string.matches("[A-Za-z0-9][A-Za-z0-9\\s]*");
+    }
+
+    static boolean isValidIATA(String string) {
+        if (string == null) {
+            return false;
+        } else if (string.equals("")) {
+            return true; //for not assigned/unknown iata
+        }
+        return string.matches("[a-zA-Z]{3}");
+    }
+
+    static boolean isValidICAO(String string) {
+        if (string == null) {
+            return false;
+        } else if (string.equals("")) {
+            return true; //for not assigned icao
+        }
+        return string.matches("[a-zA-Z]{4}");
     }
 
 }
