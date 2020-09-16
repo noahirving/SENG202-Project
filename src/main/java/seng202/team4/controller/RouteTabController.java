@@ -19,10 +19,6 @@ import java.sql.*;
  * initialising/updating the JavaFX TableView with data from the SQLite database table 'Routes' and also
  * initialising/updating the additive filtering and searching of said data. Checkboxes in this table are used to add
  * to a separate 'RoutesSelected' table and are used by both the Maps tab and the Emissions tab.
- *
- * Authors: Swapnil Bhagat, Kye Oldham, Darryl Alang, Griffin Baxter, Noah Irving
- * SENG202 Team 4
- * Description written on 15/09/2020
  */
 public class RouteTabController extends DataController {
 

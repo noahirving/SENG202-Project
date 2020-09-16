@@ -32,10 +32,6 @@ import java.sql.ResultSet;
  * carbon emissions for each route is calculated. The suggested donation amount to
  * offset a users carbon footprint is calculated, along with how many trees they
  * could plant with this derived figure.
- *
- * Authors: Swapnil Bhagat, Kye Oldham, Darryl Alang, Griffin Baxter, Noah Irving
- * SENG202 Team 4
- * Description written on 16/09/2020
  */
 public class EmissionsTabController extends DataController {
 

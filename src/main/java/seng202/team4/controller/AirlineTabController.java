@@ -18,10 +18,6 @@ import java.sql.*;
  * this includes displaying the airlines in the JavaFX TableView with data
  * from the 'Airlines' SQLite database table and also initialising/updating the
  * additive filtering and searching of said data.
- *
- * Authors: Swapnil Bhagat, Kye Oldham, Darryl Alang, Griffin Baxter, Noah Irving
- * SENG202 Team 4
- * Description written on 16/09/2020
  */
 public class AirlineTabController extends DataController {
 
