@@ -124,14 +124,11 @@ public class Airport extends DataType {
             valid = false;
         }
 
-
-        //TODO: Implement '/' and alpha validator for tz database
-        /*
-        if (!Validate.isAlpha(tzDatabase)) {
+        if (!Validate.isValidTZDB(tzDatabase)) {
             errorMessage.add("Invalid tz database");
             valid = false;
         }
-         */
+
 
         if (valid) {
             return new Airport(name, city, country, iata, icao, Double.parseDouble(latitude), Double.parseDouble(longitude), Double.parseDouble(altitude), Float.parseFloat(timeZone), dstChar, tzDatabase);

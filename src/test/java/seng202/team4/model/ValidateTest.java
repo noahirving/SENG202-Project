@@ -94,6 +94,11 @@ public class ValidateTest extends TestCase {
         assertTrue(Validate.isValidIATA(iata3));
     }
 
+    public void testIsValidIATA4() {
+        String iata4 = null;
+        assertFalse(Validate.isValidIATA(iata4));
+    }
+
     public void testIsValidICAO1() {
         String icao1 = "ABCD";
         assertTrue(Validate.isValidICAO(icao1));
@@ -107,5 +112,30 @@ public class ValidateTest extends TestCase {
     public void testIsValidICAO3() {
         String icao3 = "";
         assertTrue(Validate.isValidICAO(icao3));
+    }
+
+    public void testIsValidICAO4() {
+        String icao4 = null;
+        assertFalse(Validate.isValidICAO(icao4));
+    }
+
+    public void testIsValidTZDB1() {
+        String tzdb1 = "America/Thule";
+        assertTrue(Validate.isValidTZDB(tzdb1));
+    }
+
+    public void testIsValidTZDB2() {
+        String tzdb2 = "America";
+        assertFalse(Validate.isValidTZDB(tzdb2));
+    }
+
+    public void testIsValidTZDB3() {
+        String tzdb3 = "Amer1ca/Thul3";
+        assertFalse(Validate.isValidTZDB(tzdb3));
+    }
+
+    public void testIsValidTZDB4() {
+        String tzdb4 = null;
+        assertFalse(Validate.isValidTZDB(tzdb4));
     }
 }
