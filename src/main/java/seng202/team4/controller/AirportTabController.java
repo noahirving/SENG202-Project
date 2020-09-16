@@ -38,35 +38,35 @@ public class AirportTabController extends DataController {
     /**
      * TableView of the airport raw data table.
      */
-    @FXML private TableView<Airport> airportDataTable;
+    @FXML private TableView<Airport> dataTable;
     /**
      * Airport column of the raw data table.
      */
-    @FXML private TableColumn<Airport, String> airportTabAirportColumn;
+    @FXML private TableColumn<Airport, String> airportColumn;
     /**
      * City column of the raw data table.
      */
-    @FXML private TableColumn<Airport, String> airportTabCityColumn;
+    @FXML private TableColumn<Airport, String> cityColumn;
     /**
      * Country column of the raw data table.
      */
-    @FXML private TableColumn<Airport, String> airportTabCountryColumn;
+    @FXML private TableColumn<Airport, String> countryColumn;
     /**
      * Coordinates column of the raw data table.
      */
-    @FXML private TableColumn<Airport, String> airportTabCoordinatesColumn;
+    @FXML private TableColumn<Airport, String> coordinatesColumn;
     /**
      * Searchable ComboBox for filtering by city.
      */
-    @FXML private ComboBox<String> airportTabCityCombobox;
+    @FXML private ComboBox<String> cityCombobox;
     /**
      * Searchable ComboBox for filtering by country.
      */
-    @FXML private ComboBox<String> airportTabCountryCombobox;
+    @FXML private ComboBox<String> countryCombobox;
     /**
      * Text field used to serach raw data table.
      */
-    @FXML private TextField airportSearchField;
+    @FXML private TextField searchField;
     /**
      * Initialization of the SortedList to be used by filters and the checkboxes.
      */
@@ -93,10 +93,10 @@ public class AirportTabController extends DataController {
     @FXML
     public void initialize() {
         // Initialise columns to data type attributes
-        airportTabAirportColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        airportTabCityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
-        airportTabCountryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
-        airportTabCoordinatesColumn.setCellValueFactory(new PropertyValueFactory<>("coordinates"));
+        airportColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
+        countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
+        coordinatesColumn.setCellValueFactory(new PropertyValueFactory<>("coordinates"));
 
         // Make and connect checkbox column to AirportsSelected database table
         makeCheckboxColumn();
@@ -120,11 +120,11 @@ public class AirportTabController extends DataController {
      */
     private void makeCheckboxColumn() {
         final TableColumn<Airport, Boolean> airportTabSelectColumn = new TableColumn<>("Select");
-        airportDataTable.getColumns().addAll(airportTabSelectColumn);
+        dataTable.getColumns().addAll(airportTabSelectColumn);
         airportTabSelectColumn.setCellValueFactory(new PropertyValueFactory<>("select"));
         airportTabSelectColumn.setCellFactory(CheckBoxTableCell.forTableColumn(airportTabSelectColumn));
         airportTabSelectColumn.setEditable(true);
-        airportDataTable.setEditable(true);
+        dataTable.setEditable(true);
 
         airportTabSelectColumn.setCellFactory(CheckBoxTableCell.forTableColumn(param -> {
             if (sortedAirport.get(param).isSelect()) {
@@ -173,7 +173,7 @@ public class AirportTabController extends DataController {
             addToComboBoxList(cities, airportCity);
 
         }
-        airportDataTable.setItems(airports);
+        dataTable.setItems(airports);
     }
 
     /**
@@ -185,12 +185,12 @@ public class AirportTabController extends DataController {
     @Override
     public void initialiseComboBoxes() {
         // Sort and set combobox items
-        FXCollections.sort(countries); airportTabCountryCombobox.setItems(countries);
-        FXCollections.sort(cities); airportTabCityCombobox.setItems(cities);
+        FXCollections.sort(countries); countryCombobox.setItems(countries);
+        FXCollections.sort(cities); cityCombobox.setItems(cities);
 
         // Make combobox searching autocomplete
-        new AutoCompleteComboBoxListener<>(airportTabCityCombobox);
-        new AutoCompleteComboBoxListener<>(airportTabCountryCombobox);
+        new AutoCompleteComboBoxListener<>(cityCombobox);
+        new AutoCompleteComboBoxListener<>(countryCombobox);
 
         filterData();
 
@@ -205,14 +205,14 @@ public class AirportTabController extends DataController {
     @Override
     public void filterData() {
         // Connect combobox and slider filters to table
-        FilteredList<Airport> countryFilter = addFilter(new FilteredList<>(airports, p -> true), airportTabCountryCombobox, "Country");
-        FilteredList<Airport> cityFilter = addFilter(countryFilter, airportTabCityCombobox, "City");
+        FilteredList<Airport> countryFilter = addFilter(new FilteredList<>(airports, p -> true), countryCombobox, "Country");
+        FilteredList<Airport> cityFilter = addFilter(countryFilter, cityCombobox, "City");
 
         // Add search bar filter
         FilteredList<Airport> searchFilter = addSearchBarFilter(cityFilter);
         sortedAirport = new SortedList<>(searchFilter);
-        sortedAirport.comparatorProperty().bind(airportDataTable.comparatorProperty());
-        airportDataTable.setItems(sortedAirport);
+        sortedAirport.comparatorProperty().bind(dataTable.comparatorProperty());
+        dataTable.setItems(sortedAirport);
 
     }
 
@@ -260,7 +260,7 @@ public class AirportTabController extends DataController {
      */
     private FilteredList<Airport> addSearchBarFilter(FilteredList<Airport> countryFilter) {
         FilteredList<Airport> searchFilter = new FilteredList<>(countryFilter, p -> true);
-        airportSearchField.textProperty().addListener((observable, oldValue, newValue) ->
+        searchField.textProperty().addListener((observable, oldValue, newValue) ->
                 searchFilter.setPredicate(airport -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;

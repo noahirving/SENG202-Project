@@ -37,29 +37,29 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-              <Label fx:id="airportTabCountrySelectorLabel" text="Country:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-              <ComboBox fx:id="airportTabCountryCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT" />
-              <TextField fx:id="airportSearchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" GridPane.halignment="LEFT" />
-              <ComboBox fx:id="airportTabCityCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="4" GridPane.halignment="LEFT" />
-              <Button fx:id="airportTabUploadDataBtn" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="135.0" text="Upload Airport Data" GridPane.columnIndex="8" GridPane.halignment="RIGHT">
+              <Label fx:id="countrySelectorLabel" text="Country:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+              <ComboBox fx:id="countryCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT" />
+              <TextField fx:id="searchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" GridPane.halignment="LEFT" />
+              <ComboBox fx:id="cityCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="4" GridPane.halignment="LEFT" />
+              <Button fx:id="uploadDataBtn" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="135.0" text="Upload Airport Data" GridPane.columnIndex="8" GridPane.halignment="RIGHT">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-              <Label fx:id="airportTabCitySelectorLabel" text="City:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
+              <Label fx:id="citySelectorLabel" text="City:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
             <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="6" />
-            <Label fx:id="airlineTabCountrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="5" />
+            <Label fx:id="countrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="5" />
             <Button mnemonicParsing="false" onAction="#newRecord" text="New Record" GridPane.columnIndex="7" />
          </children>
          <padding>
             <Insets left="15.0" right="15.0" />
          </padding>
       </GridPane>
-        <TableView fx:id="airportDataTable" prefHeight="406.0" prefWidth="724.0" GridPane.rowIndex="1">
+        <TableView fx:id="dataTable" prefHeight="406.0" prefWidth="724.0" GridPane.rowIndex="1">
             <columns>
-                <TableColumn fx:id="airportTabAirportColumn" prefWidth="320.0" text="Airport" />
-                <TableColumn fx:id="airportTabCityColumn" minWidth="4.800048828125" prefWidth="279.0" text="City" />
-                <TableColumn fx:id="airportTabCountryColumn" minWidth="4.800048828125" prefWidth="140.0" text="Country" />
-                <TableColumn fx:id="airportTabCoordinatesColumn" minWidth="4.800048828125" prefWidth="181.0" text="Coordinates" />
+                <TableColumn fx:id="airportColumn" prefWidth="320.0" text="Airport" />
+                <TableColumn fx:id="cityColumn" minWidth="4.800048828125" prefWidth="279.0" text="City" />
+                <TableColumn fx:id="countryColumn" minWidth="4.800048828125" prefWidth="140.0" text="Country" />
+                <TableColumn fx:id="coordinatesColumn" minWidth="4.800048828125" prefWidth="181.0" text="Coordinates" />
             </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
