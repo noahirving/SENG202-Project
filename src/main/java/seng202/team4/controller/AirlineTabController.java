@@ -45,7 +45,6 @@ public class AirlineTabController extends DataController {
      * Text field used to search data table.
      */
     @FXML private TextField searchField;
-
     /**
      * Mutable ObservableLst containing a list of airlines for the search filter.
      */
@@ -64,7 +63,9 @@ public class AirlineTabController extends DataController {
     private FilteredList<Airline> searchFilter = new FilteredList<>(countryFilter, p -> true);
 
     /**
-     * Initializes the airline tab
+     * Holds the high level logic (set of instructions) for initialisation.
+     * Initialisation order: Table Columns, Set DataSet ComboBox, Set DataSet Listener,
+     * Set Table
      */
     @FXML
     public void initialize() {
@@ -83,11 +84,11 @@ public class AirlineTabController extends DataController {
     }
 
     /**
-     * Sets the table data by displaying each airline in the 'airline' database table
-     * in the table view. This is done using the table query and assigning each record
-     * to a row in the table
-     * @param rs result of the table query
-     * @throws Exception if the query fails
+     * Sets the JavaFX table with rows from the 'Airline' database table.
+     * This is done using the table query and assigning each record to a row in the table
+     * @param rs JDBC ResultSet obtained from querying the Database Airline table and is used to set the rows
+     *           of the JavaFX data table by creating N Airline objects from the query that results in N tuples.
+     * @throws Exception if the query fails, throws an exception
      */
     @Override
     public void setTableData(ResultSet rs) throws Exception{
@@ -108,9 +109,10 @@ public class AirlineTabController extends DataController {
     }
 
     /**
-     * Required method from the abstract DataController class
-     * initializes the combo boxes with all the possible values
-     * for each column
+     * Sorts the FX observable lists for the country ComboBox and
+     * uses class AutoCompleteComboBoxListener to make the ComboBox searchable.
+     * filterData() is also called here because filtering of the table is based on ComboBox selections
+     * and is required to be refreshed whenever a new dataset is chosen to be displayed.
      */
     @Override
     public void initialiseComboBoxes() {
@@ -126,9 +128,10 @@ public class AirlineTabController extends DataController {
     }
 
     /**
-     * Required method from the abstract DataController class
-     * Connects the combo boxes and slider filters to the table
-     * Updates the table with values accepted by the filters
+     * Filtering of table data is done here by initialising then iteratively the country combobox filter
+     * to a FilteredList<Airline> object. The country filter requires addFilter(). Then the search bar filter
+     * is added through addSearchBar(). Finally the resulting SortedList is bound to the TableView dataTable
+     * and the result of the filtering is shown to the user.
      */
     @Override
     public void filterData() {
@@ -136,7 +139,7 @@ public class AirlineTabController extends DataController {
         FilteredList<Airline> countryFilter = addFilter(new FilteredList<>(airlines, p -> true), countryCombobox, "Country");
 
         // Add search bar filter
-        FilteredList<Airline> searchFilter = searchBarFilter(countryFilter);
+        FilteredList<Airline> searchFilter = addSearchBar(countryFilter);
         SortedList<Airline> sortedAirline = new SortedList<>(searchFilter);
         sortedAirline.comparatorProperty().bind(dataTable.comparatorProperty());
 
@@ -145,8 +148,8 @@ public class AirlineTabController extends DataController {
     }
 
     /**
-     * Gets the fxml file for adding a new airline record
-     * @return the path to the fxml file
+     * Override the parent's abstract class as to return the new record FXML file relating to the Airline class.
+     * @return String the path to the newAirlineFXML file.
      */
     @Override
     public String getNewRecordFXML() {
@@ -154,11 +157,14 @@ public class AirlineTabController extends DataController {
     }
 
     /**
+     * Adds a combobox filter, comboBox, to an input FilteredList, filteredList through
+     * adding a listener to comboBox (which works with combobox searching as well). The result is
+     * a new FilteredList which has the comboBox filter applied.
      *
-     * @param filteredList
-     * @param comboBox
-     * @param filter
-     * @return
+     * @param filteredList the filtered list to add a filter to.
+     * @param comboBox     the searchable combobox filter that is added to the filteredList.
+     * @param filter       a String parameter used to specify which filter is being applied.
+     * @return FilteredList with the new filter added.
      */
     public FilteredList<Airline> addFilter(FilteredList<Airline> filteredList, ComboBox<String> comboBox, String filter) {
         FilteredList<Airline> newFilter = new FilteredList<>(filteredList, p -> true);
@@ -177,11 +183,11 @@ public class AirlineTabController extends DataController {
     }
 
     /**
-     *
-     * @param countryFilter
-     * @return
+     * Adds holistic search bar filter which searches the Airline's name and it's country.
+     * @param countryFilter the last filter to be added to before the search bar.
+     * @return FilteredList with the search bar filter added.
      */
-    private FilteredList<Airline> searchBarFilter(FilteredList<Airline> countryFilter) {
+    private FilteredList<Airline> addSearchBar(FilteredList<Airline> countryFilter) {
         FilteredList<Airline> searchFilter = new FilteredList<>(countryFilter, p -> true);
         searchField.textProperty().addListener((observable, oldValue, newValue) ->
                 searchFilter.setPredicate(airline -> {
@@ -200,16 +206,15 @@ public class AirlineTabController extends DataController {
     }
 
     /**
-     * Required method from the abstract DataController class
-     * @return the dataType, the model 'Airline' class in this case
+     * Returns the 'Airline' datatype specifically used for this controller.
+     * @return DataType a new Airline object.
      */
     @Override
     public DataType getDataType() { return new Airline(); }
 
     /**
-     * Required method from the abstract DataController class
-     * @return the query for generating a results set of all airlines from the
-     * database that will populate the table view
+     * Returns the JDBC/SQL query for selecting all rows from the 'Airline' table.
+     * @return String for the  JDBC/SQL query for selecting all rows from the 'Airline' table.
      */
     @Override
     public String getTableQuery() {
