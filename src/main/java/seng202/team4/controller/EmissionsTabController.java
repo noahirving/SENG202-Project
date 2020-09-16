@@ -1,47 +1,100 @@
 package seng202.team4.controller;
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import seng202.team4.Path;
+import javafx.scene.layout.FlowPane;
 import seng202.team4.model.DataType;
 import seng202.team4.model.Route;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.ResultSet;
 
 /**
- * Controller for the emissions tab, 'emissionsTab.fxml'
- * extends the abstract DataController class
+ * Performs logic for the 'Emissions' tab of the application
+ * Responsible for connecting the selected route data to the JavaFX interface,
+ * this includes displaying the selected routes in the JavaFX TableView with data
+ * from the 'RoutesSelected' SQLite database table and also using a search filter
+ * on this data. Analysis is peformed on this data, specifically the distance and
+ * carbon emissions for each route is calculated. The suggested donation amount to
+ * offset a users carbon footprint is calculated, along with how many trees they
+ * could plant with this derived figure.
+ *
+ * Authors: Swapnil Bhagat, Kye Oldham, Darryl Alang, Griffin Baxter, Noah Irving
+ * SENG202 Team 4
+ * Description written on 16/09/2020
  */
 public class EmissionsTabController extends DataController {
-    public Route dataType = new Route();
 
+    /**
+     * Data type (Route) used for this controller
+     */
+    public Route dataType = new Route();
+    /**
+     * Mutable ObservableList containing Route objects
+     */
     private ObservableList<Route> selectedRoutes;
+    /**
+     * Initialization of users total emissions
+     */
     private Double sumEmissions = 0.0;
+    /**
+     * Initialization of users suggested dollar offset amount
+     */
     private Double dollarOffset = 0.0;
+    /**
+     * Initializaion of the trees the user could plant with dollarOffset
+     */
     private Double treeOffset = 0.0;
 
-    @FXML TableView<Route> emissionsDataTable;
-    @FXML private TableColumn<Route, String> emissionsTabAirlineColumn;
-    @FXML private TableColumn<Route, String> emissionsTabSourceColumn;
-    @FXML private TableColumn<Route, String> emissionsTabDestinationColumn;
-    @FXML private TableColumn<Route, String> emissionsTabPlaneColumn;
-    @FXML private TableColumn<Route, Integer> emissionsTabDistanceColumn;
-    @FXML private TableColumn<Route, Integer> emissionsTabEmissionsColumn;
-    @FXML private Button emissionsTabLoadRoutesBtn;
-    @FXML private TextField emissionsSearchField;
+    /**
+     * TableView of the selected routes raw data table
+     */
+    @FXML TableView<Route> dataTable;
+    /**
+     * Airline code column of the raw data table
+     */
+    @FXML private TableColumn<Route, String> airlineColumn;
+    /**
+     * Departure airport IATA column of the raw data table
+     */
+    @FXML private TableColumn<Route, String> sourceColumn;
+    /**
+     * Destination airport IATA column of the raw data table
+     */
+    @FXML private TableColumn<Route, String> destinationColumn;
+    /**
+     * Plane type column of the raw data table
+     */
+    @FXML private TableColumn<Route, String> planeColumn;
+    /**
+     * Distance column of the raw data table
+     */
+    @FXML private TableColumn<Route, Integer> distanceColumn;
+    /**
+     * Carbon emissions (C02) column of the raw data table
+     */
+    @FXML private TableColumn<Route, Integer> emissionsColumn;
+    /**
+     * Text field used to search the data table
+     */
+    @FXML private TextField searchField;
+    /**
+     * Current emissions label displaying the users total carbon footprint for
+     * all routes in the data table
+     */
     @FXML private Label currentEmissionsValue;
 
 
@@ -55,11 +108,24 @@ public class EmissionsTabController extends DataController {
     @FXML
     public void pressEnvironmentalDonationButton(ActionEvent buttonPress) {
         String donationDollarsCents = String.format("%.2f", dollarOffset);
-
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Environmental Donation Equivalent");
         alert.setHeaderText("Donation Equivalent: $" + donationDollarsCents);
-        alert.setContentText("Donations for offsetting carbon emissions can be made on the following sites...");
+
+        FlowPane fp = new FlowPane();
+        Label linkText = new Label("Donate at: ");
+        Hyperlink hp = new Hyperlink("Carbon Fund");
+        fp.getChildren().addAll(linkText, hp);
+        hp.setOnAction((evt) -> {
+            URI u = null;
+            try {
+                u = new URI("https://carbonfund.org");
+                Desktop.getDesktop().browse(u);
+            } catch (URISyntaxException | IOException e) {
+                e.printStackTrace();
+            }
+        });
+        alert.getDialogPane().contentProperty().set( fp );
         alert.show();
     }
 
@@ -105,15 +171,17 @@ public class EmissionsTabController extends DataController {
     }
 
     /**
-     * Initializes the emissions tab
+     * Holds the high level logic (set of instructions) for initialisation.
+     * Initialisation order: Table Columns, Set Table
      */
     public void initialize() {
-        emissionsTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<>("airlineCode"));
-        emissionsTabSourceColumn.setCellValueFactory(new PropertyValueFactory<>("sourceAirportCode"));
-        emissionsTabDestinationColumn.setCellValueFactory(new PropertyValueFactory<>("destinationAirportCode"));
-        emissionsTabPlaneColumn.setCellValueFactory(new PropertyValueFactory<>("planeTypeCode"));
-        emissionsTabDistanceColumn.setCellValueFactory(new PropertyValueFactory<>("distance"));
-        emissionsTabEmissionsColumn.setCellValueFactory(new PropertyValueFactory<>("carbonEmissions"));
+        //Connects table columns to their respective Route class attribute
+        airlineColumn.setCellValueFactory(new PropertyValueFactory<>("airlineCode"));
+        sourceColumn.setCellValueFactory(new PropertyValueFactory<>("sourceAirportCode"));
+        destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destinationAirportCode"));
+        planeColumn.setCellValueFactory(new PropertyValueFactory<>("planeTypeCode"));
+        distanceColumn.setCellValueFactory(new PropertyValueFactory<>("distance"));
+        emissionsColumn.setCellValueFactory(new PropertyValueFactory<>("carbonEmissions"));
 
         try {
             setTable();
@@ -124,9 +192,9 @@ public class EmissionsTabController extends DataController {
     }
 
     /**
-     * Sets the total carbon emissions for the selected routes
-     * The recommended donation to offset the emissions
-     * figure is calculated aswell
+     * Calculates the total carbon emissions for the selected routes in
+     * the data table. The recommended donation to offset the emissions
+     * figure is calculated using this figure.
      */
     private void setTotalEmissions() {
         sumEmissions = 0.0;
@@ -143,8 +211,8 @@ public class EmissionsTabController extends DataController {
      * On action method for the 'Load Selected Routes' button
      * updates the table to display the routes selected by the user
      * on the 'Routes' tab, throws an IOException if this fails
-     * @param buttonPress
-     * @throws IOException
+     * @param buttonPress the ActionEvent triggered when the user clicks the buton
+     * @throws IOException if the setTable() method call results in an exception
      */
     @FXML
     public void updateTable(ActionEvent buttonPress) throws IOException{
@@ -178,11 +246,11 @@ public class EmissionsTabController extends DataController {
     }
 
     /**
-     * Sets the table data by displaying each route in the 'RoutesSelected' database table
-     * in the table view. This is done using the table query and assigning each record
-     * to a row in the table
-     * @param rs result of the table query
-     * @throws Exception if the query fails
+     * Sets the JavaFX table with rows from the 'RoutesSelected' database table.
+     * This is done using the table query and assigning each record to a row in the table
+     * @param rs JDBC ResultSet obtained from querying the Database RoutesSelected table and is used to set the rows
+     *           of the JavaFX data table by creating N Route objects from the query that results in N tuples.
+     * @throws Exception if the query fails, throws an exception
      */
     @Override
     public void setTableData(ResultSet rs) throws Exception {
@@ -203,7 +271,7 @@ public class EmissionsTabController extends DataController {
             selectedRoutes.add(route);
 
         }
-        emissionsDataTable.setItems(selectedRoutes);
+        dataTable.setItems(selectedRoutes);
 
     }
 
@@ -216,7 +284,7 @@ public class EmissionsTabController extends DataController {
      */
     private FilteredList<Route> searchBarFilter() {
         FilteredList<Route> searchFilter = new FilteredList<>(selectedRoutes, p -> true);
-        emissionsSearchField.textProperty().addListener((observable, oldValue, newValue) ->
+        searchField.textProperty().addListener((observable, oldValue, newValue) ->
                 searchFilter.setPredicate(route -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
@@ -244,29 +312,6 @@ public class EmissionsTabController extends DataController {
     public void initialiseComboBoxes() {
         filterData();
     }
-    /*
-    public FilteredList<Route> addFilter(FilteredList<Route> filteredList, ComboBox<String> comboBox, String filter) {
-        FilteredList<Route> newFilter = new FilteredList<>(filteredList, p -> true);
-        comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                newFilter.setPredicate(route -> {
-                    if (newValue == null || newValue.equals("---")) {
-                        return true;
-                    }
-                    String lower = newValue.toLowerCase();
-
-                    if (filter.equals("Airline")) {
-                        return route.getAirlineCode().toLowerCase().contains(lower);
-                    } else if (filter.equals("Source")) {
-                        return route.getSourceAirportCode().toLowerCase().contains(lower);
-                    } else if (filter.equals("Destination")) {
-                        return route.getDestinationAirportCode().toLowerCase().contains(lower);
-                    } else {
-                        return route.getPlaneTypeCode().toLowerCase().contains(lower);
-                    }
-
-                }));
-        return newFilter;
-    }*/
 
     /** Required method from the abstract DataController class
      * applies the search filter to the data table view
@@ -275,9 +320,9 @@ public class EmissionsTabController extends DataController {
     public void filterData() {
         FilteredList<Route> searchFilter = searchBarFilter();
         SortedList<Route> sortedRoute = new SortedList<>(searchFilter);
-        sortedRoute.comparatorProperty().bind(emissionsDataTable.comparatorProperty());
+        sortedRoute.comparatorProperty().bind(dataTable.comparatorProperty());
 
-        emissionsDataTable.setItems(sortedRoute);
+        dataTable.setItems(sortedRoute);
 
     }
 

@@ -63,14 +63,14 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                    <TableView fx:id="emissionsDataTable" prefHeight="362.0" prefWidth="450.0" GridPane.rowIndex="1">
+                    <TableView fx:id="dataTable" prefHeight="362.0" prefWidth="450.0" GridPane.rowIndex="1">
                         <columns>
-                            <TableColumn fx:id="emissionsTabAirlineColumn" prefWidth="75.0" text="Airline" />
-                        <TableColumn fx:id="emissionsTabSourceColumn" prefWidth="75.0" text="Source" />
-                        <TableColumn fx:id="emissionsTabDestinationColumn" prefWidth="75.0" text="Destination" />
-                        <TableColumn fx:id="emissionsTabPlaneColumn" prefWidth="75.0" text="Plane" />
-                        <TableColumn fx:id="emissionsTabDistanceColumn" prefWidth="75.0" text="Distance" />
-                        <TableColumn fx:id="emissionsTabEmissionsColumn" prefWidth="75.0" text="C02 Emitted" />
+                            <TableColumn fx:id="airlineColumn" prefWidth="75.0" text="Airline" />
+                        <TableColumn fx:id="sourceColumn" prefWidth="75.0" text="Source" />
+                        <TableColumn fx:id="destinationColumn" prefWidth="75.0" text="Destination" />
+                        <TableColumn fx:id="planeColumn" prefWidth="75.0" text="Plane" />
+                        <TableColumn fx:id="distanceColumn" prefWidth="75.0" text="Distance" />
+                        <TableColumn fx:id="emissionsColumn" prefWidth="75.0" text="C02 Emitted" />
                         </columns>
                     </TableView>
                   <GridPane>
@@ -82,11 +82,11 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                          <Button fx:id="emissionsTabLoadRoutesBtn" mnemonicParsing="false" onAction="#updateTable" prefWidth="162.0" text="Load Selected Routes" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                          <Button fx:id="loadRoutesBtn" mnemonicParsing="false" onAction="#updateTable" prefWidth="162.0" text="Load Selected Routes" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>
-                          <TextField fx:id="emissionsSearchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" GridPane.halignment="CENTER" />
+                          <TextField fx:id="searchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>
                </children>
