@@ -4,39 +4,63 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import seng202.team4.Path;
 import seng202.team4.model.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.*;
 
 /**
- * Controller for the airline tab, 'airlineTab.fxml'
- * extends the abstract DataController class
+ * Performs logic for the 'Airline' tab of the application
+ * Responsible for connecting the airline data to the JavaFX interface,
+ * this includes displaying the airlines in the JavaFX TableView with data
+ * from the 'Airlines' SQLite database table and also initialising/updating the
+ * additive filtering and searching of said data.
+ *
+ * Authors: Swapnil Bhagat, Kye Oldham, Darryl Alang, Griffin Baxter, Noah Irving
+ * SENG202 Team 4
+ * Description written on 16/09/2020
  */
 public class AirlineTabController extends DataController {
 
-    @FXML private TableView<Airline> airlineDataTable;
-    @FXML private TableColumn<Airline, String> airlineTabAirlineColumn;
-    @FXML private TableColumn<Airline, String> airlineTabCountryColumn;
-    @FXML private ComboBox<String> airlineTabCountryCombobox;
-    @FXML private TextField airlineSearchField;
+    /**
+     * TableView of the airline raw data table.
+     */
+    @FXML private TableView<Airline> dataTable;
+    /**
+     * Airline column of the raw data table.
+     */
+    @FXML private TableColumn<Airline, String> airlineColumn;
+    /**
+     * Country column of the raw data table.
+     */
+    @FXML private TableColumn<Airline, String> countryColumn;
+    /**
+     * Searchable combobox for filtering by country.
+     */
+    @FXML private ComboBox<String> countryCombobox;
+    /**
+     * Text field used to search data table.
+     */
+    @FXML private TextField searchField;
 
+    /**
+     * Mutable ObservableLst containing a list of airlines for the search filter.
+     */
     private ObservableList<Airline> airlines = FXCollections.observableArrayList();
+    /**
+     * Mutable ObservableList containing a list of countries for the countryComboBox.
+     */
     private ObservableList<String> countries = FXCollections.observableArrayList();
-
+    /**
+     * Initialization of FilteredList for countryComboBox.
+     */
     private FilteredList<Airline> countryFilter = new FilteredList<>(airlines, p -> true);
+    /**
+     * Initialization of FilteredList for the search text field
+     */
     private FilteredList<Airline> searchFilter = new FilteredList<>(countryFilter, p -> true);
 
     /**
@@ -44,8 +68,8 @@ public class AirlineTabController extends DataController {
      */
     @FXML
     public void initialize() {
-        airlineTabAirlineColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        airlineTabCountryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
+        airlineColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
 
         try {
             setDataSetComboBox();
@@ -80,7 +104,7 @@ public class AirlineTabController extends DataController {
 
             addToComboBoxList(countries, country);
         }
-        airlineDataTable.setItems(airlines);
+        dataTable.setItems(airlines);
     }
 
     /**
@@ -92,10 +116,10 @@ public class AirlineTabController extends DataController {
     public void initialiseComboBoxes() {
         // Sort and set combobox items
         FXCollections.sort(countries);
-        airlineTabCountryCombobox.setItems(countries);
+        countryCombobox.setItems(countries);
 
         // Make combobox searching autocomplete
-        new AutoCompleteComboBoxListener<>(airlineTabCountryCombobox);
+        new AutoCompleteComboBoxListener<>(countryCombobox);
 
         filterData();
 
@@ -109,14 +133,14 @@ public class AirlineTabController extends DataController {
     @Override
     public void filterData() {
         // Connect combobox and slider filters to table
-        FilteredList<Airline> countryFilter = addFilter(new FilteredList<>(airlines, p -> true), airlineTabCountryCombobox, "Country");
+        FilteredList<Airline> countryFilter = addFilter(new FilteredList<>(airlines, p -> true), countryCombobox, "Country");
 
         // Add search bar filter
         FilteredList<Airline> searchFilter = searchBarFilter(countryFilter);
         SortedList<Airline> sortedAirline = new SortedList<>(searchFilter);
-        sortedAirline.comparatorProperty().bind(airlineDataTable.comparatorProperty());
+        sortedAirline.comparatorProperty().bind(dataTable.comparatorProperty());
 
-        airlineDataTable.setItems(sortedAirline);
+        dataTable.setItems(sortedAirline);
 
     }
 
@@ -159,7 +183,7 @@ public class AirlineTabController extends DataController {
      */
     private FilteredList<Airline> searchBarFilter(FilteredList<Airline> countryFilter) {
         FilteredList<Airline> searchFilter = new FilteredList<>(countryFilter, p -> true);
-        airlineSearchField.textProperty().addListener((observable, oldValue, newValue) ->
+        searchField.textProperty().addListener((observable, oldValue, newValue) ->
                 searchFilter.setPredicate(airline -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;

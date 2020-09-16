@@ -35,14 +35,14 @@
           <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-              <TextField fx:id="airlineSearchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
-              <Button fx:id="airlineTabUploadDataBtn" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="125.0" text="Upload Airline Data" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+              <TextField fx:id="searchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
+              <Button fx:id="uploadDataBtn" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="125.0" text="Upload Airline Data" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-              <ComboBox fx:id="airlineTabCountryCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
-              <Label fx:id="airlineTabCountrySelectorLabel" alignment="CENTER" text="Country:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-            <Label fx:id="airlineTabCountrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="3" />
+              <ComboBox fx:id="countryCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+              <Label fx:id="countrySelectorLabel" alignment="CENTER" text="Country:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+            <Label fx:id="countrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="3" />
             <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="4" />
             <Button mnemonicParsing="false" onAction="#newRecord" prefHeight="25.0" prefWidth="90.0" text="New Record" GridPane.columnIndex="5" />
          </children>
@@ -50,10 +50,10 @@
             <Insets left="15.0" right="15.0" />
          </padding>
       </GridPane>
-        <TableView fx:id="airlineDataTable" prefHeight="406.0" prefWidth="724.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+        <TableView fx:id="dataTable" prefHeight="406.0" prefWidth="724.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
             <columns>
-                <TableColumn fx:id="airlineTabAirlineColumn" prefWidth="685.0" text="Airline" />
-                <TableColumn fx:id="airlineTabCountryColumn" minWidth="4.800048828125" prefWidth="522.0" text="Country" />
+                <TableColumn fx:id="airlineColumn" prefWidth="685.0" text="Airline" />
+                <TableColumn fx:id="countryColumn" minWidth="4.800048828125" prefWidth="522.0" text="Country" />
             </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
