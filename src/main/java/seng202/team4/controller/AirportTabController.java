@@ -39,6 +39,7 @@ public class AirportTabController extends DataController {
     @FXML private ComboBox<String> airportTabCountryCombobox;
     @FXML private TextField airportSearchField;
 
+    private SortedList<Airport> sortedAirport;
     private ObservableList<Airport> airports = FXCollections.observableArrayList();
     private ObservableList<String> countries = FXCollections.observableArrayList();
     private ObservableList<String> cities = FXCollections.observableArrayList();
@@ -84,13 +85,13 @@ public class AirportTabController extends DataController {
         airportDataTable.setEditable(true);
 
         airportTabSelectColumn.setCellFactory(CheckBoxTableCell.forTableColumn(param -> {
-            if (airports.get(param).isSelect()) {
-                DataLoader.addToAirportsSelectedDatabase(airports.get(param));
+            if (sortedAirport.get(param).isSelect()) {
+                DataLoader.addToAirportsSelectedDatabase(sortedAirport.get(param));
             } else {
-                DataLoader.removeFromAirportsSelectedDatabase(airports.get(param));
+                DataLoader.removeFromAirportsSelectedDatabase(sortedAirport.get(param));
             }
 
-            return airports.get(param).selectProperty();
+            return sortedAirport.get(param).selectProperty();
         }));
     }
 
@@ -165,9 +166,9 @@ public class AirportTabController extends DataController {
 
         // Add search bar filter
         FilteredList<Airport> searchFilter = searchBarFilter(cityFilter);
-        SortedList<Airport> sortedRoute = new SortedList<>(searchFilter);
-        sortedRoute.comparatorProperty().bind(airportDataTable.comparatorProperty());
-        airportDataTable.setItems(sortedRoute);
+        sortedAirport = new SortedList<>(searchFilter);
+        sortedAirport.comparatorProperty().bind(airportDataTable.comparatorProperty());
+        airportDataTable.setItems(sortedAirport);
 
     }
 

@@ -105,6 +105,7 @@ public class RouteTabController extends DataController {
      */
     private ObservableList<String> planeTypes;
 
+    private SortedList<Route> sortedRoute;
     /**
      * Holds the high level logic (set of instructions) for initialisation.
      * Initialisation order: Sliders, Table Columns, Dataset Chooser ComboBox, Set Table
@@ -162,13 +163,13 @@ public class RouteTabController extends DataController {
         dataTable.setEditable(true);
         // Add listener for adding/removing a specific route to the RoutesSelected Database table
         routeTabSelectedRoute.setCellFactory(CheckBoxTableCell.forTableColumn(param -> {
-            if (routes.get(param).isSelect()) {
-                DataLoader.addToRoutesSelectedDatabase(routes.get(param));
+            if (sortedRoute.get(param).isSelect()) {
+                DataLoader.addToRoutesSelectedDatabase(sortedRoute.get(param));
             } else {
-                DataLoader.removeFromRoutesSelectedDatabase(routes.get(param));
+                DataLoader.removeFromRoutesSelectedDatabase(sortedRoute.get(param));
             }
 
-            return routes.get(param).selectProperty();
+            return sortedRoute.get(param).selectProperty();
         }));
     }
 
@@ -260,7 +261,7 @@ public class RouteTabController extends DataController {
 
         // Add search bar filter
         FilteredList<Route> searchFilter = addSearchBarFilter(planeFilter);
-        SortedList<Route> sortedRoute = new SortedList<>(searchFilter);
+        sortedRoute = new SortedList<>(searchFilter);
         sortedRoute.comparatorProperty().bind(dataTable.comparatorProperty());
 
         dataTable.setItems(sortedRoute);
