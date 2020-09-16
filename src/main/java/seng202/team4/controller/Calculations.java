@@ -13,10 +13,6 @@ import java.util.ArrayList;
  * Performs calculations for the emissions tab of the application.
  * Responsible for calculating the distance and carbon emissions
  * of a route.
- *
- * Authors: Kye Oldham, Swapnil Bhagat
- * SENG202 Team 4
- * Description written on 16/09/2020
  */
 public class Calculations {
 

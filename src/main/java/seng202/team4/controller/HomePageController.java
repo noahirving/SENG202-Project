@@ -17,10 +17,6 @@ import java.sql.ResultSet;
  * Responsible for giving instructions to the user and in
  * a later release will be responsible for global searching
  * functionality. Allows user to load the default database
- *
- * Authors: Swapnil Bhagat, Kye Oldham, Darryl Alang, Griffin Baxter, Noah Irving
- * SENG202 Team 4
- * Description written on 16/09/2020
  */
 public class HomePageController extends DataController {
 
