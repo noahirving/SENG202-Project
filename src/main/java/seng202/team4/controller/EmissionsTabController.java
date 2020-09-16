@@ -94,14 +94,12 @@ public class EmissionsTabController extends DataController {
      */
     @FXML private Label currentEmissionsValue;
 
-    @FXML private Button loadRoutesBtn;
-
     /**
      *  On Action method for the 'Environmental Donation' button
      *  Gets the calculated donation amount and displays this
      *  in a new Alert window
      *
-     * @param buttonPress
+     * @param buttonPress ActionEvent triggered when button is clicked
      */
     @FXML
     public void pressEnvironmentalDonationButton(ActionEvent buttonPress) {
@@ -131,7 +129,7 @@ public class EmissionsTabController extends DataController {
      * On Action method for the 'Trees Equivalent' button
      * Gets how many trees the user could plant with the donation amount
      * and displays this in a new Alert window
-     * @param buttonPress
+     * @param buttonPress AcitonEvent triggered when button is clicked
      */
     @FXML
     public void pressTreesEquivalentButton(ActionEvent buttonPress) {
@@ -163,7 +161,7 @@ public class EmissionsTabController extends DataController {
      * This feature will be implemented in a later release.
      * This will display alternative routes that complete the same
      * route, but cause less damage to the environment
-     * @param buttonPress
+     * @param buttonPress ActionEvent triggered when button is clicked
      */
     @FXML
     public void pressAlternativeRoutesButton(ActionEvent buttonPress) {
@@ -176,7 +174,7 @@ public class EmissionsTabController extends DataController {
      * This will display alternative aircrafts to the aircraft types used
      * by the selected routes. The displayed aircraft will be more economically
      * efficient and cause less damage to the environment
-     * @param buttonPress
+     * @param buttonPress ActionEvent triggered when the button is clicked
      */
     @FXML
     public void pressAlternativeAircraftTypeButton(ActionEvent buttonPress) {
@@ -224,7 +222,7 @@ public class EmissionsTabController extends DataController {
      * On action method for the 'Load Selected Routes' button
      * updates the table to display the routes selected by the user
      * on the 'Routes' tab, throws an IOException if this fails
-     * @param buttonPress the ActionEvent triggered when the user clicks the buton
+     * @param buttonPress ActionEvent triggered when the user clicks the buton
      * @throws IOException if the setTable() method call results in an exception
      */
     @FXML
@@ -241,7 +239,7 @@ public class EmissionsTabController extends DataController {
 
     /**
      * Required method from the abstract DataController class
-     * @return the dataType, in this case it is of type 'Route'
+     * @return DataType in this case it is of type 'Route'
      */
     @Override
     public DataType getDataType() {
@@ -249,9 +247,8 @@ public class EmissionsTabController extends DataController {
     }
 
     /**
-     * Required method from the abstract DataController class
-     * @return the query for generating a results set that will
-     * populate the table view
+     * Returns the JDBC/SQL query for selecting all distinct/unique rows from the 'RoutesSelected' table.
+     * @return String for the  JDBC/SQL query for selecting all rows from the 'RoutesSelected' table.
      */
     @Override
     public String getTableQuery() {
@@ -294,7 +291,7 @@ public class EmissionsTabController extends DataController {
      * Filters the routes in the table view that have a value in
      * either of the: airlineCode, sourceAirportCode, destinationAirportCode or planeTypeCode
      * columns that matches the users search input
-     * @return the FilteredList of routes that match the input
+     * @return FilteredList of routes that match the input
      */
     private FilteredList<Route> searchBarFilter() {
         FilteredList<Route> searchFilter = new FilteredList<>(selectedRoutes, p -> true);
@@ -343,8 +340,8 @@ public class EmissionsTabController extends DataController {
 
     /**
      * Required method from the abstract DataController class
-     * @return an empty record, which will be assigned values
-     * and added to the table?
+     * @return String an empty record as no new records are added
+     * to the emissions table
      */
     @Override
     public String getNewRecordFXML() {

@@ -101,6 +101,9 @@ public class RouteTabController extends DataController {
      */
     private ObservableList<String> planeTypes;
 
+    /**
+     * Initialization of SortedList of routes that will be used by the filters
+     */
     private SortedList<Route> sortedRoute;
     /**
      * Holds the high level logic (set of instructions) for initialisation.
@@ -147,8 +150,9 @@ public class RouteTabController extends DataController {
     }
 
     /**
-     * Makes the checkbox column for selecting specific rows of the Airport table.
-     * Selected rows are then used by the Map tab to display chosen airports.
+     * Makes the checkbox column for selecting specific rows of the Route table.
+     * Selected rows are then used by the Emissions tab, to calculated distance and carbon emissions,
+     * and the Map tab, to display chosen airports.
      */
     private void makeCheckboxColumn() {
         final TableColumn<Route, Boolean> routeTabSelectedRoute = new TableColumn<>("Select");
@@ -170,8 +174,8 @@ public class RouteTabController extends DataController {
     }
 
     /**
-     * Sets the JavaFX Airport table with rows from the 'Airports' table from the database.
-     * @param rs JDBC ResultSet obtained from querying the Database Airport table and is used to set the rows
+     * Sets the JavaFX Route table with rows from the 'Routes' table from the database.
+     * @param rs JDBC ResultSet obtained from querying the Database Route table and is used to set the rows
      *           of the JavaFX airport table by creating N Route objects from the query that results in N tuples.
      */
     @Override
@@ -301,7 +305,7 @@ public class RouteTabController extends DataController {
      * Adds holistic search bar filter which searches the route's Airline Code, Source Airport Code, Destination Airport
      * Code, and Plant Type Code.
      * @param filteredList the last filter to be added to before the search bar.
-     * @return the FilteredList with the search bar filter added.
+     * @return FilteredList with the search bar filter added.
      */
     private FilteredList<Route> addSearchBarFilter(FilteredList<Route> filteredList) {
         FilteredList<Route> searchFilter = new FilteredList<>(filteredList, p -> true);
@@ -349,14 +353,14 @@ public class RouteTabController extends DataController {
 
     /**
      * Override the parent's abstract class as to return the new record FXML file relating to the Route class.
-     * @return the path to the newRouteFXML file.
+     * @return String the path to the newRouteFXML file.
      */
     @Override
     public String getNewRecordFXML() { return Path.newRouteFXML; }
 
     /**
      * Returns the 'Route' datatype specifically used for this controller.
-     * @return a new Route object.
+     * @return DataType a new Route object.
      */
     @Override
     public DataType getDataType() {
@@ -365,7 +369,7 @@ public class RouteTabController extends DataController {
 
     /**
      * Returns the JDBC/SQL query for selecting all rows from the 'Route' table.
-     * @return the String for the  JDBC/SQL query for selecting all rows from the 'Route' table.
+     * @return String for the  JDBC/SQL query for selecting all rows from the 'Route' table.
      */
     @Override
     public String getTableQuery() {

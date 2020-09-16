@@ -40,4 +40,11 @@ public interface Validate {
         return string.matches("[a-zA-Z]{4}");
     }
 
+    static boolean isValidTZDB(String string) {
+        if (string == null) {
+            return false;
+        }
+        return string.matches("[a-zA-Z]+/[a-zA-Z_-]+");
+    }
+
 }
