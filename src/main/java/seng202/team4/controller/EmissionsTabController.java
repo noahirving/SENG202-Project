@@ -8,6 +8,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -97,6 +98,7 @@ public class EmissionsTabController extends DataController {
      */
     @FXML private Label currentEmissionsValue;
 
+    @FXML private Button loadRoutesBtn;
 
     /**
      *  On Action method for the 'Environmental Donation' button
@@ -110,7 +112,7 @@ public class EmissionsTabController extends DataController {
         String donationDollarsCents = String.format("%.2f", dollarOffset);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Environmental Donation Equivalent");
-        alert.setHeaderText("Donation Equivalent: $" + donationDollarsCents);
+        alert.setHeaderText("Donation required to offset your emissions: $" + donationDollarsCents);
 
         FlowPane fp = new FlowPane();
         Label linkText = new Label("Donate at: ");
@@ -119,7 +121,7 @@ public class EmissionsTabController extends DataController {
         hp.setOnAction((evt) -> {
             URI u = null;
             try {
-                u = new URI("https://carbonfund.org");
+                u = new URI("https://carbonfund.org/donate");
                 Desktop.getDesktop().browse(u);
             } catch (URISyntaxException | IOException e) {
                 e.printStackTrace();
@@ -140,8 +142,23 @@ public class EmissionsTabController extends DataController {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Trees Equivalent");
-        alert.setHeaderText("Trees Equivalent: " + treeOffset);
-        alert.setContentText("Donations for planting trees can be made on the following sites...");
+        alert.setHeaderText("With the suggested donation amount you could plant " + treeOffset + " trees");
+
+        FlowPane treesFp = new FlowPane();
+        Label linkText = new Label("Plant trees using: ");
+        Hyperlink hp = new Hyperlink("Team Trees");
+        treesFp.getChildren().addAll(linkText, hp);
+        hp.setOnAction((evt) -> {
+            URI u = null;
+            try {
+                u = new URI("https://teamtrees.org/");
+                Desktop.getDesktop().browse(u);
+            } catch (URISyntaxException | IOException e) {
+                e.printStackTrace();
+            }
+        });
+        alert.getDialogPane().contentProperty().set( treesFp );
+        //alert.setContentText("Donations for planting trees can be made on the following sites...");
         alert.show();
     }
 
@@ -242,6 +259,7 @@ public class EmissionsTabController extends DataController {
      */
     @Override
     public String getTableQuery() {
+        //Old query Select distinct Airline, SourceAirport, DestinationAirport, Equipment, distance, carbonEmissions from RoutesSelected
         return "Select distinct Airline, SourceAirport, DestinationAirport, Equipment, distance, carbonEmissions from RoutesSelected";
     }
 
@@ -313,7 +331,8 @@ public class EmissionsTabController extends DataController {
         filterData();
     }
 
-    /** Required method from the abstract DataController class
+    /**
+     * Required method from the abstract DataController class
      * applies the search filter to the data table view
      */
     @Override
