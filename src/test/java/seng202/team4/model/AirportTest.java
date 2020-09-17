@@ -88,5 +88,24 @@ public class AirportTest extends TestCase {
         assertEquals(null, airport);
     }
 
+    @Test
+    public void testGetValid13() {
+        Airport airport = Airport.getValid("Thule Air Base","Thule","Greenland","THU","BGTL","76.531203","-68.703161","251","-4","AA","America/Thule", new ArrayList<>());
+        assertEquals(null, airport);
+    }
+
+    @Test
+    public void testGetValid14() {
+        Airport airport = new Airport();
+        Airport newport = (Airport) airport.getValid(new String[]{"Thule Air Base","Thule","Greenland","THU","BGTL","76.531203","-68.703161","251","-4","E","America/Thule"}, new ArrayList<>());
+        assertTrue(newport.equals(new Airport("Thule Air Base","Thule","Greenland","THU","BGTL",76.531203,-68.703161,251,-4,'E',"America/Thule")));
+    }
+
+    @Test
+    public void testAirport() {
+        Airport airport1 = new Airport("Thule Air Base","Thule","Greenland","THU","BGTL",76.531203,-68.703161,251,-4,'E',"America/Thule");
+        Airport airport2 = new Airport("10,\"Thule Air Base\",\"Thule\",\"Greenland\",\"THU\",\"BGTL\",76.531203,-68.703161,251,-4,\"E\",\"America/Thule\"");
+        assertTrue(airport1.equals(airport2));
+    }
 
 }
