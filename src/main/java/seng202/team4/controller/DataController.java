@@ -103,7 +103,7 @@ public abstract class DataController {
         stage.setTitle("Upload file");
         stage.setMinHeight(290);
         stage.setMinWidth(720);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.view + "/fileUpload.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.VIEW + "/fileUpload.fxml"));
         stage.setScene(new Scene(loader.load(), 700, 250));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
@@ -127,8 +127,10 @@ public abstract class DataController {
     public void newRecord() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("New Record");
+        stage.setMinHeight(440);
+        stage.setMinWidth(720);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(getNewRecordFXML()));
-        stage.setScene(new Scene(loader.load(), 700, 250));
+        stage.setScene(new Scene(loader.load(), 700, 400));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
         NewRecord controller = loader.getController();

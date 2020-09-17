@@ -39,12 +39,9 @@ public class FileUploadController {
     }
 
     public void getFile() {
-
-
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
-                new FileChooser.ExtensionFilter("CSV Files", "*.csv")
+                new FileChooser.ExtensionFilter(".DAT, .CSV or .TXT files", "*.dat", "*.csv", "*.txt")
         );
         File f = fc.showOpenDialog(ownerStage);
         if (f != null) {

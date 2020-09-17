@@ -12,7 +12,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         //DataLoader loader = new DataLoader();
-
         Main m = new Main();
         m.createDirectory();
         m.deleteDB();
@@ -26,19 +25,21 @@ public class Main {
     }
 
     public void loadTest() throws IOException {
-        File airport = copyToFolder(Path.airportRsc);
-        File airline = copyToFolder(Path.airlineRsc);
-        File route = copyToFolder(Path.routeRsc);
+        File airport = copyToFolder(Path.AIRPORT_RSC);
+        File airline = copyToFolder(Path.AIRLINE_RSC);
+        File route = copyToFolder(Path.ROUTE_RSC);
+        File flightPath = copyToFolder(Path.FLIGHT_PATH_RSC);
 
         DataLoader.uploadAirportData(airport);
         DataLoader.uploadAirlineData(airline);
         DataLoader.uploadRouteData(route);
+        DataLoader.uploadFlightPathData(flightPath);
     }
 
     public void deleteDB() {
         try
         {
-            File file = new File(Path.database);
+            File file = new File(Path.DATABASE);
             if(file.delete()) {
                 System.out.println(file.getName() + " deleted");
             }
@@ -73,7 +74,6 @@ public class Main {
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
 
-
             String airlineSetTable = "CREATE TABLE \"AirlineSet\" " + setTable;
             String airlineTable = "CREATE TABLE \"Airline\" (" +
                     "\"ID\" INTEGER NOT NULL UNIQUE," +
@@ -88,7 +88,6 @@ public class Main {
                     "FOREIGN KEY (SetID) REFERENCES AirlineSet (SetID)," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
-
 
             String airportSetTable = "CREATE TABLE \"AirportSet\" " + setTable;
             String airportTable = "CREATE TABLE \"Airport\" (" +
@@ -126,6 +125,20 @@ public class Main {
                     "FOREIGN KEY (SetID) REFERENCES RouteSet (SetID)," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
+
+            String flightPathSetTable = "CREATE TABLE \"FlightPathSet\" " + setTable;
+            String flightPathTable = "CREATE TABLE \"FlightPath\" (" +
+                    "\"ID\"\tINTEGER NOT NULL UNIQUE," +
+                    "\"Type\" STRING," +
+                    "\"FlightPathID\" INTEGER," +
+                    "\"Altitude\" INTEGER," +
+                    "\"Latitude\" DOUBLE," +
+                    "\"Longitude\" DOUBLE," +
+                    "\"SetID\" INTEGER NOT NULL," +
+                    "FOREIGN KEY (SetID) REFERENCES FlightPathSet (SetID)," +
+                    "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
+                    ")";
+
             String routesSelectedTable = "CREATE TABLE \"RoutesSelected\" (" +
                     "\"ID\"\tINTEGER NOT NULL UNIQUE," +
                     "\"Airline\" STRING," +
@@ -144,12 +157,17 @@ public class Main {
                     "\"Latitude\" DOUBLE," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
+
             createNewTable(airlineSetTable);
             createNewTable(airportSetTable);
             createNewTable(routeSetTable);
+            createNewTable(flightPathSetTable);
+
             createNewTable(airlineTable);
             createNewTable(airportTable);
             createNewTable(routeTable);
+            createNewTable(flightPathTable);
+
             createNewTable(routesSelectedTable);
             createNewTable(airportsSelectedTable);
         }
@@ -158,7 +176,7 @@ public class Main {
 
     public static void createNewTable(String table) {
 
-        try (Connection c = DriverManager.getConnection(Path.databaseConnection);
+        try (Connection c = DriverManager.getConnection(Path.DATABASE_CONNECTION);
              Statement stmt = c.createStatement()
         ) {
             stmt.execute(table);
@@ -172,14 +190,14 @@ public class Main {
     public File copyToFolder(String filename) throws IOException {
 
         InputStream initialStream = (this.getClass().getResourceAsStream(filename));
-        File targetFile = new File(Path.directory + filename);
+        File targetFile = new File(Path.DIRECTORY + filename);
 
         java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return targetFile;
     }
 
     public void createDirectory() {
-        File folder = new File(Path.directory);
+        File folder = new File(Path.DIRECTORY);
         if (!folder.exists()) {
             folder.mkdir();
         }

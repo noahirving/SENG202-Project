@@ -46,13 +46,13 @@ public class Airline extends DataType {
     public String getInsertStatement(int setID){
         return "INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') "
                 + "VALUES ('"
-                + getName().replaceAll("'", "''") + between
-                + getCode().replaceAll("'", "''") + between
-                + getIata().replaceAll("'", "''") + between
-                + getIcao().replaceAll("'", "''") + between
-                + getCallSign().replaceAll("'", "''") + between
-                + getCountry().replaceAll("'", "''") + between
-                + isRecentlyActive() + between
+                + getName().replaceAll("'", "''") + BETWEEN
+                + getCode().replaceAll("'", "''") + BETWEEN
+                + getIata().replaceAll("'", "''") + BETWEEN
+                + getIcao().replaceAll("'", "''") + BETWEEN
+                + getCallSign().replaceAll("'", "''") + BETWEEN
+                + getCountry().replaceAll("'", "''") + BETWEEN
+                + isRecentlyActive() + BETWEEN
                 + setID
                 + "');";
     }

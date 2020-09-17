@@ -48,7 +48,7 @@
               <Label fx:id="citySelectorLabel" text="City:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
             <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="6" />
             <Label fx:id="countrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="5" />
-            <Button mnemonicParsing="false" onAction="#newRecord" text="New Record" GridPane.columnIndex="7" />
+            <Button fx:id="newRecordButton" mnemonicParsing="false" onAction="#newRecord" prefHeight="26.4" prefWidth="26.4" GridPane.columnIndex="7" GridPane.halignment="CENTER" />
          </children>
          <padding>
             <Insets left="15.0" right="15.0" />

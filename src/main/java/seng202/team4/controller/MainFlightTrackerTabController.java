@@ -15,7 +15,7 @@ public class MainFlightTrackerTabController {
 
     @FXML
     public void pressHomeButton(ActionEvent buttonPress) throws IOException {
-        Parent homeView = FXMLLoader.load(getClass().getResource(Path.homeSceneFXML));
+        Parent homeView = FXMLLoader.load(getClass().getResource(Path.HOME_SCENE_FXML));
 
         Scene homeScene = new Scene(homeView);
 

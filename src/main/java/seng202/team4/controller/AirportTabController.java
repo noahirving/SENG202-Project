@@ -5,12 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import seng202.team4.Path;
 import seng202.team4.model.Airport;
 import seng202.team4.model.DataLoader;
@@ -68,6 +67,10 @@ public class AirportTabController extends DataController {
      */
     private SortedList<Airport> sortedAirport;
     /**
+     * Button that opens window to add new record.
+     */
+    @FXML private Button newRecordButton;
+    /**
      * Initialization of FilteredList for the search text field.
      */
     private ObservableList<Airport> airports = FXCollections.observableArrayList();
@@ -96,7 +99,7 @@ public class AirportTabController extends DataController {
 
         // Make and connect checkbox column to AirportsSelected database table
         makeCheckboxColumn();
-
+        setNewRecordButton();
         try {
             setDataSetComboBox();
             setDataSetListener();
@@ -106,6 +109,14 @@ public class AirportTabController extends DataController {
             System.exit(0);
         }
 
+    }
+
+    /**
+     * Sets the shape of the new record button to circle and image to a green '+' icon.
+     */
+    private void setNewRecordButton() {
+        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
+        newRecordButton.setGraphic(new ImageView(addRecordImage));
     }
 
     /**
@@ -214,11 +225,11 @@ public class AirportTabController extends DataController {
 
     /**
      * Override the parent's abstract class as to return the new record FXML file relating to the Airport class.
-     * @return String the path to the newAirportFXML file.
+     * @return String the path to the NEW_AIRPORT_FXML file.
      */
     @Override
     public String getNewRecordFXML() {
-        return Path.newAirportFXML;
+        return Path.NEW_AIRPORT_FXML;
     }
 
     /**

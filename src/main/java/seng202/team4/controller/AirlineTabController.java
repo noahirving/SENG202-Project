@@ -7,6 +7,8 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import seng202.team4.Path;
 import seng202.team4.model.*;
 
@@ -42,6 +44,10 @@ public class AirlineTabController extends DataController {
      */
     @FXML private TextField searchField;
     /**
+     * Button that opens window to add new record.
+     */
+    @FXML private Button newRecordButton;
+    /**
      * Mutable ObservableLst containing a list of airlines for the search filter.
      */
     private ObservableList<Airline> airlines = FXCollections.observableArrayList();
@@ -60,7 +66,7 @@ public class AirlineTabController extends DataController {
 
     /**
      * Holds the high level logic (set of instructions) for initialisation.
-     * Initialisation order: Table Columns, Set DataSet ComboBox, Set DataSet Listener,
+     * Initialisation order: Set New Record Button, Table Columns, Set DataSet ComboBox, Set DataSet Listener,
      * Set Table
      */
     @FXML
@@ -68,7 +74,9 @@ public class AirlineTabController extends DataController {
         airlineColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
 
+
         try {
+            setNewRecordButton();
             setDataSetComboBox();
             setDataSetListener();
             setTable();
@@ -77,6 +85,14 @@ public class AirlineTabController extends DataController {
             System.exit(0);
         }
 
+    }
+
+    /**
+     * Sets the shape of the new record button to circle and image to a green '+' icon.
+     */
+    private void setNewRecordButton() {
+        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
+        newRecordButton.setGraphic(new ImageView(addRecordImage));
     }
 
     /**
@@ -145,11 +161,11 @@ public class AirlineTabController extends DataController {
 
     /**
      * Override the parent's abstract class as to return the new record FXML file relating to the Airline class.
-     * @return String the path to the newAirlineFXML file.
+     * @return String the path to the NEW_AIRLINE_FXML file.
      */
     @Override
     public String getNewRecordFXML() {
-        return Path.newAirlineFXML;
+        return Path.NEW_AIRLINE_FXML;
     }
 
     /**

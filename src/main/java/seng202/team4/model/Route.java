@@ -65,16 +65,16 @@ public class Route extends DataType {
     public String getInsertStatement(int setID) {
         return "INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'DISTANCE', 'SETID') "
                 + "VALUES ('"
-                + getAirlineCode().replaceAll("'", "''") + between
-                + getAirlineID() + between
-                + getSourceAirportCode().replaceAll("'", "''") + between
-                + getSourceAirportID() + between
-                + getDestinationAirportCode().replaceAll("'", "''") + between
-                + getDestinationAirportID() + between
-                + isCodeshare() + between
-                + getNumStops() + between
-                + getPlaneTypeCode().replaceAll("'", "''") + between
-                + getDistance() + between
+                + getAirlineCode().replaceAll("'", "''") + BETWEEN
+                + getAirlineID() + BETWEEN
+                + getSourceAirportCode().replaceAll("'", "''") + BETWEEN
+                + getSourceAirportID() + BETWEEN
+                + getDestinationAirportCode().replaceAll("'", "''") + BETWEEN
+                + getDestinationAirportID() + BETWEEN
+                + isCodeshare() + BETWEEN
+                + getNumStops() + BETWEEN
+                + getPlaneTypeCode().replaceAll("'", "''") + BETWEEN
+                + getDistance() + BETWEEN
                 + setID
                 + "');";
     }

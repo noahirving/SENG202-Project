@@ -20,7 +20,7 @@ public abstract class DatabaseManager {
     public static Connection connect() {
         try {
             Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection(Path.databaseConnection);
+            Connection c = DriverManager.getConnection(Path.DATABASE_CONNECTION);
             c.setAutoCommit(false);
             return c;
         } catch (SQLException | ClassNotFoundException e) {

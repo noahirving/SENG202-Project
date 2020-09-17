@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -25,6 +27,10 @@ public class MapTabController {
      * WebView that will host the Google Map.
      */
     @FXML private WebView googleMapView;
+    /**
+     * A button that refreshes comboboxes and map by calling init()
+     */
+    @FXML private Button refreshButton;
     /**
      * A radio container that contains the route and airport filter showing radio buttons.
      */
@@ -95,6 +101,8 @@ public class MapTabController {
      */
     @FXML
     public void initialize() {
+        Image refreshImage = new Image(getClass().getResourceAsStream(Path.REFRESH_BUTTON_PNG));
+        refreshButton.setGraphic(new ImageView(refreshImage));
         init();
     }
 
@@ -116,7 +124,7 @@ public class MapTabController {
      */
     private void initMap() {
         webEngine = googleMapView.getEngine();
-        webEngine.load(getClass().getResource(Path.mapRsc).toExternalForm());
+        webEngine.load(getClass().getResource(Path.MAP_RSC).toExternalForm());
     }
 
     /**
