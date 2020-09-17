@@ -29,10 +29,12 @@ public class Main {
         File airport = copyToFolder(Path.airportRsc);
         File airline = copyToFolder(Path.airlineRsc);
         File route = copyToFolder(Path.routeRsc);
+        File flightPath = copyToFolder(Path.flightPathRsc);
 
         DataLoader.uploadAirportData(airport);
         DataLoader.uploadAirlineData(airline);
         DataLoader.uploadRouteData(route);
+        DataLoader.uploadFlightPathData(flightPath);
     }
 
     public void deleteDB() {
@@ -73,7 +75,6 @@ public class Main {
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
 
-
             String airlineSetTable = "CREATE TABLE \"AirlineSet\" " + setTable;
             String airlineTable = "CREATE TABLE \"Airline\" (" +
                     "\"ID\" INTEGER NOT NULL UNIQUE," +
@@ -88,7 +89,6 @@ public class Main {
                     "FOREIGN KEY (SetID) REFERENCES AirlineSet (SetID)," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
-
 
             String airportSetTable = "CREATE TABLE \"AirportSet\" " + setTable;
             String airportTable = "CREATE TABLE \"Airport\" (" +
@@ -126,6 +126,20 @@ public class Main {
                     "FOREIGN KEY (SetID) REFERENCES RouteSet (SetID)," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
+
+            String flightPathSetTable = "CREATE TABLE \"FlightPathSet\" " + setTable;
+            String flightPathTable = "CREATE TABLE \"FlightPath\" (" +
+                    "\"ID\"\tINTEGER NOT NULL UNIQUE," +
+                    "\"Type\" STRING," +
+                    "\"FlightPathID\" INTEGER," +
+                    "\"Altitude\" INTEGER," +
+                    "\"Latitude\" DOUBLE," +
+                    "\"Longitude\" DOUBLE," +
+                    "\"SetID\" INTEGER NOT NULL," +
+                    "FOREIGN KEY (SetID) REFERENCES FlightPathSet (SetID)," +
+                    "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
+                    ")";
+
             String routesSelectedTable = "CREATE TABLE \"RoutesSelected\" (" +
                     "\"ID\"\tINTEGER NOT NULL UNIQUE," +
                     "\"Airline\" STRING," +
@@ -144,12 +158,17 @@ public class Main {
                     "\"Latitude\" DOUBLE," +
                     "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
                     ")";
+
             createNewTable(airlineSetTable);
             createNewTable(airportSetTable);
             createNewTable(routeSetTable);
+            createNewTable(flightPathSetTable);
+
             createNewTable(airlineTable);
             createNewTable(airportTable);
             createNewTable(routeTable);
+            createNewTable(flightPathTable);
+
             createNewTable(routesSelectedTable);
             createNewTable(airportsSelectedTable);
         }

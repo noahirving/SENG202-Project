@@ -30,6 +30,11 @@ public abstract class DataLoader {
         return uploadData("default", filePath, route);
     }
 
+    public static boolean uploadFlightPathData(File filePath) {
+        FlightPath flightPath = new FlightPath();
+        return uploadData("default", filePath, flightPath);
+    }
+
     public static Boolean uploadData(String name, File filePath, DataType dataType) {
         //makeSet(name);
         Connection c = DatabaseManager.connect();
