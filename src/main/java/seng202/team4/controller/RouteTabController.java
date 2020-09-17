@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import seng202.team4.Path;
 import seng202.team4.model.*;
 
@@ -50,7 +52,6 @@ public class RouteTabController extends DataController {
      * Plane type column of the raw data table.
      */
     @FXML private TableColumn<Route, String> planeTypeColumn;
-
     /**
      * Searchable combobox for filtering by airline code.
      */
@@ -79,6 +80,10 @@ public class RouteTabController extends DataController {
      * Text field used to search data table.
      */
     @FXML private TextField searchField;
+    /**
+     * Button that opens window to add new record.
+     */
+    @FXML private Button newRecordButton;
 
     /**
      * Mutable ObservableList containing Route objects.
@@ -107,10 +112,11 @@ public class RouteTabController extends DataController {
     private SortedList<Route> sortedRoute;
     /**
      * Holds the high level logic (set of instructions) for initialisation.
-     * Initialisation order: Sliders, Table Columns, Dataset Chooser ComboBox, Set Table
+     * Initialisation order: New Record Button, Sliders, Table Columns, Dataset Chooser ComboBox, Set Table
      */
     public void initialize() {
         try {
+            setNewRecordButton();
             initialiseColumns();
             setDataSetComboBox();
             initialiseSliders();
@@ -121,6 +127,13 @@ public class RouteTabController extends DataController {
             System.exit(0);
         }
 
+    }
+    /**
+     * Sets the shape of the new record button to circle and image to a green '+' icon.
+     */
+    private void setNewRecordButton() {
+        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.addRecordButtonPNG));
+        newRecordButton.setGraphic(new ImageView(addRecordImage));
     }
 
     /**

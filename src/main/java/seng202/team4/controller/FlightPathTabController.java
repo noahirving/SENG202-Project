@@ -5,11 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import seng202.team4.Path;
 import seng202.team4.model.Airline;
 import seng202.team4.model.DataType;
@@ -55,6 +54,10 @@ public class FlightPathTabController extends DataController {
      */
     @FXML private TextField searchField;
     /**
+     * Button that opens window to add new record.
+     */
+    @FXML private Button newRecordButton;
+    /**
      * Mutable ObservableLst containing a list of types.
      */
     private ObservableList<Airline> types = FXCollections.observableArrayList();
@@ -81,7 +84,7 @@ public class FlightPathTabController extends DataController {
 
     /**
      * Holds the high level logic (set of instructions) for initialisation.
-     * Initialisation order: Table Columns, Set DataSet ComboBox, Set DataSet Listener,
+     * Initialisation order: Record Button, Table Columns, Set DataSet ComboBox, Set DataSet Listener,
      * Set Table
      */
     @FXML
@@ -93,6 +96,7 @@ public class FlightPathTabController extends DataController {
         longitudeColumn.setCellValueFactory(new PropertyValueFactory<>("longitude"));
 
         try {
+            setNewRecordButton();
             setDataSetComboBox();
             setDataSetListener();
             setTable();
@@ -101,6 +105,14 @@ public class FlightPathTabController extends DataController {
             System.exit(0);
         }
 
+    }
+
+    /**
+     * Sets the shape of the new record button to circle and image to a green '+' icon.
+     */
+    private void setNewRecordButton() {
+        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.addRecordButtonPNG));
+        newRecordButton.setGraphic(new ImageView(addRecordImage));
     }
 
     /**

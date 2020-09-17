@@ -18,6 +18,10 @@ public abstract class Path {
     public static final String newRouteFXML = view + "/newRoute.fxml";
     public static final String newFlightPathFXML = view + "/newFlightPath.fxml";
 
+    public static final String refreshButtonPNG = view + "/images/refresh_icon.png";
+    public static final String addRecordButtonPNG = view + "/images/add_record_image.png";
+
+
     public static final String styleSheet = view +  "/styles.css";
 
     public static final String airlineRsc = "/airlines.dat";
