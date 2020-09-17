@@ -1,6 +1,7 @@
 package seng202.team4.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FlightPath extends DataType {
 
@@ -30,6 +31,7 @@ public class FlightPath extends DataType {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
     @Override
     public String getInsertStatement(int setID) {
             return "INSERT INTO FlightPath ('TYPE', 'FLIGHTPATHID', 'ALTITUDE', 'LATITUDE', 'LONGITUDE', 'SETID') "
@@ -102,6 +104,22 @@ public class FlightPath extends DataType {
         return getValid(type, id, altitude, latitude, longitude, errorMessage);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FlightPath)) return false;
+        FlightPath that = (FlightPath) o;
+        return getAltitude() == that.getAltitude() &&
+                Double.compare(that.getLatitude(), getLatitude()) == 0 &&
+                Double.compare(that.getLongitude(), getLongitude()) == 0 &&
+                getType().equals(that.getType()) &&
+                getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getType(), getId(), getAltitude(), getLatitude(), getLongitude());
+    }
 
     public String getType() {
         return type;
