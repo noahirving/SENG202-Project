@@ -4,6 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Route extends DataType {
 
@@ -61,6 +62,7 @@ public class Route extends DataType {
         this.numStops = stops;
         this.planeTypeCode = equipment;
     }
+
     @Override
     public String getInsertStatement(int setID) {
         return "INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'DISTANCE', 'SETID') "
@@ -79,7 +81,6 @@ public class Route extends DataType {
                 + "');";
     }
 
-
     @Override
     public DataType newDataType(String line) {
         return new Route(line);
@@ -90,13 +91,12 @@ public class Route extends DataType {
         return "Route";
     }
 
-
     @Override
     public String getSetName() {
         return "RouteSet";
     }
 
-    public static DataType getValid(String airline, String srcAirport, String dstAirport, String codeshare, String stops, String equipment, ArrayList<String> errorMessage) {
+    public static Route getValid(String airline, String srcAirport, String dstAirport, String codeshare, String stops, String equipment, ArrayList<String> errorMessage) {
         // TODO: Finish validating, get IDs
         boolean valid = true;
         if (!Validate.isAlphaNumeric(airline)) {
@@ -119,7 +119,7 @@ public class Route extends DataType {
             errorMessage.add("Invalid stops");
             valid = false;
         }
-        if (!Validate.isAlpha(equipment)) {
+        if (!Validate.isAlphaNumeric(equipment)) {
             errorMessage.add("Invalid equipment");
             valid = false;
         }
@@ -142,6 +142,24 @@ public class Route extends DataType {
         return getValid(airline, srcAirport, dstAirport, codeshare, stops, equipment, errorMessage);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Route)) return false;
+        Route route = (Route) o;
+        return isCodeshare() == route.isCodeshare() &&
+                getNumStops() == route.getNumStops() &&
+                getAirlineCode().equals(route.getAirlineCode()) &&
+                getSourceAirportCode().equals(route.getSourceAirportCode()) &&
+                getDestinationAirportCode().equals(route.getDestinationAirportCode()) &&
+                getPlaneTypeCode().equals(route.getPlaneTypeCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAirlineCode(), getSourceAirportCode(), getDestinationAirportCode(), isCodeshare(), getNumStops(), getPlaneTypeCode());
+    }
+
     public void setCarbonEmissions(double emissions) {
         this.carbonEmissions = emissions;
     }
@@ -149,7 +167,6 @@ public class Route extends DataType {
     public double getCarbonEmissions() {
         return carbonEmissions;
     }
-
 
     public int tryReturnInt(String intString) {
         try {
