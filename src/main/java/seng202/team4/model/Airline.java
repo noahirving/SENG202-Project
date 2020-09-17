@@ -1,6 +1,7 @@
 package seng202.team4.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Airline extends DataType {
 
@@ -74,7 +75,7 @@ public class Airline extends DataType {
 
     public static Airline getValid(String name, String code, String iata, String icao, String callSign, String country, String recentlyActive, ArrayList<String> errorMessage) {
         boolean valid = true;
-        //TODO: Add missing validation
+
         if (!Validate.isAlphaNumeric(name)) {
             errorMessage.add("Invalid name");
             valid = false;
@@ -83,11 +84,11 @@ public class Airline extends DataType {
             errorMessage.add("Invalid code");
             valid = false;
         }
-        if (!Validate.isAlphaNumeric(iata)) {
+        if (!Validate.isValidIATA(iata)) {
             errorMessage.add("Invalid IATA");
             valid = false;
         }
-        if (!Validate.isAlphaNumeric(icao)) {
+        if (!Validate.isValidICAO(icao)) {
             errorMessage.add("Invalid ICAO");
             valid = false;
         }
@@ -120,6 +121,26 @@ public class Airline extends DataType {
         String country = record[5];
         String recentlyActive = record[6];
         return getValid(name, code, iata, icao, callSign, country, recentlyActive, errorMessage);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Airline)) return false;
+        Airline airline = (Airline) o;
+        return getId() == airline.getId() &&
+                isRecentlyActive() == airline.isRecentlyActive() &&
+                getName().equals(airline.getName()) &&
+                getCode().equals(airline.getCode()) &&
+                getIata().equals(airline.getIata()) &&
+                getIcao().equals(airline.getIcao()) &&
+                getCallSign().equals(airline.getCallSign()) &&
+                getCountry().equals(airline.getCountry());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getCode(), getIata(), getIcao(), getCallSign(), getCountry(), isRecentlyActive());
     }
 
     public double calculateCarbonEmissions() {

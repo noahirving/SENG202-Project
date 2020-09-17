@@ -28,7 +28,7 @@ public interface Validate {
         } else if (string.equals("")) {
             return true; //for not assigned/unknown iata
         }
-        return string.matches("[a-zA-Z]{3}");
+        return string.matches("[a-zA-Z]{2,3}");
     }
 
     static boolean isValidICAO(String string) {
@@ -37,7 +37,7 @@ public interface Validate {
         } else if (string.equals("")) {
             return true; //for not assigned icao
         }
-        return string.matches("[a-zA-Z]{4}");
+        return string.matches("[a-zA-Z]{3,4}");
     }
 
     static boolean isValidTZDB(String string) {
