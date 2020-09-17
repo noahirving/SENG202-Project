@@ -50,9 +50,9 @@ public class HomePageController extends DataController {
      * @throws IOException caused by error in loading default database
      */
     public void loadDefault() throws IOException {
-        File airport = copyToFolder(Path.airportRsc);
-        File airline = copyToFolder(Path.airlineRsc);
-        File route = copyToFolder(Path.routeRsc);
+        File airport = copyToFolder(Path.AIRPORT_RSC);
+        File airline = copyToFolder(Path.AIRLINE_RSC);
+        File route = copyToFolder(Path.ROUTE_RSC);
 
         DataLoader.uploadAirportData(airport);
         DataLoader.uploadAirlineData(airline);
@@ -72,7 +72,7 @@ public class HomePageController extends DataController {
     public File copyToFolder(String filename) throws IOException {
 
         InputStream initialStream = (this.getClass().getResourceAsStream(filename));
-        File targetFile = new File(Path.directory + filename);
+        File targetFile = new File(Path.DIRECTORY + filename);
 
         java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return targetFile;

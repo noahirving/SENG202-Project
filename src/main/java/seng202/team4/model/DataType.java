@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public abstract class DataType implements Validate {
 
-    public static final String between = "', '";
+    public static final String BETWEEN = "', '";
     public abstract String getInsertStatement(int setID);
     public abstract DataType newDataType(String line);
     public abstract String getTypeName();

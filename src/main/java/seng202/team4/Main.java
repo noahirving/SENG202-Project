@@ -12,7 +12,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         //DataLoader loader = new DataLoader();
-
         Main m = new Main();
         m.createDirectory();
         m.deleteDB();
@@ -26,10 +25,10 @@ public class Main {
     }
 
     public void loadTest() throws IOException {
-        File airport = copyToFolder(Path.airportRsc);
-        File airline = copyToFolder(Path.airlineRsc);
-        File route = copyToFolder(Path.routeRsc);
-        File flightPath = copyToFolder(Path.flightPathRsc);
+        File airport = copyToFolder(Path.AIRPORT_RSC);
+        File airline = copyToFolder(Path.AIRLINE_RSC);
+        File route = copyToFolder(Path.ROUTE_RSC);
+        File flightPath = copyToFolder(Path.FLIGHT_PATH_RSC);
 
         DataLoader.uploadAirportData(airport);
         DataLoader.uploadAirlineData(airline);
@@ -40,7 +39,7 @@ public class Main {
     public void deleteDB() {
         try
         {
-            File file = new File(Path.database);
+            File file = new File(Path.DATABASE);
             if(file.delete()) {
                 System.out.println(file.getName() + " deleted");
             }
@@ -177,7 +176,7 @@ public class Main {
 
     public static void createNewTable(String table) {
 
-        try (Connection c = DriverManager.getConnection(Path.databaseConnection);
+        try (Connection c = DriverManager.getConnection(Path.DATABASE_CONNECTION);
              Statement stmt = c.createStatement()
         ) {
             stmt.execute(table);
@@ -191,14 +190,14 @@ public class Main {
     public File copyToFolder(String filename) throws IOException {
 
         InputStream initialStream = (this.getClass().getResourceAsStream(filename));
-        File targetFile = new File(Path.directory + filename);
+        File targetFile = new File(Path.DIRECTORY + filename);
 
         java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return targetFile;
     }
 
     public void createDirectory() {
-        File folder = new File(Path.directory);
+        File folder = new File(Path.DIRECTORY);
         if (!folder.exists()) {
             folder.mkdir();
         }

@@ -2,8 +2,6 @@ package seng202.team4.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -111,7 +109,7 @@ public class FlightPathTabController extends DataController {
      * Sets the shape of the new record button to circle and image to a green '+' icon.
      */
     private void setNewRecordButton() {
-        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.addRecordButtonPNG));
+        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
         newRecordButton.setGraphic(new ImageView(addRecordImage));
     }
 
@@ -150,11 +148,11 @@ public class FlightPathTabController extends DataController {
 
     /**
      * Override the parent's abstract class as to return the new record FXML file relating to the FlightPath class.
-     * @return String the path to the newFlightPathFXML file.
+     * @return String the path to the NEW_FLIGHT_PATH_FXML file.
      */
     @Override
     public String getNewRecordFXML() {
-        return Path.newFlightPathFXML;
+        return Path.NEW_FLIGHT_PATH_FXML;
     }
 
     /**

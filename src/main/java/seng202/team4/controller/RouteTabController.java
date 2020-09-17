@@ -132,7 +132,7 @@ public class RouteTabController extends DataController {
      * Sets the shape of the new record button to circle and image to a green '+' icon.
      */
     private void setNewRecordButton() {
-        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.addRecordButtonPNG));
+        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
         newRecordButton.setGraphic(new ImageView(addRecordImage));
     }
 
@@ -366,10 +366,10 @@ public class RouteTabController extends DataController {
 
     /**
      * Override the parent's abstract class as to return the new record FXML file relating to the Route class.
-     * @return String the path to the newRouteFXML file.
+     * @return String the path to the NEW_ROUTE_FXML file.
      */
     @Override
-    public String getNewRecordFXML() { return Path.newRouteFXML; }
+    public String getNewRecordFXML() { return Path.NEW_ROUTE_FXML; }
 
     /**
      * Returns the 'Route' datatype specifically used for this controller.

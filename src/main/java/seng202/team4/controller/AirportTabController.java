@@ -115,7 +115,7 @@ public class AirportTabController extends DataController {
      * Sets the shape of the new record button to circle and image to a green '+' icon.
      */
     private void setNewRecordButton() {
-        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.addRecordButtonPNG));
+        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
         newRecordButton.setGraphic(new ImageView(addRecordImage));
     }
 
@@ -225,11 +225,11 @@ public class AirportTabController extends DataController {
 
     /**
      * Override the parent's abstract class as to return the new record FXML file relating to the Airport class.
-     * @return String the path to the newAirportFXML file.
+     * @return String the path to the NEW_AIRPORT_FXML file.
      */
     @Override
     public String getNewRecordFXML() {
-        return Path.newAirportFXML;
+        return Path.NEW_AIRPORT_FXML;
     }
 
     /**

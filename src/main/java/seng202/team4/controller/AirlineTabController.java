@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Circle;
 import seng202.team4.Path;
 import seng202.team4.model.*;
 
@@ -92,7 +91,7 @@ public class AirlineTabController extends DataController {
      * Sets the shape of the new record button to circle and image to a green '+' icon.
      */
     private void setNewRecordButton() {
-        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.addRecordButtonPNG));
+        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
         newRecordButton.setGraphic(new ImageView(addRecordImage));
     }
 
@@ -162,11 +161,11 @@ public class AirlineTabController extends DataController {
 
     /**
      * Override the parent's abstract class as to return the new record FXML file relating to the Airline class.
-     * @return String the path to the newAirlineFXML file.
+     * @return String the path to the NEW_AIRLINE_FXML file.
      */
     @Override
     public String getNewRecordFXML() {
-        return Path.newAirlineFXML;
+        return Path.NEW_AIRLINE_FXML;
     }
 
     /**

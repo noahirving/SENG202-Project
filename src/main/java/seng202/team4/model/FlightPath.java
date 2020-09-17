@@ -1,8 +1,5 @@
 package seng202.team4.model;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-
 import java.util.ArrayList;
 
 public class FlightPath extends DataType {
@@ -37,11 +34,11 @@ public class FlightPath extends DataType {
     public String getInsertStatement(int setID) {
             return "INSERT INTO FlightPath ('TYPE', 'FLIGHTPATHID', 'ALTITUDE', 'LATITUDE', 'LONGITUDE', 'SETID') "
                 + "VALUES ('"
-                + getType().replaceAll("'", "''") + between
-                + getId() + between
-                + getAltitude() + between
-                + getLatitude() + between
-                + getLongitude() + between
+                + getType().replaceAll("'", "''") + BETWEEN
+                + getId() + BETWEEN
+                + getAltitude() + BETWEEN
+                + getLatitude() + BETWEEN
+                + getLongitude() + BETWEEN
                 + setID
                 + "');";
     }

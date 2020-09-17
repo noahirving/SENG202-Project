@@ -101,7 +101,7 @@ public class MapTabController {
      */
     @FXML
     public void initialize() {
-        Image refreshImage = new Image(getClass().getResourceAsStream(Path.refreshButtonPNG));
+        Image refreshImage = new Image(getClass().getResourceAsStream(Path.REFRESH_BUTTON_PNG));
         refreshButton.setGraphic(new ImageView(refreshImage));
         init();
     }
@@ -124,7 +124,7 @@ public class MapTabController {
      */
     private void initMap() {
         webEngine = googleMapView.getEngine();
-        webEngine.load(getClass().getResource(Path.mapRsc).toExternalForm());
+        webEngine.load(getClass().getResource(Path.MAP_RSC).toExternalForm());
     }
 
     /**
