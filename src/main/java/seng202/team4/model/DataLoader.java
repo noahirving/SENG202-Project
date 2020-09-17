@@ -9,12 +9,12 @@ import java.io.FileReader;
 import java.sql.*;
 
 /**
- * Initialises the DataLoader class by reading raw data files,
- * creating datatype classes, and adding them to a DataList class.
+ * Handles loading data into the database.
  */
 public abstract class DataLoader {
 
 
+    // TODO: remove these methods as #uploadData handles everything anyway and these are only used for development in the first place
     public static boolean uploadAirlineData(File file) {
         Airline airline = new Airline();
         return uploadData("default", file, airline);
