@@ -2,8 +2,8 @@ package seng202.team4.model;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Airport extends DataType {
 
@@ -54,9 +54,6 @@ public class Airport extends DataType {
         //this.source = airportArr[13];
     }
 
-    public Airport() {
-
-    }
     public Airport (String name, String city, String country, String iata, String icao, double latitude, double longitude, double altitude, float timeZone, char dst, String tzDatabase) {
         this.name = name;
         this.city = city;
@@ -69,6 +66,9 @@ public class Airport extends DataType {
         this.timezone = timeZone;
         this.dst = dst;
         this.tzDatabase = tzDatabase;
+    }
+
+    public Airport() {
     }
 
     public static Airport getValid(String name, String city, String country, String iata, String icao, String latitude, String longitude, String altitude, String timeZone, String dst, String tzDatabase, ArrayList<String> errorMessage) {
@@ -129,15 +129,12 @@ public class Airport extends DataType {
             valid = false;
         }
 
-
         if (valid) {
             return new Airport(name, city, country, iata, icao, Double.parseDouble(latitude), Double.parseDouble(longitude), Double.parseDouble(altitude), Float.parseFloat(timeZone), dstChar, tzDatabase);
         }
         else {
             return null;
         }
-
-
 
     }
 
@@ -191,6 +188,31 @@ public class Airport extends DataType {
         String tzDatabase = record[10];
 
         return getValid(name, city, country, iata, icao, latitude, longitude, altitude, timeZone, dst, tzDatabase, errorMessage);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Airport)) return false;
+        Airport airport = (Airport) o;
+        return getId() == airport.getId() &&
+                Double.compare(airport.getLatitude(), getLatitude()) == 0 &&
+                Double.compare(airport.getLongitude(), getLongitude()) == 0 &&
+                Double.compare(airport.getAltitude(), getAltitude()) == 0 &&
+                Float.compare(airport.getTimezone(), getTimezone()) == 0 &&
+                getDst() == airport.getDst() &&
+                getRouteNum() == airport.getRouteNum() &&
+                getName().equals(airport.getName()) &&
+                getCity().equals(airport.getCity()) &&
+                getCountry().equals(airport.getCountry()) &&
+                getIata().equals(airport.getIata()) &&
+                getIcao().equals(airport.getIcao()) &&
+                getTzDatabase().equals(airport.getTzDatabase());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getCity(), getCountry(), getIata(), getIcao(), getLatitude(), getLongitude(), getAltitude(), getTimezone(), getDst(), getTzDatabase(), getRouteNum());
     }
 
     public int getId() {
@@ -261,7 +283,7 @@ public class Airport extends DataType {
         this.altitude = altitude;
     }
 
-    public double getTimezone() {
+    public float getTimezone() {
         return timezone;
     }
 
