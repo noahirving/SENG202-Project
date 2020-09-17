@@ -20,11 +20,9 @@ public abstract class Path {
 
     public static final String styleSheet = view +  "/styles.css";
 
-    public static final String airlineRsc = "/airlines.txt";
-    public static final String airportRsc = "/airports.txt";
-    public static final String routeRsc = "/routes.txt";
+    public static final String airlineRsc = "/airlines.dat";
+    public static final String airportRsc = "/airports.dat";
+    public static final String routeRsc = "/routes.dat";
     public static final String flightPathRsc = "/NZCH-WSSS.csv";
     public static final String mapRsc = "/map.html";
-
-
 }
