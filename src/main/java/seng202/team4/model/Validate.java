@@ -47,4 +47,17 @@ public interface Validate {
         return string.matches("[a-zA-Z]+/[a-zA-Z_-]+");
     }
 
+    static boolean isValidTimeZone(String string) {
+        try {
+            double timezone = Double.parseDouble(string);
+            if (timezone >= -12 && timezone <= 14) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

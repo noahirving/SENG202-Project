@@ -106,7 +106,7 @@ public class Airport extends DataType {
             errorMessage.add("Invalid altitude");
             valid = false;
         }
-        if (!Validate.isNumeric(timeZone)) {
+        if (!Validate.isValidTimeZone(timeZone)) {
             errorMessage.add("Invalid time zone");
             valid = false;
         }

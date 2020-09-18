@@ -148,4 +148,29 @@ public class ValidateTest extends TestCase {
         String tzdb4 = null;
         assertFalse(Validate.isValidTZDB(tzdb4));
     }
+
+    public void testIsValidTimeZone1() {
+        String tz = "aa";
+        assertFalse(Validate.isValidTimeZone(tz));
+    }
+
+    public void testIsValidTimeZone2() {
+        String tz = "-13";
+        assertFalse(Validate.isValidTimeZone(tz));
+    }
+
+    public void testIsValidTimeZone3() {
+        String tz = "15";
+        assertFalse(Validate.isValidTimeZone(tz));
+    }
+
+    public void testIsValidTimeZone4() {
+        String tz = "3";
+        assertTrue(Validate.isValidTimeZone(tz));
+    }
+
+    public void testIsValidTimeZone5() {
+        String tz = null;
+        assertFalse(Validate.isValidTimeZone(tz));
+    }
 }
