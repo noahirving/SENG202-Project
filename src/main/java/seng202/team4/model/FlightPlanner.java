@@ -1,4 +1,4 @@
-package seng202.team4;
+package seng202.team4.model;
 
 import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONObject;

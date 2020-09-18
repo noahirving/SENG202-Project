@@ -2,7 +2,7 @@ package seng202.team4.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import seng202.team4.Path;
+import seng202.team4.model.Path;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
 

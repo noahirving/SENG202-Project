@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import seng202.team4.Path;
+import seng202.team4.model.Path;
 import seng202.team4.model.Airline;
 import seng202.team4.model.DataType;
 import seng202.team4.model.FlightPath;

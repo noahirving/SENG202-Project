@@ -1,7 +1,6 @@
-package seng202.team4;
+package seng202.team4.model;
 
-import seng202.team4.model.DataLoader;
-import seng202.team4.model.DatabaseManager;
+import seng202.team4.view.MainApplication;
 
 import java.io.*;
 import java.nio.file.StandardCopyOption;

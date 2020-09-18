@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import seng202.team4.Path;
+import seng202.team4.model.Path;
 import seng202.team4.model.DatabaseManager;
 
 import java.sql.*;

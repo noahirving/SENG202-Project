@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import seng202.team4.Path;
+import seng202.team4.model.Path;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
 import seng202.team4.model.DatabaseManager;

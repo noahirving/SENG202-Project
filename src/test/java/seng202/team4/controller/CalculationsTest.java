@@ -1,7 +1,7 @@
 package seng202.team4.controller;
 
 import org.junit.*;
-import seng202.team4.Main;
+import seng202.team4.model.Main;
 import seng202.team4.model.DatabaseManager;
 import seng202.team4.model.Route;
 

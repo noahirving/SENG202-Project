@@ -10,7 +10,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import seng202.team4.Path;
+import seng202.team4.model.Path;
 import seng202.team4.model.Airport;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;

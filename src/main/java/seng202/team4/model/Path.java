@@ -1,4 +1,4 @@
-package seng202.team4;
+package seng202.team4.model;
 
 public abstract class Path {
     public static final String DIRECTORY = System.getProperty("user.home") + "/flight_tracker";

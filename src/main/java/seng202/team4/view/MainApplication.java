@@ -1,4 +1,4 @@
-package seng202.team4;
+package seng202.team4.view;
 
 
 import javafx.application.Application;
@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import seng202.team4.model.Path;
 
 import java.io.IOException;
 
