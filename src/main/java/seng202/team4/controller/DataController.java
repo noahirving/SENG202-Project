@@ -103,7 +103,7 @@ public abstract class DataController {
         stage.setTitle("Upload file");
         stage.setMinHeight(290);
         stage.setMinWidth(720);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.VIEW + "/fileUpload.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.VIEW + Path.USER_INTERFACES + "/fileUpload.fxml"));
         stage.setScene(new Scene(loader.load(), 700, 250));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
