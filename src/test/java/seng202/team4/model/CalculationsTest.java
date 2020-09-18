@@ -1,4 +1,4 @@
-package seng202.team4.controller;
+package seng202.team4.model;
 
 import org.junit.*;
 import seng202.team4.model.Calculations;
