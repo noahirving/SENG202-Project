@@ -1,7 +1,5 @@
 package seng202.team4.model;
 
-import seng202.team4.controller.Calculations;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
