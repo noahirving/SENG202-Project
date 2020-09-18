@@ -36,10 +36,6 @@ import java.sql.ResultSet;
 public class EmissionsTabController extends DataController {
 
     /**
-     * Data type (Route) used for this controller
-     */
-    public Route dataType = new Route();
-    /**
      * Mutable ObservableList containing Route objects
      */
     private ObservableList<Route> selectedRoutes;

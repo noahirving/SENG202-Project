@@ -27,10 +27,6 @@ import java.sql.ResultSet;
 public class AirportTabController extends DataController {
 
     /**
-     * Data type (Route) used for this controller.
-     */
-    public Airport dataType = new Airport();
-    /**
      * TableView of the airport raw data table.
      */
     @FXML private TableView<Airport> dataTable;

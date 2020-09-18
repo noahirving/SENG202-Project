@@ -25,10 +25,6 @@ import java.sql.*;
 public class RouteTabController extends DataController {
 
     /**
-     * Data type (Route) used for this controller.
-     */
-    public Route dataType = new Route();
-    /**
      * TableView of the route raw data table.
      */
     @FXML private TableView<Route> dataTable;
