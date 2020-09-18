@@ -44,6 +44,7 @@ public abstract class NewRecord {
             dataSetNames.add(rs.getString("Name"));
         }
         comboBox.setItems(dataSetNames);
+        comboBox.setValue(dataSetNames.get(0));
         rs.close();
         stmt.close();
         DatabaseManager.disconnect(c);
