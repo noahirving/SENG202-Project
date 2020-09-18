@@ -55,7 +55,7 @@ public class EmissionsTabController extends DataController {
     /**
      * TableView of the selected routes raw data table
      */
-    @FXML TableView<Route> dataTable;
+    @FXML private TableView<Route> dataTable;
     /**
      * Airline code column of the raw data table
      */
