@@ -13,7 +13,6 @@ public class Airline extends DataType {
     private String callSign;
     private String country;
     private boolean recentlyActive;
-    private double carbonEmissions;
 
     public Airline(String airlineData) {
         String[] airlines = airlineData.replaceAll("\"", "").split(",");
@@ -25,7 +24,6 @@ public class Airline extends DataType {
         this.callSign = airlines[5];
         this.country = airlines[6];
         this.recentlyActive = airlines[7].equals("Y");
-        this.carbonEmissions = calculateCarbonEmissions();
     }
 
     public Airline() {
@@ -40,7 +38,6 @@ public class Airline extends DataType {
         this.callSign = callSign;
         this.country = country;
         this.recentlyActive = recentlyActive.equals("Y");
-        this.carbonEmissions = calculateCarbonEmissions();
     }
 
     @Override
@@ -137,10 +134,6 @@ public class Airline extends DataType {
                 getCountry().equals(airline.getCountry());
     }
 
-    public double calculateCarbonEmissions() {
-        return 0; // To be implemented
-    }
-
     // getters
     public int getId() {
         return id;
@@ -173,11 +166,6 @@ public class Airline extends DataType {
     public boolean isRecentlyActive() {
         return recentlyActive;
     }
-
-    public double getCarbonEmissions() {
-        return carbonEmissions;
-    }
-
 
     //setters
     public void setId(int id) {
@@ -212,7 +200,4 @@ public class Airline extends DataType {
         this.recentlyActive = recentlyActive;
     }
 
-    public void setCarbonEmissions(double carbonEmissions) {
-        this.carbonEmissions = carbonEmissions;
-    }
 }
