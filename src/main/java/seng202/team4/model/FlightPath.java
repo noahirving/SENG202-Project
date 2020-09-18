@@ -104,8 +104,7 @@ public class FlightPath extends DataType {
         return getValid(type, id, altitude, latitude, longitude, errorMessage);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean equalsTest(Object o) {
         if (this == o) return true;
         if (!(o instanceof FlightPath)) return false;
         FlightPath that = (FlightPath) o;
@@ -114,11 +113,6 @@ public class FlightPath extends DataType {
                 Double.compare(that.getLongitude(), getLongitude()) == 0 &&
                 getType().equals(that.getType()) &&
                 getId().equals(that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getType(), getId(), getAltitude(), getLatitude(), getLongitude());
     }
 
     public String getType() {

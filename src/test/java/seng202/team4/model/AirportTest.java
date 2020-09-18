@@ -98,14 +98,14 @@ public class AirportTest extends TestCase {
     public void testGetValid14() {
         Airport airport = new Airport();
         Airport newport = (Airport) airport.getValid(new String[]{"Thule Air Base","Thule","Greenland","THU","BGTL","76.531203","-68.703161","251","-4","E","America/Thule"}, new ArrayList<>());
-        assertTrue(newport.equals(new Airport("Thule Air Base","Thule","Greenland","THU","BGTL",76.531203,-68.703161,251,-4,'E',"America/Thule")));
+        assertTrue(newport.equalsTest(new Airport("Thule Air Base","Thule","Greenland","THU","BGTL",76.531203,-68.703161,251,-4,'E',"America/Thule")));
     }
 
     @Test
     public void testAirport() {
         Airport airport1 = new Airport("Thule Air Base","Thule","Greenland","THU","BGTL",76.531203,-68.703161,251,-4,'E',"America/Thule");
         Airport airport2 = new Airport("10,\"Thule Air Base\",\"Thule\",\"Greenland\",\"THU\",\"BGTL\",76.531203,-68.703161,251,-4,\"E\",\"America/Thule\"");
-        assertTrue(airport1.equals(airport2));
+        assertTrue(airport1.equalsTest(airport2));
     }
 
 }

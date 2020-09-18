@@ -190,8 +190,7 @@ public class Airport extends DataType {
         return getValid(name, city, country, iata, icao, latitude, longitude, altitude, timeZone, dst, tzDatabase, errorMessage);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean equalsTest(Object o) {
         if (this == o) return true;
         if (!(o instanceof Airport)) return false;
         Airport airport = (Airport) o;
@@ -208,11 +207,6 @@ public class Airport extends DataType {
                 getIata().equals(airport.getIata()) &&
                 getIcao().equals(airport.getIcao()) &&
                 getTzDatabase().equals(airport.getTzDatabase());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getCity(), getCountry(), getIata(), getIcao(), getLatitude(), getLongitude(), getAltitude(), getTimezone(), getDst(), getTzDatabase(), getRouteNum());
     }
 
     public int getId() {

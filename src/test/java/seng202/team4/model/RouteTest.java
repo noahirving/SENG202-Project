@@ -54,7 +54,7 @@ public class RouteTest extends TestCase {
     public void testGetValid7() {
         Route route = new Route();
         Route newroute = (Route) route.getValid(new String[]{"BA","SIN","MEL","Y","0","744"}, new ArrayList<>());
-        assertTrue(newroute.equals(new Route("BA,1355,SIN,3316,MEL,3339,Y,0,744")));
+        assertTrue(newroute.equalsTest(new Route("BA,1355,SIN,3316,MEL,3339,Y,0,744")));
     }
 
 }

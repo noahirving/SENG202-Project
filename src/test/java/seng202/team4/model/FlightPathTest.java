@@ -48,7 +48,7 @@ public class FlightPathTest extends TestCase {
     public void testGetValid7() {
         FlightPath path = new FlightPath();
         FlightPath newpath = (FlightPath) path.getValid(new String[]{"FIX","ATMAP","35000","-12","118.25"}, new ArrayList<>());
-        assertTrue(newpath.equals(new FlightPath("FIX","ATMAP",35000,-12,118.25)));
+        assertTrue(newpath.equalsTest(new FlightPath("FIX","ATMAP",35000,-12,118.25)));
     }
 
 }

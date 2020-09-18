@@ -142,8 +142,7 @@ public class Route extends DataType {
         return getValid(airline, srcAirport, dstAirport, codeshare, stops, equipment, errorMessage);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean equalsTest(Object o) {
         if (this == o) return true;
         if (!(o instanceof Route)) return false;
         Route route = (Route) o;
@@ -153,11 +152,6 @@ public class Route extends DataType {
                 getSourceAirportCode().equals(route.getSourceAirportCode()) &&
                 getDestinationAirportCode().equals(route.getDestinationAirportCode()) &&
                 getPlaneTypeCode().equals(route.getPlaneTypeCode());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getAirlineCode(), getSourceAirportCode(), getDestinationAirportCode(), isCodeshare(), getNumStops(), getPlaneTypeCode());
     }
 
     public void setCarbonEmissions(double emissions) {

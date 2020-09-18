@@ -123,8 +123,7 @@ public class Airline extends DataType {
         return getValid(name, code, iata, icao, callSign, country, recentlyActive, errorMessage);
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean equalsTest(Object o) {
         if (this == o) return true;
         if (!(o instanceof Airline)) return false;
         Airline airline = (Airline) o;
@@ -136,11 +135,6 @@ public class Airline extends DataType {
                 getIcao().equals(airline.getIcao()) &&
                 getCallSign().equals(airline.getCallSign()) &&
                 getCountry().equals(airline.getCountry());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getCode(), getIata(), getIcao(), getCallSign(), getCountry(), isRecentlyActive());
     }
 
     public double calculateCarbonEmissions() {
