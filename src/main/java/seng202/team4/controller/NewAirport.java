@@ -20,9 +20,6 @@ public class NewAirport extends NewRecord {
     public TextField timeZoneField;
     public TextField dstField;
     public TextField tzDatabaseField;
-    public ComboBox setComboBox;
-    public Stage stage;
-    public DataController controller;
 
     @Override
     public String[] getRecordData() {
