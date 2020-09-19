@@ -27,10 +27,10 @@ public class Main {
         File route = copyToFolder(Path.ROUTE_RSC);
         File flightPath = copyToFolder(Path.FLIGHT_PATH_RSC);
 
-        DataLoader.uploadAirportData(airport);
-        DataLoader.uploadAirlineData(airline);
-        DataLoader.uploadRouteData(route);
-        DataLoader.uploadFlightPathData(flightPath);
+        DataLoader.uploadData("Default", airline, new Airline());
+        DataLoader.uploadData("Default", airport, new Airport());
+        DataLoader.uploadData("Default", route, new Route());
+        DataLoader.uploadData("Default", flightPath, new FlightPath());
     }
 
     public void deleteDB() {

@@ -10,28 +10,6 @@ import java.sql.*;
  */
 public abstract class DataLoader {
 
-
-    // TODO: remove these methods as #uploadData handles everything anyway and these are only used for development in the first place
-    public static boolean uploadAirlineData(File file) {
-        Airline airline = new Airline();
-        return uploadData("default", file, airline);
-    }
-
-    public static boolean uploadAirportData(File file) {
-        Airport airport = new Airport();
-        return uploadData("default", file, airport);
-    }
-
-    public static boolean uploadRouteData(File file) {
-        Route route = new Route();
-        return uploadData("default", file, route);
-    }
-
-    public static boolean uploadFlightPathData(File file) {
-        FlightPath flightPath = new FlightPath();
-        return uploadData("default", file, flightPath);
-    }
-
     /**
      * Uploads data to the database from a file of a specific dataType with a name for the new set of data.
      * @param setName   the name of the new set of data.
@@ -48,11 +26,7 @@ public abstract class DataLoader {
                 String setInsertStatement = "INSERT INTO " + dataType.getSetName() + " ('NAME') VALUES ('" + setName + "');";
                 stmt.executeUpdate(setInsertStatement);
 
-                // Gets the ID of the new set.
-                String idQuery = "SELECT ID FROM " + dataType.getSetName() + " WHERE Name = '" + setName + "';";
-                ResultSet rs = stmt.executeQuery(idQuery);
-                rs.next();
-                int setID = rs.getInt("ID");
+                int setID = getSetID(setName, dataType, stmt);
 
                 // Reads lines from file and adds valid lines to statement batch
                 BufferedReader buffer = new BufferedReader(new FileReader(file));
@@ -91,12 +65,7 @@ public abstract class DataLoader {
         if (c != null) {
             Statement stmt = DatabaseManager.getStatement(c);
             try {
-                // Gets the ID of the set of the given name.
-                // TODO: repeated from #uploadData, create own function
-                String setIdQuery = "SELECT ID FROM " + dataType.getSetName() + " WHERE Name = '" + setName + "';";
-                ResultSet rs = stmt.executeQuery(setIdQuery);
-                rs.next();
-                int setID = rs.getInt("ID");
+                int setID = getSetID(setName, dataType, stmt);
 
                 // Inserts the new record into the database
                 stmt.executeUpdate(dataType.getInsertStatement(setID));
@@ -113,6 +82,21 @@ public abstract class DataLoader {
             }
         }
         return false;
+    }
+
+    /**
+     * Gets the ID of a set given the sets name and what data type it is.
+     * @param setName the name of the set.
+     * @param dataType the data type of the set.
+     * @param stmt the statement used to to execute the query.
+     * @return the ID of the set.
+     * @throws SQLException
+     */
+    private static int getSetID(String setName, DataType dataType, Statement stmt) throws SQLException{
+        String setIdQuery = "SELECT ID FROM " + dataType.getSetName() + " WHERE Name = '" + setName + "';";
+        ResultSet rs = stmt.executeQuery(setIdQuery);
+        rs.next();
+        return rs.getInt("ID");
     }
 
     public static void addToRoutesSelectedDatabase(Route route) {
