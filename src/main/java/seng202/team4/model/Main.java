@@ -10,10 +10,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
+        deleteDatabase();
         DatabaseManager.setUp();
 
         Main m = new Main();
-        m.loadTest();
+        m.loadDefaultData();
 
         MainApplication.main(args);
 
@@ -21,7 +22,8 @@ public class Main {
         //fp.searchFlight();
     }
 
-    public void loadTest() throws IOException {
+    public void loadDefaultData() throws IOException {
+        // TODO: Check that default data is not already in database (temporary fix is deleting the database everytime).
         File airport = copyToFolder(Path.AIRPORT_RSC);
         File airline = copyToFolder(Path.AIRLINE_RSC);
         File route = copyToFolder(Path.ROUTE_RSC);
@@ -33,12 +35,12 @@ public class Main {
         DataLoader.uploadData("Default", flightPath, new FlightPath());
     }
 
-    public void deleteDB() {
+    public static void deleteDatabase() {
         try
         {
             File file = new File(Path.DATABASE);
             if(file.delete()) {
-                System.out.println(file.getName() + " deleted");
+                System.out.println("Database deleted");
             }
             else {
                 System.out.println("Delete failed");
@@ -51,10 +53,17 @@ public class Main {
         }
     }
 
-    public File copyToFolder(String filename) throws IOException {
+    /**
+     * Copies the provided file to a target file.
+     *
+     * @param fileName String name of source file
+     * @return File the final file with the source files contents
+     * @throws IOException if an exception occurs during the copy operation
+     */
+    public File copyToFolder(String fileName) throws IOException {
 
-        InputStream initialStream = (this.getClass().getResourceAsStream(filename));
-        File targetFile = new File(Path.DIRECTORY + filename);
+        InputStream initialStream = (this.getClass().getResourceAsStream(fileName));
+        File targetFile = new File(Path.DIRECTORY + fileName);
 
         java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return targetFile;

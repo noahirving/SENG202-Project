@@ -27,7 +27,7 @@ public class CalculationsTest {
     public static void setup() throws Exception {
         DatabaseManager.setUp();
         Main m = new Main();
-        m.loadTest();
+        m.loadDefaultData();
 
         con = DatabaseManager.connect();
     }
@@ -35,6 +35,7 @@ public class CalculationsTest {
     @AfterClass
     public static void teardown() throws Exception {
         rs.close();
+        Main.deleteDatabase();
         DatabaseManager.disconnect(con);
     }
 
