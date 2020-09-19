@@ -16,6 +16,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * Abstract class defining common functionality between
+ * the controllers used for adding new records.
+ */
 abstract class NewRecord {
 
     @FXML
@@ -27,6 +31,13 @@ abstract class NewRecord {
 
     abstract String[] getRecordData();
 
+    /**
+     * Initial set up for the controller, declares the stage
+     * the controller is running on and the controller that
+     * called it.
+     * @param stage stage the controller is running on.
+     * @param controller controller that called it.
+     */
     void setUp(Stage stage, DataController controller) {
         this.controller = controller;
         this.stage = stage;
@@ -37,6 +48,11 @@ abstract class NewRecord {
         }
     }
 
+    /**
+     * Sets the data set names int the dataset comboBox.
+     * @param comboBox the comboBox the names are set in.
+     * @throws Exception
+     */
     //TODO: Essentially the same as the function from DataController, a more efficient implementation would be preferred
     private void setDataSetComboBox(ComboBox comboBox) throws Exception{
         Connection c = DatabaseManager.connect();
@@ -53,12 +69,18 @@ abstract class NewRecord {
         DatabaseManager.disconnect(c);
     }
 
+    /**
+     * Closes the stage and adds the record to the database if
+     * the record was valid, otherwise an error message is shown
+     * to the user.
+     * @throws Exception
+     */
     @FXML
-    private void confirm(ActionEvent actionEvent) throws Exception {
+    private void confirm() throws Exception {
         ArrayList<String> errorMessage = new ArrayList<String>();
         String[] recordData = getRecordData();
         DataType record = controller.getDataType().getValid(recordData, errorMessage);
-        if (record == null) {
+        if (record == null) { // If the record is null display the error message if it exists
             if (errorMessage.size() > 0) {
                 errorText.setText(errorMessage.get(0));
                 errorText.setVisible(true);
@@ -67,7 +89,7 @@ abstract class NewRecord {
                 System.out.println(s);
             }
         }
-        else {
+        else { // Otherwise add the new record to the database
             String setName = setComboBox.getValue().toString();
             DataLoader.addNewRecord(record, setName);
             controller.setTable();
@@ -75,8 +97,11 @@ abstract class NewRecord {
         }
     }
 
+    /**
+     * Closes the stage.
+     */
     @FXML
-    private void cancel(ActionEvent actionEvent) {
+    private void cancel() {
         stage.close();
     }
 }
