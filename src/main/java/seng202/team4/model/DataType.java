@@ -48,4 +48,6 @@ public abstract class DataType implements Validate {
      * @return a valid new dataType, 'null' if invalid.
      */
     public abstract DataType getValid(String[] record, ArrayList<String> errorMessage);
+    public abstract DataType getValid(String record, ArrayList<String> errorMessage);
+
 }

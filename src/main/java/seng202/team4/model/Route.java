@@ -3,6 +3,7 @@ package seng202.team4.model;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -25,11 +26,11 @@ public class Route extends DataType {
     public Route(String routeInfo) {
         String[] routeArray = routeInfo.split(",");
         this.airlineCode = routeArray[0];
-        this.airlineID = tryReturnInt(routeArray[1]);
+        //this.airlineID = tryReturnInt(routeArray[1]);
         this.sourceAirportCode = routeArray[2];
-        this.sourceAirportID = tryReturnInt(routeArray[3]);
+        //this.sourceAirportID = tryReturnInt(routeArray[3]);
         this.destinationAirportCode = routeArray[4];
-        this.destinationAirportID = tryReturnInt(routeArray[5]);
+        //this.destinationAirportID = tryReturnInt(routeArray[5]);
         this.codeshare = routeArray[6].equals("Y");
         try {
             this.numStops = Integer.parseInt(routeArray[7]);
@@ -135,15 +136,15 @@ public class Route extends DataType {
     public static Route getValid(String airline, String srcAirport, String dstAirport, String codeshare, String stops, String equipment, ArrayList<String> errorMessage) {
         // TODO: Finish validating, get IDs
         boolean valid = true;
-        if (!Validate.isAlphaNumeric(airline)) {
+        if (!Validate.isAirlineIATA(airline) && !Validate.isAirlineICAO(airline)) {
             errorMessage.add("Invalid airline");
             valid = false;
         }
-        if (!Validate.isAlphaNumeric(srcAirport)) {
+        if (!Validate.isAirportIATA(srcAirport) && !Validate.isAirportICAO(srcAirport)) {
             errorMessage.add("Invalid source airport");
             valid = false;
         }
-        if (!Validate.isAlphaNumeric(dstAirport)) {
+        if (!Validate.isAirportIATA(dstAirport) && !Validate.isAirportICAO(dstAirport)) {
             errorMessage.add("Invalid destination airport");
             valid = false;
         }
@@ -151,7 +152,7 @@ public class Route extends DataType {
             errorMessage.add("Invalid codeshare");
             valid = false;
         }
-        if (!Validate.isNumeric(stops)) {
+        if (!Validate.isInterger(stops)) {
             errorMessage.add("Invalid stops");
             valid = false;
         }
@@ -182,6 +183,22 @@ public class Route extends DataType {
         String stops = record[4];
         String equipment = record[5];
         return getValid(airline, srcAirport, dstAirport, codeshare, stops, equipment, errorMessage);
+    }
+
+    public DataType getValid(String record, ArrayList<String> errorMessage) {
+        String[] recordList = record.replaceAll("\"", "").split(",");
+        if (recordList.length == 9) {
+            recordList = new String[] {recordList[0], recordList[2], recordList[4], recordList[6], recordList[7], recordList[8]};
+            return getValid(recordList, errorMessage);
+        }
+        else if (recordList.length == 8) {
+            recordList = new String[]{recordList[0], recordList[2], recordList[4], recordList[6], recordList[7], ""};
+            return getValid(recordList, errorMessage);
+        }
+        else {
+            errorMessage.add("Invalid number of attributes");
+            return null;
+        }
     }
 
     public boolean equalsTest(Object o) {

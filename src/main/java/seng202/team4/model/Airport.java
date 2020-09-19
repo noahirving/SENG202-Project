@@ -3,6 +3,7 @@ package seng202.team4.model;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Airport extends DataType {
@@ -154,36 +155,38 @@ public class Airport extends DataType {
      */
     public static Airport getValid(String name, String city, String country, String iata, String icao, String latitude, String longitude, String altitude, String timeZone, String dst, String tzDatabase, ArrayList<String> errorMessage) {
         boolean valid = true;
-        if (!Validate.isAlphaNumeric(name)) {
+        if (!name.matches("^\\p{ASCII}+$")) {
             errorMessage.add("Invalid name");
             valid = false;
         }
-        if (!Validate.isAlpha(city)) {
+        if (!city.matches("^\\p{ASCII}+$")) {
             errorMessage.add("Invalid city");
             valid = false;
         }
-        if (!Validate.isAlpha(country)) {
+        if (!country.matches("^\\p{ASCII}+$")) {
             errorMessage.add("Invalid country");
             valid = false;
         }
-        if (!Validate.isValidIATA(iata)) {
+        if (!Validate.isAirportIATA(iata)) {
             errorMessage.add("Invalid IATA");
+            System.out.println(iata);
             valid = false;
         }
-        if (!Validate.isValidICAO(icao)) {
+        if (!Validate.isAirportICAO(icao)) {
+            System.out.println(icao);
             errorMessage.add("Invalid ICAO");
             valid = false;
         }
 
-        if (!Validate.isNumeric(latitude)) {
+        if (!Validate.isFloat(latitude)) {
             errorMessage.add("Invalid latitude");
             valid = false;
         }
-        if (!Validate.isNumeric(longitude)) {
+        if (!Validate.isFloat(longitude)) {
             errorMessage.add("Invalid longitude");
             valid = false;
         }
-        if (!Validate.isNumeric(altitude)) {
+        if (!Validate.isInterger(altitude)) {
             errorMessage.add("Invalid altitude");
             valid = false;
         }
@@ -240,6 +243,16 @@ public class Airport extends DataType {
         String tzDatabase = record[10];
 
         return getValid(name, city, country, iata, icao, latitude, longitude, altitude, timeZone, dst, tzDatabase, errorMessage);
+    }
+
+    public DataType getValid(String record, ArrayList<String> errorMessage) {
+        String[] recordList = record.replaceAll("\"", "").split(",");
+        if (recordList.length != 12) {
+            errorMessage.add("Invalid number of attributes");
+            return null;
+        }
+        recordList = Arrays.copyOfRange(recordList, 1, 12);
+        return getValid(recordList, errorMessage);
     }
 
     public boolean equalsTest(Object o) {

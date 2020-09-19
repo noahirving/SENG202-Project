@@ -74,15 +74,15 @@ public class FlightPath extends DataType {
             errorMessage.add("Invalid ID");
             valid = false;
         }
-        if (!Validate.isNumeric(altitude)) {
+        if (!Validate.isInterger(altitude)) {
             errorMessage.add("Invalid altitude");
             valid = false;
         }
-        if (!Validate.isNumeric(latitude)) {
+        if (!Validate.isFloat(latitude)) {
             errorMessage.add("Invalid latitude");
             valid = false;
         }
-        if (!Validate.isNumeric(longitude)) {
+        if (!Validate.isFloat(longitude)) {
             errorMessage.add("Invalid longitude");
             valid = false;
         }
@@ -102,6 +102,15 @@ public class FlightPath extends DataType {
         String latitude = record[3];
         String longitude = record[4];
         return getValid(type, id, altitude, latitude, longitude, errorMessage);
+    }
+
+    public DataType getValid(String record, ArrayList<String> errorMessage) {
+        String[] recordList = record.replaceAll("\"", "").split(",");
+        if (recordList.length != 5) {
+            errorMessage.add("Invalid number of attributes");
+            return null;
+        }
+        return getValid(recordList, errorMessage);
     }
 
     public boolean equalsTest(Object o) {

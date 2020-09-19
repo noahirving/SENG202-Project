@@ -1,6 +1,7 @@
 package seng202.team4.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Airline extends DataType {
@@ -116,15 +117,15 @@ public class Airline extends DataType {
             errorMessage.add("Invalid name");
             valid = false;
         }
-        if (!Validate.isAlphaNumeric(code)) {
+        if (!Validate.isAlphaNumeric(code) && !code.equals("\\N")) {
             errorMessage.add("Invalid code");
             valid = false;
         }
-        if (!Validate.isValidIATA(iata)) {
+        if (!Validate.isAirlineIATA(iata)) {
             errorMessage.add("Invalid IATA");
             valid = false;
         }
-        if (!Validate.isValidICAO(icao)) {
+        if (!Validate.isAirlineICAO(icao)) {
             errorMessage.add("Invalid ICAO");
             valid = false;
         }
@@ -164,6 +165,16 @@ public class Airline extends DataType {
         String country = record[5];
         String recentlyActive = record[6];
         return getValid(name, code, iata, icao, callSign, country, recentlyActive, errorMessage);
+    }
+
+    public DataType getValid(String record, ArrayList<String> errorMessage) {
+        String[] recordList = record.replaceAll("\"", "").split(",");
+        if (recordList.length != 8) {
+            errorMessage.add("Invalid number of attributes");
+            return null;
+        }
+        recordList = Arrays.copyOfRange(recordList, 1, 8);
+        return getValid(recordList, errorMessage);
     }
 
     public boolean equalsTest(Object o) {

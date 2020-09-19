@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Handles loading data into the database.
@@ -32,8 +33,21 @@ public abstract class DataLoader {
                 BufferedReader buffer = new BufferedReader(new FileReader(file));
                 String line = buffer.readLine();
                 while (line != null && line.trim().length() > 0) {
-                    DataType data = dataType.newDataType(line); // TODO: Replace with getValid
-                    stmt.addBatch(data.getInsertStatement(setID));
+                    ArrayList<String> errorMessage = new ArrayList<String>();
+                    DataType data = dataType.getValid(line, errorMessage);
+                    if (data != null) {
+                        stmt.addBatch(data.getInsertStatement(setID));
+                    }
+                    else {
+                        if (errorMessage.size() > 0) {
+                            System.out.println(dataType.getTypeName());
+                            System.out.println(line);
+                            System.out.println(errorMessage.get(0) + "\n\n");
+                        }/*
+                        System.out.println(dataType.getTypeName());
+                        System.out.println(line);
+                        System.out.print("error\n");*/
+                    }
                     line = buffer.readLine();
                 }
 

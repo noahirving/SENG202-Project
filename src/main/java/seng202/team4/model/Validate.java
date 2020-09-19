@@ -1,11 +1,20 @@
 package seng202.team4.model;
 
 public interface Validate {
-    static boolean isNumeric(String string) {
+    static final String NULL = "\\N";
+
+    static boolean isFloat(String string) {
         if (string == null) {
             return false;
         }
         return string.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    static boolean isInterger(String string) {
+        if (string == null) {
+            return false;
+        }
+        return string.matches("-?\\d+");
     }
 
     static boolean isAlpha(String string) {
@@ -19,32 +28,41 @@ public interface Validate {
         if (string == null) {
             return false;
         }
-        return string.matches("[A-Za-z0-9][A-Za-z0-9\\s]*");
+        return string.matches("[A-Za-z0-9\\s]*");
     }
 
-    static boolean isValidIATA(String string) {
+    static boolean isAirportIATA(String string) {
         if (string == null) {
             return false;
-        } else if (string.equals("")) {
-            return true; //for not assigned/unknown iata
         }
-        return string.matches("[a-zA-Z]{2,3}");
+        return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9]{3}");
     }
 
-    static boolean isValidICAO(String string) {
+    static boolean isAirportICAO(String string) {
         if (string == null) {
             return false;
-        } else if (string.equals("")) {
-            return true; //for not assigned icao
         }
-        return string.matches("[a-zA-Z]{3,4}");
+        return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9]{4}");
     }
 
+    static boolean isAirlineIATA(String string) {
+        if (string == null) {
+            return false;
+        }
+        return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9]{2}");
+    }
+
+    static boolean isAirlineICAO(String string) {
+        if (string == null) {
+            return false;
+        }
+        return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9]{3}");
+    }
     static boolean isValidTZDB(String string) {
         if (string == null) {
             return false;
         }
-        return string.matches("[a-zA-Z]+/[a-zA-Z_-]+");
+        return string.matches("[a-zA-Z]+/[a-zA-Z_-]+") || string.equals(NULL);
     }
 
     static boolean isValidTimeZone(String string) {
@@ -59,5 +77,7 @@ public interface Validate {
             return false;
         }
     }
-
+    static boolean isAsciiOrNull(String string) {
+        return string.equals(NULL) || string.matches("^\\p{ASCII}*$");
+    }
 }
