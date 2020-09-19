@@ -25,7 +25,7 @@
             <Insets right="250.0" />
          </GridPane.margin>
       </Text>
-      <TextField fx:id="nameField" maxWidth="250.0" onKeyTyped="#getName" GridPane.halignment="CENTER">
+      <TextField fx:id="nameField" maxWidth="250.0" GridPane.halignment="CENTER">
          <GridPane.margin>
             <Insets left="100.0" />
          </GridPane.margin>

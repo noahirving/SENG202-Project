@@ -10,40 +10,53 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+ * Controller used for uploading datasets
+ * to the application.
+ */
 public class FileUploadController {
 
     @FXML private TextField nameField;
     @FXML private Text filePath;
     @FXML private Label errorText;
-    private String name;
     private File file;
     private DataController controller;
-    private Stage ownerStage;
+    private Stage stage;
 
-    public void setDataController(DataController controller) {
+    /**
+     * Initial setup of the controller, sets the stage
+     * of the scene and the controller that called it.
+     * @param controller the controller that opened the stage.
+     * @param stage the stage.
+     */
+    public void setUp(DataController controller, Stage stage) {
         this.controller = controller;
+        this.stage = stage;
     }
 
-    public void setOwnerStage(Stage ownerStage) {
-        this.ownerStage = ownerStage;
-    }
-
-    public void getName() {
+    /**
+     * Gets the name of the data set from the name field.
+     * @return the name in the name field, otherwise null if invalid.
+     */
+    private String getName() {
         String name = nameField.getText().trim();
         if (!name.isBlank() && !name.toLowerCase().equals(DataController.ALL.toLowerCase())) { // Name doesn't equal keyword All
-            this.name = name;
+            return name;
         }
         else {
-            this.name = null;
+            return null;
         }
     }
 
+    /**
+     * Launches a file explorer to get the file from the user.
+     */
     public void getFile() {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter(".DAT, .CSV or .TXT files", "*.dat", "*.csv", "*.txt")
         );
-        File f = fc.showOpenDialog(ownerStage);
+        File f = fc.showOpenDialog(stage);
         if (f != null) {
             file = f;
             filePath.setText(file.toString());
@@ -51,11 +64,19 @@ public class FileUploadController {
         }
     }
 
+    /**
+     * Closes the stage.
+     */
     public void cancel() {
-        ownerStage.close();
+        stage.close();
     }
 
+    /**
+     * If dataset name is valid and file is chosen attempts to
+     * upload file and closes stage.
+     */
     public void confirm() {
+        String name = getName();
         if (name == null) {
             errorText.setText("*Pick a name");
         } else if (file == null) {
@@ -65,10 +86,7 @@ public class FileUploadController {
         } else {
             System.out.println("Confirmed");
             controller.newData(name, file);
-            ownerStage.close();
+            stage.close();
         }
-
     }
-
-
 }

@@ -19,6 +19,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+/**
+ * Describes the required functionality of
+ * all the controllers that display tables
+ * of data in their scene.
+ */
 public abstract class DataController {
 
     public abstract DataType getDataType();
@@ -27,7 +32,8 @@ public abstract class DataController {
     public abstract void initialiseComboBoxes();
     public abstract void filterData();
     public abstract String getNewRecordFXML();
-    @FXML private ComboBox dataSetComboBox;
+    @FXML
+    private ComboBox dataSetComboBox;
     public final static String ALL = "All";
 
 
@@ -44,43 +50,65 @@ public abstract class DataController {
         });
     }
 
+    /**
+     * Displays the data set names in the data set
+     * combo box.
+     * @throws Exception
+     */
     public void setDataSetComboBox() throws Exception{
+        // Connects to the database and gets the names of the data sets.
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
         ResultSet rs = stmt.executeQuery("Select Name from " + getDataType().getSetName());
+        // Creates a list to store the keyword ALL in and the names.
         ObservableList<String> dataSetNames = FXCollections.observableArrayList();
         dataSetNames.add(ALL);
         while (rs.next()) {
             dataSetNames.add(rs.getString("Name"));
         }
-        dataSetComboBox.setItems(dataSetNames);
+        dataSetComboBox.setItems(dataSetNames); // Sets the names into the combo box
+        // Closes the database
         rs.close();
         stmt.close();
         DatabaseManager.disconnect(c);
     }
 
-    public void setDataSet(String dataSetName) throws Exception{
+    /**
+     * Sets the dataset displayed in the table.
+     * @param dataSetName name of the dataset.
+     * @throws Exception
+     */
+    public void setDataSet(String dataSetName) throws Exception {
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
+
         String query = "Select * from " + getDataType().getTypeName() + " ";
+        // If dataset name is not equal to keyword all, gets dataset matching name.
         if (dataSetName != ALL) {
             String idQuery = "Select ID from " + getDataType().getSetName() + " Where Name = '" + dataSetName + "';";
             ResultSet rs = stmt.executeQuery(idQuery);
-            rs.next(); // Need to check no null
+            rs.next(); // TODO: Need to check no null
 
             query +=  "WHERE SetID = '" + rs.getInt("ID") + "'";
         }
-        System.out.println(query);
         setTable(query);
-        System.out.println("Table updated");
         stmt.close();
         DatabaseManager.disconnect(c);
     }
 
+    /**
+     * Sets the table with all data of the table's datatype.
+     * @throws Exception
+     */
     public void setTable() throws Exception {
         setTable(getTableQuery());
     }
 
+    /**
+     * Sets the table using the query provided.
+     * @param query specifications for the content of the table.
+     * @throws Exception
+     */
     public void setTable(String query) throws Exception {
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
@@ -98,9 +126,13 @@ public abstract class DataController {
         }
     }
 
+    /**
+     * Launches a new stage for uploading data.
+     * @throws IOException
+     */
     public void uploadData() throws IOException {
         Stage stage = new Stage();
-        stage.setTitle("Upload file");
+        stage.setTitle("Upload " + getDataType().getTypeName() + " Data");
         stage.setMinHeight(290);
         stage.setMinWidth(720);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.VIEW + Path.USER_INTERFACES + "/fileUpload.fxml"));
@@ -108,10 +140,14 @@ public abstract class DataController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
         FileUploadController controller = loader.getController();
-        controller.setDataController(this);
-        controller.setOwnerStage(stage);
+        controller.setUp(this, stage);
     }
 
+    /**
+     * Uploads the new data to the database and sets the table to show the new data set.
+     * @param name name of the new dataset.
+     * @param file the file that is being uploaded.
+     */
     public void newData(String name, File file) {
         DataLoader.uploadData(name, file, getDataType());
         try {
@@ -123,7 +159,10 @@ public abstract class DataController {
         }
     }
 
-
+    /**
+     * Launches and sets up a stage for adding new records.
+     * @throws IOException
+     */
     public void newRecord() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("New Record");
@@ -137,6 +176,10 @@ public abstract class DataController {
         controller.setUp(stage, this);
     }
 
+    /**
+     * Gets the dataset combo box.
+     * @return the dataset combo box.
+     */
     public ComboBox getDataSetComboBox() {
         return dataSetComboBox;
     }
