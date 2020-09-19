@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.controlsfx.control.textfield.TextFields;
 import seng202.team4.model.Path;
 import seng202.team4.model.*;
 
@@ -133,7 +134,9 @@ public class AirlineTabController extends DataController {
         countryCombobox.setItems(countries);
 
         // Make combobox searching autocomplete
-        new AutoCompleteComboBoxListener<>(countryCombobox);
+        countryCombobox.setEditable(true);
+        TextFields.bindAutoCompletion(countryCombobox.getEditor(), countryCombobox.getItems());
+//        new AutoCompleteComboBoxListener<>(countryCombobox);
 
         filterData();
 

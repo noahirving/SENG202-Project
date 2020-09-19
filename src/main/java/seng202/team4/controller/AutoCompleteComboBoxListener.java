@@ -12,25 +12,23 @@ import javafx.scene.input.KeyEvent;
  */
 public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
 
+    /**
+     * Combobox to make auto-complete searchable.
+     */
     private ComboBox comboBox;
-    private StringBuilder sb;
+    /**
+     * List of items in the combobox.
+     */
     private ObservableList<T> data;
     private boolean moveCaretToPos = false;
     private int caretPos;
 
     public AutoCompleteComboBoxListener(final ComboBox comboBox) {
         this.comboBox = comboBox;
-        sb = new StringBuilder();
         data = comboBox.getItems();
 
         this.comboBox.setEditable(true);
-        this.comboBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent t) {
-                comboBox.hide();
-            }
-        });
+        this.comboBox.setOnKeyPressed(t -> comboBox.hide());
         this.comboBox.setOnKeyReleased(AutoCompleteComboBoxListener.this);
     }
 
@@ -83,6 +81,10 @@ public class AutoCompleteComboBoxListener<T> implements EventHandler<KeyEvent> {
         }
     }
 
+    /**
+     * Moves the caret to the end of the text.
+     * @param textLength Length of the text in the search box.
+     */
     private void moveCaret(int textLength) {
         if(caretPos == -1) {
             comboBox.getEditor().positionCaret(textLength);

@@ -1,11 +1,6 @@
 package seng202.team4.controller;
 
-import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-import seng202.team4.model.DataType;
-
-import java.util.ArrayList;
 
 public class NewAirline extends NewRecord{
     public TextField nameField;

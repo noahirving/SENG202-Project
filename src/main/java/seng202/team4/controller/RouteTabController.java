@@ -16,7 +16,7 @@ import seng202.team4.model.*;
 import java.sql.*;
 
 /**
- * Performs logic for the 'Routes' tab of the application.
+ * Performs logic for the 'Routes' tab of the application; extends the DataController Class.
  * Responsible for connecting the route data provided/added to the JavaFX interface, this includes
  * initialising/updating the JavaFX TableView with data from the SQLite database table 'Routes' and also
  * initialising/updating the additive filtering and searching of said data. Checkboxes in this table are used to add
