@@ -35,7 +35,7 @@
          <RowConstraints minHeight="10.0" percentHeight="55.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
       <children>
-         <GridPane GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <GridPane visible="false" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
            <columnConstraints>
              <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
              <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
@@ -48,7 +48,7 @@
                <ComboBox maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="250.0" promptText="Data type" visibleRowCount="3" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
             </children>
          </GridPane>
-          <Button mnemonicParsing="false" onAction="#searchButtonPressed" prefWidth="100.0" text="Search" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+          <Button mnemonicParsing="false" onAction="#searchButtonPressed" prefWidth="100.0" text="Search" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
               <GridPane.margin>
                   <Insets />
               </GridPane.margin>
@@ -56,7 +56,7 @@
                <Cursor fx:constant="HAND" />
             </cursor>
           </Button>
-          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search for an airline, airport, or route" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search for an airline, airport, or route" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
               <GridPane.margin>
                   <Insets bottom="5.0" />
               </GridPane.margin>
