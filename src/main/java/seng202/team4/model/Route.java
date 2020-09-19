@@ -50,10 +50,21 @@ public class Route extends DataType {
         this.select = new SimpleBooleanProperty(false);
     }
 
+    /**
+     * Creates an empty object of route.
+     */
     public Route() {
-
     }
 
+    /**
+     * Creates a full route object.
+     * @param airline
+     * @param srcAirport
+     * @param dstAirport
+     * @param codeshare
+     * @param stops
+     * @param equipment
+     */
     public Route(String airline, String srcAirport, String dstAirport, boolean codeshare, int stops, String equipment) {
         this.airlineCode = airline;
         this.sourceAirportCode = srcAirport;
@@ -63,6 +74,11 @@ public class Route extends DataType {
         this.planeTypeCode = equipment;
     }
 
+    /**
+     * Gets the route insert statement for the database.
+     * @param setID the ID of the set the that will be inserted into.
+     * @return
+     */
     @Override
     public String getInsertStatement(int setID) {
         return "INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'DISTANCE', 'SETID') "
@@ -86,16 +102,36 @@ public class Route extends DataType {
         return new Route(line);
     }
 
+    /**
+     * Gets the datatype name.
+     * @return datatype name.
+     */
     @Override
     public String getTypeName() {
         return "Route";
     }
 
+    /**
+     * Gets the datatype set name.
+     * @return the datatype set name.
+     */
     @Override
     public String getSetName() {
         return "RouteSet";
     }
 
+    /**
+     * Gets a valid airline from the given strings. Fills
+     * the error message list if any errors are encountered.
+     * @param airline
+     * @param srcAirport
+     * @param dstAirport
+     * @param codeshare
+     * @param stops
+     * @param equipment
+     * @param errorMessage list of errors.
+     * @return the airline if valid, otherwise null.
+     */
     public static Route getValid(String airline, String srcAirport, String dstAirport, String codeshare, String stops, String equipment, ArrayList<String> errorMessage) {
         // TODO: Finish validating, get IDs
         boolean valid = true;
@@ -131,6 +167,12 @@ public class Route extends DataType {
         }
     }
 
+    /**
+     * Converts record array into individual strings and calls get valid.
+     * @param record        array of strings constituting the record.
+     * @param errorMessage  arrayList where the error messages will be stored.
+     * @return the airline if valid, otherwise null.
+     */
     @Override
     public DataType getValid(String[] record, ArrayList<String> errorMessage) {
         String airline = record[0];
@@ -162,6 +204,7 @@ public class Route extends DataType {
         return carbonEmissions;
     }
 
+    // TODO: remove
     public int tryReturnInt(String intString) {
         try {
             return Integer.parseInt(intString);

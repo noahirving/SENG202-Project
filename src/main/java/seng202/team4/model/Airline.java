@@ -26,20 +26,38 @@ public class Airline extends DataType {
         this.recentlyActive = airlines[7].equals("Y");
     }
 
+    /**
+     * Creates an empty object of airline.
+     */
     public Airline() {
 
     }
 
-    public Airline(String name, String code, String iata, String icao, String callSign, String country, String recentlyActive) {
+    /**
+     * Creates a full airline object.
+     * @param name
+     * @param code
+     * @param iata
+     * @param icao
+     * @param callSign
+     * @param country
+     * @param recentlyActive
+     */
+    public Airline(String name, String code, String iata, String icao, String callSign, String country, boolean recentlyActive) {
         this.name = name;
         this.code = code;
         this.iata = iata;
         this.icao = icao;
         this.callSign = callSign;
         this.country = country;
-        this.recentlyActive = recentlyActive.equals("Y");
+        this.recentlyActive = recentlyActive;
     }
 
+    /**
+     * Gets the airline insert statement for the database.
+     * @param setID the ID of the set the that will be inserted into.
+     * @return
+     */
     @Override
     public String getInsertStatement(int setID){
         return "INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') "
@@ -60,16 +78,37 @@ public class Airline extends DataType {
         return new Airline(line);
     }
 
+    /**
+     * Gets the datatype name.
+     * @return datatype name.
+     */
     @Override
     public String getTypeName() {
         return "Airline";
     }
 
+    /**
+     * Gets the datatype set name.
+     * @return the datatype set name.
+     */
     @Override
     public String getSetName() {
         return "AirlineSet";
     }
 
+    /**
+     * Gets a valid airline from the given strings. Fills
+     * the error message list if any errors are encountered.
+     * @param name
+     * @param code
+     * @param iata
+     * @param icao
+     * @param callSign
+     * @param country
+     * @param recentlyActive
+     * @param errorMessage list of errors.
+     * @return the airline if valid, otherwise null.
+     */
     public static Airline getValid(String name, String code, String iata, String icao, String callSign, String country, String recentlyActive, ArrayList<String> errorMessage) {
         boolean valid = true;
 
@@ -102,12 +141,19 @@ public class Airline extends DataType {
             valid = false;
         }
         if (valid) {
-            return new Airline(name, code, iata, icao, callSign, country, recentlyActive);
+            return new Airline(name, code, iata, icao, callSign, country, recentlyActive.equals("Y"));
         }
         else {
             return null;
         }
     }
+
+    /**
+     * Converts record array into individual strings and calls get valid.
+     * @param record        array of strings constituting the record.
+     * @param errorMessage  arrayList where the error messages will be stored.
+     * @return the airline if valid, otherwise null.
+     */
     @Override
     public Airline getValid(String[] record, ArrayList<String> errorMessage) {
         String name = record[0];

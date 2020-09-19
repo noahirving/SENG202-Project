@@ -54,6 +54,26 @@ public class Airport extends DataType {
         //this.source = airportArr[13];
     }
 
+    /**
+     * Creates an empty object of airport.
+     */
+    public Airport() {
+    }
+
+    /**
+     * Creates a full airport object.
+     * @param name
+     * @param city
+     * @param country
+     * @param iata
+     * @param icao
+     * @param latitude
+     * @param longitude
+     * @param altitude
+     * @param timeZone
+     * @param dst
+     * @param tzDatabase
+     */
     public Airport (String name, String city, String country, String iata, String icao, double latitude, double longitude, double altitude, float timeZone, char dst, String tzDatabase) {
         this.name = name;
         this.city = city;
@@ -67,10 +87,71 @@ public class Airport extends DataType {
         this.dst = dst;
         this.tzDatabase = tzDatabase;
     }
-
-    public Airport() {
+    /**
+     * Gets the airport insert statement for the database.
+     * @param setID the ID of the set the that will be inserted into.
+     * @return
+     */
+    @Override
+    public String getInsertStatement(int setID) {
+        return "INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME', 'SETID') "
+                + "VALUES ('"
+                + getName().replaceAll("'", "''''") + BETWEEN
+                + getCity().replaceAll("'", "''") + BETWEEN
+                + getCountry().replaceAll("'", "''") + BETWEEN
+                + getIata().replaceAll("'", "''") + BETWEEN
+                + getIcao().replaceAll("'", "''") + BETWEEN
+                + getLatitude() + BETWEEN
+                + getLongitude() + BETWEEN
+                + getAltitude() + BETWEEN
+                + getTimezone() + BETWEEN
+                + getDst() + BETWEEN
+                + getTzDatabase().replaceAll("'", "''") + BETWEEN
+                + setID
+                + "');";
     }
 
+
+    @Override
+    public DataType newDataType(String line) {
+        return new Airport(line);
+    }
+
+    /**
+     * Gets the datatype name.
+     * @return datatype name.
+     */
+    @Override
+    public String getTypeName() {
+        return "Airport";
+    }
+
+    /**
+     * Gets the datatype set name.
+     * @return the datatype set name.
+     */
+    @Override
+    public String getSetName() {
+        return "AirportSet";
+    }
+
+    /**
+     * Gets a valid airline from the given strings. Fills
+     * the error message list if any errors are encountered.
+     * @param name
+     * @param city
+     * @param country
+     * @param iata
+     * @param icao
+     * @param latitude
+     * @param longitude
+     * @param altitude
+     * @param timeZone
+     * @param dst
+     * @param tzDatabase
+     * @param errorMessage list of errors.
+     * @return the airport if valid, otherwise null.
+     */
     public static Airport getValid(String name, String city, String country, String iata, String icao, String latitude, String longitude, String altitude, String timeZone, String dst, String tzDatabase, ArrayList<String> errorMessage) {
         boolean valid = true;
         if (!Validate.isAlphaNumeric(name)) {
@@ -138,41 +219,12 @@ public class Airport extends DataType {
 
     }
 
-    @Override
-    public String getInsertStatement(int setID) {
-        return "INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME', 'SETID') "
-                + "VALUES ('"
-                + getName().replaceAll("'", "''''") + BETWEEN
-                + getCity().replaceAll("'", "''") + BETWEEN
-                + getCountry().replaceAll("'", "''") + BETWEEN
-                + getIata().replaceAll("'", "''") + BETWEEN
-                + getIcao().replaceAll("'", "''") + BETWEEN
-                + getLatitude() + BETWEEN
-                + getLongitude() + BETWEEN
-                + getAltitude() + BETWEEN
-                + getTimezone() + BETWEEN
-                + getDst() + BETWEEN
-                + getTzDatabase().replaceAll("'", "''") + BETWEEN
-                + setID
-                + "');";
-    }
-
-
-    @Override
-    public DataType newDataType(String line) {
-        return new Airport(line);
-    }
-
-    @Override
-    public String getTypeName() {
-        return "Airport";
-    }
-
-    @Override
-    public String getSetName() {
-        return "AirportSet";
-    }
-
+    /**
+     * Converts record array into individual strings and calls get valid.
+     * @param record        array of strings constituting the record.
+     * @param errorMessage  arrayList where the error messages will be stored.
+     * @return the airport if valid, otherwise null.
+     */
     @Override
     public DataType getValid(String[] record, ArrayList<String> errorMessage) {
         String name = record[0];

@@ -60,6 +60,6 @@ public class AirlineTest extends TestCase {
     public void testGetValid8() {
         Airline airline = new Airline();
         Airline newline = (Airline) airline.getValid(new String[]{"Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada","Y"}, new ArrayList<>());
-        assertTrue(newline.equalsTest(new Airline("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada","Y")));
+        assertTrue(newline.equalsTest(new Airline("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada",true)));
     }
 }
