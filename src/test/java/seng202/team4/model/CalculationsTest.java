@@ -25,10 +25,8 @@ public class CalculationsTest {
 
     @BeforeClass
     public static void setup() throws Exception {
+        DatabaseManager.setUp();
         Main m = new Main();
-        m.createDirectory();
-        m.deleteDB();
-        m.newDB();
         m.loadTest();
 
         con = DatabaseManager.connect();
