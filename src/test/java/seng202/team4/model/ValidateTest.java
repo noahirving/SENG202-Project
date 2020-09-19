@@ -6,32 +6,32 @@ public class ValidateTest extends TestCase {
 
     public void testIsNumeric1() {
         String num1 = "123";
-        assertTrue(Validate.isNumeric(num1));
+        assertTrue(Validate.isInterger(num1));
     }
 
     public void testIsNumeric2() {
         String num2 = "1.23";
-        assertTrue(Validate.isNumeric(num2));
+        assertTrue(Validate.isFloat(num2));
     }
 
     public void testIsNumeric3() {
         String num3 = "-123";
-        assertTrue(Validate.isNumeric(num3));
+        assertTrue(Validate.isInterger(num3));
     }
 
     public void testIsNumeric4() {
         String num4 = "-1.23";
-        assertTrue(Validate.isNumeric(num4));
+        assertTrue(Validate.isFloat(num4));
     }
 
     public void testIsNumeric5() {
         String num5 = "a.23";
-        assertFalse(Validate.isNumeric(num5));
+        assertFalse(Validate.isFloat(num5));
     }
 
     public void testIsNumeric6() {
         String num6 = null;
-        assertFalse(Validate.isNumeric(num6));
+        assertFalse(Validate.isInterger(num6));
     }
 
     public void testIsAlpha1() {
@@ -81,52 +81,52 @@ public class ValidateTest extends TestCase {
 
     public void testIsValidIATA1() {
         String iata1 = "ABC";
-        assertTrue(Validate.isValidIATA(iata1));
+        assertTrue(Validate.isAirportIATA(iata1));
     }
 
     public void testIsValidIATA2() {
         String iata2 = "AA";
-        assertTrue(Validate.isValidIATA(iata2));
+        assertTrue(Validate.isAirlineIATA(iata2));
     }
 
     public void testIsValidIATA3() {
         String iata3 = "";
-        assertTrue(Validate.isValidIATA(iata3));
+        assertTrue(Validate.isAirportIATA(iata3));
     }
 
     public void testIsValidIATA4() {
         String iata4 = null;
-        assertFalse(Validate.isValidIATA(iata4));
+        assertFalse(Validate.isAirportIATA(iata4));
     }
 
     public void testIsValidIATA5() {
         String iata5 = "ABCD";
-        assertFalse(Validate.isValidIATA(iata5));
+        assertFalse(Validate.isAirportIATA(iata5));
     }
 
     public void testIsValidICAO1() {
         String icao1 = "ABCD";
-        assertTrue(Validate.isValidICAO(icao1));
+        assertTrue(Validate.isAirportICAO(icao1));
     }
 
     public void testIsValidICAO2() {
         String icao2 = "AB";
-        assertFalse(Validate.isValidICAO(icao2));
+        assertFalse(Validate.isAirportICAO(icao2));
     }
 
     public void testIsValidICAO3() {
         String icao3 = "";
-        assertTrue(Validate.isValidICAO(icao3));
+        assertTrue(Validate.isAirportICAO(icao3));
     }
 
     public void testIsValidICAO4() {
         String icao4 = null;
-        assertFalse(Validate.isValidICAO(icao4));
+        assertFalse(Validate.isAirportICAO(icao4));
     }
 
     public void testIsValidICAO5() {
         String icao5 = "ABC";
-        assertTrue(Validate.isValidICAO(icao5));
+        assertTrue(Validate.isAirlineICAO(icao5));
     }
 
     public void testIsValidTZDB1() {
