@@ -1,16 +1,22 @@
 package seng202.team4.controller;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class NewFlightPath extends NewRecord{
-    public TextField typeField;
-    public TextField idField;
-    public TextField altitudeField;
-    public TextField latitudeField;
-    public TextField longitudeField;
+public class NewFlightPath extends NewRecord {
+    @FXML
+    private TextField typeField;
+    @FXML
+    private TextField idField;
+    @FXML
+    private TextField altitudeField;
+    @FXML
+    private TextField latitudeField;
+    @FXML
+    private TextField longitudeField;
 
     @Override
-    public String[] getRecordData() {
+    String[] getRecordData() {
         String type = typeField.getText().trim();
         String id = idField.getText().trim();
         String altitude = altitudeField.getText().trim();

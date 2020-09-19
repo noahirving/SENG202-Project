@@ -1,28 +1,35 @@
 package seng202.team4.controller;
 
-import javafx.scene.control.ComboBox;
+import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import seng202.team4.model.Airport;
-import seng202.team4.model.DataType;
-import java.util.ArrayList;
 
 public class NewAirport extends NewRecord {
 
-    public TextField nameField;
-    public TextField cityField;
-    public TextField countryField;
-    public TextField iataField;
-    public TextField icaoField;
-    public TextField latitudeField;
-    public TextField longitudeField;
-    public TextField altitudeField;
-    public TextField timeZoneField;
-    public TextField dstField;
-    public TextField tzDatabaseField;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private TextField cityField;
+    @FXML
+    private TextField countryField;
+    @FXML
+    private TextField iataField;
+    @FXML
+    private TextField icaoField;
+    @FXML
+    private TextField latitudeField;
+    @FXML
+    private TextField longitudeField;
+    @FXML
+    private TextField altitudeField;
+    @FXML
+    private TextField timeZoneField;
+    @FXML
+    private TextField dstField;
+    @FXML
+    private TextField tzDatabaseField;
 
     @Override
-    public String[] getRecordData() {
+    String[] getRecordData() {
         String name = nameField.getText().trim();
         String city = cityField.getText().trim();
         String country = countryField.getText().trim();

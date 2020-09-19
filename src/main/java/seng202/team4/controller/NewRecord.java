@@ -3,8 +3,8 @@ package seng202.team4.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seng202.team4.model.DataLoader;
@@ -16,15 +16,18 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public abstract class NewRecord {
-    public ComboBox setComboBox;
-    public Text errorText;
-    public Stage stage;
-    public DataController controller;
+abstract class NewRecord {
 
-    public abstract String[] getRecordData();
+    @FXML
+    private ComboBox setComboBox;
+    @FXML
+    private Text errorText;
+    private Stage stage;
+    private DataController controller;
 
-    public void setUp(Stage stage, DataController controller) {
+    abstract String[] getRecordData();
+
+    void setUp(Stage stage, DataController controller) {
         this.controller = controller;
         this.stage = stage;
         try {
@@ -35,7 +38,7 @@ public abstract class NewRecord {
     }
 
     //TODO: Essentially the same as the function from DataController, a more efficient implementation would be preferred
-    public void setDataSetComboBox(ComboBox comboBox) throws Exception{
+    private void setDataSetComboBox(ComboBox comboBox) throws Exception{
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
         ResultSet rs = stmt.executeQuery("Select Name from " + controller.getDataType().getSetName());
@@ -50,7 +53,8 @@ public abstract class NewRecord {
         DatabaseManager.disconnect(c);
     }
 
-    public void confirm(ActionEvent actionEvent) throws Exception {
+    @FXML
+    private void confirm(ActionEvent actionEvent) throws Exception {
         ArrayList<String> errorMessage = new ArrayList<String>();
         String[] recordData = getRecordData();
         DataType record = controller.getDataType().getValid(recordData, errorMessage);
@@ -71,7 +75,8 @@ public abstract class NewRecord {
         }
     }
 
-    public void cancel(ActionEvent actionEvent) {
+    @FXML
+    private void cancel(ActionEvent actionEvent) {
         stage.close();
     }
 }

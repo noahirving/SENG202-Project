@@ -1,19 +1,24 @@
 package seng202.team4.controller;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-import java.sql.Struct;
-
 public class NewRoute extends NewRecord{
-    public TextField airlineField;
-    public TextField srcAirportField;
-    public TextField dstAirportField;
-    public TextField codeshareField;
-    public TextField stopsField;
-    public TextField equipmentField;
+    @FXML
+    private TextField airlineField;
+    @FXML
+    private TextField srcAirportField;
+    @FXML
+    private TextField dstAirportField;
+    @FXML
+    private TextField codeshareField;
+    @FXML
+    private TextField stopsField;
+    @FXML
+    private TextField equipmentField;
 
     @Override
-    public String[] getRecordData() {
+    String[] getRecordData() {
         String airline = airlineField.getText().trim();
         String srcAirport = srcAirportField.getText().trim();
         String dstAirport = dstAirportField.getText().trim();
