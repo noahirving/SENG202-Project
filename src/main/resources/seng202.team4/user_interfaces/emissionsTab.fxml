@@ -26,7 +26,7 @@
                 <Font size="22.0" />
             </font>
          <GridPane.margin>
-            <Insets right="150.0" />
+            <Insets right="200.0" />
          </GridPane.margin>
         </Label>
         <Label fx:id="currentEmissionsValue" text="0.00" GridPane.halignment="CENTER">
@@ -34,7 +34,7 @@
                 <Font size="22.0" />
             </font>
          <padding>
-            <Insets left="140.0" />
+            <Insets left="160.0" />
          </padding>
         </Label>
         <Label fx:id="currentEmissionsPostfixLabel" text="CO2" GridPane.halignment="CENTER">
@@ -42,7 +42,7 @@
                 <Font size="22.0" />
             </font>
          <padding>
-            <Insets left="250.0" />
+            <Insets left="320.0" />
          </padding>
         </Label>
       <GridPane GridPane.rowIndex="1">
