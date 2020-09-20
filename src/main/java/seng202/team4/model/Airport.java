@@ -33,17 +33,17 @@ public class Airport extends DataType {
 
     /**
      * Creates a full airport object.
-     * @param name
-     * @param city
-     * @param country
-     * @param iata
-     * @param icao
-     * @param latitude
-     * @param longitude
-     * @param altitude
-     * @param timeZone
-     * @param dst
-     * @param tzDatabase
+     * @param name Name
+     * @param city City
+     * @param country Country
+     * @param iata IATA
+     * @param icao ICAO
+     * @param latitude Latitude
+     * @param longitude Longitude
+     * @param altitude Altitude
+     * @param timeZone TimeZone
+     * @param dst DST
+     * @param tzDatabase TimeZone Database
      */
     public Airport (String name, String city, String country, String iata, String icao, double latitude, double longitude, double altitude, float timeZone, char dst, String tzDatabase) {
         this.name = name;
@@ -62,7 +62,7 @@ public class Airport extends DataType {
     /**
      * Gets the airport insert statement for the database.
      * @param setID the ID of the set the that will be inserted into.
-     * @return
+     * @return The insert statement of a given ID.
      */
     @Override
     public String getInsertStatement(int setID) {
@@ -104,17 +104,17 @@ public class Airport extends DataType {
     /**
      * Gets a valid airline from the given strings. Fills
      * the error message list if any errors are encountered.
-     * @param name
-     * @param city
-     * @param country
-     * @param iata
-     * @param icao
-     * @param latitude
-     * @param longitude
-     * @param altitude
-     * @param timeZone
-     * @param dst
-     * @param tzDatabase
+     * @param name Name
+     * @param city City
+     * @param country Country
+     * @param iata IATA
+     * @param icao ICAO
+     * @param latitude Latitude
+     * @param longitude Longitude
+     * @param altitude Altitude
+     * @param timeZone TimeZone
+     * @param dst DST
+     * @param tzDatabase TimeZone Database
      * @param errorMessage list of errors.
      * @return the airport if valid, otherwise null.
      */

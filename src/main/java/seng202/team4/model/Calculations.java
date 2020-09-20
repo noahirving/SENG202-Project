@@ -41,7 +41,7 @@ public class Calculations {
      * @param airportCodeTwo String representing code of the destination airport
      * @param con connection to the SQLite database
      * @return double the calculated distance between two given airports
-     * @throws SQLException
+     * @throws SQLException SQL Exception
      */
     public static double calculateDistance(String airportCodeOne, String airportCodeTwo, Connection con) throws SQLException {
         Double lat1;

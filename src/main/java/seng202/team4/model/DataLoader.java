@@ -104,7 +104,7 @@ public abstract class DataLoader {
      * @param dataType the data type of the set.
      * @param stmt the statement used to to execute the query.
      * @return the ID of the set.
-     * @throws SQLException
+     * @throws SQLException SQL Exception
      */
     private static int getSetID(String setName, DataType dataType, Statement stmt) throws SQLException{
         String setIdQuery = "SELECT ID FROM " + dataType.getSetName() + " WHERE Name = '" + setName + "';";

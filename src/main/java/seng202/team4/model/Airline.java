@@ -23,13 +23,13 @@ public class Airline extends DataType {
 
     /**
      * Creates a full airline object.
-     * @param name
-     * @param code
-     * @param iata
-     * @param icao
-     * @param callSign
-     * @param country
-     * @param recentlyActive
+     * @param name Name
+     * @param code Code
+     * @param iata IATA
+     * @param icao ICAO
+     * @param callSign CallSign
+     * @param country Country
+     * @param recentlyActive Recently Active
      */
     public Airline(String name, String code, String iata, String icao, String callSign, String country, boolean recentlyActive) {
         this.name = name;
@@ -44,7 +44,7 @@ public class Airline extends DataType {
     /**
      * Gets the airline insert statement for the database.
      * @param setID the ID of the set the that will be inserted into.
-     * @return
+     * @return the insert statement of a given ID statement.
      */
     @Override
     public String getInsertStatement(int setID){
@@ -82,13 +82,13 @@ public class Airline extends DataType {
     /**
      * Gets a valid airline from the given strings. Fills
      * the error message list if any errors are encountered.
-     * @param name
-     * @param code
-     * @param iata
-     * @param icao
-     * @param callSign
-     * @param country
-     * @param recentlyActive
+     * @param name Name
+     * @param code Code
+     * @param iata IATA
+     * @param icao ICAO
+     * @param callSign CallSign
+     * @param country Country
+     * @param recentlyActive Recently Active
      * @param errorMessage list of errors.
      * @return the airline if valid, otherwise null.
      */

@@ -30,12 +30,12 @@ public class Route extends DataType {
 
     /**
      * Creates a full route object.
-     * @param airline
-     * @param srcAirport
-     * @param dstAirport
-     * @param codeshare
-     * @param stops
-     * @param equipment
+     * @param airline Airline
+     * @param srcAirport Source Airport
+     * @param dstAirport Destination Airport
+     * @param codeshare Codeshare
+     * @param stops Stops
+     * @param equipment Equipment
      */
     public Route(String airline, String srcAirport, String dstAirport, boolean codeshare, int stops, String equipment) {
         this.airlineCode = airline;
@@ -49,7 +49,7 @@ public class Route extends DataType {
     /**
      * Gets the route insert statement for the database.
      * @param setID the ID of the set the that will be inserted into.
-     * @return
+     * @return The insert statement of a given ID.
      */
     @Override
     public String getInsertStatement(int setID) {
@@ -90,12 +90,12 @@ public class Route extends DataType {
     /**
      * Gets a valid airline from the given strings. Fills
      * the error message list if any errors are encountered.
-     * @param airline
-     * @param srcAirport
-     * @param dstAirport
-     * @param codeshare
-     * @param stops
-     * @param equipment
+     * @param airline Airline
+     * @param srcAirport Source Airport
+     * @param dstAirport Destination Airport
+     * @param codeshare Codeshare
+     * @param stops Stops
+     * @param equipment Equipment
      * @param errorMessage list of errors.
      * @return the airline if valid, otherwise null.
      */

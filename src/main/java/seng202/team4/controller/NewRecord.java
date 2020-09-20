@@ -51,7 +51,7 @@ abstract class NewRecord {
     /**
      * Sets the data set names int the dataset comboBox.
      * @param comboBox the comboBox the names are set in.
-     * @throws Exception
+     * @throws Exception SQL Exception
      */
     //TODO: Essentially the same as the function from DataController, a more efficient implementation would be preferred
     private void setDataSetComboBox(ComboBox comboBox) throws Exception{
@@ -73,7 +73,7 @@ abstract class NewRecord {
      * Closes the stage and adds the record to the database if
      * the record was valid, otherwise an error message is shown
      * to the user.
-     * @throws Exception
+     * @throws Exception SQL Exception
      */
     @FXML
     private void confirm() throws Exception {

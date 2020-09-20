@@ -76,7 +76,7 @@ public abstract class DataController {
     /**
      * Displays the data set names in the data set
      * combo box.
-     * @throws Exception
+     * @throws Exception SQL Exception
      */
     public void setDataSetComboBox() throws Exception{
         // Connects to the database and gets the names of the data sets.
@@ -99,7 +99,7 @@ public abstract class DataController {
     /**
      * Sets the dataset displayed in the table.
      * @param dataSetName name of the dataset.
-     * @throws Exception
+     * @throws Exception SQL Exception
      */
     public void setDataSet(String dataSetName) throws Exception {
         Connection c = DatabaseManager.connect();
@@ -121,7 +121,7 @@ public abstract class DataController {
 
     /**
      * Sets the table with all data of the table's datatype.
-     * @throws Exception
+     * @throws Exception SQL Exception
      */
     public void setTable() throws Exception {
         setTable(getTableQuery());
@@ -130,7 +130,7 @@ public abstract class DataController {
     /**
      * Sets the table using the query provided.
      * @param query specifications for the content of the table.
-     * @throws Exception
+     * @throws Exception SQL Exception
      */
     public void setTable(String query) throws Exception {
         Connection c = DatabaseManager.connect();
@@ -151,7 +151,7 @@ public abstract class DataController {
 
     /**
      * Launches a new stage for uploading data.
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void uploadData() throws IOException {
         Stage stage = new Stage();
@@ -184,7 +184,7 @@ public abstract class DataController {
 
     /**
      * Launches and sets up a stage for adding new records.
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void newRecord() throws IOException {
         Stage stage = new Stage();
