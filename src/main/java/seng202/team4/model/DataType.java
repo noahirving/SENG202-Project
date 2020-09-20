@@ -53,9 +53,9 @@ public abstract class DataType implements Validate {
     public abstract DataType getValid(String record, ArrayList<String> errorMessage);
 
     /**
-     *
-     * @param o
-     * @return
+     * A method for checking if a given object is equal the current object of the class.
+     * @param o Object
+     * @return Returns true if equal to current object.
      */
     public abstract boolean equalsTest(Object o);
 

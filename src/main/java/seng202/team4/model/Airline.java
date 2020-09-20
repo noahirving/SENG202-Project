@@ -167,6 +167,11 @@ public class Airline extends DataType {
         return getValid(recordList, errorMessage);
     }
 
+    /**
+     * A method for checking if a given object is equal the current object of the class.
+     * @param o Object
+     * @return Returns true if equal to current object.
+     */
     @Override
     public boolean equalsTest(Object o) {
         if (this == o) return true;
@@ -180,14 +185,6 @@ public class Airline extends DataType {
                 getIcao().equals(airline.getIcao()) &&
                 getCallSign().equals(airline.getCallSign()) &&
                 getCountry().equals(airline.getCountry());
-    }
-
-    public int tryReturnInt(String intString) {
-        try {
-            return Integer.parseInt(intString);
-        } catch (Exception e) {
-            return -1;
-        }
     }
 
     // getters

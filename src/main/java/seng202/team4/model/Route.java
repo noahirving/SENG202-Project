@@ -175,6 +175,11 @@ public class Route extends DataType {
         }
     }
 
+    /**
+     * A method for checking if a given object is equal the current object of the class.
+     * @param o Object
+     * @return Returns true if equal to current object.
+     */
     @Override
     public boolean equalsTest(Object o) {
         if (this == o) return true;
