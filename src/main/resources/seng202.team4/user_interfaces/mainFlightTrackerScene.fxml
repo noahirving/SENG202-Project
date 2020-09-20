@@ -23,85 +23,16 @@
             </Tab>
             <Tab fx:id="airlineTabButton" text="Airlines">
                 <content>
-             <!--  <AnchorPane fx:id="airlineTabPane" minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="600.0">
-                     <children>
-                                                <ComboBox fx:id="airlineTabCountryCombobox" layoutX="336.0" layoutY="12.0" prefHeight="26.0" prefWidth="137.0" promptText="All" />
-                                                <Button fx:id="airlineTabUploadDataBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" />
-                                                <TextField fx:id="airlineSearchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
-                                                <Label fx:id="airlineTabCountrySelectorLabel" layoutX="285.0" layoutY="16.0" text="Country:" />
-                                                <TableView fx:id="airlineDataTable" layoutX="14.0" layoutY="50.0" prefHeight="406.0" prefWidth="724.0">
-                                                  <columns>
-                                                    <TableColumn fx:id="airlineTabAirlineColumn" prefWidth="362.0" text="Airline" />
-                                                    <TableColumn fx:id="airlineTabCountryColumn" minWidth="4.800048828125" prefWidth="362.0" text="Country" />
-                                                  </columns>
-                                                </TableView>
-                                             </children>
-                                          </AnchorPane> -->
                     <fx:include source="airlineTab.fxml" />
                 </content>
           </Tab>
             <Tab fx:id="airportTabButton" text="Airports">
                <content>
-                  <!--<AnchorPane fx:id="airportTabPane" minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="600.0">
-                     <children>
-                                                <Button fx:id="airportTabUploadDataBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" />
-                                                <TextField fx:id="airportSearchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
-                                                <TableView fx:id="airportDataTable" layoutX="14.0" layoutY="50.0" prefHeight="406.0" prefWidth="724.0">
-                                                   <columns>
-                                                      <TableColumn fx:id="airportTabAirportColumn" prefWidth="181.0" text="Airport" />
-                                                      <TableColumn fx:id="airportTabCityColumn" minWidth="4.800048828125" prefWidth="181.0" text="City" />
-                                                      <TableColumn fx:id="airportTabCountryColumn" minWidth="4.800048828125" prefWidth="181.0" text="Country" />
-                                                      <TableColumn fx:id="airportTabCoordinatesColumn" minWidth="4.800048828125" prefWidth="181.0" text="Coordinates" />
-                                                   </columns>
-                                                </TableView>
-                                                <ComboBox fx:id="airportTabCityCombobox" layoutX="244.0" layoutY="15.0" prefHeight="26.0" prefWidth="117.0" promptText="All" />
-                                                <Label fx:id="airportTabCitySelectorLabel" layoutX="211.0" layoutY="19.0" text="City:" />
-                                                <ComboBox fx:id="airportTabCountryCombobox" layoutX="441.0" layoutY="15.0" prefHeight="26.0" prefWidth="117.0" promptText="All" />
-                                                <Label fx:id="airportTabCountrySelectorLabel" layoutX="385.0" layoutY="19.0" text="Country:" />
-                                             </children>
-                                          </AnchorPane> -->
                   <fx:include source="airportTab.fxml" />
                </content>
             </Tab>
             <Tab fx:id="routeTabButton" text="Routes">
                <content>
-                  <!-- <AnchorPane fx:id="routeTabPane" minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="600.0">
-                     <children>
-                                                <Button fx:id="routeTabUploadDataBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" />
-                                                <TextField fx:id="searchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
-                                                <TableView fx:id="dataTable" layoutX="14.0" layoutY="50.0" prefHeight="406.0" prefWidth="474.0">
-                                                   <columns>
-                                                      <TableColumn fx:id="routeTabAirportColumn" prefWidth="79.0" text="Airport" />
-                                                      <TableColumn fx:id="departureAirportColumn" minWidth="4.800048828125" prefWidth="79.0" text="Departure&#10;   airport" />
-                                                      <TableColumn fx:id="destinationAirportColumn" minWidth="4.800048828125" prefWidth="79.0" text="Destination &#10;    airport" />
-                                                      <TableColumn fx:id="numStopsColumn" minWidth="4.800048828125" prefWidth="79.0" text="Number of &#10;     stops" />
-                                                      <TableColumn fx:id="planeTypeColumn" minWidth="4.800048828125" prefWidth="79.0" text="Plane type" />
-                                                      <TableColumn fx:id="routeTabCarbonEmissionsColumn" minWidth="4.800048828125" prefWidth="79.0" text="  Carbon &#10;emissions" />
-                                                   </columns>
-                                                </TableView>
-                                                <AnchorPane fx:id="routeFilterPane" layoutX="513.0" layoutY="50.0" prefHeight="406.0" prefWidth="222.0">
-                                                   <children>
-                                                      <Label fx:id="routeTabFilterLabel" layoutX="95.0" layoutY="14.0" text="Filters">
-                                                         <font>
-                                                            <Font size="22.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <ComboBox fx:id="airlineFilterCombobox" layoutX="95.0" layoutY="61.0" prefHeight="36.0" prefWidth="118.0" promptText="All" />
-                                                      <Label fx:id="routeTabAirlineLabel" layoutX="41.0" layoutY="70.0" text="Airline:" />
-                                                      <ComboBox fx:id="departureFilterCombobox" layoutX="95.0" layoutY="123.0" prefHeight="36.0" prefWidth="118.0" promptText="All" />
-                                                      <Label fx:id="routeTabDepartureLabel" layoutX="25.0" layoutY="132.0" text="Departure:" />
-                                                      <ComboBox fx:id="destinationFilterCombobox" layoutX="95.0" layoutY="185.0" prefHeight="36.0" prefWidth="118.0" promptText="All" />
-                                                      <Label fx:id="routeTabDestinationLabel" layoutX="25.0" layoutY="194.0" text="Destination:" />
-                                                      <ComboBox fx:id="planeTypeFilterCombobox" layoutX="95.0" layoutY="286.0" prefHeight="36.0" prefWidth="118.0" promptText="All" />
-                                                      <Label fx:id="routeTabPlaneTypeLabel" layoutX="25.0" layoutY="295.0" text="Plane type:" />
-                                                      <Slider fx:id="stopsFilterSlider" layoutX="95.0" layoutY="245.0" prefHeight="14.0" prefWidth="118.0" />
-                                                      <Label fx:id="routeTabStopsLabel" layoutX="52.0" layoutY="243.0" text="Stops:" />
-                                                      <Slider fx:id="routeEmissionsFilterSlider" layoutX="93.0" layoutY="349.0" prefHeight="14.0" prefWidth="118.0" />
-                                                      <Label fx:id="routeTabEmissionsLabel" layoutX="25.0" layoutY="347.0" text="Emissions:" />
-                                                   </children>
-                                                </AnchorPane>
-                                             </children>
-                                          </AnchorPane> -->
                   <fx:include source="routeTab.fxml" />
                </content>
             </Tab>
@@ -112,64 +43,11 @@
             </Tab>
             <Tab fx:id="mapTabButton" text="Map">
                <content>
-                  <!-- <AnchorPane fx:id="mapTabPane" minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="600.0">
-                     <children>
-                                                <Button fx:id="mapTabUploadDataBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="124.0" text="Upload Airport Data" />
-                                                <TextField fx:id="mapSearchField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
-                                                <Label fx:id="mapTabCoordinatesLabel" layoutX="208.0" layoutY="19.0" text="Enter coordinates:" />
-                                                <TextField fx:id="mapTabLatitudeField" layoutX="312.0" layoutY="14.0" prefHeight="26.0" prefWidth="106.0" promptText="Latitude" />
-                                                <TextField fx:id="mapTabLongitudeField" layoutX="435.0" layoutY="14.0" prefHeight="26.0" prefWidth="106.0" promptText="Longitude" />
-                                             </children>
-                                          </AnchorPane> -->
                   <fx:include source="mapTab.fxml" />
                </content>
             </Tab>
             <Tab fx:id="emissionsTabButton" text="Emissions">
                <content>
-                  <!-- <AnchorPane fx:id="emissionsTabPane" minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="600.0">
-                     <children>
-                                                <TextField fx:id="emissionsSearchField" layoutX="14.0" layoutY="61.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" />
-                                                <TableView fx:id="emissionsDataTable" layoutX="14.0" layoutY="94.0" prefHeight="362.0" prefWidth="350.0">
-                                                   <columns>
-                                                      <TableColumn fx:id="emissionsTabRoutesAndEmissionsColumn" prefWidth="350.0" text="Routes and Emissions" />
-                                                   </columns>
-                                                </TableView>
-                                                <AnchorPane fx:id="enivornmentalImpactPane" layoutX="385.0" layoutY="64.0" prefHeight="392.0" prefWidth="350.0">
-                                                   <children>
-                                                      <Label fx:id="offsetEmissionsLabel" layoutX="95.0" layoutY="14.0" text="Offset Emissions">
-                                                         <font>
-                                                            <Font size="22.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Button fx:id="environmentalDonationBtn" layoutX="24.0" layoutY="71.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="142.0" text="Envornmental Donation" />
-                                                      <Button fx:id="TreesEquivalentBtn" layoutX="183.0" layoutY="71.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="142.0" text="Trees Equivalent" />
-                                                      <Label fx:id="reduceEmissionsLabel" layoutX="95.0" layoutY="195.0" text="Reduce Emissions">
-                                                         <font>
-                                                            <Font size="22.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Button fx:id="AlternativeRoutesBtn" layoutX="24.0" layoutY="252.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="142.0" text="Alternative Routes" />
-                                                      <Button fx:id="AlternativeAircraftTypeBtn" layoutX="183.0" layoutY="252.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="142.0" text="Alternative Aircraft &#10;&#9;  Types" />
-                                                   </children>
-                                                </AnchorPane>
-                                                <Button fx:id="emissionsTabModifyRoutesBtn" layoutX="222.0" layoutY="62.0" mnemonicParsing="false" text="Modify Selected Routes" />
-                                                <Label fx:id="currentEmissionsLabel" layoutX="189.0" layoutY="14.0" text="Current Emissions:">
-                                                   <font>
-                                                      <Font size="22.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="currentEmissionsValue" layoutX="381.0" layoutY="14.0" text="val">
-                                                   <font>
-                                                      <Font size="22.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="currentEmissionsPostfixLabel" layoutX="430.0" layoutY="14.0" text="CO2">
-                                                   <font>
-                                                      <Font size="22.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </AnchorPane>-->
                   <fx:include source="emissionsTab.fxml" />
                </content>
             </Tab>
