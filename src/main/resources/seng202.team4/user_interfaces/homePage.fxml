@@ -25,7 +25,7 @@
         <RowConstraints maxHeight="340.0" minHeight="10.0" percentHeight="60.0" prefHeight="278.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="187.0" minHeight="10.0" percentHeight="20.0" prefHeight="104.0" vgrow="SOMETIMES" />
     </rowConstraints>
-   <GridPane GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+   <GridPane visible="false" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
      <columnConstraints>
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
      </columnConstraints>
@@ -36,7 +36,7 @@
          <RowConstraints minHeight="10.0" percentHeight="55.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
       <children>
-         <GridPane visible="false" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <GridPane GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
            <columnConstraints>
              <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
              <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
@@ -49,7 +49,7 @@
                <ComboBox maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="250.0" promptText="Data type" visibleRowCount="3" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
             </children>
          </GridPane>
-          <Button mnemonicParsing="false" onAction="#searchButtonPressed" prefWidth="100.0" text="Search" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+          <Button mnemonicParsing="false" onAction="#searchButtonPressed" prefWidth="100.0" text="Search" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
               <GridPane.margin>
                   <Insets />
               </GridPane.margin>
@@ -57,7 +57,7 @@
                <Cursor fx:constant="HAND" />
             </cursor>
           </Button>
-          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search for an airline, airport, or route" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search for an airline, airport, or route" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
               <GridPane.margin>
                   <Insets bottom="5.0" />
               </GridPane.margin>
@@ -74,4 +74,9 @@
         </font>
     </Text>
    <Label fx:id="internetWarningLabel" text="*Warning: no internet access. Map function will not work!" textFill="RED" visible="false" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select a tab at the top of the application to get started" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+      <font>
+         <Font size="20.0" />
+      </font>
+   </Text>
 </GridPane>
