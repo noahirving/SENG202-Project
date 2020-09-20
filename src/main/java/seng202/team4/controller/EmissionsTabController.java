@@ -105,18 +105,8 @@ public class EmissionsTabController extends DataController {
         alert.setHeaderText("Donation required to offset your emissions: $" + donationDollarsCents + " NZD");
 
         FlowPane fp = new FlowPane();
-        Label linkText = new Label("Donate at: ");
-        Hyperlink hp = new Hyperlink("Carbon Fund");
-        fp.getChildren().addAll(linkText, hp);
-        hp.setOnAction((evt) -> {
-            URI u = null;
-            try {
-                u = new URI("https://carbonfund.org/donate");
-                Desktop.getDesktop().browse(u);
-            } catch (URISyntaxException | IOException e) {
-                e.printStackTrace();
-            }
-        });
+        Label explainText = new Label("Donations can be made at the carbonfund.org site");
+        fp.getChildren().addAll(explainText);
         alert.getDialogPane().contentProperty().set( fp );
         alert.show();
     }
@@ -135,20 +125,9 @@ public class EmissionsTabController extends DataController {
         alert.setHeaderText("With the suggested donation amount you could plant " + treeOffset + " trees");
 
         FlowPane treesFp = new FlowPane();
-        Label linkText = new Label("Plant trees using: ");
-        Hyperlink hp = new Hyperlink("Team Trees");
-        treesFp.getChildren().addAll(linkText, hp);
-        hp.setOnAction((evt) -> {
-            URI u = null;
-            try {
-                u = new URI("https://teamtrees.org/");
-                Desktop.getDesktop().browse(u);
-            } catch (URISyntaxException | IOException e) {
-                e.printStackTrace();
-            }
-        });
+        Label explainText = new Label("Plant trees at the teamtrees.org site");
+        treesFp.getChildren().addAll(explainText);
         alert.getDialogPane().contentProperty().set( treesFp );
-        //alert.setContentText("Donations for planting trees can be made on the following sites...");
         alert.show();
     }
 
