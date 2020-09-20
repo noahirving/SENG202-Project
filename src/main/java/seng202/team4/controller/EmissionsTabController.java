@@ -102,7 +102,7 @@ public class EmissionsTabController extends DataController {
         String donationDollarsCents = String.format("%.2f", dollarOffset);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Environmental Donation Equivalent");
-        alert.setHeaderText("Donation required to offset your emissions: $" + donationDollarsCents);
+        alert.setHeaderText("Donation required to offset your emissions: $" + donationDollarsCents + " NZD");
 
         FlowPane fp = new FlowPane();
         Label linkText = new Label("Donate at: ");
@@ -208,10 +208,10 @@ public class EmissionsTabController extends DataController {
         for(Route route: selectedRoutes){
             sumEmissions += route.getCarbonEmissions();
         }
-        dollarOffset = sumEmissions * 0.01;
+        dollarOffset = sumEmissions * 0.01479;
         treeOffset = Math.ceil(dollarOffset);
         //String emissionsLabel = Double.toString();
-        currentEmissionsValue.setText(String.format("%.2f", sumEmissions));
+        currentEmissionsValue.setText(String.format("%.2f", sumEmissions) + "kg C02");
     }
 
     /**
