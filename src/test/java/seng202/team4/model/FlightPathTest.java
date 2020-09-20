@@ -9,7 +9,7 @@ public class FlightPathTest extends TestCase {
 
     @Test
     public void testInsertStatement() {
-        FlightPath path = new FlightPath("FIX,ATMAP,35000,-12,118.255");
+        FlightPath path = new FlightPath("FIX","ATMAP",35000,-12,118.255);
         String statement = path.getInsertStatement(10);
         assertEquals("INSERT INTO FlightPath ('TYPE', 'FLIGHTPATHID', 'ALTITUDE', 'LATITUDE', 'LONGITUDE', 'SETID') VALUES ('FIX', 'ATMAP', '35000', '-12.0', '118.255', '10');", statement);
     }

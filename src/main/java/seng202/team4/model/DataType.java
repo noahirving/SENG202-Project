@@ -21,12 +21,6 @@ public abstract class DataType implements Validate {
     public abstract String getInsertStatement(int setID);
 
     // TODO: will be removed once getValid is implemented for uploading
-    /**
-     * Gets a new data type made of the attribute in the string.
-     * @param line string a attributes for the class.
-     * @return a new data type made of the provided string.
-     */
-    public abstract DataType newDataType(String line);
 
     /**
      * Gets the name of data type.
@@ -48,6 +42,14 @@ public abstract class DataType implements Validate {
      * @return a valid new dataType, 'null' if invalid.
      */
     public abstract DataType getValid(String[] record, ArrayList<String> errorMessage);
+
+    /**
+     * Gets a valid data type from the array of strings, or returns null with
+     * reasons for being invalid in the error message.
+     * @param record string constituting the record.
+     * @param errorMessage arrayList where the error messages will be stored.
+     * @return a valid new dataType, 'null' if invalid.
+     */
     public abstract DataType getValid(String record, ArrayList<String> errorMessage);
 
 }

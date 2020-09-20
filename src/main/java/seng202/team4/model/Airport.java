@@ -26,40 +26,10 @@ public class Airport extends DataType {
     private String source;
     private BooleanProperty select = new SimpleBooleanProperty(false);
 
-
-    public Airport(String airportData) {
-        String[] airportArr = airportData.replaceAll("\"", "").split(",");
-        this.name = airportArr[1];
-        int delta = 0;
-        if (airportArr.length == 13) { // To deal with commas in city field
-            this.city = (airportArr[2] + " " + airportArr[3]);
-            delta = 1;
-        }
-        else {
-            this.city = airportArr[2];
-        }
-        this.country = airportArr[3 + delta];
-        this.iata = airportArr[4 + delta];
-        this.icao = airportArr[5 + delta];
-        this.latitude = Double.parseDouble(airportArr[6 + delta]);
-        this.longitude = Double.parseDouble(airportArr[7 + delta]);
-        setCoordinates(this.longitude, this.latitude);
-        this.altitude = Double.parseDouble(airportArr[8 + delta]);
-        this.timezone = Float.parseFloat(airportArr[9 + delta]);
-        this.dst = airportArr[10 + delta].charAt(0);
-        this.tzDatabase = airportArr[11 + delta];
-        this.select = new SimpleBooleanProperty(false);
-
-        // Below parameters are not in given data.
-        //this.type = airportArr[12];
-        //this.source = airportArr[13];
-    }
-
     /**
      * Creates an empty object of airport.
      */
-    public Airport() {
-    }
+    public Airport() {}
 
     /**
      * Creates a full airport object.
@@ -88,6 +58,7 @@ public class Airport extends DataType {
         this.dst = dst;
         this.tzDatabase = tzDatabase;
     }
+
     /**
      * Gets the airport insert statement for the database.
      * @param setID the ID of the set the that will be inserted into.
@@ -110,12 +81,6 @@ public class Airport extends DataType {
                 + getTzDatabase().replaceAll("'", "''") + BETWEEN
                 + setID
                 + "');";
-    }
-
-
-    @Override
-    public DataType newDataType(String line) {
-        return new Airport(line);
     }
 
     /**
@@ -249,6 +214,13 @@ public class Airport extends DataType {
         return getValid(name, city, country, iata, icao, latitude, longitude, altitude, timeZone, dst, tzDatabase, errorMessage);
     }
 
+    /**
+     * Converts a string record into individual strings and calls get valid.
+     * @param record string constituting the record.
+     * @param errorMessage arrayList where the error messages will be stored.
+     * @return the airline if valid, otherwise null.
+     */
+    @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {
         String[] recordList = record.replaceAll("\"", "").split(",");
         String[] newRecordList = new String[12];

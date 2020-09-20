@@ -11,18 +11,7 @@ public class FlightPath extends DataType {
     private double latitude;
     private double longitude;
 
-    public FlightPath(String flightPathInfo) {
-        String[] flightPathArray = flightPathInfo.split(",");
-        this.type = flightPathArray[0];
-        this.id = flightPathArray[1];
-        this.altitude = Integer.parseInt(flightPathArray[2]);
-        this.latitude = Double.parseDouble(flightPathArray[3]);
-        this.longitude = Double.parseDouble(flightPathArray[4]);
-    }
-
-    public FlightPath() {
-
-    }
+    public FlightPath() {}
 
     public FlightPath(String type, String id, int altitude, double latitude, double longitude) {
         this.type = type;
@@ -43,12 +32,6 @@ public class FlightPath extends DataType {
                 + getLongitude() + BETWEEN
                 + setID
                 + "');";
-    }
-
-
-    @Override
-    public DataType newDataType(String line) {
-        return new FlightPath(line);
     }
 
     @Override
@@ -104,6 +87,7 @@ public class FlightPath extends DataType {
         return getValid(type, id, altitude, latitude, longitude, errorMessage);
     }
 
+    @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {
         String[] recordList = record.replaceAll("\"", "").split(",");
         if (recordList.length != 5) {

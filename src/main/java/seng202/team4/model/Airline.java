@@ -15,24 +15,11 @@ public class Airline extends DataType {
     private String country;
     private boolean recentlyActive;
 
-    public Airline(String airlineData) {
-        String[] airlines = airlineData.replaceAll("\"", "").split(",");
-        this.id = tryReturnInt(airlines[0]);
-        this.name = airlines[1];
-        this.code = airlines[2];
-        this.iata = airlines[3];
-        this.icao = airlines[4];
-        this.callSign = airlines[5];
-        this.country = airlines[6];
-        this.recentlyActive = airlines[7].equals("Y");
-    }
 
     /**
      * Creates an empty object of airline.
      */
-    public Airline() {
-
-    }
+    public Airline() {}
 
     /**
      * Creates a full airline object.
@@ -72,11 +59,6 @@ public class Airline extends DataType {
                 + isRecentlyActive() + BETWEEN
                 + setID
                 + "');";
-    }
-
-    @Override
-    public DataType newDataType(String line) {
-        return new Airline(line);
     }
 
     /**
@@ -168,6 +150,13 @@ public class Airline extends DataType {
         return getValid(name, code, iata, icao, callSign, country, recentlyActive, errorMessage);
     }
 
+    /**
+     * Converts a string record into individual strings and calls get valid.
+     * @param record string constituting the record.
+     * @param errorMessage arrayList where the error messages will be stored.
+     * @return the airline if valid, otherwise null.
+     */
+    @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {
         String[] recordList = record.replaceAll("\"", "").split(",");
         if (recordList.length != 8) {

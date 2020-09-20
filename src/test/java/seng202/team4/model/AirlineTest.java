@@ -7,11 +7,13 @@ import java.util.ArrayList;
 
 public class AirlineTest extends TestCase {
 
+
     @Test
     public void testInsertStatement() {
-        Airline airline = new Airline("19675,\"Rainbow Air Canada\",\"Rainbow Air CAN\",\"RY\",\"RAY\",\"Rainbow CAN\",\"Canada\",\"Y\"");
+        Airline airline = new Airline("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada",true);
         String statement = airline.getInsertStatement(10);
-        assertEquals("INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') VALUES ('Rainbow Air Canada', 'Rainbow Air CAN', 'RY', 'RAY', 'Rainbow CAN', 'Canada', 'true', '10');", statement);
+        assertEquals("INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') " +
+                "VALUES ('Rainbow Air Canada', 'Rainbow Air CAN', 'RY', 'RAY', 'Rainbow CAN', 'Canada', 'true', '10');", statement);
     }
 
     @Test

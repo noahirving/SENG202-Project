@@ -16,7 +16,7 @@ public class AirportTest extends TestCase {
 
     @Test
     public void testInsertStatement() {
-        Airport airport = new Airport("10,\"Thule Air Base\",\"Thule\",\"Greenland\",\"THU\",\"BGTL\",76.531203,-68.703161,251,-4,\"E\",\"America/Thule\"");
+        Airport airport = new Airport("Thule Air Base","Thule","Greenland","THU","BGTL",76.531203,-68.703161,251,-4,'E',"America/Thule");
         String statement = airport.getInsertStatement(5);
         assertEquals("INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME', 'SETID') " +
                 "VALUES ('Thule Air Base', 'Thule', 'Greenland', 'THU', 'BGTL', '76.531203', '-68.703161', '251.0', '-4.0', 'E', 'America/Thule', '5');", statement);
@@ -101,11 +101,12 @@ public class AirportTest extends TestCase {
         assertTrue(newport.equalsTest(new Airport("Thule Air Base","Thule","Greenland","THU","BGTL",76.531203,-68.703161,251,-4,'E',"America/Thule")));
     }
 
+    /*
     @Test
     public void testAirport() {
         Airport airport1 = new Airport("Thule Air Base","Thule","Greenland","THU","BGTL",76.531203,-68.703161,251,-4,'E',"America/Thule");
         Airport airport2 = new Airport("10,\"Thule Air Base\",\"Thule\",\"Greenland\",\"THU\",\"BGTL\",76.531203,-68.703161,251,-4,\"E\",\"America/Thule\"");
         assertTrue(airport1.equalsTest(airport2));
-    }
+    }*/
 
 }

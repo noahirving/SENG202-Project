@@ -9,9 +9,10 @@ public class RouteTest extends TestCase {
 
     @Test
     public void testInsertStatement() {
-        Route route = new Route("BA,1355,SIN,3316,MEL,3339,Y,0,744");
+        Route route = new Route("BA","SIN","MEL",true,0,"744");
         String statement = route.getInsertStatement(10);
-        assertEquals("INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'DISTANCE', 'SETID') VALUES ('BA', '1355', 'SIN', '3316', 'MEL', '3339', 'true', '0', '744', '0.0', '10');", statement);
+        assertEquals("INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'DISTANCE', 'SETID') " +
+                "VALUES ('BA', '0', 'SIN', '0', 'MEL', '0', 'true', '0', '744', '0.0', '10');", statement);
     }
 
     @Test
@@ -54,7 +55,7 @@ public class RouteTest extends TestCase {
     public void testGetValid7() {
         Route route = new Route();
         Route newroute = (Route) route.getValid(new String[]{"BA","SIN","MEL","Y","0","744"}, new ArrayList<>());
-        assertTrue(newroute.equalsTest(new Route("BA,1355,SIN,3316,MEL,3339,Y,0,744")));
+        assertTrue(newroute.equalsTest(new Route("BA","SIN","MEL",true,0,"744")));
     }
 
 }

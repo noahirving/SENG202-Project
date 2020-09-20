@@ -23,39 +23,10 @@ public class Route extends DataType {
     private BooleanProperty select = new SimpleBooleanProperty(false);
     private double carbonEmissions;
 
-    public Route(String routeInfo) {
-        String[] routeArray = routeInfo.split(",");
-        this.airlineCode = routeArray[0];
-        this.airlineID = tryReturnInt(routeArray[1]);
-        this.sourceAirportCode = routeArray[2];
-        this.sourceAirportID = tryReturnInt(routeArray[3]);
-        this.destinationAirportCode = routeArray[4];
-        this.destinationAirportID = tryReturnInt(routeArray[5]);
-        this.codeshare = routeArray[6].equals("Y");
-        try {
-            this.numStops = Integer.parseInt(routeArray[7]);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        if (routeArray.length == 9) {
-            this.planeTypeCode = routeArray[8];
-        } else {
-            this.planeTypeCode = "";
-        }
-        try {
-            this.distance = Double.parseDouble(routeArray[10]);
-        }
-        catch (Exception e) {
-            this.distance = 0.00;
-        }
-        this.select = new SimpleBooleanProperty(false);
-    }
-
     /**
      * Creates an empty object of route.
      */
-    public Route() {
-    }
+    public Route() {}
 
     /**
      * Creates a full route object.
@@ -96,11 +67,6 @@ public class Route extends DataType {
                 + getDistance() + BETWEEN
                 + setID
                 + "');";
-    }
-
-    @Override
-    public DataType newDataType(String line) {
-        return new Route(line);
     }
 
     /**
@@ -186,6 +152,13 @@ public class Route extends DataType {
         return getValid(airline, srcAirport, dstAirport, codeshare, stops, equipment, errorMessage);
     }
 
+    /**
+     * Converts a string record into individual strings and calls get valid.
+     * @param record string constituting the record.
+     * @param errorMessage arrayList where the error messages will be stored.
+     * @return the airline if valid, otherwise null.
+     */
+    @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {
         String[] recordList = record.replaceAll("\"", "").split(",");
         if (recordList.length == 9) {
@@ -220,14 +193,6 @@ public class Route extends DataType {
 
     public double getCarbonEmissions() {
         return carbonEmissions;
-    }
-
-    public int tryReturnInt(String intString) {
-        try {
-            return Integer.parseInt(intString);
-        } catch (Exception e) {
-            return -1;
-        }
     }
 
     public int getId() {
