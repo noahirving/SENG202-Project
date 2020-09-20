@@ -17,7 +17,7 @@ public class Airline extends DataType {
 
     public Airline(String airlineData) {
         String[] airlines = airlineData.replaceAll("\"", "").split(",");
-        this.id = Integer.parseInt(airlines[0]);
+        this.id = tryReturnInt(airlines[0]);
         this.name = airlines[1];
         this.code = airlines[2];
         this.iata = airlines[3];
@@ -189,6 +189,14 @@ public class Airline extends DataType {
                 getIcao().equals(airline.getIcao()) &&
                 getCallSign().equals(airline.getCallSign()) &&
                 getCountry().equals(airline.getCountry());
+    }
+
+    public int tryReturnInt(String intString) {
+        try {
+            return Integer.parseInt(intString);
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     // getters

@@ -16,7 +16,7 @@ public class AirlineTest extends TestCase {
 
     @Test
     public void testGetValid1() {
-        Airline airline = Airline.getValid("","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada","Y", new ArrayList<>());
+        Airline airline = Airline.getValid("***","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada","Y", new ArrayList<>());
         assertEquals(null, airline);
     }
 

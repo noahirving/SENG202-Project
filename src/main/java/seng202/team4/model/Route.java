@@ -26,11 +26,11 @@ public class Route extends DataType {
     public Route(String routeInfo) {
         String[] routeArray = routeInfo.split(",");
         this.airlineCode = routeArray[0];
-        //this.airlineID = tryReturnInt(routeArray[1]);
+        this.airlineID = tryReturnInt(routeArray[1]);
         this.sourceAirportCode = routeArray[2];
-        //this.sourceAirportID = tryReturnInt(routeArray[3]);
+        this.sourceAirportID = tryReturnInt(routeArray[3]);
         this.destinationAirportCode = routeArray[4];
-        //this.destinationAirportID = tryReturnInt(routeArray[5]);
+        this.destinationAirportID = tryReturnInt(routeArray[5]);
         this.codeshare = routeArray[6].equals("Y");
         try {
             this.numStops = Integer.parseInt(routeArray[7]);
@@ -221,7 +221,6 @@ public class Route extends DataType {
         return carbonEmissions;
     }
 
-    // TODO: remove
     public int tryReturnInt(String intString) {
         try {
             return Integer.parseInt(intString);

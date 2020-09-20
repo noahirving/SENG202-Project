@@ -30,13 +30,13 @@ public class AirportTest extends TestCase {
 
     @Test
     public void testGetValid2() {
-        Airport airport = Airport.getValid("Thule Air Base","123","Greenland","THU","BGTL","76.531203","-68.703161","251","-4","E","America/Thule", new ArrayList<>());
+        Airport airport = Airport.getValid("Thule Air Base","","Greenland","THU","BGTL","76.531203","-68.703161","251","-4","E","America/Thule", new ArrayList<>());
         assertEquals(null, airport);
     }
 
     @Test
     public void testGetValid3() {
-        Airport airport = Airport.getValid("Thule Air Base","Thule","123","THU","BGTL","76.531203","-68.703161","251","-4","E","America/Thule", new ArrayList<>());
+        Airport airport = Airport.getValid("Thule Air Base","Thule","","THU","BGTL","76.531203","-68.703161","251","-4","E","America/Thule", new ArrayList<>());
         assertEquals(null, airport);
     }
 
