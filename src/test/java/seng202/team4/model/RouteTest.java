@@ -2,11 +2,19 @@ package seng202.team4.model;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-
 import java.util.ArrayList;
+
+/**
+ * Performs the tests for Airline class.
+ * Setters and getters are not tested.
+ */
 
 public class RouteTest extends TestCase {
 
+    /**
+     * Tests whether getInsertStatement returns the correct statement
+     * that adds the given airport values to the database.
+     */
     @Test
     public void testInsertStatement() {
         Route route = new Route("BA","SIN","MEL",true,0,"744");
@@ -15,44 +23,66 @@ public class RouteTest extends TestCase {
                 "VALUES ('BA', '0', 'SIN', '0', 'MEL', '0', 'true', '0', '744', '0.0', '10');", statement);
     }
 
+    /**
+     * Test whether getValid returns a null value when given an invalid airline IATA or ICAO code.
+     */
     @Test
-    public void testGetValid1() {
+    public void testGetValidAirline() {
         Route route = Route.getValid("BA~","SIN","MEL","Y","0","744", new ArrayList<>());
         assertEquals(null, route);
     }
 
+    /**
+     * Test whether getValid returns a null value when given an invalid source airport IATA or ICAO code.
+     */
     @Test
-    public void testGetValid2() {
+    public void testGetValidSrc() {
         Route route = Route.getValid("BA","SIN!!","MEL","Y","0","744", new ArrayList<>());
         assertEquals(null, route);
     }
 
+    /**
+     * Test whether getValid returns a null value when given an invalid destination airport IATA or ICAO code.
+     */
     @Test
-    public void testGetValid3() {
+    public void testGetValidDest() {
         Route route = Route.getValid("BA","SIN","MEL!!","Y","0","744", new ArrayList<>());
         assertEquals(null, route);
     }
 
+    /**
+     * Test whether getValid returns a null value when given an invalid codeshare.
+     */
     @Test
-    public void testGetValid4() {
+    public void testGetValidCodeShare() {
         Route route = Route.getValid("BA","SIN","MEL","S","0","744", new ArrayList<>());
         assertEquals(null, route);
     }
 
+    /**
+     * Test whether getValid returns a null value when given an invalid number of stops.
+     */
     @Test
-    public void testGetValid5() {
+    public void testGetValidStops() {
         Route route = Route.getValid("BA","SIN","MEL","Y","0a","744", new ArrayList<>());
         assertEquals(null, route);
     }
 
+    /**
+     * Test whether getValid returns a null value when given an invalid equipment codes.
+     */
     @Test
-    public void testGetValid6() {
+    public void testGetValidEquipment() {
         Route route = Route.getValid("BA","SIN","MEL","Y","0","744@", new ArrayList<>());
         assertEquals(null, route);
     }
 
+    /**
+     * Test whether the getValid returns a route object when given a valid input
+     * and that the object has the correct attributes.
+     */
     @Test
-    public void testGetValid7() {
+    public void testGetValid() {
         Route route = new Route();
         Route newroute = (Route) route.getValid(new String[]{"BA","SIN","MEL","Y","0","744"}, new ArrayList<>());
         assertTrue(newroute.equalsTest(new Route("BA","SIN","MEL",true,0,"744")));
