@@ -120,7 +120,6 @@ public class MapTabController {
     /**
      * Initialises the Google Map by creating a new WebEngine for the JavaFX WebView then loading the
      * map.html resource onto the WebEngine.
-     * @throws SQLException
      */
     private void initMap() {
         webEngine = googleMapView.getEngine();
@@ -173,6 +172,7 @@ public class MapTabController {
      * Specifically initialises/populates the route filtering comboboxes by querying
      * the SQL database.
      * @param stmt Statement object used to execute the JDBC query.
+     * @throws SQLException thrown if there is an error querying the SQL database
      */
     private void initialiseRouteComboBoxes(Statement stmt) throws SQLException {
         ResultSet routesResultSet = stmt.executeQuery("SELECT Airline, SourceAirport, Equipment FROM Route");

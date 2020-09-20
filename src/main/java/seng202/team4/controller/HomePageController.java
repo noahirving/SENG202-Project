@@ -2,6 +2,7 @@ package seng202.team4.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import seng202.team4.model.Main;
 import seng202.team4.model.Path;
 import seng202.team4.model.DataLoader;
@@ -10,6 +11,10 @@ import seng202.team4.model.DataType;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.nio.file.StandardCopyOption;
 import java.sql.ResultSet;
 
@@ -25,6 +30,50 @@ public class HomePageController {
      * Button to load default data into the application
      */
     @FXML private Button loadDefaultDatabaseButton;
+    /**
+     * Label indicating internet and therefore maps is inaccessible
+     */
+    @FXML private Label internetWarningLabel;
+
+    /**
+     * Initialise the homepage by testing internet connection and displaying error message is internet is not available
+     */
+    @FXML
+    public void initialize() {
+        if (!getInternetAccess()) {
+            internetWarningLabel.setVisible(true);
+        }
+    }
+
+    /**
+     * Uses isHostAvailable to check if one or more of google.com, amazon.com, facebook.com, or apple.com is available.
+     * The likelihood of all these websites being down is extremely low.
+     * @return true or false on whether or not internet is available
+     */
+    private Boolean getInternetAccess() {
+        return isHostAvailable("google.com") || isHostAvailable("amazon.com")
+                || isHostAvailable("facebook.com")|| isHostAvailable("apple.com");
+    }
+
+    /**
+     * Opens a socket to a given host and tests if this host is available attempting to connect, returns the result of
+     * this attempt (true or false). Timeout for connection is 3000 milliseconds.
+     * @param hostName host to connect to (e.g. google.com)
+     * @return true or false on whether connection attempt was successful
+     */
+    private static boolean isHostAvailable(String hostName) {
+        Socket socket = new Socket();
+        try {
+            int port = 80;
+            InetSocketAddress socketAddress = new InetSocketAddress(hostName, port);
+            socket.connect(socketAddress, 3000);
+
+            return true;
+        }
+        catch(Exception e) {
+            return false;
+        }
+    }
 
     /**
      * Called when the user clicks the search button
