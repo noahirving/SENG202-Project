@@ -5,7 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seng202.team4.model.Path;
@@ -34,6 +37,16 @@ public abstract class DataController {
     public abstract String getNewRecordFXML();
     @FXML
     private ComboBox dataSetComboBox;
+    /**
+     * Button that opens window to add new record.
+     */
+    @FXML
+    protected Button newRecordButton;
+    /**
+     * Button that deletes the selected record.
+     */
+    @FXML
+    protected Button deleteRecordButton;
     public final static String ALL = "All";
 
 
@@ -48,6 +61,16 @@ public abstract class DataController {
                 }
             }
         });
+    }
+
+    /**
+     * Sets the images of buttons
+     */
+    void initialiseButtons() {
+        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
+        newRecordButton.setGraphic(new ImageView(addRecordImage));
+        Image deleteRecordImage = new Image(getClass().getResourceAsStream(Path.DELETE_RECORD_BUTTON_PNG));
+        deleteRecordButton.setGraphic(new ImageView(deleteRecordImage));
     }
 
     /**
@@ -183,4 +206,5 @@ public abstract class DataController {
     public ComboBox getDataSetComboBox() {
         return dataSetComboBox;
     }
+
 }

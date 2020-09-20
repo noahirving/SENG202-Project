@@ -10,10 +10,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import seng202.team4.model.Path;
-import seng202.team4.model.Airport;
-import seng202.team4.model.DataLoader;
-import seng202.team4.model.DataType;
+import seng202.team4.model.*;
 
 import java.sql.ResultSet;
 
@@ -67,6 +64,10 @@ public class AirportTabController extends DataController {
      */
     @FXML private Button newRecordButton;
     /**
+     * Button that deletes the selected record.
+     */
+    @FXML private Button deleteRecordButton;
+    /**
      * Initialization of FilteredList for the search text field.
      */
     private ObservableList<Airport> airports = FXCollections.observableArrayList();
@@ -95,7 +96,7 @@ public class AirportTabController extends DataController {
 
         // Make and connect checkbox column to AirportsSelected database table
         makeCheckboxColumn();
-        setNewRecordButton();
+        initialiseButtons();
         try {
             setDataSetComboBox();
             setDataSetListener();
@@ -105,14 +106,6 @@ public class AirportTabController extends DataController {
             System.exit(0);
         }
 
-    }
-
-    /**
-     * Sets the shape of the new record button to circle and image to a green '+' icon.
-     */
-    private void setNewRecordButton() {
-        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
-        newRecordButton.setGraphic(new ImageView(addRecordImage));
     }
 
     /**
@@ -299,4 +292,9 @@ public class AirportTabController extends DataController {
     @Override
     public String getTableQuery() { return "SELECT * FROM Airport"; }
 
+    @FXML
+    private void deleteRow() {
+        Airport airportToDelete = dataTable.getSelectionModel().getSelectedItem();
+        airports.remove(airportToDelete);
+    }
 }

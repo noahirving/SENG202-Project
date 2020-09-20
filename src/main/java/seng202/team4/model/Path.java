@@ -21,6 +21,7 @@ public abstract class Path {
 
     public static final String REFRESH_BUTTON_PNG = VIEW + "/images/refresh_icon.png";
     public static final String ADD_RECORD_BUTTON_PNG = VIEW + "/images/add_record_image.png";
+    public static final String DELETE_RECORD_BUTTON_PNG = VIEW + "/images/delete_record_image.png";
 
 
     public static final String STYLE_SHEET = VIEW + USER_INTERFACES + "/styles.css";

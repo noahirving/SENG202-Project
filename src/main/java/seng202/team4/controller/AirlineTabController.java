@@ -44,10 +44,6 @@ public class AirlineTabController extends DataController {
      */
     @FXML private TextField searchField;
     /**
-     * Button that opens window to add new record.
-     */
-    @FXML private Button newRecordButton;
-    /**
      * Mutable ObservableLst containing a list of airlines for the search filter.
      */
     private ObservableList<Airline> airlines = FXCollections.observableArrayList();
@@ -76,7 +72,7 @@ public class AirlineTabController extends DataController {
 
 
         try {
-            setNewRecordButton();
+            initialiseButtons();
             setDataSetComboBox();
             setDataSetListener();
             setTable();
@@ -85,14 +81,6 @@ public class AirlineTabController extends DataController {
             System.exit(0);
         }
 
-    }
-
-    /**
-     * Sets the shape of the new record button to circle and image to a green '+' icon.
-     */
-    private void setNewRecordButton() {
-        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
-        newRecordButton.setGraphic(new ImageView(addRecordImage));
     }
 
     /**
@@ -231,5 +219,11 @@ public class AirlineTabController extends DataController {
     @Override
     public String getTableQuery() {
         return "SELECT Name, Country FROM Airline";
+    }
+
+    @FXML
+    private void deleteRow() {
+        Airline airlineToDelete = dataTable.getSelectionModel().getSelectedItem();
+        airlines.remove(airlineToDelete);
     }
 }
