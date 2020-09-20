@@ -129,7 +129,7 @@ public class AirlineTabController extends DataController {
 
     /**
      * Filtering of table data is done here by initialising then iteratively the country combobox filter
-     * to a FilteredList<Airline> object. The country filter requires addFilter(). Then the search bar filter
+     * to a FilteredList object. The country filter requires addFilter(). Then the search bar filter
      * is added through addSearchBar(). Finally the resulting SortedList is bound to the TableView dataTable
      * and the result of the filtering is shown to the user.
      */

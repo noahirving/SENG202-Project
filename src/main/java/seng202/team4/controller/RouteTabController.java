@@ -240,7 +240,7 @@ public class RouteTabController extends DataController {
 
     /**
      * Filtering of table data is done here by initialising then iteratively adding each combobox/slider filter
-     * to a FilteredList<Route> object. Each filter requires addFilter(). Then the search bar filter
+     * to a FilteredList object. Each filter requires addFilter(). Then the search bar filter
      * is added through addSearchBar(). Finally the resulting SortedList is bound to the TableView dataTable
      * and the result of the filtering is shown to the user.
      */

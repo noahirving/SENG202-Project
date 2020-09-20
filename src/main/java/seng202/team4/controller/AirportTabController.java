@@ -194,7 +194,7 @@ public class AirportTabController extends DataController {
 
     /**
      * Filtering of table data is done here by initialising then iteratively adding each combobox filter
-     * to a FilteredList<Airport> object. The country and cities filter require addFilter(). Then the search bar filter
+     * to a FilteredList object. The country and cities filter require addFilter(). Then the search bar filter
      * is added through addSearchBarFilter(). Finally the resulting SortedList is bound to the TableView dataTable
      * and the result of the filtering is shown to the user.
      */
