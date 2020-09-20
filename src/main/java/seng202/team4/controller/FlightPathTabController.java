@@ -5,14 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import seng202.team4.model.Path;
-import seng202.team4.model.Airline;
-import seng202.team4.model.DataType;
-import seng202.team4.model.FlightPath;
+import seng202.team4.model.*;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Flight Path' tab of the application
@@ -94,7 +90,7 @@ public class FlightPathTabController extends DataController {
         longitudeColumn.setCellValueFactory(new PropertyValueFactory<>("longitude"));
 
         try {
-            setNewRecordButton();
+            initialiseButtons();
             setDataSetComboBox();
             setDataSetListener();
             setTable();
@@ -103,14 +99,6 @@ public class FlightPathTabController extends DataController {
             System.exit(0);
         }
 
-    }
-
-    /**
-     * Sets the shape of the new record button to circle and image to a green '+' icon.
-     */
-    private void setNewRecordButton() {
-        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
-        newRecordButton.setGraphic(new ImageView(addRecordImage));
     }
 
     /**
@@ -178,6 +166,15 @@ public class FlightPathTabController extends DataController {
 
     @Override
     public void filterData() {
+    }
 
+    /**
+     * Delete each row selected in the table view
+     */
+    @FXML
+    private void deleteRow() {
+        ObservableList<FlightPath> selectedFlightPaths = dataTable.getSelectionModel().getSelectedItems();
+        ArrayList<FlightPath> rows = new ArrayList<>(selectedFlightPaths);
+        rows.forEach(row -> flightPaths.remove(row));
     }
 }

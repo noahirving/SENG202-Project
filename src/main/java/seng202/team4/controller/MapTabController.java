@@ -86,6 +86,10 @@ public class MapTabController {
      * Limit for how many routes can be shown on the map (to avoid clutter).
      */
     private static final int ROUTELIMIT = 400;
+    /**
+     * Limit for how many airports can be shown on the map (to avoid clutter).
+     */
+    private static final int AIRPORTLIMIT = 500;
 
     /**
      * Web engine used to load the Google Map onto the WebView.
@@ -103,6 +107,7 @@ public class MapTabController {
     public void initialize() {
         Image refreshImage = new Image(getClass().getResourceAsStream(Path.REFRESH_BUTTON_PNG));
         refreshButton.setGraphic(new ImageView(refreshImage));
+        refreshButton.setTooltip(new Tooltip("Refresh drop-down menus"));
         init();
     }
 
@@ -367,11 +372,13 @@ public class MapTabController {
         String query = String.format("SELECT Longitude, Latitude, Name FROM Airport WHERE Country is %s", country);
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
+        int count = 0;
         try {
             ResultSet airportResultSet = stmt.executeQuery(query);
 
-            while (airportResultSet.next()) {
+            while (airportResultSet.next() & count < AIRPORTLIMIT) {
                 showOneAirport(airportResultSet);
+                count++;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

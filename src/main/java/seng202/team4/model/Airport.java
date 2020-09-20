@@ -4,7 +4,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class Airport extends DataType {
 

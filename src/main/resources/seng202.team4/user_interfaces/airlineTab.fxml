@@ -40,12 +40,24 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-              <ComboBox fx:id="countryCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+              <ComboBox fx:id="countryCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ComboBox>
               <Label fx:id="countrySelectorLabel" alignment="CENTER" text="Country:" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
             <Label fx:id="countrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="3" />
-            <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="4" />
-            <Button fx:id="newRecordButton" mnemonicParsing="false" onAction="#newRecord" prefHeight="26.4" prefWidth="26.4" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
-            <Button fx:id="deleteRecordButton" mnemonicParsing="false" onAction="#deleteRow" prefHeight="26.4" prefWidth="26.4" GridPane.columnIndex="5" />
+            <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="4">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ComboBox>
+            <Button fx:id="newRecordButton" mnemonicParsing="false" onAction="#newRecord" prefHeight="26.4" prefWidth="26.4" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button fx:id="deleteRecordButton" mnemonicParsing="false" onAction="#deleteRow" prefHeight="26.4" prefWidth="26.4" GridPane.columnIndex="5">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
          <padding>
             <Insets left="15.0" right="15.0" />

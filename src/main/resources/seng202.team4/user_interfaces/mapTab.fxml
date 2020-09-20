@@ -60,7 +60,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <ComboBox fx:id="routeAirlineFilterCombobox" prefHeight="36.0" prefWidth="118.0" promptText="All" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="routeAirlineFilterCombobox" prefHeight="36.0" prefWidth="118.0" promptText="All" GridPane.columnIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ComboBox>
                         <Label fx:id="airlineLabel" text="Airline:" GridPane.halignment="RIGHT" />
                         <Label text="(Routes Per Airline)" GridPane.columnIndex="1">
                            <GridPane.margin>
@@ -82,7 +85,10 @@
                      </rowConstraints>
                      <children>
                         <Label fx:id="airportLabel" text="Airport: " GridPane.halignment="RIGHT" />
-                        <ComboBox fx:id="routeAirportFilterCombobox" prefHeight="36.0" prefWidth="118.0" promptText="All" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="routeAirportFilterCombobox" prefHeight="36.0" prefWidth="118.0" promptText="All" GridPane.columnIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ComboBox>
                         <Label text="(Routes Per Airport)" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets top="60.0" />
@@ -99,7 +105,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <ComboBox fx:id="routePlaneTypeFilterCombobox" prefHeight="36.0" prefWidth="118.0" promptText="All" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="routePlaneTypeFilterCombobox" prefHeight="36.0" prefWidth="118.0" promptText="All" GridPane.columnIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ComboBox>
                         <Label fx:id="planeLabel" text="Plane type:" GridPane.halignment="RIGHT" />
                         <Label text="(Routes Per Plane Type)" GridPane.columnIndex="1">
                            <GridPane.margin>

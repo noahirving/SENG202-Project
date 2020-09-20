@@ -1,7 +1,6 @@
 package seng202.team4.model;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class FlightPath extends DataType {
 

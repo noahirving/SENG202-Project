@@ -14,6 +14,7 @@ import seng202.team4.model.Path;
 import seng202.team4.model.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Routes' tab of the application; extends the DataController Class.
@@ -178,6 +179,7 @@ public class RouteTabController extends DataController {
      */
     @Override
     public void setTableData(ResultSet rs) {
+        dataTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         routes = FXCollections.observableArrayList();
         airlineCodes = FXCollections.observableArrayList();
         departureCountries = FXCollections.observableArrayList();
@@ -374,9 +376,13 @@ public class RouteTabController extends DataController {
         return "SELECT * FROM Route";
     }
 
+    /**
+     * Delete each row selected in the table view
+     */
     @FXML
     private void deleteRow() {
-        Route routeToDelete = dataTable.getSelectionModel().getSelectedItem();
-        routes.remove(routeToDelete);
+        ObservableList<Route> selectedRoutes = dataTable.getSelectionModel().getSelectedItems();
+        ArrayList<Route> rows = new ArrayList<>(selectedRoutes);
+        rows.forEach(row -> routes.remove(row));
     }
 }

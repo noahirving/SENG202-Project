@@ -7,12 +7,11 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import seng202.team4.model.Path;
 import seng202.team4.model.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Airline' tab of the application
@@ -221,9 +220,13 @@ public class AirlineTabController extends DataController {
         return "SELECT Name, Country FROM Airline";
     }
 
+    /**
+     * Delete each row selected in the table view
+     */
     @FXML
     private void deleteRow() {
-        Airline airlineToDelete = dataTable.getSelectionModel().getSelectedItem();
-        airlines.remove(airlineToDelete);
+        ObservableList<Airline> selectedAirlines = dataTable.getSelectionModel().getSelectedItems();
+        ArrayList<Airline> rows = new ArrayList<>(selectedAirlines);
+        rows.forEach(row -> airlines.remove(row));
     }
 }

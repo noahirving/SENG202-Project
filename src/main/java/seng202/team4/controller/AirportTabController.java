@@ -8,11 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import seng202.team4.model.*;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Airport' tab of the application
@@ -292,9 +291,14 @@ public class AirportTabController extends DataController {
     @Override
     public String getTableQuery() { return "SELECT * FROM Airport"; }
 
+    /**
+     * Delete each row selected in the table view
+     */
     @FXML
     private void deleteRow() {
-        Airport airportToDelete = dataTable.getSelectionModel().getSelectedItem();
-        airports.remove(airportToDelete);
+        ObservableList<Airport> selectedAirports = dataTable.getSelectionModel().getSelectedItems();
+        ArrayList<Airport> rows = new ArrayList<>(selectedAirports);
+        rows.forEach(row -> airports.remove(row));
     }
+
 }
