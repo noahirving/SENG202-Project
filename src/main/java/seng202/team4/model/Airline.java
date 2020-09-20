@@ -113,11 +113,11 @@ public class Airline extends DataType {
     public static Airline getValid(String name, String code, String iata, String icao, String callSign, String country, String recentlyActive, ArrayList<String> errorMessage) {
         boolean valid = true;
 
-        if (!Validate.isAlphaNumeric(name)) {
+        if (!Validate.isAlphaMultiLanguage(name)) {
             errorMessage.add("Invalid name");
             valid = false;
         }
-        if (!Validate.isAlphaNumeric(code) && !code.equals("\\N")) {
+        if (!Validate.isAlphaMultiLanguage(code) && !code.equals("\\N")) {
             errorMessage.add("Invalid code");
             valid = false;
         }
@@ -129,14 +129,15 @@ public class Airline extends DataType {
             errorMessage.add("Invalid ICAO");
             valid = false;
         }
-        if (!Validate.isAlphaNumeric(callSign)) {
+        if (!Validate.isAlphaMultiLanguage(callSign)) {
             errorMessage.add("Invalid call sign");
             valid = false;
         }
-        if (!Validate.isAlpha(country)) {
+        if (!Validate.isAlphaMultiLanguage(country)) {
             errorMessage.add("Invalid country");
             valid = false;
         }
+        recentlyActive = recentlyActive.toUpperCase();
         if (!recentlyActive.equals("Y") && !recentlyActive.equals("N")) {
             errorMessage.add("Invalid recently active");
             valid = false;

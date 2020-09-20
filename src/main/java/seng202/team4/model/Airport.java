@@ -155,15 +155,15 @@ public class Airport extends DataType {
      */
     public static Airport getValid(String name, String city, String country, String iata, String icao, String latitude, String longitude, String altitude, String timeZone, String dst, String tzDatabase, ArrayList<String> errorMessage) {
         boolean valid = true;
-        if (!name.matches("^\\p{ASCII}+$")) {
+        if (!Validate.isAlphaMultiLanguage(name)) {
             errorMessage.add("Invalid name");
             valid = false;
         }
-        if (!city.matches("^\\p{ASCII}+$")) {
+        if (!Validate.isAlphaMultiLanguage(city)) {
             errorMessage.add("Invalid city");
             valid = false;
         }
-        if (!country.matches("^\\p{ASCII}+$")) {
+        if (!Validate.isAlphaMultiLanguage(country)) {
             errorMessage.add("Invalid country");
             valid = false;
         }
@@ -186,7 +186,7 @@ public class Airport extends DataType {
             errorMessage.add("Invalid longitude");
             valid = false;
         }
-        if (!Validate.isInterger(altitude)) {
+        if (!Validate.isInteger(altitude)) {
             errorMessage.add("Invalid altitude");
             valid = false;
         }
@@ -196,7 +196,11 @@ public class Airport extends DataType {
         }
 
         char dstChar = 'N';
-        if (dst.length() == 1) {
+        if (dst == null) {
+            errorMessage.add("Invalid daylight savings time");
+            valid = false;
+        }
+        else if (dst.length() == 1) {
             dstChar = dst.charAt(0);
             if (!(dstChar == 'E' || dstChar == 'A' || dstChar == 'S' || dstChar == 'O' || dstChar == 'Z' || dstChar == 'N' || dstChar == 'U')) {
                 errorMessage.add("Invalid daylight savings time");
@@ -247,12 +251,35 @@ public class Airport extends DataType {
 
     public DataType getValid(String record, ArrayList<String> errorMessage) {
         String[] recordList = record.replaceAll("\"", "").split(",");
-        if (recordList.length != 12) {
+        String[] newRecordList = new String[12];
+        boolean containsComma = false;
+        if (recordList.length == 13) {
+            containsComma = true;
+            newRecordList[0] = recordList[0];
+            newRecordList[1] = recordList[1];
+            newRecordList[2] = recordList[2] + " " + recordList[3];
+            newRecordList[3] = recordList[4];
+            newRecordList[4] = recordList[5];
+            newRecordList[5] = recordList[6];
+            newRecordList[6] = recordList[7];
+            newRecordList[7] = recordList[8];
+            newRecordList[8] = recordList[9];
+            newRecordList[9] = recordList[10];
+            newRecordList[10] = recordList[11];
+            newRecordList[11] = recordList[12];
+        }
+        if (recordList.length != 12 && recordList.length != 13) {
             errorMessage.add("Invalid number of attributes");
             return null;
         }
-        recordList = Arrays.copyOfRange(recordList, 1, 12);
-        return getValid(recordList, errorMessage);
+        if (containsComma) {
+            newRecordList = Arrays.copyOfRange(newRecordList, 1, 12);
+            return getValid(newRecordList, errorMessage);
+        }
+        else {
+            recordList = Arrays.copyOfRange(recordList, 1, 12);
+            return getValid(recordList, errorMessage);
+        }
     }
 
     public boolean equalsTest(Object o) {

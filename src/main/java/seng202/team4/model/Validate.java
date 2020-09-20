@@ -10,7 +10,7 @@ public interface Validate {
         return string.matches("-?\\d+(\\.\\d+)?");
     }
 
-    static boolean isInterger(String string) {
+    static boolean isInteger(String string) {
         if (string == null) {
             return false;
         }
@@ -24,6 +24,13 @@ public interface Validate {
         return string.matches("[A-Za-z][A-Za-z\\s]*");
     }
 
+    static boolean isAlphaMultiLanguage(String string) {
+        if (string == null) {
+            return false;
+        }
+        return string.matches("[-\\a-zA-Z0-9 \'.\u0080-\u9fff]*+");
+    }
+
     static boolean isAlphaNumeric(String string) {
         if (string == null) {
             return false;
@@ -35,28 +42,28 @@ public interface Validate {
         if (string == null) {
             return false;
         }
-        return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9]{3}");
+        return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9а-яА-Я%]{3}");
     }
 
     static boolean isAirportICAO(String string) {
         if (string == null) {
             return false;
         }
-        return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9]{4}");
+        return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9-_%]{3,4}");
     }
 
     static boolean isAirlineIATA(String string) {
         if (string == null) {
             return false;
         }
-        return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9]{2}");
+        return string.equals("") || string.equals(NULL) || string.matches("[-\\a-zA-Z0-9а-яА-Я +^;:&.?!]*");
     }
 
     static boolean isAirlineICAO(String string) {
         if (string == null) {
             return false;
         }
-        return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9]{3}");
+        return string.equals("") || string.equals(NULL) || string.matches("[-\\a-zA-Z0-9а-яА-Я '*/+=:&.?!]*");
     }
     static boolean isValidTZDB(String string) {
         if (string == null) {

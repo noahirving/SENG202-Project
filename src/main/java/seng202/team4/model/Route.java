@@ -137,6 +137,7 @@ public class Route extends DataType {
         // TODO: Finish validating, get IDs
         boolean valid = true;
         if (!Validate.isAirlineIATA(airline) && !Validate.isAirlineICAO(airline)) {
+            System.out.println("test: " + airline);
             errorMessage.add("Invalid airline");
             valid = false;
         }
@@ -152,7 +153,7 @@ public class Route extends DataType {
             errorMessage.add("Invalid codeshare");
             valid = false;
         }
-        if (!Validate.isInterger(stops)) {
+        if (!Validate.isInteger(stops)) {
             errorMessage.add("Invalid stops");
             valid = false;
         }

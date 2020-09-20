@@ -74,7 +74,7 @@ public class FlightPath extends DataType {
             errorMessage.add("Invalid ID");
             valid = false;
         }
-        if (!Validate.isInterger(altitude)) {
+        if (!Validate.isInteger(altitude)) {
             errorMessage.add("Invalid altitude");
             valid = false;
         }

@@ -6,7 +6,7 @@ public class ValidateTest extends TestCase {
 
     public void testIsNumeric1() {
         String num1 = "123";
-        assertTrue(Validate.isInterger(num1));
+        assertTrue(Validate.isInteger(num1));
     }
 
     public void testIsNumeric2() {
@@ -16,7 +16,7 @@ public class ValidateTest extends TestCase {
 
     public void testIsNumeric3() {
         String num3 = "-123";
-        assertTrue(Validate.isInterger(num3));
+        assertTrue(Validate.isInteger(num3));
     }
 
     public void testIsNumeric4() {
@@ -31,7 +31,7 @@ public class ValidateTest extends TestCase {
 
     public void testIsNumeric6() {
         String num6 = null;
-        assertFalse(Validate.isInterger(num6));
+        assertFalse(Validate.isInteger(num6));
     }
 
     public void testIsAlpha1() {

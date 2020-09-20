@@ -16,37 +16,37 @@ public class AirlineTest extends TestCase {
 
     @Test
     public void testGetValid1() {
-        Airline airline = Airline.getValid("***","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada","Y", new ArrayList<>());
+        Airline airline = Airline.getValid("~","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada","Y", new ArrayList<>());
         assertEquals(null, airline);
     }
 
     @Test
     public void testGetValid2() {
-        Airline airline = Airline.getValid("Rainbow Air Canada","r@inb0w 4!r","RY","RAY","Rainbow CAN","Canada","Y", new ArrayList<>());
+        Airline airline = Airline.getValid("Rainbow Air Canada","r@inb0w 4!r~","RY","RAY","Rainbow CAN","Canada","Y", new ArrayList<>());
         assertEquals(null, airline);
     }
 
     @Test
     public void testGetValid3() {
-        Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RYAN","RAY","Rainbow CAN","Canada","Y", new ArrayList<>());
+        Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RYAN~","RAY","Rainbow CAN","Canada","Y", new ArrayList<>());
         assertEquals(null, airline);
     }
 
     @Test
     public void testGetValid4() {
-        Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RY","RAYAB","Rainbow CAN","Canada","Y", new ArrayList<>());
+        Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RY","RAYAB~","Rainbow CAN","Canada","Y", new ArrayList<>());
         assertEquals(null, airline);
     }
 
     @Test
     public void testGetValid5() {
-        Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Ra!nbow C4N","Canada","Y", new ArrayList<>());
+        Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Ra!nbow C4N~","Canada","Y", new ArrayList<>());
         assertEquals(null, airline);
     }
 
     @Test
     public void testGetValid6() {
-        Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","C4nada","Y", new ArrayList<>());
+        Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","C4nada~","Y", new ArrayList<>());
         assertEquals(null, airline);
     }
 

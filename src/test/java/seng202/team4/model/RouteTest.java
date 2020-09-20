@@ -16,7 +16,7 @@ public class RouteTest extends TestCase {
 
     @Test
     public void testGetValid1() {
-        Route route = Route.getValid("BA!!","SIN","MEL","Y","0","744", new ArrayList<>());
+        Route route = Route.getValid("BA~","SIN","MEL","Y","0","744", new ArrayList<>());
         assertEquals(null, route);
     }
 
