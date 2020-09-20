@@ -14,7 +14,6 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        System.out.println("Hello");
         Parent root = FXMLLoader.load(getClass().getResource(Path.MAN_SCENE_FXML));
         primaryStage.setTitle("Flight Companion");
         primaryStage.setMinHeight(500);
