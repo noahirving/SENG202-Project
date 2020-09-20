@@ -97,6 +97,7 @@ public class FlightPath extends DataType {
         return getValid(recordList, errorMessage);
     }
 
+    @Override
     public boolean equalsTest(Object o) {
         if (this == o) return true;
         if (!(o instanceof FlightPath)) return false;

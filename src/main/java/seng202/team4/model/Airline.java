@@ -167,6 +167,7 @@ public class Airline extends DataType {
         return getValid(recordList, errorMessage);
     }
 
+    @Override
     public boolean equalsTest(Object o) {
         if (this == o) return true;
         if (!(o instanceof Airline)) return false;

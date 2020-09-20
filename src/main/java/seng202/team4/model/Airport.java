@@ -254,6 +254,7 @@ public class Airport extends DataType {
         }
     }
 
+    @Override
     public boolean equalsTest(Object o) {
         if (this == o) return true;
         if (!(o instanceof Airport)) return false;

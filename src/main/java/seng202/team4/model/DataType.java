@@ -52,4 +52,11 @@ public abstract class DataType implements Validate {
      */
     public abstract DataType getValid(String record, ArrayList<String> errorMessage);
 
+    /**
+     *
+     * @param o
+     * @return
+     */
+    public abstract boolean equalsTest(Object o);
+
 }
