@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        deleteDatabase();
+        //deleteDatabase();
         DatabaseManager.setUp();
 
         //Main m = new Main();
@@ -22,17 +22,21 @@ public class Main {
         //fp.searchFlight();
     }
 
-    public void loadDefaultData() throws IOException {
+    public void loadDefaultData() {
         // TODO: Check that default data is not already in database (temporary fix is deleting the database everytime).
-        File airport = copyToFolder(Path.AIRPORT_RSC);
-        File airline = copyToFolder(Path.AIRLINE_RSC);
-        File route = copyToFolder(Path.ROUTE_RSC);
-        File flightPath = copyToFolder(Path.FLIGHT_PATH_RSC);
+        try {
+            File airport = copyToFolder(Path.AIRPORT_RSC);
+            File airline = copyToFolder(Path.AIRLINE_RSC);
+            File route = copyToFolder(Path.ROUTE_RSC);
+            File flightPath = copyToFolder(Path.FLIGHT_PATH_RSC);
 
-        DataLoader.uploadData("Default", airline, new Airline());
-        DataLoader.uploadData("Default", airport, new Airport());
-        DataLoader.uploadData("Default", route, new Route());
-        DataLoader.uploadData("Default", flightPath, new FlightPath());
+            DataLoader.uploadData("Default", airline, new Airline());
+            DataLoader.uploadData("Default", airport, new Airport());
+            DataLoader.uploadData("Default", route, new Route());
+            DataLoader.uploadData("Default", flightPath, new FlightPath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void deleteDatabase() {

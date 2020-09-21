@@ -166,12 +166,15 @@ public abstract class DatabaseManager {
         if (!directory.exists()) {
             directory.mkdir();
             newDatabase();
+            new Main().loadDefaultData();
+
         }
         else {
             // If directory exists but database does not a new database is created.
             File database = new File(Path.DATABASE);
             if (!database.exists()) {
                 newDatabase();
+                new Main().loadDefaultData();
             }
         }
     }
