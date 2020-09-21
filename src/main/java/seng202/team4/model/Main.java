@@ -10,11 +10,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-//        deleteDatabase();
+        //deleteDatabase();
         DatabaseManager.setUp();
 
-        Main m = new Main();
-//        m.loadDefaultData();
+        //Main m = new Main();
+        //m.loadDefaultData();
 
         MainApplication.main(args);
 
