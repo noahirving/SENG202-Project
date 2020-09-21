@@ -90,10 +90,16 @@ abstract class NewRecord {
             }
         }
         else { // Otherwise add the new record to the database
-            String setName = setComboBox.getValue().toString();
-            DataLoader.addNewRecord(record, setName);
-            controller.setTable();
-            stage.close();
+            if (setComboBox.getValue() == null) {
+                errorText.setText("Cannot find set");
+                errorText.setVisible(true);
+            }
+            else {
+                String setName = setComboBox.getValue().toString();
+                DataLoader.addNewRecord(record, setName);
+                controller.setTable();
+                stage.close();
+            }
         }
     }
 
