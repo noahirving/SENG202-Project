@@ -13,8 +13,8 @@ public class Main {
         //deleteDatabase();
         DatabaseManager.setUp();
 
-        //Main m = new Main();
-        //m.loadDefaultData();
+        Main m = new Main();
+        m.loadDefaultData();
 
         MainApplication.main(args);
 
