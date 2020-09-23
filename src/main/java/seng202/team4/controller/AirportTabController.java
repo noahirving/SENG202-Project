@@ -93,6 +93,10 @@ public class AirportTabController extends DataController {
         countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
         coordinatesColumn.setCellValueFactory(new PropertyValueFactory<>("coordinates"));
 
+        // Multiple rows can be selected
+        dataTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+
         // Make and connect checkbox column to AirportsSelected database table
         makeCheckboxColumn();
         initialiseButtons();
@@ -299,6 +303,7 @@ public class AirportTabController extends DataController {
         ObservableList<Airport> selectedAirports = dataTable.getSelectionModel().getSelectedItems();
         ArrayList<Airport> rows = new ArrayList<>(selectedAirports);
         rows.forEach(row -> airports.remove(row));
+        rows.forEach(DataLoader::removeFromAirportsSelectedDatabase);
     }
 
 }

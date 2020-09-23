@@ -89,6 +89,9 @@ public class FlightPathTabController extends DataController {
         latitudeColumn.setCellValueFactory(new PropertyValueFactory<>("latitude"));
         longitudeColumn.setCellValueFactory(new PropertyValueFactory<>("longitude"));
 
+        // Multiple rows can be selected
+        dataTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         try {
             initialiseButtons();
             setDataSetComboBox();

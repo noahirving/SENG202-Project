@@ -107,6 +107,8 @@ public class RouteTabController extends DataController {
      * Initialisation order: New Record Button, Sliders, Table Columns, Dataset Chooser ComboBox, Set Table
      */
     public void initialize() {
+        // Multiple rows can be selected
+        dataTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         try {
             initialiseButtons();
             initialiseColumns();
@@ -179,7 +181,6 @@ public class RouteTabController extends DataController {
      */
     @Override
     public void setTableData(ResultSet rs) {
-        dataTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         routes = FXCollections.observableArrayList();
         airlineCodes = FXCollections.observableArrayList();
         departureCountries = FXCollections.observableArrayList();
@@ -384,5 +385,6 @@ public class RouteTabController extends DataController {
         ObservableList<Route> selectedRoutes = dataTable.getSelectionModel().getSelectedItems();
         ArrayList<Route> rows = new ArrayList<>(selectedRoutes);
         rows.forEach(row -> routes.remove(row));
+        rows.forEach(DataLoader::removeFromRoutesSelectedDatabase);
     }
 }

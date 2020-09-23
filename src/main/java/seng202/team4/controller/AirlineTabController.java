@@ -69,6 +69,8 @@ public class AirlineTabController extends DataController {
         airlineColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
 
+        // Multiple rows can be selected
+        dataTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         try {
             initialiseButtons();
