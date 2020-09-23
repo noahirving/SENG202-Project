@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -20,40 +20,6 @@
       <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <GridPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="14.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="18.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="13.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-              <Button fx:id="uploadDataBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="150.0" text="Upload Flight Path Data" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Label fx:id="countrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-            <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="2">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></ComboBox>
-            <Button fx:id="newRecordButton" mnemonicParsing="false" onAction="#newRecord" prefHeight="26.4" prefWidth="26.4" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button fx:id="deleteRecordButton" mnemonicParsing="false" onAction="#deleteRow" prefHeight="26.4" prefWidth="26.4" GridPane.columnIndex="3">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-         </children>
-         <padding>
-            <Insets left="15.0" right="15.0" />
-         </padding>
-      </GridPane>
         <TableView fx:id="dataTable" prefHeight="406.0" prefWidth="724.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
             <columns>
                 <TableColumn fx:id="typeColumn" prefWidth="685.0" text="Type" />
@@ -66,5 +32,28 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
         </TableView>
+      <GridPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="9.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="13.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label fx:id="countrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="1" />
+            <JFXTextField fx:id="searchField" focusColor="#32a42f" promptText="Search" />
+            <JFXComboBox fx:id="dataSetComboBox" focusColor="#32a42f" prefHeight="25.0" prefWidth="105.0" promptText="All" GridPane.columnIndex="2" />
+            <JFXButton fx:id="uploadDataBtn" buttonType="RAISED" onAction="#uploadData" styleClass="button-upload" stylesheets="@styles.css" text="Upload Flight Path" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+            <JFXButton fx:id="newRecordButton" buttonType="RAISED" onAction="#newRecord" prefWidth="26.4" style="-fx-background-color: #f2f2f3;" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
+            <JFXButton fx:id="deleteRecordButton" buttonType="RAISED" layoutX="566.0" layoutY="24.0" onAction="#deleteRow" prefWidth="26.4" style="-fx-background-color: #f2f2f3;" GridPane.columnIndex="3" />
+         </children>
+         <padding>
+            <Insets left="15.0" right="15.0" />
+         </padding>
+      </GridPane>
    </children>
 </GridPane>

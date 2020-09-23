@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -14,8 +14,8 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TabPane fx:id="mainTabPane" prefHeight="500.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="90.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-        <tabs>
+      <JFXTabPane stylesheets="@styles.css">
+         <tabs>
             <Tab fx:id="homeTabButton" text="Home">
                 <content>
                     <fx:include prefHeight="500.0" prefWidth="750.0" source="homePage.fxml" />
@@ -51,7 +51,7 @@
                   <fx:include source="emissionsTab.fxml" />
                </content>
             </Tab>
-        </tabs>
-      </TabPane>
+         </tabs>
+      </JFXTabPane>
    </children>
 </GridPane>

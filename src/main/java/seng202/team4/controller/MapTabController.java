@@ -28,9 +28,13 @@ public class MapTabController {
      */
     @FXML private WebView googleMapView;
     /**
-     * A button that refreshes comboboxes and map by calling init()
+     * A button that refreshes route comboboxes and map by calling init()
      */
-    @FXML private Button refreshButton;
+    @FXML private Button refreshButtonRoute;
+    /**
+     * A button that refreshes airport comboboxes and map by calling init()
+     */
+    @FXML private Button refreshButtonAirport;
     /**
      * A radio container that contains the route and airport filter showing radio buttons.
      */
@@ -105,10 +109,19 @@ public class MapTabController {
      */
     @FXML
     public void initialize() {
-        Image refreshImage = new Image(getClass().getResourceAsStream(Path.REFRESH_BUTTON_PNG));
-        refreshButton.setGraphic(new ImageView(refreshImage));
-        refreshButton.setTooltip(new Tooltip("Refresh drop-down menus"));
+        initialiseRefreshButtons();
         init();
+    }
+
+    /**
+     * Initialise refresh buttons by setting their images and tooltips.
+     */
+    private void initialiseRefreshButtons() {
+        Image refreshImage = new Image(getClass().getResourceAsStream(Path.REFRESH_BUTTON_PNG));
+        refreshButtonRoute.setGraphic(new ImageView(refreshImage));
+        refreshButtonAirport.setGraphic(new ImageView(refreshImage));
+        refreshButtonRoute.setTooltip(new Tooltip("Refresh drop-down menus"));
+        refreshButtonAirport.setTooltip(new Tooltip("Refresh drop-down menus"));
     }
 
     /**

@@ -1,5 +1,8 @@
 package seng202.team4.controller;
 
+import com.jfoenix.controls.JFXSlider;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -64,7 +67,7 @@ public class RouteTabController extends DataController {
     /**
      * Slider for filtering by number of stops for a route.
      */
-    @FXML private Slider stopsFilterSlider;
+    @FXML private JFXSlider stopsFilterSlider;
     /**
      * Label that shows how many stops are selected by stopsFilterSlider.
      */
@@ -143,10 +146,10 @@ public class RouteTabController extends DataController {
      * Connect sliders to their respective columns; sliders' maximum values are their corresponding column's max values.
      */
     private void initialiseSliders() {
-        stopsFilterSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> stopsLabel.textProperty().setValue(
-                String.valueOf(newValue.intValue())));
-
-        setSliderMaxStops();
+    stopsFilterSlider.valueChangingProperty().addListener((source, oldValue, newValue) ->
+            stopsLabel.textProperty().setValue(String.valueOf((int)stopsFilterSlider.getValue())));
+    stopsFilterSlider.setValue(0);
+    setSliderMaxStops();
 
     }
 
@@ -253,8 +256,10 @@ public class RouteTabController extends DataController {
         FilteredList<Route> airlinesFilter = addFilter(new FilteredList<>(routes, p -> true), airlineFilterCombobox, "Airline");
         FilteredList<Route> sourceFilter = addFilter(airlinesFilter, departureFilterCombobox, "Source");
         FilteredList<Route> stopSliderFilter = new FilteredList<>(sourceFilter, p -> true);
+
         stopsLabel.textProperty().addListener((observableValue, oldValue, newValue) ->
                 stopSliderFilter.setPredicate((route -> (Integer.parseInt(newValue) == route.getNumStops()))));
+
 
         FilteredList<Route> destinationFilter = addFilter(stopSliderFilter, destinationFilterCombobox, "Destination");
         FilteredList<Route> planeFilter = addFilter(destinationFilter, planeTypeFilterCombobox, "Plane");

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -38,33 +37,15 @@
         </rowConstraints>
          <children>
               <Label fx:id="countrySelectorLabel" text="Country:" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
-              <ComboBox fx:id="countryCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="2" GridPane.halignment="LEFT">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></ComboBox>
-              <TextField fx:id="searchField" maxWidth="200.0" prefHeight="26.0" prefWidth="162.0" promptText="Search" GridPane.halignment="LEFT" />
-              <ComboBox fx:id="cityCombobox" maxWidth="250.0" prefHeight="26.0" prefWidth="117.0" promptText="All" GridPane.columnIndex="4" GridPane.halignment="LEFT">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></ComboBox>
-              <Button fx:id="uploadDataBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#uploadData" prefHeight="26.0" prefWidth="157.0" text="Upload Airport Data" GridPane.columnIndex="8" GridPane.halignment="RIGHT">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
               <Label fx:id="citySelectorLabel" text="City:" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
-            <ComboBox fx:id="dataSetComboBox" maxWidth="250.0" prefHeight="26.0" prefWidth="137.0" promptText="All" GridPane.columnIndex="6">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></ComboBox>
             <Label fx:id="countrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="5" />
-            <Button fx:id="newRecordButton" mnemonicParsing="false" onAction="#newRecord" prefHeight="26.4" prefWidth="26.4" GridPane.columnIndex="7" GridPane.halignment="RIGHT">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button fx:id="deleteRecordButton" mnemonicParsing="false" onAction="#deleteRow" prefHeight="26.4" prefWidth="26.4" GridPane.columnIndex="7">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
+            <JFXTextField fx:id="searchField" focusColor="#32a42f" promptText="Search" />
+            <JFXComboBox fx:id="countryCombobox" focusColor="#32a42f" prefHeight="25.0" prefWidth="71.0" promptText="All" GridPane.columnIndex="2" />
+            <JFXComboBox fx:id="cityCombobox" focusColor="#32a42f" prefHeight="25.0" prefWidth="71.0" promptText="All" GridPane.columnIndex="4" />
+            <JFXComboBox fx:id="dataSetComboBox" focusColor="#32a42f" prefHeight="25.0" prefWidth="68.0" GridPane.columnIndex="6" />
+            <JFXButton fx:id="newRecordButton" buttonType="RAISED" onAction="#newRecord" prefWidth="26.4" style="-fx-background-color: #f2f2f3;" GridPane.columnIndex="7" GridPane.halignment="RIGHT" />
+            <JFXButton fx:id="deleteRecordButton" buttonType="RAISED" onAction="#deleteRow" prefWidth="26.4" style="-fx-background-color: #f2f2f3;" GridPane.columnIndex="7" />
+            <JFXButton fx:id="uploadDataBtn" buttonType="RAISED" onAction="#uploadData" styleClass="button-upload" stylesheets="@styles.css" text="Upload Airline Data" GridPane.columnIndex="8" GridPane.halignment="CENTER" />
          </children>
          <padding>
             <Insets left="15.0" right="15.0" />

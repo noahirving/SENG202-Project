@@ -2,6 +2,8 @@ package seng202.team4.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -75,6 +77,10 @@ public class FlightPathTabController extends DataController {
      * Mutable ObservableLst containing a list of flight paths.
      */
     private ObservableList<FlightPath> flightPaths = FXCollections.observableArrayList();
+    /**
+     * Initialization of SortedList of routes that will be used by the filters
+     */
+    private SortedList<FlightPath> sortedFlightPath;
 
     /**
      * Holds the high level logic (set of instructions) for initialisation.
@@ -164,11 +170,41 @@ public class FlightPathTabController extends DataController {
 
     @Override
     public void initialiseComboBoxes() {
+        filterData();
 
     }
 
     @Override
     public void filterData() {
+        FilteredList<FlightPath> searchFilter = addSearchBarFilter(flightPaths);
+        sortedFlightPath = new SortedList<>(searchFilter);
+        sortedFlightPath.comparatorProperty().bind(dataTable.comparatorProperty());
+
+        dataTable.setItems(sortedFlightPath);
+
+    }
+
+    private FilteredList<FlightPath> addSearchBarFilter(ObservableList<FlightPath> flightPaths) {
+        FilteredList<FlightPath> searchFilter = new FilteredList<>(flightPaths, p -> true);
+        searchField.textProperty().addListener((observable, oldValue, newValue) ->
+                searchFilter.setPredicate(flightPath -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    if (flightPath.getType().toLowerCase().contains(newValue.toLowerCase())) {
+                        return true;
+                    } else if (flightPath.getId().toLowerCase().contains(newValue.toLowerCase())) {
+                        return true;
+                    } else if (String.valueOf(flightPath.getAltitude()).contains(newValue.toLowerCase())) {
+                        return true;
+                    } else if (String.valueOf(flightPath.getLatitude()).contains(newValue.toLowerCase())) {
+                        return true;
+                    } else {
+                        return (String.valueOf(flightPath.getLongitude()).contains(newValue.toLowerCase()));
+                    }
+                }));
+        return searchFilter;
     }
 
     /**
