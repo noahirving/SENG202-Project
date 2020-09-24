@@ -61,7 +61,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <JFXTextField fx:id="searchField" focusColor="#298326" promptText="Search">
+                        <JFXTextField fx:id="searchField" focusColor="#298326" labelFloat="true" promptText="Search">
                            <GridPane.margin>
                               <Insets left="15.0" />
                            </GridPane.margin>

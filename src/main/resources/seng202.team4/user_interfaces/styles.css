@@ -28,8 +28,8 @@
     -fx-pref-height: 23;
     -fx-background-color: #f2f2f3;
     -fx-padding: 0.15em 0.15em;
-    /*-fx-background-image: url("/seng202.team4/images/refresh_icon.png");*/
     -fx-cursor: HAND;
+    -fx-background-radius: 5em;
 
 }
 .button-upload {
@@ -37,4 +37,3 @@
     -fx-cursor: HAND;
 
 }
-

@@ -25,7 +25,6 @@
       <GridPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="52.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" percentWidth="10.0" prefWidth="10.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" percentWidth="12.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" percentWidth="12.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
@@ -34,12 +33,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label fx:id="countrySelectorLabel1" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="65.0" text="Data Set:" textAlignment="RIGHT" GridPane.columnIndex="1" />
-            <JFXTextField fx:id="searchField" focusColor="#32a42f" prefHeight="25.0" prefWidth="182.0" promptText="Search" />
-            <JFXComboBox fx:id="dataSetComboBox" focusColor="#32a42f" prefHeight="25.0" prefWidth="68.0" GridPane.columnIndex="2" />
-            <JFXButton fx:id="newRecordButton" buttonType="RAISED" onAction="#newRecord" prefWidth="26.4" style="-fx-background-color: #f2f2f3;" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
-            <JFXButton fx:id="deleteRecordButton" buttonType="RAISED" onAction="#deleteRow" prefWidth="20.0" style="-fx-background-color: #f2f2f3;" GridPane.columnIndex="3" />
-            <JFXButton fx:id="uploadDataBtn" buttonType="RAISED" onAction="#uploadData" styleClass="button-upload" stylesheets="@styles.css" text="Upload Route Data" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+            <JFXTextField fx:id="searchField" focusColor="#32a42f" labelFloat="true" prefHeight="25.0" prefWidth="182.0" promptText="Search" />
+            <JFXComboBox fx:id="dataSetComboBox" focusColor="#32a42f" labelFloat="true" prefHeight="25.0" prefWidth="100.0" promptText="Data Set" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <JFXButton fx:id="newRecordButton" buttonType="RAISED" onAction="#newRecord" prefWidth="26.4" style="-fx-background-color: #f2f2f3;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+            <JFXButton fx:id="deleteRecordButton" buttonType="RAISED" onAction="#deleteRow" prefWidth="20.0" style="-fx-background-color: #f2f2f3;" GridPane.columnIndex="2" />
+            <JFXButton fx:id="uploadDataBtn" buttonType="RAISED" onAction="#uploadData" styleClass="button-upload" stylesheets="@styles.css" text="Upload Route Data" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
          </children>
          <padding>
             <Insets left="15.0" right="15.0" />
@@ -66,7 +64,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
               </TableView>
-            <GridPane vgap="25.0" GridPane.columnIndex="1">
+            <GridPane GridPane.columnIndex="1">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                </columnConstraints>
@@ -79,95 +77,39 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                      <Label fx:id="routeTabFilterLabel" text="Filters" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                      <Label fx:id="routeTabFilterLabel" text="Filters" textFill="#32a42f" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                           <font>
-                              <Font size="22.0" />
+                              <Font size="35.0" />
                           </font>
                       </Label>
-                  <GridPane hgap="5.0" GridPane.rowIndex="1">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                            <Label fx:id="routeTabAirlineLabel" text="Airline:" GridPane.halignment="RIGHT" />
-                        <JFXComboBox fx:id="airlineFilterCombobox" focusColor="#32a42f" prefHeight="25.0" prefWidth="118.0" promptText="All" GridPane.columnIndex="1" />
-                     </children>
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </GridPane>
-                  <GridPane hgap="5.0" layoutX="10.0" layoutY="426.0" GridPane.rowIndex="2">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                            <Label fx:id="routeTabDepartureLabel" text="Departure:" GridPane.halignment="RIGHT" />
-                        <JFXComboBox fx:id="departureFilterCombobox" focusColor="#32a42f" prefHeight="25.0" prefWidth="118.0" promptText="All" GridPane.columnIndex="1" />
-                     </children>
-                  </GridPane>
-                  <GridPane hgap="5.0" layoutX="10.0" layoutY="10.0" GridPane.rowIndex="3">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                            <Label fx:id="routeTabDestinationLabel" text="Destination:" GridPane.halignment="RIGHT" />
-                        <JFXComboBox fx:id="destinationFilterCombobox" focusColor="#32a42f" prefHeight="25.0" prefWidth="118.0" promptText="All" GridPane.columnIndex="1" />
-                     </children>
-                  </GridPane>
+                  <JFXComboBox fx:id="airlineFilterCombobox" editable="true" focusColor="#32a42f" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Airline" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <JFXComboBox fx:id="departureFilterCombobox" editable="true" focusColor="#32a42f" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Departure Airport" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <JFXComboBox fx:id="destinationFilterCombobox" editable="true" focusColor="#32a42f" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Destination Airport" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                   <GridPane hgap="5.0" layoutX="10.0" layoutY="362.0" GridPane.rowIndex="4">
                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="42.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="95.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
+                        <Label fx:id="stopsLabel" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                           <GridPane.margin>
+                              <Insets bottom="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <JFXSlider fx:id="stopsFilterSlider" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </JFXSlider>
                             <Label fx:id="routeTabStopsLabel" text="Stops:" GridPane.halignment="RIGHT" />
-                        <GridPane prefHeight="46.0" prefWidth="126.0" GridPane.columnIndex="1">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="118.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label fx:id="stopsLabel" text="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                              <JFXSlider fx:id="stopsFilterSlider" />
-                           </children>
-                        </GridPane>
                      </children>
                   </GridPane>
-                  <GridPane hgap="5.0" layoutX="10.0" layoutY="402.0" GridPane.rowIndex="5">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                            <Label fx:id="routeTabPlaneTypeLabel" text="Plane type:" GridPane.halignment="RIGHT" />
-                        <JFXComboBox fx:id="planeTypeFilterCombobox" focusColor="#32a42f" prefHeight="25.0" prefWidth="118.0" promptText="All" GridPane.columnIndex="1" />
-                     </children>
-                  </GridPane>
+                  <JFXComboBox fx:id="planeTypeFilterCombobox" editable="true" focusColor="#32a42f" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Plane Type" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                </children>
-               <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </padding>
             </GridPane>
          </children>
       </GridPane>
