@@ -12,6 +12,7 @@ target/
 
 # Database
 *.db*
+/databases/
 
 # POM
 dependency-reduced-pom.xml

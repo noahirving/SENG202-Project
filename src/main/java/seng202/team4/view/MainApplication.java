@@ -16,9 +16,9 @@ public class MainApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(Path.MAN_SCENE_FXML));
         primaryStage.setTitle("Flight Tracker");
-        primaryStage.setMinHeight(500);
-        primaryStage.setMinWidth(780);
-        Scene mainScene = new Scene(root, 760, 460);
+        primaryStage.setMinHeight(720);
+        primaryStage.setMinWidth(1280);
+        Scene mainScene = new Scene(root, 1280, 720);
         mainScene.getStylesheets().add(Path.STYLE_SHEET);
         primaryStage.setScene(mainScene);
         primaryStage.show();
