@@ -5,8 +5,8 @@
 .button {
     -fx-padding: 0.7em 0.57em;
     -fx-font-size: 14px;
-    -fx-background-color: #298326;
-    -fx-text-fill: WHITE;
+    -fx-background-color: WHITE;
+    -fx-text-fill: BLACK;
     -jfx-button-type: RAISED;
     -fx-cursor: HAND;
 
