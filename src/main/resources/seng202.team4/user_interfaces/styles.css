@@ -5,7 +5,7 @@
 .button {
     -fx-padding: 0.7em 0.57em;
     -fx-font-size: 14px;
-    -fx-background-color: #bbd0ba;
+    -fx-background-color: #298326;
     -fx-text-fill: WHITE;
     -jfx-button-type: RAISED;
     -fx-cursor: HAND;
@@ -36,4 +36,9 @@
     -fx-background-color: #298326;
     -fx-cursor: HAND;
 
+}
+#gridPane {
+    -fx-background-image: url("/seng202.team4/images/homepage.png");
+    -fx-background-size: cover, auto;
+    -fx-background-position: center center;
 }

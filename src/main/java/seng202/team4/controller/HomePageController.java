@@ -3,6 +3,10 @@ package seng202.team4.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import seng202.team4.model.Main;
 import seng202.team4.model.Path;
 import seng202.team4.model.DataLoader;
@@ -34,6 +38,15 @@ public class HomePageController {
      * Label indicating internet and therefore maps is inaccessible
      */
     @FXML private Label internetWarningLabel;
+    /**
+     * ImageView that stores the home page image
+     */
+    @FXML private ImageView homeImage;
+    /**
+     * GridPane that holds all the controls for the homepage
+     */
+    @FXML private GridPane gridPane;
+    @FXML private VBox vBox;
 
     /**
      * Initialise the homepage by testing internet connection and displaying error message is internet is not available
@@ -43,6 +56,12 @@ public class HomePageController {
         if (!getInternetAccess()) {
             internetWarningLabel.setVisible(true);
         }
+
+    }
+
+    @FXML
+    private void exit() {
+        System.exit(0);
     }
 
     /**
