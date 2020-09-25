@@ -14,7 +14,7 @@
 
 <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team4.controller.MapTabController">
    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="953.0" minWidth="10.0" prefWidth="953.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="953.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="328.0" minWidth="0.0" prefWidth="285.0" />
    </columnConstraints>
    <rowConstraints>
