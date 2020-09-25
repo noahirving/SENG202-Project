@@ -51,7 +51,6 @@ public class MapTabController {
      * Grid container the holds all the filters for airports.
      */
     @FXML private GridPane airportFilterGrid;
-
     /**
      * Searchable combobox for filtering by airline code.
      */
@@ -90,11 +89,6 @@ public class MapTabController {
      * Limit for how many routes can be shown on the map (to avoid clutter).
      */
     private static final int ROUTELIMIT = 400;
-    /**
-     * Limit for how many airports can be shown on the map (to avoid clutter).
-     */
-    private static final int AIRPORTLIMIT = 500;
-
     /**
      * Web engine used to load the Google Map onto the WebView.
      */
@@ -246,9 +240,9 @@ public class MapTabController {
         clearMap();
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
+        int count = 0;
         try {
             ResultSet routesResultSet = stmt.executeQuery("SELECT SourceAirport, DestinationAirport FROM RoutesSelected");
-            int count = 0;
             while (routesResultSet.next() && count <= ROUTELIMIT) {
                 showOneRoute(routesResultSet);
                 count++;
@@ -258,7 +252,48 @@ public class MapTabController {
             throwables.printStackTrace();
         }
         DatabaseManager.disconnect(c);
+
+        repositionMap("Routes");
+
     }
+
+    /**
+     * Clears map then, using values in the comboboxes, shows filtered results of routes in the map.
+     * Routes must be less than ROUTELIMIT. All SQL Exceptions are handled here.
+     * Activated when the 'Apply Button' in the route filters grid is clicked.
+     */
+    @FXML
+    private void routeApplyFilter() {
+        clearMap();
+        String airline = (String) routeAirlineFilterCombobox.getValue();
+        String airport = (String) routeAirportFilterCombobox.getValue();
+        String planeType = (String) routePlaneTypeFilterCombobox.getValue();
+
+        airline = getValidInput(airline);
+        airport = getValidInput(airport);
+        planeType = getValidInput(planeType);
+
+        String query = String.format("SELECT SourceAirport, DestinationAirport FROM Route WHERE Airline is %s and SourceAirport is %s and Equipment is %s",
+                airline, airport, planeType);
+
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        int count = 0;
+        try {
+            ResultSet filteredResultSet = stmt.executeQuery(query);
+            while (filteredResultSet.next() && count < ROUTELIMIT) {
+                showOneRoute(filteredResultSet);
+                count++;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        DatabaseManager.disconnect(c);
+
+        repositionMap("Routes");
+
+    }
+
 
     /**
      * Shows one route on the Google Map by querying the Airport table for coordinates then
@@ -310,15 +345,28 @@ public class MapTabController {
         try {
             ResultSet airportResultSet = stmt.executeQuery("SELECT Name, Longitude, Latitude FROM AirportsSelected");
 
-            while (airportResultSet.next()) {
-                showOneAirport(airportResultSet);
-            }
+            showAirportsOnMap(airportResultSet);
             stmt.close();
         } catch (SQLException throwables) {
+            DatabaseManager.disconnect(c);
+
             throwables.printStackTrace();
         }
         DatabaseManager.disconnect(c);
+        repositionMap("Airports");
 
+    }
+
+    /**
+     * Given a ResultSet of Airports from SQL, show all these airports on the Google Maps using showOneAirport() for each.
+     * @param airportResultSet ResultSet of airports to show
+     * @throws SQLException thrown when there is an error with resultset.next() method
+     */
+    private void showAirportsOnMap(ResultSet airportResultSet) throws SQLException {
+        while (airportResultSet.next()) {
+            showOneAirport(airportResultSet);
+        }
+        clusterMarkers();
     }
 
     /**
@@ -337,42 +385,6 @@ public class MapTabController {
     }
 
     /**
-     * Clears map then, using values in the comboboxes, shows filtered results of routes in the map.
-     * Routes must be less than ROUTELIMIT. All SQL Exceptions are handled here.
-     * Activated when the 'Apply Button' in the route filters grid is clicked.
-     */
-    @FXML
-    private void routeApplyFilter() {
-        clearMap();
-        String airline = (String) routeAirlineFilterCombobox.getValue();
-        String airport = (String) routeAirportFilterCombobox.getValue();
-        String planeType = (String) routePlaneTypeFilterCombobox.getValue();
-
-
-        airline = getValidInput(airline);
-        airport = getValidInput(airport);
-        planeType = getValidInput(planeType);
-
-        String query = String.format("SELECT SourceAirport, DestinationAirport FROM Route WHERE Airline is %s and SourceAirport is %s and Equipment is %s",
-                airline, airport, planeType);
-
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
-        try {
-            ResultSet filteredResultSet = stmt.executeQuery(query);
-            int count = 0;
-            while (filteredResultSet.next() && count < ROUTELIMIT) {
-                showOneRoute(filteredResultSet);
-                count++;
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        DatabaseManager.disconnect(c);
-
-    }
-
-    /**
      * Clears map then, using values in the comboboxes, shows filtered results of airports in the map.
      * All SQL Exceptions are handled here.
      * Activated when the 'Apply Button' in the airport filters grid is clicked.
@@ -385,18 +397,20 @@ public class MapTabController {
         String query = String.format("SELECT Longitude, Latitude, Name FROM Airport WHERE Country is %s", country);
         Connection c = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(c);
-        int count = 0;
         try {
             ResultSet airportResultSet = stmt.executeQuery(query);
-
-            while (airportResultSet.next() & count < AIRPORTLIMIT) {
-                showOneAirport(airportResultSet);
-                count++;
-            }
+            showAirportsOnMap(airportResultSet);
         } catch (SQLException throwables) {
+            DatabaseManager.disconnect(c);
             throwables.printStackTrace();
         }
         DatabaseManager.disconnect(c);
+
+        // Reposition map only if there is a filter input
+        if (!country.equals("not null")) {
+            repositionMap("Airports");
+        }
+
     }
 
     /**
@@ -421,6 +435,28 @@ public class MapTabController {
     @FXML
     private void clearMap() {
         String scriptToExecute = "clearMap();";
+        executeScript(scriptToExecute);
+    }
+
+    /**
+     * Make airport markers cluster in Google Maps
+     */
+    public void clusterMarkers() {
+        String scriptToExecute = "makeClusters();";
+        executeScript(scriptToExecute);
+    }
+
+    /**
+     * Reposition map according to either routes or airports
+     * @param filter either 'Routes' or 'Airports' to determine which markers to reposition on
+     */
+    private void repositionMap(String filter) {
+        String scriptToExecute;
+        if (filter.equals("Routes")) {
+            scriptToExecute = "repositionMapByRoutes();";
+        } else {
+            scriptToExecute = "repositionMapByAirports();";
+        }
         executeScript(scriptToExecute);
     }
 

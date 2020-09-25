@@ -18,7 +18,7 @@ public class MainApplication extends Application {
         primaryStage.setTitle("Flight Tracker");
         primaryStage.setMinHeight(720);
         primaryStage.setMinWidth(1280);
-        Scene mainScene = new Scene(root, 960, 540);
+        Scene mainScene = new Scene(root, 1280, 720);
         mainScene.getStylesheets().add(Path.STYLE_SHEET);
         primaryStage.setScene(mainScene);
         primaryStage.show();
