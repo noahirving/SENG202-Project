@@ -13,6 +13,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.controlsfx.control.textfield.TextFields;
 import seng202.team4.model.Path;
 import seng202.team4.model.*;
 
@@ -222,7 +223,7 @@ public class RouteTabController extends DataController {
 
     /**
      * Sorts and sets the FX observable lists to each respective combobox and
-     * uses class AutoCompleteComboBoxListener to make these comboboxes searchable.
+     * uses ControlsFX to make these comboboxes searchable.
      * filterdata() is also called here because filtering of the table is based on combobox selections
      * and is required to be refreshed whenever a new dataset is chosen to be displayed.
      */
@@ -235,10 +236,11 @@ public class RouteTabController extends DataController {
         FXCollections.sort(planeTypes); planeTypeFilterCombobox.setItems(planeTypes);
 
         // Make combobox searching autocomplete
-        new AutoCompleteComboBoxListener<>(airlineFilterCombobox);
-        new AutoCompleteComboBoxListener<>(departureFilterCombobox);
-        new AutoCompleteComboBoxListener<>(destinationFilterCombobox);
-        new AutoCompleteComboBoxListener<>(planeTypeFilterCombobox);
+        TextFields.bindAutoCompletion(airlineFilterCombobox.getEditor(), airlineFilterCombobox.getItems());
+        TextFields.bindAutoCompletion(departureFilterCombobox.getEditor(), departureFilterCombobox.getItems());
+        TextFields.bindAutoCompletion(destinationFilterCombobox.getEditor(), destinationFilterCombobox.getItems());
+        TextFields.bindAutoCompletion(planeTypeFilterCombobox.getEditor(), planeTypeFilterCombobox.getItems());
+
 
         filterData();
 

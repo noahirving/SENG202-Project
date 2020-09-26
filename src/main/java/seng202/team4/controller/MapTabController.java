@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import org.controlsfx.control.textfield.TextFields;
 import seng202.team4.model.Path;
 import seng202.team4.model.DatabaseManager;
 
@@ -160,33 +161,44 @@ public class MapTabController {
      * Catches exceptions caused by SQL errors.
      */
     private void initialiseComboBoxes() {
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
         try {
-            initialiseRouteComboBoxes(stmt);
-            ResultSet airportResultSet = stmt.executeQuery("SELECT Country FROM Airport");
-            while (airportResultSet.next()) {
-                String country = airportResultSet.getString("Country");
-                if (!airportCountries.contains(country)) {
-                    airportCountries.add(country);
-                }
-            }
+            initialiseRouteComboBoxes();
+            initialiseAirportComboBoxes();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        FXCollections.sort(airportCountries); airportCountryFilterCombobox.setItems(airportCountries);
-        new AutoCompleteComboBoxListener<>(airportCountryFilterCombobox);
-        DatabaseManager.disconnect(c);
+
     }
 
     /**
      * Specifically initialises/populates the route filtering comboboxes by querying
      * the SQL database.
-     * @param stmt Statement object used to execute the JDBC query.
      * @throws SQLException thrown if there is an error querying the SQL database
      */
-    private void initialiseRouteComboBoxes(Statement stmt) throws SQLException {
+    private void initialiseAirportComboBoxes() throws SQLException {
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        ResultSet airportResultSet = stmt.executeQuery("SELECT Country FROM Airport");
+        while (airportResultSet.next()) {
+            String country = airportResultSet.getString("Country");
+            if (!airportCountries.contains(country)) {
+                airportCountries.add(country);
+            }
+        }
+        DatabaseManager.disconnect(c);
+        FXCollections.sort(airportCountries); airportCountryFilterCombobox.setItems(airportCountries);
+        TextFields.bindAutoCompletion(airportCountryFilterCombobox.getEditor(), airportCountryFilterCombobox.getItems());
+    }
+
+    /**
+     * Specifically initialises/populates the route filtering comboboxes by querying
+     * the SQL database.
+     * @throws SQLException thrown if there is an error querying the SQL database
+     */
+    private void initialiseRouteComboBoxes() throws SQLException {
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
         ResultSet routesResultSet = stmt.executeQuery("SELECT Airline, SourceAirport, Equipment FROM Route");
         while (routesResultSet.next()) {
             String airline = routesResultSet.getString("Airline");
@@ -203,13 +215,15 @@ public class MapTabController {
                 planeTypes.add(planeType);
             }
         }
+        DatabaseManager.disconnect(c);
         FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
         FXCollections.sort(departureCountries); routeAirportFilterCombobox.setItems(departureCountries);
         FXCollections.sort(planeTypes); routePlaneTypeFilterCombobox.setItems(planeTypes);
         // Make combobox searching autocomplete
-        new AutoCompleteComboBoxListener<>(routeAirlineFilterCombobox);
-        new AutoCompleteComboBoxListener<>(routeAirportFilterCombobox);
-        new AutoCompleteComboBoxListener<>(routePlaneTypeFilterCombobox);
+        TextFields.bindAutoCompletion(routeAirlineFilterCombobox.getEditor(), routeAirlineFilterCombobox.getItems());
+        TextFields.bindAutoCompletion(routeAirportFilterCombobox.getEditor(), routeAirportFilterCombobox.getItems());
+        TextFields.bindAutoCompletion(routePlaneTypeFilterCombobox.getEditor(), routePlaneTypeFilterCombobox.getItems());
+
     }
 
     /**

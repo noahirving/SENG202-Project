@@ -1,5 +1,6 @@
 package seng202.team4.controller;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -7,6 +8,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.controlsfx.control.textfield.TextFields;
 import seng202.team4.model.Path;
 import seng202.team4.model.*;
 
@@ -111,7 +113,7 @@ public class AirlineTabController extends DataController {
 
     /**
      * Sorts the FX observable lists for the country ComboBox and
-     * uses class AutoCompleteComboBoxListener to make the ComboBox searchable.
+     * uses ControlsFX library to make the ComboBox searchable.
      * filterData() is also called here because filtering of the table is based on ComboBox selections
      * and is required to be refreshed whenever a new dataset is chosen to be displayed.
      */
@@ -121,8 +123,7 @@ public class AirlineTabController extends DataController {
         FXCollections.sort(countries);
         countryCombobox.setItems(countries);
 
-        // Make combobox searching autocomplete
-        new AutoCompleteComboBoxListener<>(countryCombobox);
+        TextFields.bindAutoCompletion(countryCombobox.getEditor(), countryCombobox.getItems());
 
         filterData();
 

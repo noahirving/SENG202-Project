@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.controlsfx.control.textfield.TextFields;
 import seng202.team4.model.*;
 
 import java.sql.ResultSet;
@@ -177,7 +178,7 @@ public class AirportTabController extends DataController {
 
     /**
      * Sorts the FX observable lists for the country and cities ComboBoxes and
-     * uses class AutoCompleteComboBoxListener to make these ComboBoxes searchable.
+     * uses ControlsFX library to make these ComboBoxes searchable.
      * filterData() is also called here because filtering of the table is based on ComboBox selections
      * and is required to be refreshed whenever a new dataset is chosen to be displayed.
      */
@@ -188,8 +189,8 @@ public class AirportTabController extends DataController {
         FXCollections.sort(cities); cityCombobox.setItems(cities);
 
         // Make combobox searching autocomplete
-        new AutoCompleteComboBoxListener<>(cityCombobox);
-        new AutoCompleteComboBoxListener<>(countryCombobox);
+        TextFields.bindAutoCompletion(countryCombobox.getEditor(), countryCombobox.getItems());
+        TextFields.bindAutoCompletion(cityCombobox.getEditor(), cityCombobox.getItems());
 
         filterData();
 
