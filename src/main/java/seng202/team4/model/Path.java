@@ -18,6 +18,7 @@ public abstract class Path {
     public static final String NEW_AIRPORT_FXML = VIEW + USER_INTERFACES + "/newAirport.fxml";
     public static final String NEW_ROUTE_FXML = VIEW + USER_INTERFACES + "/newRoute.fxml";
     public static final String NEW_FLIGHT_PATH_FXML = VIEW + USER_INTERFACES + "/newFlightPath.fxml";
+    public static final String AIRLINE_DETAILS = VIEW + USER_INTERFACES + "/airlineDetails.fxml";
 
     public static final String REFRESH_BUTTON_PNG = VIEW + "/images/refresh_icon.png";
     public static final String ADD_RECORD_BUTTON_PNG = VIEW + "/images/add_record_image.png";

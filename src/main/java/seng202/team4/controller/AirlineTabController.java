@@ -1,6 +1,5 @@
 package seng202.team4.controller;
 
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -8,10 +7,12 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import org.controlsfx.control.textfield.TextFields;
 import seng202.team4.model.Path;
 import seng202.team4.model.*;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -101,9 +102,23 @@ public class AirlineTabController extends DataController {
             Airline airline = new Airline();
             String name = rs.getString("Name");
             String country = rs.getString("Country");
+            String code = rs.getString("Alias");
+            String iata = rs.getString("Iata");
+            String icao = rs.getString("Icao");
+            String cs = rs.getString("Callsign");
+            String active = rs.getString("RecentlyActive");
 
             airline.setName(name);
             airline.setCountry(country);
+            airline.setCode(code);
+            airline.setIata(iata);
+            airline.setIcao(icao);
+            airline.setCallSign(cs);
+            if (active.equals("true")) {
+                airline.setRecentlyActive(true);
+            } else {
+                airline.setRecentlyActive(false);
+            }
             airlines.add(airline);
 
             addToComboBoxList(countries, country);
@@ -220,7 +235,7 @@ public class AirlineTabController extends DataController {
      */
     @Override
     public String getTableQuery() {
-        return "SELECT Name, Country FROM Airline";
+        return "SELECT * FROM Airline";
     }
 
     /**
@@ -231,5 +246,13 @@ public class AirlineTabController extends DataController {
         ObservableList<Airline> selectedAirlines = dataTable.getSelectionModel().getSelectedItems();
         ArrayList<Airline> rows = new ArrayList<>(selectedAirlines);
         rows.forEach(row -> airlines.remove(row));
+    }
+
+    @FXML
+    public void tableClicked(MouseEvent click) throws IOException {
+        if (click.getClickCount() > 1) {
+            Airline airline = dataTable.getSelectionModel().getSelectedItem();
+            showDetails(airline);
+        }
     }
 }
