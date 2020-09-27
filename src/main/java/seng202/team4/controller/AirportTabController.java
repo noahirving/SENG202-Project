@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import org.controlsfx.control.textfield.TextFields;
 import seng202.team4.model.*;
 
@@ -154,23 +155,35 @@ public class AirportTabController extends DataController {
         countries.add(""); cities.add("");
         while (rs.next()) {
             Airport airport = new Airport();
-            String airportName = rs.getString("Name");
-            String airportCountry = rs.getString("Country");
-            String airportCity = rs.getString("City");
-            double airportLongitude = rs.getDouble("Longitude");
-            double airportLatitude = rs.getDouble("Latitude");
+            String name = rs.getString("Name");
+            String country = rs.getString("Country");
+            String city = rs.getString("City");
+            String iata = rs.getString("Iata");
+            String icao = rs.getString("Icao");
+            double longitude = rs.getDouble("Longitude");
+            double latitude = rs.getDouble("Latitude");
+            double altitude = rs.getDouble("Altitude");
+            float timezone = rs.getFloat("TimeZone");
+            char dst = rs.getString("Dst").charAt(0);
+            String tz = rs.getString("TzDatabaseTime");
 
-            airport.setName(airportName);
-            airport.setCountry(airportCountry);
-            airport.setCity(airportCity);
-            airport.setLongitude(airportLongitude);
-            airport.setLatitude(airportLatitude);
-            airport.setCoordinates(airportLongitude, airportLatitude);
+            airport.setName(name);
+            airport.setCountry(country);
+            airport.setCity(city);
+            airport.setIata(iata);
+            airport.setIcao(icao);
+            airport.setLongitude(longitude);
+            airport.setLatitude(latitude);
+            airport.setCoordinates(longitude, latitude);
+            airport.setAltitude(altitude);
+            airport.setTimezone(timezone);
+            airport.setDst(dst);
+            airport.setTzDatabase(tz);
 
             airports.add(airport);
 
-            addToComboBoxList(countries, airportCountry);
-            addToComboBoxList(cities, airportCity);
+            addToComboBoxList(countries, country);
+            addToComboBoxList(cities, city);
 
         }
         dataTable.setItems(airports);
@@ -305,6 +318,18 @@ public class AirportTabController extends DataController {
         ArrayList<Airport> rows = new ArrayList<>(selectedAirports);
         rows.forEach(row -> airports.remove(row));
         rows.forEach(DataLoader::removeFromAirportsSelectedDatabase);
+    }
+
+    @FXML
+    public void tableClicked(MouseEvent click) {
+        if (click.getClickCount() > 1) {
+            Airport airport = dataTable.getSelectionModel().getSelectedItem();
+            showDetails(airport);
+        }
+    }
+
+    public String getDetailsFXML() {
+        return Path.AIRPORT_DETAILS;
     }
 
 }

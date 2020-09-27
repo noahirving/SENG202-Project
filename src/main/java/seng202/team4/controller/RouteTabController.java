@@ -394,4 +394,8 @@ public class RouteTabController extends DataController {
         rows.forEach(row -> routes.remove(row));
         rows.forEach(DataLoader::removeFromRoutesSelectedDatabase);
     }
+
+    public String getDetailsFXML() {
+        return null;
+    }
 }

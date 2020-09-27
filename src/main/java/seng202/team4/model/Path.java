@@ -21,6 +21,7 @@ public abstract class Path {
     public static final String AIRLINE_DETAILS = VIEW + USER_INTERFACES + "/airlineDetails.fxml";
     public static final String UPLOAD_SCENE_FXML = VIEW + USER_INTERFACES + "/fileUpload.fxml";
     public static final String INVALID_LINES_POPUP_FXML = VIEW + USER_INTERFACES + "/invalidLinesPopUp.fxml";
+    public static final String AIRPORT_DETAILS = VIEW + USER_INTERFACES + "/airportDetails.fxml";
 
     public static final String REFRESH_BUTTON_PNG = VIEW + "/images/refresh_icon.png";
     public static final String ADD_RECORD_BUTTON_PNG = VIEW + "/images/add_record_image.png";
