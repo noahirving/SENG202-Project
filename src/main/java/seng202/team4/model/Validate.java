@@ -24,7 +24,7 @@ public interface Validate {
      * @return Returns true if the given string is an integer.
      */
     static boolean isInteger(String string) {
-        if (string == null) {
+        if ((string == null) || (string.length() == 0)) {
             return false;
         }
         return string.matches("-?\\d+");
@@ -36,7 +36,7 @@ public interface Validate {
      * @return Returns true if the given string is an alpha.
      */
     static boolean isAlpha(String string) {
-        if (string == null) {
+        if ((string == null) || (string.length() == 0)) {
             return false;
         }
         return string.matches("[A-Za-z][A-Za-z\\s]*");
@@ -48,7 +48,7 @@ public interface Validate {
      * @return Returns true if the given string is an alpha with multiple language characters.
      */
     static boolean isAlphaMultiLanguage(String string) {
-        if (string == null) {
+        if ((string == null) || (string.length() == 0)) {
             return false;
         }
         return string.matches("[-\\a-zA-Z0-9 \'.\u0080-\u9fff]*+");
@@ -60,7 +60,7 @@ public interface Validate {
      * @return Returns true if the given string is alphanumeric.
      */
     static boolean isAlphaNumeric(String string) {
-        if (string == null) {
+        if ((string == null) || (string.length() == 0)) {
             return false;
         }
         return string.matches("[A-Za-z0-9\\s]*");
@@ -72,7 +72,7 @@ public interface Validate {
      * @return Returns true if the given string is an airport IATA.
      */
     static boolean isAirportIATA(String string) {
-        if (string == null) {
+        if ((string == null) || (string.length() == 0)) {
             return false;
         }
         return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9а-яА-Я%]{3}");
@@ -84,7 +84,7 @@ public interface Validate {
      * @return Returns true if the given string is an airport ICAO.
      */
     static boolean isAirportICAO(String string) {
-        if (string == null) {
+        if ((string == null) || (string.length() == 0)) {
             return false;
         }
         return string.equals("") || string.equals(NULL) || string.matches("[a-zA-Z0-9-_%]{3,4}");
@@ -96,7 +96,7 @@ public interface Validate {
      * @return Returns true if the given string is an airline IATA.
      */
     static boolean isAirlineIATA(String string) {
-        if (string == null) {
+        if ((string == null) || (string.length() == 0)) {
             return false;
         }
         return string.equals("") || string.equals(NULL) || string.matches("[-\\a-zA-Z0-9а-яА-Я +^;:&.?!]*");
@@ -108,7 +108,7 @@ public interface Validate {
      * @return Returns true if the given string is an airline ICAO.
      */
     static boolean isAirlineICAO(String string) {
-        if (string == null) {
+        if ((string == null) || (string.length() == 0)) {
             return false;
         }
         return string.equals("") || string.equals(NULL) || string.matches("[-\\a-zA-Z0-9а-яА-Я '*/+=:&.?!]*");
@@ -120,7 +120,7 @@ public interface Validate {
      * @return Returns true if the given string is a valid timezone database.
      */
     static boolean isValidTZDB(String string) {
-        if (string == null) {
+        if ((string == null) || (string.length() == 0)) {
             return false;
         }
         return string.matches("[a-zA-Z]+/[a-zA-Z_-]+") || string.equals(NULL);

@@ -84,7 +84,7 @@
                 <TableColumn fx:id="airportColumn" prefWidth="320.0" text="Airport" />
                 <TableColumn fx:id="cityColumn" minWidth="4.800048828125" prefWidth="279.0" text="City" />
                 <TableColumn fx:id="countryColumn" minWidth="4.800048828125" prefWidth="140.0" text="Country" />
-                <TableColumn fx:id="coordinatesColumn" minWidth="4.800048828125" prefWidth="181.0" text="Coordinates" />
+                <TableColumn fx:id="coordinatesColumn" minWidth="4.800048828125" prefWidth="181.0" text="Coordinates (Longitude, Latitude)" />
             </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -54,8 +54,9 @@
                     </TableView>
                   <GridPane>
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.1999816894531" minWidth="10.0" prefWidth="384.6000061035156" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="557.4000244140625" minWidth="10.0" prefWidth="333.80004882812494" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.20001220703125" minWidth="10.0" prefWidth="152.99995117187495" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -66,7 +67,8 @@
                               <Insets left="15.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXButton fx:id="loadRoutesBtn" onAction="#updateTable" styleClass="button-filters" stylesheets="@styles.css" text="Load Selected Routes" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                        <JFXButton fx:id="loadRoutesBtn" onAction="#updateTable" styleClass="button-filters" stylesheets="@styles.css" text="Load Selected Routes" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+                        <JFXButton fx:id="deleteRecordButton" buttonType="RAISED" onAction="#deleteRow" prefWidth="26.4" style="-fx-background-color: #f2f2f3;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
                      </children>
                   </GridPane>
                </children>

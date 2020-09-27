@@ -1,7 +1,17 @@
 package seng202.team4.controller;
 
+import com.jfoenix.controls.JFXCheckBox;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import org.controlsfx.control.textfield.TextFields;
+import seng202.team4.model.DatabaseManager;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  * Describes the functionality required for getting
@@ -11,15 +21,47 @@ public class NewRoute extends NewRecord{
     @FXML
     private TextField airlineField;
     @FXML
-    private TextField srcAirportField;
+    private ComboBox<String> depAirportCombo;
+    /**
+     * Mutable ObservableList containing a list of airport IATA and ICAO for the comboboxes.
+     */
+    private ObservableList<String> airports = FXCollections.observableArrayList();
     @FXML
-    private TextField dstAirportField;
+    private ComboBox<String> dstAirportCombo;
     @FXML
-    private TextField codeshareField;
+    private JFXCheckBox codeshareField;
     @FXML
     private TextField stopsField;
     @FXML
     private TextField equipmentField;
+
+    @FXML
+    public void initialize() {
+        initialiseComboBoxes();
+    }
+
+    private void initialiseComboBoxes() {
+        Connection c = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(c);
+        String query = "SELECT DISTINCT ICAO, IATA FROM Airport";
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String iata = rs.getString("IATA");
+                String icao = rs.getString("ICAO");
+                airports.addAll(iata, icao);
+            }
+            FXCollections.sort(airports);
+            depAirportCombo.setItems(airports);
+            dstAirportCombo.setItems(airports);
+            TextFields.bindAutoCompletion(depAirportCombo.getEditor(), depAirportCombo.getItems());
+            TextFields.bindAutoCompletion(dstAirportCombo.getEditor(), dstAirportCombo.getItems());
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        DatabaseManager.disconnect(c);
+    }
 
     /**
      * Gets the content of the text fields in the scene.
@@ -28,9 +70,14 @@ public class NewRoute extends NewRecord{
     @Override
     String[] getRecordData() {
         String airline = airlineField.getText().trim();
-        String srcAirport = srcAirportField.getText().trim();
-        String dstAirport = dstAirportField.getText().trim();
-        String codeshare = codeshareField.getText().trim();
+        String srcAirport = depAirportCombo.getValue().trim();
+        String dstAirport = dstAirportCombo.getValue().trim();
+        String codeshare;
+        if (codeshareField.isSelected()) {
+            codeshare = "Y";
+        } else {
+            codeshare = "";
+        }
         String stops = stopsField.getText().trim();
         String equipment = equipmentField.getText().trim();
 

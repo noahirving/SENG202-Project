@@ -143,6 +143,11 @@ public abstract class DataController {
         initialiseComboBoxes();
     }
 
+    /**
+     * Adds an String to a given combobox if it is not already in it
+     * @param comboBoxList combobox to add to
+     * @param dataName string to add
+     */
     public void addToComboBoxList(ObservableList comboBoxList, String dataName) {
         if (!comboBoxList.contains(dataName)) {
             comboBoxList.add(dataName);
@@ -156,8 +161,9 @@ public abstract class DataController {
     public void uploadData() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Upload " + getDataType().getTypeName() + " Data");
-        stage.setMinHeight(290);
+        stage.setMinHeight(400);
         stage.setMinWidth(720);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream(Path.APP_ICON)));
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.VIEW + Path.USER_INTERFACES + "/fileUpload.fxml"));
         stage.setScene(new Scene(loader.load(), 700, 250));
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -189,10 +195,10 @@ public abstract class DataController {
     public void newRecord() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("New Record");
-        stage.setMinHeight(440);
-        stage.setMinWidth(720);
+
+        stage.getIcons().add(new Image(getClass().getResourceAsStream(Path.APP_ICON)));
         FXMLLoader loader = new FXMLLoader(getClass().getResource(getNewRecordFXML()));
-        stage.setScene(new Scene(loader.load(), 700, 400));
+        stage.setScene(new Scene(loader.load()));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
         NewRecord controller = loader.getController();

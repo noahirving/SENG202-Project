@@ -7,7 +7,7 @@ public abstract class Path {
 
     public static final String VIEW = "/seng202.team4";
     public static final String USER_INTERFACES = "/user_interfaces";
-    public static final String MAN_SCENE_FXML = VIEW + USER_INTERFACES + "/mainFlightTrackerScene.fxml";
+    public static final String MAIN_SCENE_FXML = VIEW + USER_INTERFACES + "/mainFlightTrackerScene.fxml";
     public static final String HOME_SCENE_FXML = VIEW + USER_INTERFACES + "/homePage.fxml";
     public static final String AIRLINE_SCENE_FXML = VIEW + USER_INTERFACES + "/airlineTab.fxml";
     public static final String AIRPORT_SCENE_FXML = VIEW + USER_INTERFACES + "/airportTab.fxml";
@@ -23,6 +23,7 @@ public abstract class Path {
     public static final String REFRESH_BUTTON_PNG = VIEW + "/images/refresh_icon.png";
     public static final String ADD_RECORD_BUTTON_PNG = VIEW + "/images/add_record_image.png";
     public static final String DELETE_RECORD_BUTTON_PNG = VIEW + "/images/delete_record_image.png";
+    public static final String APP_ICON = VIEW + "/images/logo_icon.png";
 
 
     public static final String STYLE_SHEET = VIEW + USER_INTERFACES + "/styles.css";

@@ -2,13 +2,12 @@ package seng202.team4.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class Airline extends DataType {
 
     private int id;
     private String name;
-    private String code;
+    private String alias;
     private String iata;
     private String icao;
     private String callSign;
@@ -24,16 +23,16 @@ public class Airline extends DataType {
     /**
      * Creates a full airline object.
      * @param name Name
-     * @param code Code
+     * @param alias Code
      * @param iata IATA
      * @param icao ICAO
      * @param callSign CallSign
      * @param country Country
      * @param recentlyActive Recently Active
      */
-    public Airline(String name, String code, String iata, String icao, String callSign, String country, boolean recentlyActive) {
+    public Airline(String name, String alias, String iata, String icao, String callSign, String country, boolean recentlyActive) {
         this.name = name;
-        this.code = code;
+        this.alias = alias;
         this.iata = iata;
         this.icao = icao;
         this.callSign = callSign;
@@ -51,7 +50,7 @@ public class Airline extends DataType {
         return "INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') "
                 + "VALUES ('"
                 + getName().replaceAll("'", "''") + BETWEEN
-                + getCode().replaceAll("'", "''") + BETWEEN
+                + getAlias().replaceAll("'", "''") + BETWEEN
                 + getIata().replaceAll("'", "''") + BETWEEN
                 + getIcao().replaceAll("'", "''") + BETWEEN
                 + getCallSign().replaceAll("'", "''") + BETWEEN
@@ -100,7 +99,7 @@ public class Airline extends DataType {
             valid = false;
         }
         if (!Validate.isAlphaMultiLanguage(code) && !code.equals("\\N")) {
-            errorMessage.add("Invalid code");
+            errorMessage.add("Invalid alias");
             valid = false;
         }
         if (!Validate.isAirlineIATA(iata)) {
@@ -180,7 +179,7 @@ public class Airline extends DataType {
         return getId() == airline.getId() &&
                 isRecentlyActive() == airline.isRecentlyActive() &&
                 getName().equals(airline.getName()) &&
-                getCode().equals(airline.getCode()) &&
+                getAlias().equals(airline.getAlias()) &&
                 getIata().equals(airline.getIata()) &&
                 getIcao().equals(airline.getIcao()) &&
                 getCallSign().equals(airline.getCallSign()) &&
@@ -196,8 +195,8 @@ public class Airline extends DataType {
         return name;
     }
 
-    public String getCode() {
-        return code;
+    public String getAlias() {
+        return alias;
     }
 
     public String getIata() {
@@ -229,8 +228,8 @@ public class Airline extends DataType {
         this.name = name;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public void setIata(String iata) {

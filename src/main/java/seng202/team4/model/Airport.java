@@ -2,6 +2,8 @@ package seng202.team4.model;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import org.apache.commons.math3.util.Precision;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -327,7 +329,7 @@ public class Airport extends DataType {
     }
 
     public void setLatitude(double latitude) {
-        this.latitude = latitude;
+        this.latitude = Precision.round(latitude, 2);
     }
 
     public double getLongitude() {
@@ -335,7 +337,7 @@ public class Airport extends DataType {
     }
 
     public void setLongitude(double longitude) {
-        this.longitude = longitude;
+        this.longitude = Precision.round(longitude, 2);
     }
 
     public double getAltitude() {
@@ -395,7 +397,7 @@ public class Airport extends DataType {
     }
 
     public void setCoordinates(double longitude, double latitude) {
-        this.coordinates = String.format("%.4f, %.4f", latitude, longitude);
+        this.coordinates = String.format("%.2f, %.2f", longitude, latitude);
     }
 
     public String getCoordinates() {

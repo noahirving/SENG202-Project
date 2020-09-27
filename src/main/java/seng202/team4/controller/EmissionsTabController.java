@@ -8,20 +8,19 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import org.apache.commons.math3.util.Precision;
+import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
+import seng202.team4.model.Path;
 import seng202.team4.model.Route;
 
-import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Emissions' tab of the application
@@ -169,7 +168,11 @@ public class EmissionsTabController extends DataController {
         distanceColumn.setCellValueFactory(new PropertyValueFactory<>("distance"));
         emissionsColumn.setCellValueFactory(new PropertyValueFactory<>("carbonEmissions"));
 
+        // Multiple rows can be selected
+        dataTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         try {
+            initialiseButtons();
             setTable();
         } catch (Exception e) {
             e.printStackTrace();
@@ -205,7 +208,6 @@ public class EmissionsTabController extends DataController {
         try {
             //emissionsDataTable.setItems(selectedRoutes);
             setTable();
-            sumEmissions = 0.0;
             setTotalEmissions();
         } catch (Exception e) {
             e.printStackTrace();
@@ -252,8 +254,8 @@ public class EmissionsTabController extends DataController {
             route.setSourceAirportCode(sourceAirport);
             route.setDestinationAirportCode(destinationAirport);
             route.setPlaneTypeCode(planeType);
-            route.setDistance(rs.getDouble("distance"));
-            route.setCarbonEmissions(rs.getDouble("carbonEmissions"));
+            route.setDistance(Precision.round(rs.getDouble("distance"), 2));
+            route.setCarbonEmissions(Precision.round(rs.getDouble("carbonEmissions"), 2));
             selectedRoutes.add(route);
 
         }
@@ -322,5 +324,31 @@ public class EmissionsTabController extends DataController {
     public String getNewRecordFXML() {
         return null;
     }
+
+    /**
+     * Sets the images of buttons
+     */
+    void initialiseButtons() {
+        javafx.scene.image.Image deleteRecordImage = new Image(getClass().getResourceAsStream(Path.DELETE_RECORD_BUTTON_PNG));
+        deleteRecordButton.setGraphic(new ImageView(deleteRecordImage));
+    }
+
+    /**
+     * Delete each row selected in the table view
+     */
+    @FXML
+    private void deleteRow() {
+        ObservableList<Route> routes = dataTable.getSelectionModel().getSelectedItems();
+        ArrayList<Route> rows = new ArrayList<>(routes);
+        rows.forEach(row -> {
+                    row.setSelect(false);
+                    selectedRoutes.remove(row);
+                    DataLoader.removeFromRoutesSelectedDatabase(row);
+                }
+        );
+        setTotalEmissions();
+
+    }
+
 
 }

@@ -1,6 +1,9 @@
 package seng202.team4.model;
 
+import org.apache.commons.math3.util.Precision;
+
 import java.util.ArrayList;
+
 
 public class FlightPath extends DataType {
 
@@ -16,8 +19,8 @@ public class FlightPath extends DataType {
         this.type = type;
         this.id = id;
         this.altitude = altitude;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.latitude = Precision.round(latitude, 2);
+        this.longitude = Precision.round(longitude, 2);
     }
 
     @Override
