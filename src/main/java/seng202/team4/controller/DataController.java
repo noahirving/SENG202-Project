@@ -213,13 +213,21 @@ public abstract class DataController {
         return dataSetComboBox;
     }
 
-    public void showDetails(DataType data) throws IOException {
+    /**
+     * Show all attributes of the selected row in the table
+     * @param data record to show attributes of
+     */
+    public void showDetails(DataType data) {
         Stage stage = new Stage();
         stage.setTitle("Airline details");
         stage.setMinHeight(440);
         stage.setMinWidth(720);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.AIRLINE_DETAILS));
-        stage.setScene(new Scene(loader.load(), 700, 400));
+        try {
+            stage.setScene(new Scene(loader.load(), 700, 400));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
         Details details = loader.getController();

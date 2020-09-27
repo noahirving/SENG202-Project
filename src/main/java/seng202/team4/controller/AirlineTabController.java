@@ -102,7 +102,7 @@ public class AirlineTabController extends DataController {
             Airline airline = new Airline();
             String name = rs.getString("Name");
             String country = rs.getString("Country");
-            String code = rs.getString("Alias");
+            String alias = rs.getString("Alias");
             String iata = rs.getString("Iata");
             String icao = rs.getString("Icao");
             String cs = rs.getString("Callsign");
@@ -110,7 +110,7 @@ public class AirlineTabController extends DataController {
 
             airline.setName(name);
             airline.setCountry(country);
-            airline.setCode(code);
+            airline.setAlias(alias);
             airline.setIata(iata);
             airline.setIcao(icao);
             airline.setCallSign(cs);

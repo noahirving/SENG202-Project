@@ -18,7 +18,7 @@ public class AirlineDetailsController extends Details {
         Airline airline = (Airline) data;
         nameText.setText(airline.getName());
         countryText.setText(airline.getCountry());
-        codeText.setText(airline.getCode());
+        codeText.setText(airline.getAlias());
         IATAText.setText(airline.getIata());
         ICAOText.setText(airline.getIcao());
         CSText.setText(airline.getCallSign());

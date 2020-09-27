@@ -20,7 +20,7 @@ public class AirportTest extends TestCase {
         Airport airport = new Airport();
         airport.setCoordinates(42.0, 13.5);
         String coordinates = airport.getCoordinates();
-        assertEquals("13.5000, 42.0000", coordinates);
+        assertEquals("42.00, 13.50", coordinates);
     }
 
     /**

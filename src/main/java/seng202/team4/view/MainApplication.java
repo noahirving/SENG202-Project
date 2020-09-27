@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import seng202.team4.model.Path;
 
@@ -21,6 +22,7 @@ public class MainApplication extends Application {
         Scene mainScene = new Scene(root);
         mainScene.getStylesheets().add(Path.STYLE_SHEET);
         primaryStage.setScene(mainScene);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(Path.APP_ICON)));
         primaryStage.show();
     }
 

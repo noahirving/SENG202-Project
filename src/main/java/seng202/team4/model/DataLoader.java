@@ -43,10 +43,7 @@ public abstract class DataLoader {
                             System.out.println(dataType.getTypeName());
                             System.out.println(line);
                             System.out.println(errorMessage.get(0) + "\n\n");
-                        }/*
-                        System.out.println(dataType.getTypeName());
-                        System.out.println(line);
-                        System.out.print("error\n");*/
+                        }
                     }
                     line = buffer.readLine();
                 }
@@ -59,7 +56,7 @@ public abstract class DataLoader {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                return  false;
+                return false;
 
             } finally {
                 DatabaseManager.disconnect(c);
