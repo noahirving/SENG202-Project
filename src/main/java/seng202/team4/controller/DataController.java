@@ -35,6 +35,8 @@ public abstract class DataController {
     public abstract void initialiseComboBoxes();
     public abstract void filterData();
     public abstract String getNewRecordFXML();
+    public abstract String getDetailsFXML();
+
     @FXML
     private ComboBox dataSetComboBox;
     /**
@@ -222,7 +224,7 @@ public abstract class DataController {
         stage.setTitle("Airline details");
         stage.setMinHeight(440);
         stage.setMinWidth(720);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.AIRLINE_DETAILS));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(getDetailsFXML()));
         try {
             stage.setScene(new Scene(loader.load(), 700, 400));
         } catch (IOException e) {

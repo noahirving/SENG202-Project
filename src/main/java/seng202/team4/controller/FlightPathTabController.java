@@ -216,4 +216,8 @@ public class FlightPathTabController extends DataController {
         ArrayList<FlightPath> rows = new ArrayList<>(selectedFlightPaths);
         rows.forEach(row -> flightPaths.remove(row));
     }
+
+    public String getDetailsFXML() {
+        return null;
+    }
 }

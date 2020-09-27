@@ -350,5 +350,7 @@ public class EmissionsTabController extends DataController {
 
     }
 
-
+    public String getDetailsFXML() {
+        return null;
+    }
 }

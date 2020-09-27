@@ -249,10 +249,14 @@ public class AirlineTabController extends DataController {
     }
 
     @FXML
-    public void tableClicked(MouseEvent click) throws IOException {
+    public void tableClicked(MouseEvent click) {
         if (click.getClickCount() > 1) {
             Airline airline = dataTable.getSelectionModel().getSelectedItem();
             showDetails(airline);
         }
+    }
+
+    public String getDetailsFXML() {
+        return Path.AIRLINE_DETAILS;
     }
 }
