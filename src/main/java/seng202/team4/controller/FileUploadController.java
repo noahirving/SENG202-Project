@@ -1,14 +1,21 @@
 package seng202.team4.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import seng202.team4.model.DataLoader;
+import seng202.team4.model.Path;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Controller used for uploading datasets
@@ -85,8 +92,48 @@ public class FileUploadController {
             errorText.setText("*Dataset name already chosen");
         } else {
             System.out.println("Confirmed");
-            controller.newData(name, file);
+            uploadData(name);
+            controller.newData(name);
+        }
+    }
+
+    /**
+     * Calls DataLoader class to upload new user inputted file. Shows error popup if data is erroneous.
+     * @param name name of the data set user has chosen
+     */
+    private void uploadData(String name) {
+        ArrayList<String> invalidLines = DataLoader.uploadData(name, file, controller.getDataType());
+        if (invalidLines.size() > 0) {
+            showErrorPopUp(invalidLines);
+        } else {
             stage.close();
         }
+    }
+
+    /**
+     * Shows a popup of how many lines are erroneous and also shows those lines to the user.
+     * @param invalidLines erroneous lines to add to popup ListView
+     */
+    private void showErrorPopUp(ArrayList<String> invalidLines) {
+        Stage errorStage = new Stage();
+        errorStage.setTitle("Error");
+        errorStage.setMinHeight(320);
+        errorStage.setMinWidth(510);
+        errorStage.setResizable(false);
+        errorStage.getIcons().add(new Image(getClass().getResourceAsStream(Path.APP_ICON)));
+        errorStage.initModality(Modality.APPLICATION_MODAL);
+
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.INVALID_LINES_POPUP_FXML));
+
+        try {
+            errorStage.setScene(new Scene(loader.load()));
+            InvalidLinesPopUp errorController = loader.getController();
+            errorController.setUp(errorStage, this.stage);
+            errorController.addErrorLines(invalidLines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        errorStage.show();
     }
 }

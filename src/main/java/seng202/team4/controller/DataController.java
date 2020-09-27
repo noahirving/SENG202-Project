@@ -12,11 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seng202.team4.model.Path;
-import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
 import seng202.team4.model.DatabaseManager;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -164,7 +162,7 @@ public abstract class DataController {
         stage.setMinHeight(400);
         stage.setMinWidth(720);
         stage.getIcons().add(new Image(getClass().getResourceAsStream(Path.APP_ICON)));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.VIEW + Path.USER_INTERFACES + "/fileUpload.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.UPLOAD_SCENE_FXML));
         stage.setScene(new Scene(loader.load(), 700, 250));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
@@ -175,10 +173,8 @@ public abstract class DataController {
     /**
      * Uploads the new data to the database and sets the table to show the new data set.
      * @param name name of the new dataset.
-     * @param file the file that is being uploaded.
      */
-    public void newData(String name, File file) {
-        DataLoader.uploadData(name, file, getDataType());
+    public void newData(String name) {
         try {
             setDataSet(name);
             dataSetComboBox.getSelectionModel().select(name);

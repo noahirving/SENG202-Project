@@ -16,9 +16,9 @@ public abstract class DataLoader {
      * @param setName   the name of the new set of data.
      * @param file      the file that's being uploaded to the database.
      * @param dataType  the data type of new data that's being uploaded.
-     * @return 'true' if data was successfully uploaded, 'false' otherwise.
+     * @return an ArrayList of erroneous lines
      */
-    public static Boolean uploadData(String setName, File file, DataType dataType) {
+    public static ArrayList<String> uploadData(String setName, File file, DataType dataType) {
         Connection c = DatabaseManager.connect(); // TODO: throw connection error
         if (c != null) {
             Statement stmt = DatabaseManager.getStatement(c);
@@ -29,17 +29,21 @@ public abstract class DataLoader {
 
                 int setID = getSetID(setName, dataType, stmt);
 
+                // Stores the invalid lines in the file
+                ArrayList<String> invalidLines = new ArrayList<>();
+
                 // Reads lines from file and adds valid lines to statement batch
                 BufferedReader buffer = new BufferedReader(new FileReader(file));
                 String line = buffer.readLine();
                 while (line != null && line.trim().length() > 0) {
-                    ArrayList<String> errorMessage = new ArrayList<String>();
+                    ArrayList<String> errorMessage = new ArrayList<>();
                     DataType data = dataType.getValid(line, errorMessage);
                     if (data != null) {
-                        stmt.addBatch(data.getInsertStatement(setID));
+                        stmt.addBatch(data.getInsertStatement(setID)); // Add to database
                     }
                     else {
                         if (errorMessage.size() > 0) {
+                            invalidLines.add(line);
                             System.out.println(dataType.getTypeName());
                             System.out.println(line);
                             System.out.println(errorMessage.get(0) + "\n\n");
@@ -52,17 +56,17 @@ public abstract class DataLoader {
                 stmt.executeBatch();
                 stmt.close();
                 c.commit();
-                return true;
+                return invalidLines;
 
             } catch (Exception e) {
                 e.printStackTrace();
-                return false;
+                return null;
 
             } finally {
                 DatabaseManager.disconnect(c);
             }
         }
-        return false;
+        return null;
     }
 
     /**
