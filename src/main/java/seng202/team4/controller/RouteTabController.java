@@ -1,8 +1,6 @@
 package seng202.team4.controller;
 
 import com.jfoenix.controls.JFXSlider;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -11,8 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import org.controlsfx.control.textfield.TextFields;
 import seng202.team4.model.Path;
 import seng202.team4.model.*;
@@ -198,6 +195,7 @@ public class RouteTabController extends DataController {
                 String sourceAirport = rs.getString("SourceAirport");
                 String destinationAirport = rs.getString("DestinationAirport");
                 String planeType = rs.getString("Equipment");
+                String codeshare = rs.getString("Codeshare");
 
                 route.setAirlineCode(airline);
                 route.setSourceAirportCode(sourceAirport);
@@ -205,6 +203,11 @@ public class RouteTabController extends DataController {
                 route.setNumStops(rs.getInt("Stops"));
                 route.setPlaneTypeCode(planeType);
                 route.setDistance(0);
+                if (codeshare.equals("true")) {
+                    route.setCodeshare(true);
+                } else {
+                    route.setCodeshare(false);
+                }
                 routes.add(route);
 
                 addToComboBoxList(airlineCodes, airline);
@@ -396,6 +399,6 @@ public class RouteTabController extends DataController {
     }
 
     public String getDetailsFXML() {
-        return null;
+        return Path.ROUTE_DETAILS;
     }
 }

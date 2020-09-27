@@ -320,14 +320,6 @@ public class AirportTabController extends DataController {
         rows.forEach(DataLoader::removeFromAirportsSelectedDatabase);
     }
 
-    @FXML
-    public void tableClicked(MouseEvent click) {
-        if (click.getClickCount() > 1) {
-            Airport airport = dataTable.getSelectionModel().getSelectedItem();
-            showDetails(airport);
-        }
-    }
-
     public String getDetailsFXML() {
         return Path.AIRPORT_DETAILS;
     }

@@ -7,13 +7,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import seng202.team4.model.Path;
-import seng202.team4.model.DataType;
-import seng202.team4.model.DatabaseManager;
+import seng202.team4.model.*;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -34,6 +34,11 @@ public abstract class DataController {
     public abstract void filterData();
     public abstract String getNewRecordFXML();
     public abstract String getDetailsFXML();
+
+    /**
+     * TableView of the raw data table.
+     */
+    @FXML private TableView<Airline> dataTable;
 
     @FXML
     private ComboBox dataSetComboBox;
@@ -231,4 +236,13 @@ public abstract class DataController {
         Details details = loader.getController();
         details.setUp(stage, data);
     }
+
+    @FXML
+    public void tableClicked(MouseEvent click) {
+        if (click.getClickCount() > 1) {
+            DataType data = dataTable.getSelectionModel().getSelectedItem();
+            showDetails(data);
+        }
+    }
+
 }

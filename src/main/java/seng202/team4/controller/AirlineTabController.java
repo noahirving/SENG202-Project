@@ -248,14 +248,6 @@ public class AirlineTabController extends DataController {
         rows.forEach(row -> airlines.remove(row));
     }
 
-    @FXML
-    public void tableClicked(MouseEvent click) {
-        if (click.getClickCount() > 1) {
-            Airline airline = dataTable.getSelectionModel().getSelectedItem();
-            showDetails(airline);
-        }
-    }
-
     public String getDetailsFXML() {
         return Path.AIRLINE_DETAILS;
     }

@@ -65,7 +65,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-              <TableView fx:id="dataTable" prefHeight="406.0" prefWidth="501.0">
+              <TableView fx:id="dataTable" onMouseClicked="#tableClicked" prefHeight="406.0" prefWidth="501.0">
                   <columns>
                       <TableColumn fx:id="airlineColumn" prefWidth="79.0" text="Airline Code" />
                       <TableColumn fx:id="departureAirportColumn" minWidth="4.800048828125" prefWidth="95.0" text="Departure&#10;   airport &#10;     IATA" />
