@@ -18,6 +18,7 @@ public class InvalidLinesPopUp {
     }
 
     public void addErrorLines(ArrayList<String> errorLines) {
+        listView.setEditable(true);
         listView.getItems().addAll(errorLines);
     }
 

@@ -1,9 +1,11 @@
 package seng202.team4.controller;
 
+import com.jfoenix.controls.JFXTooltip;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import seng202.team4.model.Path;
 
 /**
  * Describes the functionality required for getting
@@ -25,25 +27,33 @@ public class NewAirline extends NewRecord {
     @FXML
     private CheckBox recentlyActiveField;
 
+
     @FXML
-    private ImageView aliasToolTip;
+    private Label aliasToolTip;
     @FXML
-    private ImageView iataToolTip;
+    private Label iataToolTip;
     @FXML
-    private ImageView icaoToolTip;
+    private Label icaoToolTip;
     @FXML
-    private ImageView callSignToolTip;
+    private Label callSignToolTip;
 
     @FXML
     public void initialize() {
         createToolTip(aliasToolTip, "For example, All Nippon Airways is commonly known as \"ANA\"");
     }
 
-    private void createToolTip(ImageView image, String tooltip) {
-        Label label = new Label();
-        label.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-        label.setGraphic(image);
-        label.setTooltip(new Tooltip(tooltip));
+    private void createToolTip(Label imageHolder, String tooltip) {
+        Image image = new Image(getClass().getResourceAsStream(Path.INFO_ICON));
+        ImageView imageView = new ImageView();
+        imageView.setImage(image);
+        imageView.setFitHeight(30);
+        imageView.setFitWidth(30);
+        imageView.setPreserveRatio(true);
+        imageView.setPickOnBounds(true);
+
+        imageHolder.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        imageHolder.setGraphic(imageView);
+        imageHolder.setTooltip(new Tooltip(tooltip));
     }
 
     /**

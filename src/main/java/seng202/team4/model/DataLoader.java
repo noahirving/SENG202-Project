@@ -43,7 +43,7 @@ public abstract class DataLoader {
                     }
                     else {
                         if (errorMessage.size() > 0) {
-                            invalidLines.add(line);
+                            invalidLines.add(line + " (" + errorMessage.get(0) + ")");
                             System.out.println(dataType.getTypeName());
                             System.out.println(line);
                             System.out.println(errorMessage.get(0) + "\n\n");

@@ -6,8 +6,6 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -105,38 +103,26 @@
             </JFXButton>
          </children>
       </GridPane>
-      <ImageView fx:id="aliasToolTip" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-         <image>
-            <Image url="@../images/info_icon.png" />
-         </image>
+      <Label fx:id="aliasToolTip" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets right="100.0" />
          </GridPane.margin>
-      </ImageView>
-      <ImageView fx:id="iataToolTip" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-         <image>
-            <Image url="@../images/info_icon.png" />
-         </image>
+      </Label>
+      <Label fx:id="iataToolTip" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets right="100.0" />
          </GridPane.margin>
-      </ImageView>
-      <ImageView fx:id="icaoToolTip" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-         <image>
-            <Image url="@../images/info_icon.png" />
-         </image>
+      </Label>
+      <Label fx:id="icaoToolTip" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets right="100.0" />
          </GridPane.margin>
-      </ImageView>
-      <ImageView fx:id="callSignToolTip" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
-         <image>
-            <Image url="@../images/info_icon.png" />
-         </image>
+      </Label>
+      <Label fx:id="callSignToolTip" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets right="100.0" />
          </GridPane.margin>
-      </ImageView>
+      </Label>
    </children>
    <opaqueInsets>
       <Insets />
