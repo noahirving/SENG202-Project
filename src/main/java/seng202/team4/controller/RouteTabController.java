@@ -398,6 +398,7 @@ public class RouteTabController extends DataController {
         rows.forEach(DataLoader::removeFromRoutesSelectedDatabase);
     }
 
+    @Override
     public String getDetailsFXML() {
         return Path.ROUTE_DETAILS;
     }

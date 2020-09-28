@@ -320,6 +320,7 @@ public class AirportTabController extends DataController {
         rows.forEach(DataLoader::removeFromAirportsSelectedDatabase);
     }
 
+    @Override
     public String getDetailsFXML() {
         return Path.AIRPORT_DETAILS;
     }

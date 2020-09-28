@@ -248,6 +248,7 @@ public class AirlineTabController extends DataController {
         rows.forEach(row -> airlines.remove(row));
     }
 
+    @Override
     public String getDetailsFXML() {
         return Path.AIRLINE_DETAILS;
     }

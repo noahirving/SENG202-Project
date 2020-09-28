@@ -19,7 +19,7 @@
       <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-        <TableView fx:id="dataTable" prefHeight="406.0" prefWidth="724.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+        <TableView fx:id="dataTable" onMouseClicked="#tableClicked" prefHeight="406.0" prefWidth="724.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
             <columns>
                 <TableColumn fx:id="typeColumn" prefWidth="685.0" text="Type" />
                 <TableColumn fx:id="idColumn" minWidth="4.800048828125" prefWidth="522.0" text="ID" />

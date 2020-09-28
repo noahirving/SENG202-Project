@@ -23,6 +23,8 @@ public abstract class Path {
     public static final String AIRLINE_DETAILS = VIEW + USER_INTERFACES + "/airlineDetails.fxml";
     public static final String AIRPORT_DETAILS = VIEW + USER_INTERFACES + "/airportDetails.fxml";
     public static final String ROUTE_DETAILS = VIEW + USER_INTERFACES + "/routeDetails.fxml";
+    public static final String FLIGHTPATH_DETAILS = VIEW + USER_INTERFACES + "/flightPathDetails.fxml";
+    public static final String EMISSIONS_DETAILS = VIEW + USER_INTERFACES + "/emissionsDetails.fxml";
 
     public static final String REFRESH_BUTTON_PNG = VIEW + "/images/refresh_icon.png";
     public static final String ADD_RECORD_BUTTON_PNG = VIEW + "/images/add_record_image.png";
