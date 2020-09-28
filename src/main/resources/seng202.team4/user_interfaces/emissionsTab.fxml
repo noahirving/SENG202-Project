@@ -39,7 +39,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                    <TableView fx:id="dataTable" prefHeight="362.0" prefWidth="450.0" GridPane.rowIndex="1">
+                    <TableView fx:id="dataTable" onMouseClicked="#tableClicked" prefHeight="362.0" prefWidth="450.0" GridPane.rowIndex="1">
                         <columns>
                             <TableColumn fx:id="airlineColumn" prefWidth="75.0" text="Airline" />
                         <TableColumn fx:id="sourceColumn" prefWidth="75.0" text="Source" />

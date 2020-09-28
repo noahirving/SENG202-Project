@@ -241,7 +241,9 @@ public abstract class DataController {
     public void tableClicked(MouseEvent click) {
         if (click.getClickCount() > 1) {
             DataType data = dataTable.getSelectionModel().getSelectedItem();
-            showDetails(data);
+            if (data != null) {
+                showDetails(data);
+            }
         }
     }
 
