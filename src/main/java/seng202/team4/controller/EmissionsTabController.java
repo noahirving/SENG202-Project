@@ -337,7 +337,8 @@ public class EmissionsTabController extends DataController {
      * Delete each row selected in the table view
      */
     @FXML
-    private void deleteRow() {
+    @Override
+    public void deleteRow() {
         ObservableList<Route> routes = dataTable.getSelectionModel().getSelectedItems();
         ArrayList<Route> rows = new ArrayList<>(routes);
         rows.forEach(row -> {

@@ -34,6 +34,7 @@ public abstract class DataController {
     public abstract void filterData();
     public abstract String getNewRecordFXML();
     public abstract String getDetailsFXML();
+    public abstract void deleteRow();
 
     /**
      * TableView of the raw data table.

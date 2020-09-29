@@ -313,7 +313,8 @@ public class AirportTabController extends DataController {
      * Delete each row selected in the table view
      */
     @FXML
-    private void deleteRow() {
+    @Override
+    public void deleteRow() {
         ObservableList<Airport> selectedAirports = dataTable.getSelectionModel().getSelectedItems();
         ArrayList<Airport> rows = new ArrayList<>(selectedAirports);
         rows.forEach(row -> airports.remove(row));

@@ -211,7 +211,8 @@ public class FlightPathTabController extends DataController {
      * Delete each row selected in the table view
      */
     @FXML
-    private void deleteRow() {
+    @Override
+    public void deleteRow() {
         ObservableList<FlightPath> selectedFlightPaths = dataTable.getSelectionModel().getSelectedItems();
         ArrayList<FlightPath> rows = new ArrayList<>(selectedFlightPaths);
         rows.forEach(row -> flightPaths.remove(row));

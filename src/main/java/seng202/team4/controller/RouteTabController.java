@@ -391,7 +391,8 @@ public class RouteTabController extends DataController {
      * Delete each row selected in the table view
      */
     @FXML
-    private void deleteRow() {
+    @Override
+    public void deleteRow() {
         ObservableList<Route> selectedRoutes = dataTable.getSelectionModel().getSelectedItems();
         ArrayList<Route> rows = new ArrayList<>(selectedRoutes);
         rows.forEach(row -> routes.remove(row));
