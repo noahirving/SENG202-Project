@@ -204,9 +204,9 @@ public abstract class DataController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(getNewRecordFXML()));
         stage.setScene(new Scene(loader.load()));
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
         NewRecord controller = loader.getController();
         controller.setUp(stage, this);
+        stage.showAndWait();
     }
 
     /**
