@@ -6,14 +6,9 @@ import javafx.beans.property.SimpleBooleanProperty;
 import java.util.ArrayList;
 
 public class Route extends DataType {
-
-    private int id;
     private String airlineCode;
-    private int airlineID;
     private String sourceAirportCode;
-    private int sourceAirportID;
     private String destinationAirportCode;
-    private int destinationAirportID;
     private boolean codeshare;
     private int numStops;
     private String planeTypeCode;
@@ -51,14 +46,11 @@ public class Route extends DataType {
      */
     @Override
     public String getInsertStatement(int setID) {
-        return "INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'DISTANCE', 'SETID') "
+        return "INSERT INTO Route ('Airline', 'SourceAirport', 'DestinationAirport', 'Codeshare', 'Stops', 'Equipment', 'Distance', 'SetID') "
                 + "VALUES ('"
                 + getAirlineCode().replaceAll("'", "''") + BETWEEN
-                + getAirlineID() + BETWEEN
                 + getSourceAirportCode().replaceAll("'", "''") + BETWEEN
-                + getSourceAirportID() + BETWEEN
                 + getDestinationAirportCode().replaceAll("'", "''") + BETWEEN
-                + getDestinationAirportID() + BETWEEN
                 + isCodeshare() + BETWEEN
                 + getNumStops() + BETWEEN
                 + getPlaneTypeCode().replaceAll("'", "''") + BETWEEN
@@ -199,32 +191,16 @@ public class Route extends DataType {
         return carbonEmissions;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public String getAirlineCode() {
         return airlineCode;
-    }
-
-    public int getAirlineID() {
-        return airlineID;
     }
 
     public String getSourceAirportCode() {
         return sourceAirportCode;
     }
 
-    public int getSourceAirportID() {
-        return sourceAirportID;
-    }
-
     public String getDestinationAirportCode() {
         return destinationAirportCode;
-    }
-
-    public int getDestinationAirportID() {
-        return destinationAirportID;
     }
 
     public boolean isCodeshare() {
@@ -251,24 +227,12 @@ public class Route extends DataType {
         this.airlineCode = airlineCode;
     }
 
-    public void setAirlineID(int airlineID) {
-        this.airlineID = airlineID;
-    }
-
     public void setSourceAirportCode(String sourceAirportCode) {
         this.sourceAirportCode = sourceAirportCode;
     }
 
-    public void setSourceAirportID(int sourceAirportID) {
-        this.sourceAirportID = sourceAirportID;
-    }
-
     public void setDestinationAirportCode(String destinationAirportCode) {
         this.destinationAirportCode = destinationAirportCode;
-    }
-
-    public void setDestinationAirportID(int destinationAirportID) {
-        this.destinationAirportID = destinationAirportID;
     }
 
     public void setCodeshare(boolean codeshare) {

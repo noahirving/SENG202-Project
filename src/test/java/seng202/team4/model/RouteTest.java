@@ -19,8 +19,8 @@ public class RouteTest extends TestCase {
     public void testInsertStatement() {
         Route route = new Route("BA","SIN","MEL",true,0,"744");
         String statement = route.getInsertStatement(10);
-        assertEquals("INSERT INTO Route ('AIRLINE', 'AIRLINEID', 'SourceAirport', 'SOURCEAIRPORTID', 'DESTINATIONAIRPORT', 'DESTINATIONAIRPORTID', 'CODESHARE', 'STOPS', 'EQUIPMENT', 'DISTANCE', 'SETID') " +
-                "VALUES ('BA', '0', 'SIN', '0', 'MEL', '0', 'true', '0', '744', '0.0', '10');", statement);
+        assertEquals("INSERT INTO Route ('Airline', 'SourceAirport', 'DestinationAirport', 'Codeshare', 'Stops', 'Equipment', 'Distance', 'SetID') " +
+                "VALUES ('BA', 'SIN', 'MEL', 'true', '0', '744', '0.0', '10');", statement);
     }
 
     /**

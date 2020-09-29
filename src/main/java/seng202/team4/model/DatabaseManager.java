@@ -47,7 +47,7 @@ public abstract class DatabaseManager {
             "\"Longitude\" DOUBLE," +
             "\"Altitude\" DOUBLE," +
             "\"Timezone\" DOUBLE," +
-            "\"DST\"\tSTRING," +
+            "\"DST\" STRING," +
             "\"TzDatabaseTime\" STRING," +
             "\"SetID\" INTEGER NOT NULL," +
             "FOREIGN KEY (SetID) REFERENCES AirportSet (SetID)," +
@@ -57,13 +57,10 @@ public abstract class DatabaseManager {
     private static final String ROUTE_SET_TABLE = "CREATE TABLE \"RouteSet\" " + SET_TABLE;
     private static final String ROUTE_TABLE =
             "CREATE TABLE \"Route\" (" +
-            "\"ID\"\tINTEGER NOT NULL UNIQUE," +
+            "\"ID\" INTEGER NOT NULL UNIQUE," +
             "\"Airline\" STRING," +
-            "\"AirlineID\" INTEGER," +
             "\"SourceAirport\" STRING," +
-            "\"SourceAirportID\" INTEGER," +
             "\"DestinationAirport\" STRING," +
-            "\"DestinationAirportID\" INTEGER," +
             "\"Codeshare\" STRING," +
             "\"Stops\" INTEGER," +
             "\"Equipment\" STRING," +
