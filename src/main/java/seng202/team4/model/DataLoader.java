@@ -212,4 +212,23 @@ public abstract class DataLoader {
 
         DatabaseManager.disconnect(con);
     }
+
+    public static boolean deleteRecord(int id, String table) {
+        String query = "Delete from " + table + " Where ID = " + id;
+
+        Connection con = DatabaseManager.connect();
+        Statement stmt = DatabaseManager.getStatement(con);
+        try {
+            stmt.executeUpdate(query);
+            con.commit();
+            stmt.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        finally {
+            DatabaseManager.disconnect(con);
+        }
+    }
 }

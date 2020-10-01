@@ -103,6 +103,7 @@ public class AirlineTabController extends DataController {
         countries = FXCollections.observableArrayList();
         while (rs.next()) {
             Airline airline = new Airline();
+            int id = rs.getInt("Id");
             String name = rs.getString("Name");
             String country = rs.getString("Country");
             String alias = rs.getString("Alias");
@@ -111,6 +112,7 @@ public class AirlineTabController extends DataController {
             String cs = rs.getString("Callsign");
             String active = rs.getString("RecentlyActive");
 
+            airline.setId(id);
             airline.setName(name);
             airline.setCountry(country);
             airline.setAlias(alias);
@@ -242,14 +244,23 @@ public class AirlineTabController extends DataController {
     }
 
     /**
-     * Delete each row selected in the table view
+     * Delete each row selected in the table view and database
      */
     @FXML
     @Override
     public void deleteRow() {
         ObservableList<Airline> selectedAirlines = dataTable.getSelectionModel().getSelectedItems();
         ArrayList<Airline> rows = new ArrayList<>(selectedAirlines);
-        rows.forEach(row -> airlines.remove(row));
+        for(Airline row : rows) {
+            boolean deleted = DataLoader.deleteRecord(row.getId(), getDataType().getTypeName());
+            if (deleted) {
+                airlines.remove(row);
+            }
+            else {
+                System.out.println("Can't delete record (AirlineTabController");
+                // TODO: Error message
+            }
+        }
     }
 
     @Override
