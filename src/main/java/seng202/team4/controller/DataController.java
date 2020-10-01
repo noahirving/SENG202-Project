@@ -1,7 +1,12 @@
 package seng202.team4.controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +16,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seng202.team4.model.*;
@@ -53,6 +60,7 @@ public abstract class DataController {
      */
     @FXML
     protected Button deleteRecordButton;
+
     public final static String ALL = "All";
 
 
@@ -176,6 +184,7 @@ public abstract class DataController {
         stage.show();
         FileUploadController controller = loader.getController();
         controller.setUp(this, stage);
+
     }
 
     /**
@@ -224,7 +233,7 @@ public abstract class DataController {
     public void showDetails(DataType data) {
         Stage stage = new Stage();
         stage.setTitle("Airline details");
-        stage.setMinHeight(440);
+        stage.setMinHeight(500);
         stage.setMinWidth(720);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(getDetailsFXML()));
         try {

@@ -1,5 +1,6 @@
 package seng202.team4.controller;
 
+import com.jfoenix.controls.JFXDialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -45,6 +46,8 @@ public class AirlineTabController extends DataController {
      * Text field used to search data table.
      */
     @FXML private TextField searchField;
+
+
     /**
      * Mutable ObservableLst containing a list of airlines for the search filter.
      */

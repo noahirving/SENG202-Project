@@ -9,7 +9,7 @@ import java.sql.*;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        //deleteDatabase();
+//        deleteDatabase();
         DatabaseManager.setUp();
 
         //Main m = new Main();

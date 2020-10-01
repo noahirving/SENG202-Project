@@ -1,11 +1,15 @@
 package seng202.team4.controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -29,6 +33,9 @@ public class FileUploadController {
     private File file;
     private DataController controller;
     private Stage stage;
+    @FXML private JFXDialog warningDialog;
+    @FXML private StackPane stackPane;
+    @FXML private JFXDialogLayout dialogLayout;
 
     /**
      * Initial setup of the controller, sets the stage
