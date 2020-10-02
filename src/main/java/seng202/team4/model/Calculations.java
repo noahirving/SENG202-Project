@@ -24,7 +24,7 @@ public class Calculations {
      * @return double the calculated emissions figure for a single passenger
      */
     public static double calculateEmissions(Route route) {
-        Double distance = route.getDistance();
+        double distance = route.getDistance();
         return distance * 0.115;
     }
 
@@ -41,18 +41,18 @@ public class Calculations {
      * @throws SQLException SQL Exception
      */
     public static double calculateDistance(String airportCodeOne, String airportCodeTwo, Connection con) throws SQLException {
-        Double lat1;
-        Double lat2;
-        Double long1;
-        Double long2;
+        double lat1;
+        double lat2;
+        double long1;
+        double long2;
 
         //Sets up query required for accessing the provided airports in the Airport database table
         String query = "SELECT Latitude,Longitude from Airport WHERE IATA = '" + airportCodeOne + "' OR IATA = '" + airportCodeTwo + "'";
         Statement stmt = DatabaseManager.getStatement(con);
         //Execute query, store results in result set
         ResultSet result = stmt.executeQuery(query);
-        ArrayList<Double> lats = new ArrayList<Double>();
-        ArrayList<Double> longs = new ArrayList<Double>();
+        ArrayList<Double> lats = new ArrayList<>();
+        ArrayList<Double> longs = new ArrayList<>();
         //Store latitude and longitudes of airports
         while (result.next()){
             lats.add(result.getDouble("Latitude"));
@@ -92,7 +92,7 @@ public class Calculations {
      * @return      the dollar donations required to offset flight carbon emissions
      */
     public static double calculateDollarOffset(Route route) {
-        Double emission = route.getCarbonEmissions();
+        double emission = route.getCarbonEmissions();
         return emission * 0.01479;
     }
 
@@ -103,7 +103,7 @@ public class Calculations {
      * @return      the number of trees to offset flight carbon emissions
      */
     public static int calculateTreesEquivalent(Route route) {
-        Double dollars = route.getDollarOffset();
+        double dollars = route.getDollarOffset();
         return (int) Math.ceil(dollars);
     }
 }

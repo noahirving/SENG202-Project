@@ -38,11 +38,11 @@ public class EmissionsTabController extends DataController {
     /**
      * Initialization of users suggested dollar offset amount
      */
-    private Double totalDonation = 0.0;
+    private double totalDonation = 0.0;
     /**
      * Initialization of the trees the user could plant with dollarOffset
      */
-    private Double totalTrees = 0.0;
+    private int totalTrees = 0;
 
     /**
      * TableView of the selected routes raw data table
@@ -187,7 +187,7 @@ public class EmissionsTabController extends DataController {
     private void setTotalEmissions() {
         double sumEmissions = 0.0;
         totalDonation = 0.0;
-        totalTrees = 0.0;
+        totalTrees = 0;
         for(Route route: selectedRoutes){
             sumEmissions += route.getCarbonEmissions();
             totalDonation += route.getDollarOffset();

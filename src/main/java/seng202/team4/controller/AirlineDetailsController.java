@@ -8,6 +8,11 @@ import seng202.team4.model.Airline;
 import seng202.team4.model.DataType;
 import seng202.team4.model.Validate;
 
+/**
+ * Performs all operations done in the airline details window
+ * that is opened when an airline data row from the tableview is double clicked.
+ * This includes viewing and editing all data attribute values.
+ */
 public class AirlineDetailsController extends Details {
 
     @FXML private JFXTextField nameText;
@@ -25,7 +30,11 @@ public class AirlineDetailsController extends Details {
     @FXML private Label invalidICAO;
     @FXML private Label invalidCallSign;
 
-
+    /**
+     * Sets the values of the airline data in their corresponding text attribute.
+     * @param data data that will be displayed.
+     */
+    @Override
     public void setData(DataType data) {
         Airline airline = (Airline) data;
         nameText.setText(airline.getName());
@@ -34,11 +43,7 @@ public class AirlineDetailsController extends Details {
         IATAText.setText(airline.getIata());
         ICAOText.setText(airline.getIcao());
         CSText.setText(airline.getCallSign());
-        if (airline.isRecentlyActive()) {
-            activeCheckBox.setSelected(true);
-        } else {
-            activeCheckBox.setSelected(false);
-        }
+        activeCheckBox.setSelected(airline.isRecentlyActive());
     }
 
     @FXML
