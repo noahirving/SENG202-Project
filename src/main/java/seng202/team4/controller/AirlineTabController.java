@@ -108,10 +108,10 @@ public class AirlineTabController extends DataController {
             String alias = rs.getString("Alias");
             String iata = rs.getString("Iata");
             String icao = rs.getString("Icao");
-            String callsign = rs.getString("Callsign");
+            String callSign = rs.getString("Callsign");
             boolean active = rs.getString("RecentlyActive").equals("true");
 
-            Airline airline = new Airline(name, country, alias, iata, icao, callsign, active);
+            Airline airline = new Airline(name, alias, iata, icao, callSign, country, active);
             airline.setId(id);
             airlines.add(airline);
             addToComboBoxList(countries, country);
