@@ -21,10 +21,6 @@ import java.net.Socket;
 public class HomePageController {
 
     /**
-     * Button to load default data into the application
-     */
-    @FXML private Button loadDefaultDatabaseButton;
-    /**
      * Label indicating internet and therefore maps is inaccessible
      */
     @FXML private Label internetWarningLabel;
@@ -84,24 +80,4 @@ public class HomePageController {
         }
     }
 
-    /**
-     * Called when the user clicks the search button
-     */
-    @FXML
-    public void searchButtonPressed() {
-    }
-
-    /**
-     * Loads default data into the application from
-     * stored files.
-     *
-     * @throws IOException caused by error in loading default database
-     */
-    @FXML
-    public void loadDefaultDatabase() throws IOException {
-        Main m = new Main();
-        m.loadDefaultData();
-        // TODO: Reload all tables and data set combo boxes, (temporary solution is to click all in data set combo box).
-        loadDefaultDatabaseButton.disableProperty().setValue(true);
-    }
 }
