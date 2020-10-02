@@ -125,19 +125,15 @@ public class FlightPathTabController extends DataController {
         latitudes = FXCollections.observableArrayList();
         longitudes = FXCollections.observableArrayList();
         while (rs.next()) {
-            FlightPath flightPath = new FlightPath();
+            int id = rs.getInt("ID");
             String type = rs.getString("Type");
-            String id = rs.getString("FlightPathID");
+            String flightPathID = rs.getString("FlightPathID");
             int altitude = rs.getInt("Altitude");
             double latitude = rs.getDouble("Latitude");
             double longitude = rs.getDouble("Longitude");
 
-            flightPath.setType(type);
+            FlightPath flightPath = new FlightPath(type, flightPathID, altitude, latitude, longitude);
             flightPath.setId(id);
-            flightPath.setAltitude(altitude);
-            flightPath.setLatitude(latitude);
-            flightPath.setLongitude(longitude);
-
             flightPaths.add(flightPath);
         }
         dataTable.setItems(flightPaths);
@@ -165,7 +161,7 @@ public class FlightPathTabController extends DataController {
      */
     @Override
     public String getTableQuery() {
-        return "SELECT TYPE, FLIGHTPATHID, ALTITUDE, LATITUDE, LONGITUDE FROM FlightPath";
+        return "SELECT * FROM FlightPath";
     }
 
     @Override
@@ -194,7 +190,7 @@ public class FlightPathTabController extends DataController {
 
                     if (flightPath.getType().toLowerCase().contains(newValue.toLowerCase())) {
                         return true;
-                    } else if (flightPath.getId().toLowerCase().contains(newValue.toLowerCase())) {
+                    } else if (flightPath.getFlightPathId().toLowerCase().contains(newValue.toLowerCase())) {
                         return true;
                     } else if (String.valueOf(flightPath.getAltitude()).contains(newValue.toLowerCase())) {
                         return true;

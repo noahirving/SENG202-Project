@@ -7,17 +7,18 @@ import java.util.ArrayList;
 
 public class FlightPath extends DataType {
 
+    private int id;
     private String type;
-    private String id;
+    private String flightPathId;
     private int altitude;
     private double latitude;
     private double longitude;
 
     public FlightPath() {}
 
-    public FlightPath(String type, String id, int altitude, double latitude, double longitude) {
+    public FlightPath(String type, String flightPathId, int altitude, double latitude, double longitude) {
         this.type = type;
-        this.id = id;
+        this.flightPathId = flightPathId;
         this.altitude = altitude;
         this.latitude = Precision.round(latitude, 2);
         this.longitude = Precision.round(longitude, 2);
@@ -113,15 +114,19 @@ public class FlightPath extends DataType {
                 Double.compare(that.getLatitude(), getLatitude()) == 0 &&
                 Double.compare(that.getLongitude(), getLongitude()) == 0 &&
                 getType().equals(that.getType()) &&
-                getId().equals(that.getId());
+                getFlightPathId().equals(that.getFlightPathId());
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getType() {
         return type;
     }
 
-    public String getId() {
-        return id;
+    public String getFlightPathId() {
+        return flightPathId;
     }
 
     public int getAltitude() {
@@ -136,12 +141,16 @@ public class FlightPath extends DataType {
         return longitude;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setType(String type) {
         this.type = type;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFlightPathId(String flightPathId) {
+        this.flightPathId = flightPathId;
     }
 
     public void setAltitude(int altitude) {

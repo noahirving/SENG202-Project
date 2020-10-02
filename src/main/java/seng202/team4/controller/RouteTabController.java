@@ -190,24 +190,17 @@ public class RouteTabController extends DataController {
         routes = FXCollections.observableArrayList();
         try {
             while (rs.next()) {
-                Route route = new Route();
+                int id = rs.getInt("Id");
                 String airline = rs.getString("Airline");
                 String sourceAirport = rs.getString("SourceAirport");
                 String destinationAirport = rs.getString("DestinationAirport");
+                boolean codeshare = rs.getString("Codeshare").equals("true");
+                int stops = rs.getInt("Stops");
                 String planeType = rs.getString("Equipment");
-                String codeshare = rs.getString("Codeshare");
 
-                route.setAirlineCode(airline);
-                route.setSourceAirportCode(sourceAirport);
-                route.setDestinationAirportCode(destinationAirport);
-                route.setNumStops(rs.getInt("Stops"));
-                route.setPlaneTypeCode(planeType);
+                Route route = new Route(airline, sourceAirport, destinationAirport, codeshare, stops, planeType);
+                route.setId(id);
                 route.setDistance(0);
-                if (codeshare.equals("true")) {
-                    route.setCodeshare(true);
-                } else {
-                    route.setCodeshare(false);
-                }
                 routes.add(route);
 
                 addToComboBoxList(airlineCodes, airline);
@@ -216,8 +209,8 @@ public class RouteTabController extends DataController {
                 addToComboBoxList(planeTypes, planeType);
 
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         dataTable.setItems(routes);
         initialiseSliders();

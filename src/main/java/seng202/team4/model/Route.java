@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import java.util.ArrayList;
 
 public class Route extends DataType {
+    private int id;
     private String airlineCode;
     private String sourceAirportCode;
     private String destinationAirportCode;
@@ -187,6 +188,10 @@ public class Route extends DataType {
         this.carbonEmissions = emissions;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public double getCarbonEmissions() {
         return carbonEmissions;
     }
@@ -217,6 +222,10 @@ public class Route extends DataType {
 
     public double getDistance() {
         return distance;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setDistance(double distance) {

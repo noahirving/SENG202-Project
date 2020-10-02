@@ -85,7 +85,7 @@ public class AirlineTabController extends DataController {
             setTable();
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(0);
+            System.exit(0); // TODO: Remove, error message.
         }
 
     }
@@ -102,30 +102,18 @@ public class AirlineTabController extends DataController {
         airlines = FXCollections.observableArrayList();
         countries = FXCollections.observableArrayList();
         while (rs.next()) {
-            Airline airline = new Airline();
             int id = rs.getInt("Id");
             String name = rs.getString("Name");
             String country = rs.getString("Country");
             String alias = rs.getString("Alias");
             String iata = rs.getString("Iata");
             String icao = rs.getString("Icao");
-            String cs = rs.getString("Callsign");
-            String active = rs.getString("RecentlyActive");
+            String callsign = rs.getString("Callsign");
+            boolean active = rs.getString("RecentlyActive").equals("true");
 
+            Airline airline = new Airline(name, country, alias, iata, icao, callsign, active);
             airline.setId(id);
-            airline.setName(name);
-            airline.setCountry(country);
-            airline.setAlias(alias);
-            airline.setIata(iata);
-            airline.setIcao(icao);
-            airline.setCallSign(cs);
-            if (active.equals("true")) {
-                airline.setRecentlyActive(true);
-            } else {
-                airline.setRecentlyActive(false);
-            }
             airlines.add(airline);
-
             addToComboBoxList(countries, country);
         }
         dataTable.setItems(airlines);
@@ -257,7 +245,7 @@ public class AirlineTabController extends DataController {
                 airlines.remove(row);
             }
             else {
-                System.out.println("Can't delete record (AirlineTabController");
+                System.out.println("Can't delete record (AirlineTabController)");
                 // TODO: Error message
             }
         }

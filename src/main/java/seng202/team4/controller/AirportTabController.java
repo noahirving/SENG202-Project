@@ -154,7 +154,7 @@ public class AirportTabController extends DataController {
         countries.clear(); cities.clear();
         countries.add(""); cities.add("");
         while (rs.next()) {
-            Airport airport = new Airport();
+            int id = rs.getInt("Id");
             String name = rs.getString("Name");
             String country = rs.getString("Country");
             String city = rs.getString("City");
@@ -167,24 +167,12 @@ public class AirportTabController extends DataController {
             char dst = rs.getString("Dst").charAt(0);
             String tz = rs.getString("TzDatabaseTime");
 
-            airport.setName(name);
-            airport.setCountry(country);
-            airport.setCity(city);
-            airport.setIata(iata);
-            airport.setIcao(icao);
-            airport.setLongitude(longitude);
-            airport.setLatitude(latitude);
-            airport.setCoordinates(longitude, latitude);
-            airport.setAltitude(altitude);
-            airport.setTimezone(timezone);
-            airport.setDst(dst);
-            airport.setTzDatabase(tz);
-
+            Airport airport = new Airport(name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst, tz);
+            airport.setId(id);
             airports.add(airport);
 
             addToComboBoxList(countries, country);
             addToComboBoxList(cities, city);
-
         }
         dataTable.setItems(airports);
     }

@@ -8,7 +8,7 @@ import seng202.team4.model.FlightPath;
 public class FlightPathDetailsController extends Details {
 
     @FXML private Text typeText;
-    @FXML private Text idText;
+    @FXML private Text flightPathIdText;
     @FXML private Text latitudeText;
     @FXML private Text longitudeText;
     @FXML private Text altitudeText;
@@ -17,7 +17,7 @@ public class FlightPathDetailsController extends Details {
     @Override
     public void setData(DataType data) {
         FlightPath path = (FlightPath) data;
-        idText.setText(path.getId());
+        flightPathIdText.setText(path.getFlightPathId());
         latitudeText.setText(Double.toString(path.getLatitude()));
         longitudeText.setText(Double.toString(path.getLongitude()));
         altitudeText.setText(Double.toString(path.getAltitude()));
