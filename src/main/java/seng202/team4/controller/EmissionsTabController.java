@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * Responsible for connecting the selected route data to the JavaFX interface,
  * this includes displaying the selected routes in the JavaFX TableView with data
  * from the 'RoutesSelected' SQLite database table and also using a search filter
- * on this data. Analysis is peformed on this data, specifically the distance and
+ * on this data. Analysis is performed on this data, specifically the distance and
  * carbon emissions for each route is calculated. The suggested donation amount to
  * offset a users carbon footprint is calculated, along with how many trees they
  * could plant with this derived figure.
@@ -120,7 +120,7 @@ public class EmissionsTabController extends DataController {
      * On Action method for the 'Trees Equivalent' button
      * Gets how many trees the user could plant with the donation amount
      * and displays this in a new Alert window
-     * @param buttonPress AcitonEvent triggered when button is clicked
+     * @param buttonPress ActionEvent triggered when button is clicked
      */
     @FXML
     public void pressTreesEquivalentButton(ActionEvent buttonPress) {
@@ -136,35 +136,32 @@ public class EmissionsTabController extends DataController {
         alert.show();
     }
 
-    @FXML
-    public void pressContributionsGraphButton(ActionEvent buttonPress) {
-        showChart("Contributions");
-    }
-
     /**
-     * On Action method for the 'Alternative Routes' button
-     * This feature will be implemented in a later release.
-     * This will display alternative routes that complete the same
-     * route, but cause less damage to the environment
-     * @param buttonPress ActionEvent triggered when button is clicked
-     */
-    @FXML
-    public void pressAlternativeRoutesButton(ActionEvent buttonPress) {
-        // To implement
-    }
-
-    /**
-     * On Action method for the 'Alternative Aircraft' button
-     * This feature will be implemented in a later release.
-     * This will display alternative aircrafts to the aircraft types used
-     * by the selected routes. The displayed aircraft will be more economically
-     * efficient and cause less damage to the environment
+     * On Action method for the 'Contributions Graph' button
+     * Creates a bar chart that visualizes the contribution
+     * of each selected route to the users overall carbon footprint
+     * and shows it in a new modal stage
      * @param buttonPress ActionEvent triggered when the button is clicked
      */
     @FXML
-    public void pressAlternativeAircraftTypeButton(ActionEvent buttonPress) {
-        // To implement
+    public void pressContributionsGraphButton(ActionEvent buttonPress) {
+        Stage stage = new Stage();
+        stage.setTitle("Route Contributions To Carbon Footprint");
+        stage.setMinHeight(417);
+        stage.setMinWidth(600);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.CONTRIBUTIONS_GRAPH));
+        try {
+            stage.setScene(new Scene(loader.load(), 600, 417));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+        ContributionsGraphController contributions = loader.getController();
+        //Set up the bar chart by passing it the users currently selected routes
+        contributions.setUp(selectedRoutes);
     }
+
 
     /**
      * Holds the high level logic (set of instructions) for initialisation.
@@ -217,7 +214,6 @@ public class EmissionsTabController extends DataController {
     @FXML
     public void updateTable(ActionEvent buttonPress) throws IOException{
         try {
-            //emissionsDataTable.setItems(selectedRoutes);
             setTable();
             setTotalEmissions();
         } catch (Exception e) {
@@ -240,7 +236,6 @@ public class EmissionsTabController extends DataController {
      */
     @Override
     public String getTableQuery() {
-        //Old query Select distinct Airline, SourceAirport, DestinationAirport, Equipment, distance, carbonEmissions from RoutesSelected
         return "Select distinct Airline, SourceAirport, DestinationAirport, Equipment, distance, carbonEmissions from RoutesSelected";
     }
 
@@ -362,31 +357,24 @@ public class EmissionsTabController extends DataController {
 
     }
 
+    /**
+     * Clear filter method
+     */
     @Override
     public void clearFilters() {
 
     }
 
+
+    /**
+     * Gets the path to the details FXML file
+     * for the editing and viewing of selected
+     * route info
+     * @return
+     */
     @Override
     public String getDetailsFXML() {
         return Path.EMISSIONS_DETAILS;
     }
 
-
-    public void showChart(String chartType) {
-        Stage stage = new Stage();
-        stage.setTitle(chartType);
-        stage.setMinHeight(440);
-        stage.setMinWidth(720);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.CONTRIBUTIONS_GRAPH));
-        try {
-            stage.setScene(new Scene(loader.load(), 700, 400));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-        contributionsGraphController contributions = loader.getController();
-        contributions.setUp(stage, selectedRoutes, dollarOffset, sumEmissions);
-    }
 }

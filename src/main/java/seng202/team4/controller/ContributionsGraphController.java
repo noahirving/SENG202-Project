@@ -6,11 +6,9 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.stage.Stage;
-import seng202.team4.model.DataType;
 import seng202.team4.model.Route;
 
-public class contributionsGraphController {
+public class ContributionsGraphController {
     @FXML
     private BarChart<String, Double> contributionChart;
 
@@ -19,15 +17,11 @@ public class contributionsGraphController {
 
     @FXML
     private NumberAxis y;
-    
-    private Stage stage;
-    private DataType data;
-    //public abstract void setData(DataType data);
 
-    public void setUp(Stage stage, ObservableList<Route> selectedRoutes, Double dollarOffset, Double sumEmissions) {
-
+    public void setUp(ObservableList<Route> selectedRoutes) {
+        contributionChart.setLegendVisible(false);
         x.setLabel("Routes selected");
-        y.setLabel("Carbon Emissions");
+        y.setLabel("Carbon Emissions per passenger (Kg-C02)");
         XYChart.Series<String, Double> routeSeries = new XYChart.Series<>();
         routeSeries.setName("Selected Routes");
         for(Route route: selectedRoutes){
@@ -35,8 +29,6 @@ public class contributionsGraphController {
             routeSeries.getData().add(new XYChart.Data<>(routeID, route.getCarbonEmissions()));
         }
         contributionChart.getData().addAll(routeSeries);
-        this.data = data;
-        this.stage = stage;
     }
 
 
