@@ -247,17 +247,4 @@ public abstract class DatabaseManager {
             }
         }
     }
-    /*
-    public void updateDatabase() {
-        try {
-            stmt.executeBatch();
-
-            stmt.close();
-            c.commit();
-            c.close();
-        } catch (SQLException e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-        }
-
-    }*/
 }

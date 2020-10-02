@@ -20,7 +20,6 @@ public abstract class DataType implements Validate {
      */
     public abstract String getInsertStatement(int setID);
 
-    // TODO: will be removed once getValid is implemented for uploading
 
     /**
      * Gets the name of data type.
