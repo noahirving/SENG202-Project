@@ -5,16 +5,58 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.ArrayList;
 
+/**
+ * Route model class with attributes representing
+ * the aspects of routes. These attributes were chosen
+ * from the open flights sample data. Objects of this class
+ * are created to display in the table on the route tab.
+ */
 public class Route extends DataType {
+
+    /**
+     * unique ID for route, as there can be multiple routes with the
+     * same airline, source and destination airport.
+     * This was required to satisfy the primary key constraint.
+     */
     private int id;
+    /**
+     * Unique open flights Airline ID
+     */
     private String airlineCode;
+    /**
+     * 3-letter IATA or 4-letter ICAO of source airport
+     */
     private String sourceAirportCode;
+    /**
+     * 3-letter IATA or 4-letter ICAO of destination airport
+     */
     private String destinationAirportCode;
+    /**
+     * 'Y' if this route is a code share. 'N' otherwise
+     */
     private boolean codeshare;
+    /**
+     * Number of stops on this flight
+     */
     private int numStops;
+    /**
+     * 3-letter code for plane type
+     */
     private String planeTypeCode;
+    /**
+     * Distance between source and destination airport
+     * Only calculated for selected routes to prevent
+     * large load time.
+     */
     private double distance;
+    /**
+     * Booleean property that is true if the airport has been selected with the checkbox and false otherwise
+     */
     private BooleanProperty select = new SimpleBooleanProperty(false);
+    /**
+     * The carbon emissions per passenger in kg of C02 for the route.
+     * Also only calculated for selected routes.
+     */
     private double carbonEmissions;
 
     /**
@@ -24,12 +66,12 @@ public class Route extends DataType {
 
     /**
      * Creates a full route object.
-     * @param airline Airline
-     * @param srcAirport Source Airport
-     * @param dstAirport Destination Airport
-     * @param codeshare Codeshare
-     * @param stops Stops
-     * @param equipment Equipment
+     * @param airline String Airline
+     * @param srcAirport String Source Airport
+     * @param dstAirport String Destination Airport
+     * @param codeshare boolean Codeshare
+     * @param stops int Stops
+     * @param equipment String Equipment
      */
     public Route(String airline, String srcAirport, String dstAirport, boolean codeshare, int stops, String equipment) {
         this.airlineCode = airline;
@@ -42,8 +84,8 @@ public class Route extends DataType {
 
     /**
      * Gets the route insert statement for the database.
-     * @param setID the ID of the set the that will be inserted into.
-     * @return The insert statement of a given ID.
+     * @param setID int the ID of the set the that will be inserted into.
+     * @return String The insert statement of a given ID.
      */
     @Override
     public String getInsertStatement(int setID) {
@@ -62,7 +104,7 @@ public class Route extends DataType {
 
     /**
      * Gets the datatype name.
-     * @return datatype name.
+     * @return String datatype name.
      */
     @Override
     public String getTypeName() {
@@ -71,7 +113,7 @@ public class Route extends DataType {
 
     /**
      * Gets the datatype set name.
-     * @return the datatype set name.
+     * @return String the datatype set name.
      */
     @Override
     public String getSetName() {
@@ -81,13 +123,13 @@ public class Route extends DataType {
     /**
      * Gets a valid airline from the given strings. Fills
      * the error message list if any errors are encountered.
-     * @param airline Airline
-     * @param srcAirport Source Airport
-     * @param dstAirport Destination Airport
-     * @param codeshare Codeshare
-     * @param stops Stops
-     * @param equipment Equipment
-     * @param errorMessage list of errors.
+     * @param airline String Airline
+     * @param srcAirport String Source Airport
+     * @param dstAirport String Destination Airport
+     * @param codeshare String Codeshare
+     * @param stops String Stops
+     * @param equipment String Equipment
+     * @param errorMessage ArrayList<String> list of errors.
      * @return the airline if valid, otherwise null.
      */
     public static Route getValid(String airline, String srcAirport, String dstAirport, String codeshare, String stops, String equipment, ArrayList<String> errorMessage) {
@@ -128,8 +170,8 @@ public class Route extends DataType {
 
     /**
      * Converts record array into individual strings and calls get valid.
-     * @param record        array of strings constituting the record.
-     * @param errorMessage  arrayList where the error messages will be stored.
+     * @param record String[] array of strings constituting the record.
+     * @param errorMessage ArrayList<String> arrayList where the error messages will be stored.
      * @return the airline if valid, otherwise null.
      */
     @Override
@@ -145,9 +187,9 @@ public class Route extends DataType {
 
     /**
      * Converts a string record into individual strings and calls get valid.
-     * @param record string constituting the record.
-     * @param errorMessage arrayList where the error messages will be stored.
-     * @return the airline if valid, otherwise null.
+     * @param record String constituting the record.
+     * @param errorMessage ArrayList<String> where the error messages will be stored.
+     * @return DataType the airline if valid, otherwise null.
      */
     @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {

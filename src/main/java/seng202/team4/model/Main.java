@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.StandardCopyOption;
 
+/**
+ * Main model class that is run to start the 'GreenFlights'
+ * flight tracking application
+ */
 public class Main {
 
     public static void main(String[] args) throws IOException {
@@ -22,6 +26,9 @@ public class Main {
         //fp.searchFlight();
     }
 
+    /**
+     * Loads the default data into the database if it has not already been loaded in
+     */
     public void loadDefaultData() {
         // TODO: Check that default data is not already in database (temporary fix is deleting the database everytime).
         try {
@@ -39,6 +46,9 @@ public class Main {
         }
     }
 
+    /**
+     * Deletes the database from the users database directory
+     */
     public static void deleteDatabase() {
         try
         {
