@@ -1,9 +1,10 @@
 package seng202.team4.model;
 
-import seng202.team4.controller.FileUploadController;
-
 import java.io.File;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Performs basic interaction with the database that bypasses

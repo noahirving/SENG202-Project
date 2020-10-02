@@ -1,6 +1,5 @@
 package seng202.team4.controller;
 
-import com.jfoenix.controls.JFXTooltip;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;

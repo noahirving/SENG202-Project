@@ -8,9 +8,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import org.controlsfx.control.textfield.TextFields;
-import seng202.team4.model.*;
+import seng202.team4.model.Airport;
+import seng202.team4.model.DataLoader;
+import seng202.team4.model.DataType;
+import seng202.team4.model.Path;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -307,6 +309,12 @@ public class AirportTabController extends DataController {
         ArrayList<Airport> rows = new ArrayList<>(selectedAirports);
         rows.forEach(row -> airports.remove(row));
         rows.forEach(DataLoader::removeFromAirportsSelectedDatabase);
+    }
+
+    @Override
+    public void clearFilters() {
+        cityCombobox.setValue("");
+        countryCombobox.setValue("");
     }
 
     @Override

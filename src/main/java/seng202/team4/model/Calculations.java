@@ -1,8 +1,5 @@
 package seng202.team4.model;
 
-import seng202.team4.model.DatabaseManager;
-import seng202.team4.model.Route;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

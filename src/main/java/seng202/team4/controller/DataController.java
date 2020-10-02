@@ -1,12 +1,7 @@
 package seng202.team4.controller;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,11 +11,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import seng202.team4.model.*;
+import seng202.team4.model.Airline;
+import seng202.team4.model.DataType;
+import seng202.team4.model.DatabaseManager;
+import seng202.team4.model.Path;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -42,6 +38,7 @@ public abstract class DataController {
     public abstract String getNewRecordFXML();
     public abstract String getDetailsFXML();
     public abstract void deleteRow();
+    public abstract void clearFilters();
 
     /**
      * TableView of the raw data table.
@@ -69,13 +66,14 @@ public abstract class DataController {
             if (newItem != null) {
                 try {
                     setDataSet(newItem.toString());
-
+                    clearFilters();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
     }
+
 
     /**
      * Sets the images of buttons

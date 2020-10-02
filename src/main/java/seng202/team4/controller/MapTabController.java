@@ -10,10 +10,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.controlsfx.control.textfield.TextFields;
-import seng202.team4.model.Path;
 import seng202.team4.model.DatabaseManager;
+import seng202.team4.model.Path;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Performs the logic for the 'Map' tab of the application.

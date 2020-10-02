@@ -4,23 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import seng202.team4.model.Main;
-import seng202.team4.model.Path;
-import seng202.team4.model.DataLoader;
-import seng202.team4.model.DataType;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.nio.file.StandardCopyOption;
-import java.sql.ResultSet;
 
 /**
  * Performs logic for the 'Home' tab of the application

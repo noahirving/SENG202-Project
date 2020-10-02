@@ -1,7 +1,7 @@
 package seng202.team4.model;
 
 import junit.framework.TestCase;
-import org.junit.*;
+import org.junit.Test;
 
 /**
  * Test the validity of different data inputs for uploading files and adding records

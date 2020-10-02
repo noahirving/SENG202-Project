@@ -7,7 +7,10 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import seng202.team4.model.*;
+import seng202.team4.model.Airline;
+import seng202.team4.model.DataType;
+import seng202.team4.model.FlightPath;
+import seng202.team4.model.Path;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -212,6 +215,11 @@ public class FlightPathTabController extends DataController {
         ObservableList<FlightPath> selectedFlightPaths = dataTable.getSelectionModel().getSelectedItems();
         ArrayList<FlightPath> rows = new ArrayList<>(selectedFlightPaths);
         rows.forEach(row -> flightPaths.remove(row));
+    }
+
+    @Override
+    public void clearFilters() {
+
     }
 
     @Override

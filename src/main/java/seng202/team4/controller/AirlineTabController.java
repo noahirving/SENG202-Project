@@ -1,6 +1,5 @@
 package seng202.team4.controller;
 
-import com.jfoenix.controls.JFXDialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -8,13 +7,13 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import org.controlsfx.control.textfield.TextFields;
+import seng202.team4.model.Airline;
+import seng202.team4.model.DataLoader;
+import seng202.team4.model.DataType;
 import seng202.team4.model.Path;
-import seng202.team4.model.*;
 
-import java.io.IOException;
-import java.sql.*;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
@@ -252,7 +251,14 @@ public class AirlineTabController extends DataController {
     }
 
     @Override
+    public void clearFilters() {
+        countryCombobox.setValue("");
+    }
+
+    @Override
     public String getDetailsFXML() {
         return Path.AIRLINE_DETAILS;
     }
+
+
 }

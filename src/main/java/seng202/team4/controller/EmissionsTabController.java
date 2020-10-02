@@ -363,6 +363,11 @@ public class EmissionsTabController extends DataController {
     }
 
     @Override
+    public void clearFilters() {
+
+    }
+
+    @Override
     public String getDetailsFXML() {
         return Path.EMISSIONS_DETAILS;
     }

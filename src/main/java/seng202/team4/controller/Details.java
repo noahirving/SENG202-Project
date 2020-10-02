@@ -1,6 +1,5 @@
 package seng202.team4.controller;
 
-import javafx.fxml.FXML;
 import javafx.stage.Stage;
 import seng202.team4.model.DataType;
 

@@ -1,6 +1,5 @@
 package seng202.team4.controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import javafx.fxml.FXML;

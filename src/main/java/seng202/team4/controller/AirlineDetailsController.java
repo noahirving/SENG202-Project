@@ -4,8 +4,9 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.text.Text;
-import seng202.team4.model.*;
+import seng202.team4.model.Airline;
+import seng202.team4.model.DataType;
+import seng202.team4.model.Validate;
 
 public class AirlineDetailsController extends Details {
 

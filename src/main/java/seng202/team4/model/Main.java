@@ -2,9 +2,10 @@ package seng202.team4.model;
 
 import seng202.team4.view.MainApplication;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.StandardCopyOption;
-import java.sql.*;
 
 public class Main {
 

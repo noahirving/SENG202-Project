@@ -9,12 +9,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import org.controlsfx.control.textfield.TextFields;
-import seng202.team4.model.Path;
 import seng202.team4.model.*;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -390,6 +391,14 @@ public class RouteTabController extends DataController {
         ArrayList<Route> rows = new ArrayList<>(selectedRoutes);
         rows.forEach(row -> routes.remove(row));
         rows.forEach(DataLoader::removeFromRoutesSelectedDatabase);
+    }
+
+    @Override
+    public void clearFilters() {
+        airlineFilterCombobox.setValue("");
+        departureFilterCombobox.setValue("");
+        destinationFilterCombobox.setValue("");
+        planeTypeFilterCombobox.setValue("");
     }
 
     @Override
