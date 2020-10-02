@@ -17,10 +17,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.commons.math3.util.Precision;
-import seng202.team4.model.DataLoader;
-import seng202.team4.model.DataType;
-import seng202.team4.model.Path;
-import seng202.team4.model.Route;
+import seng202.team4.model.*;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -49,11 +46,11 @@ public class EmissionsTabController extends DataController {
     /**
      * Initialization of users suggested dollar offset amount
      */
-    private Double dollarOffset = 0.0;
+    private Double totalDonation = 0.0;
     /**
      * Initializaion of the trees the user could plant with dollarOffset
      */
-    private Double treeOffset = 0.0;
+    private Double totalTrees = 0.0;
 
     /**
      * TableView of the selected routes raw data table
@@ -104,7 +101,7 @@ public class EmissionsTabController extends DataController {
      */
     @FXML
     public void pressEnvironmentalDonationButton(ActionEvent buttonPress) {
-        String donationDollarsCents = String.format("%.2f", dollarOffset);
+        String donationDollarsCents = String.format("%.2f", totalDonation);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Environmental Donation Equivalent");
         alert.setHeaderText("Donation required to offset your emissions: $" + donationDollarsCents + " NZD");
@@ -127,7 +124,7 @@ public class EmissionsTabController extends DataController {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Trees Equivalent");
-        alert.setHeaderText("With the suggested donation amount you could plant " + treeOffset + " trees");
+        alert.setHeaderText("With the suggested donation amount you could plant " + totalTrees + " trees");
 
         FlowPane treesFp = new FlowPane();
         Label explainText = new Label("Plant trees at the teamtrees.org site");
@@ -195,11 +192,13 @@ public class EmissionsTabController extends DataController {
      */
     private void setTotalEmissions() {
         sumEmissions = 0.0;
+        totalDonation = 0.0;
+        totalTrees = 0.0;
         for(Route route: selectedRoutes){
             sumEmissions += route.getCarbonEmissions();
+            totalDonation += route.getDollarOffset();
+            totalTrees += route.getTreeEquivalent();
         }
-        dollarOffset = sumEmissions * 0.01479;
-        treeOffset = Math.ceil(dollarOffset);
         //String emissionsLabel = Double.toString();
         currentEmissionsValue.setText(String.format("%.2f", sumEmissions) + "kg C02");
     }
@@ -262,6 +261,8 @@ public class EmissionsTabController extends DataController {
             route.setPlaneTypeCode(planeType);
             route.setDistance(Precision.round(rs.getDouble("distance"), 2));
             route.setCarbonEmissions(Precision.round(rs.getDouble("carbonEmissions"), 2));
+            route.setDollarOffset(Calculations.calculateDollarOffset(route));
+            route.setTreeEquivalent(Calculations.calculateTreesEquivalent(route));
             selectedRoutes.add(route);
 
         }

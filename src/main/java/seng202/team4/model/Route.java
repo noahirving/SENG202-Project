@@ -59,6 +59,9 @@ public class Route extends DataType {
      */
     private double carbonEmissions;
 
+    private double dollarOffset;
+    private int treeEquivalent;
+
     /**
      * Creates an empty object of route.
      */
@@ -266,6 +269,14 @@ public class Route extends DataType {
         return distance;
     }
 
+    public double getDollarOffset() {
+        return dollarOffset;
+    }
+
+    public int getTreeEquivalent() {
+        return treeEquivalent;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -308,5 +319,13 @@ public class Route extends DataType {
 
     public void setSelect(boolean select) {
         this.select.set(select);
+    }
+
+    public void setDollarOffset(double dollarOffset) {
+        this.dollarOffset = dollarOffset;
+    }
+
+    public void setTreeEquivalent(int treeEquivalent) {
+        this.treeEquivalent = treeEquivalent;
     }
 }

@@ -84,4 +84,14 @@ public class Calculations {
         //return distance to be stored in DB
         return(r * c);
     }
+
+    public static double calculateDollarOffset(Route route) {
+        Double emission = route.getCarbonEmissions();
+        return emission * 0.01479;
+    }
+
+    public static int calculateTreesEquivalent(Route route) {
+        Double dollars = route.getDollarOffset();
+        return (int) Math.ceil(dollars);
+    }
 }
