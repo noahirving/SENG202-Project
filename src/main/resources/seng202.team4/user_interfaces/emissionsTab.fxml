@@ -161,6 +161,11 @@
                               <Insets />
                            </GridPane.margin>
                           </Label>
+                        <JFXButton fx:id="contributionsGraphButton" onAction="#pressContributionsGraphButton" prefHeight="50.0" prefWidth="150.0" styleClass="button-filters" stylesheets="@styles.css" text="Contributions Graph" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
+                           </padding>
+                        </JFXButton>
                      </children>
                   </GridPane>
                </children>

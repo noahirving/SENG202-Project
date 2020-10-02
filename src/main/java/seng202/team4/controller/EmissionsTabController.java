@@ -7,11 +7,15 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.apache.commons.math3.util.Precision;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
@@ -89,6 +93,8 @@ public class EmissionsTabController extends DataController {
      */
     @FXML private Label currentEmissionsValue;
 
+    @FXML private Button contributionsGraphButton;
+
     /**
      *  On Action method for the 'Environmental Donation' button
      *  Gets the calculated donation amount and displays this
@@ -128,6 +134,11 @@ public class EmissionsTabController extends DataController {
         treesFp.getChildren().addAll(explainText);
         alert.getDialogPane().contentProperty().set( treesFp );
         alert.show();
+    }
+
+    @FXML
+    public void pressContributionsGraphButton(ActionEvent buttonPress) {
+        showChart("Contributions");
     }
 
     /**
@@ -354,5 +365,23 @@ public class EmissionsTabController extends DataController {
     @Override
     public String getDetailsFXML() {
         return Path.EMISSIONS_DETAILS;
+    }
+
+
+    public void showChart(String chartType) {
+        Stage stage = new Stage();
+        stage.setTitle(chartType);
+        stage.setMinHeight(440);
+        stage.setMinWidth(720);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Path.CONTRIBUTIONS_GRAPH));
+        try {
+            stage.setScene(new Scene(loader.load(), 700, 400));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+        contributionsGraphController contributions = loader.getController();
+        contributions.setUp(stage, selectedRoutes, dollarOffset, sumEmissions);
     }
 }

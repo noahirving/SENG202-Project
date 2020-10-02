@@ -25,6 +25,7 @@ public abstract class Path {
     public static final String ROUTE_DETAILS = VIEW + USER_INTERFACES + "/routeDetails.fxml";
     public static final String FLIGHTPATH_DETAILS = VIEW + USER_INTERFACES + "/flightPathDetails.fxml";
     public static final String EMISSIONS_DETAILS = VIEW + USER_INTERFACES + "/emissionsDetails.fxml";
+    public static final String CONTRIBUTIONS_GRAPH = VIEW + USER_INTERFACES + "/emissionsContributionsGraph.fxml";
 
     public static final String REFRESH_BUTTON_PNG = VIEW + "/images/refresh_icon.png";
     public static final String ADD_RECORD_BUTTON_PNG = VIEW + "/images/add_record_image.png";
@@ -41,4 +42,5 @@ public abstract class Path {
     public static final String ROUTE_RSC = "/routes.dat";
     public static final String FLIGHT_PATH_RSC = "/NZCH-WSSS.csv";
     public static final String MAP_RSC = "/seng202.team4/user_interfaces/map.html";
+
 }
