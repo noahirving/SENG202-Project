@@ -58,6 +58,7 @@ public class Airport extends DataType {
         this.timezone = timeZone;
         this.dst = dst;
         this.tzDatabase = tzDatabase;
+        setCoordinates(longitude, latitude);
     }
 
     /**
@@ -334,6 +335,7 @@ public class Airport extends DataType {
 
     public void setLatitude(double latitude) {
         this.latitude = Precision.round(latitude, 2);
+        setCoordinates(this.longitude, this.latitude);
     }
 
     public double getLongitude() {
@@ -342,6 +344,7 @@ public class Airport extends DataType {
 
     public void setLongitude(double longitude) {
         this.longitude = Precision.round(longitude, 2);
+        setCoordinates(this.longitude, this.latitude);
     }
 
     public double getAltitude() {
