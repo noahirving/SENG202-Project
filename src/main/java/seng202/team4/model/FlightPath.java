@@ -29,7 +29,7 @@ public class FlightPath extends DataType {
             return "INSERT INTO FlightPath ('TYPE', 'FLIGHTPATHID', 'ALTITUDE', 'LATITUDE', 'LONGITUDE', 'SETID') "
                 + "VALUES ('"
                 + getType().replaceAll("'", "''") + BETWEEN
-                + getId() + BETWEEN
+                + getFlightPathId() + BETWEEN
                 + getAltitude() + BETWEEN
                 + getLatitude() + BETWEEN
                 + getLongitude() + BETWEEN
