@@ -1,6 +1,6 @@
 package seng202.team4.model;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -8,7 +8,7 @@ import org.junit.Test;
  * into the application.
  */
 
-public class ValidateTest extends TestCase {
+public class ValidateTest {
 
     /**
      * Test whether numeric data input is a valid integer.
@@ -16,7 +16,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsNumeric1() {
         String num1 = "123";
-        assertTrue(Validate.isInteger(num1));
+        Assert.assertTrue(Validate.isInteger(num1));
     }
 
     /**
@@ -25,7 +25,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsNumeric2() {
         String num2 = "1.23";
-        assertTrue(Validate.isFloat(num2));
+        Assert.assertTrue(Validate.isFloat(num2));
     }
 
     /**
@@ -34,7 +34,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsNumeric3() {
         String num3 = "-123";
-        assertTrue(Validate.isInteger(num3));
+        Assert.assertTrue(Validate.isInteger(num3));
     }
 
     /**
@@ -43,7 +43,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsNumeric4() {
         String num4 = "-1.23";
-        assertTrue(Validate.isFloat(num4));
+        Assert.assertTrue(Validate.isFloat(num4));
     }
 
     /**
@@ -52,7 +52,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsNumeric5() {
         String num5 = "a.23";
-        assertFalse(Validate.isFloat(num5));
+        Assert.assertFalse(Validate.isFloat(num5));
     }
 
     /**
@@ -61,7 +61,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsNumeric6() {
         String num6 = null;
-        assertFalse(Validate.isInteger(num6));
+        Assert.assertFalse(Validate.isInteger(num6));
     }
 
     /**
@@ -70,7 +70,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsNumeric7() {
         String num6 = null;
-        assertFalse(Validate.isFloat(num6));
+        Assert.assertFalse(Validate.isFloat(num6));
     }
 
     /**
@@ -79,7 +79,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsAlpha1() {
         String str1 = "A";
-        assertTrue(Validate.isAlpha(str1));
+        Assert.assertTrue(Validate.isAlpha(str1));
     }
 
     /**
@@ -88,7 +88,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsAlpha2() {
         String str2 = "Air Port";
-        assertTrue(Validate.isAlpha(str2));
+        Assert.assertTrue(Validate.isAlpha(str2));
     }
 
     /**
@@ -97,7 +97,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsAlpha3() {
         String str3 = "";
-        assertFalse(Validate.isAlpha(str3));
+        Assert.assertFalse(Validate.isAlpha(str3));
     }
 
     /**
@@ -106,7 +106,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsAlpha4() {
         String str4 = "Airport 4";
-        assertFalse(Validate.isAlpha(str4));
+        Assert.assertFalse(Validate.isAlpha(str4));
     }
 
     /**
@@ -115,7 +115,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsAlpha5() {
         String str5 = "   ";
-        assertFalse(Validate.isAlpha(str5));
+        Assert.assertFalse(Validate.isAlpha(str5));
     }
 
     /**
@@ -124,7 +124,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsAlpha6() {
         String str6 = null;
-        assertFalse(Validate.isAlpha(str6));
+        Assert.assertFalse(Validate.isAlpha(str6));
     }
 
     /**
@@ -134,7 +134,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsAlphaNumeric1() {
         String st1 = "Airport 123";
-        assertTrue(Validate.isAlphaNumeric(st1));
+        Assert.assertTrue(Validate.isAlphaNumeric(st1));
     }
 
     /**
@@ -144,7 +144,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsAlphaNumeric2() {
         String st2 = "Airport 123!$%";
-        assertFalse(Validate.isAlphaNumeric(st2));
+        Assert.assertFalse(Validate.isAlphaNumeric(st2));
     }
 
     /**
@@ -153,7 +153,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsAlphaNumeric3() {
         String st3 = null;
-        assertFalse(Validate.isAlphaNumeric(st3));
+        Assert.assertFalse(Validate.isAlphaNumeric(st3));
     }
 
     /**
@@ -162,7 +162,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidIATA1() {
         String iata1 = "ABC";
-        assertTrue(Validate.isAirportIATA(iata1));
+        Assert.assertTrue(Validate.isAirportIATA(iata1));
     }
 
     /**
@@ -171,7 +171,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidIATA2() {
         String iata2 = "AA";
-        assertTrue(Validate.isAirlineIATA(iata2));
+        Assert.assertTrue(Validate.isAirlineIATA(iata2));
     }
 
     /**
@@ -180,7 +180,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidIATA3() {
         String iata3 = "";
-        assertTrue(Validate.isAirportIATA(iata3));
+        Assert.assertTrue(Validate.isAirportIATA(iata3));
     }
 
     /**
@@ -189,7 +189,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidIATA4() {
         String iata4 = null;
-        assertFalse(Validate.isAirportIATA(iata4));
+        Assert.assertFalse(Validate.isAirportIATA(iata4));
     }
 
     /**
@@ -198,7 +198,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidIATA5() {
         String iata5 = "ABCD";
-        assertFalse(Validate.isAirportIATA(iata5));
+        Assert.assertFalse(Validate.isAirportIATA(iata5));
     }
 
     /**
@@ -207,7 +207,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidICAO1() {
         String icao1 = "ABCD";
-        assertTrue(Validate.isAirportICAO(icao1));
+        Assert.assertTrue(Validate.isAirportICAO(icao1));
     }
 
     /**
@@ -216,7 +216,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidICAO2() {
         String icao2 = "AB";
-        assertFalse(Validate.isAirportICAO(icao2));
+        Assert.assertFalse(Validate.isAirportICAO(icao2));
     }
 
     /**
@@ -225,7 +225,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidICAO3() {
         String icao3 = "";
-        assertTrue(Validate.isAirportICAO(icao3));
+        Assert.assertTrue(Validate.isAirportICAO(icao3));
     }
 
     /**
@@ -234,7 +234,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidICAO4() {
         String icao4 = null;
-        assertFalse(Validate.isAirportICAO(icao4));
+        Assert.assertFalse(Validate.isAirportICAO(icao4));
     }
 
     /**
@@ -243,7 +243,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidICAO5() {
         String icao5 = "ABC";
-        assertTrue(Validate.isAirlineICAO(icao5));
+        Assert.assertTrue(Validate.isAirlineICAO(icao5));
     }
 
     /**
@@ -252,7 +252,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidTZDB1() {
         String tzdb1 = "America/Thule";
-        assertTrue(Validate.isValidTZDB(tzdb1));
+        Assert.assertTrue(Validate.isValidTZDB(tzdb1));
     }
 
     /**
@@ -261,7 +261,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidTZDB2() {
         String tzdb2 = "America";
-        assertFalse(Validate.isValidTZDB(tzdb2));
+        Assert.assertFalse(Validate.isValidTZDB(tzdb2));
     }
 
     /**
@@ -270,7 +270,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidTZDB3() {
         String tzdb3 = "Amer1ca/Thul3";
-        assertFalse(Validate.isValidTZDB(tzdb3));
+        Assert.assertFalse(Validate.isValidTZDB(tzdb3));
     }
 
     /**
@@ -279,7 +279,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidTZDB4() {
         String tzdb4 = null;
-        assertFalse(Validate.isValidTZDB(tzdb4));
+        Assert.assertFalse(Validate.isValidTZDB(tzdb4));
     }
 
     /**
@@ -288,7 +288,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidTimeZone1() {
         String tz = "aa";
-        assertFalse(Validate.isValidTimeZone(tz));
+        Assert.assertFalse(Validate.isValidTimeZone(tz));
     }
 
     /**
@@ -297,7 +297,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidTimeZone2() {
         String tz = "-13";
-        assertFalse(Validate.isValidTimeZone(tz));
+        Assert.assertFalse(Validate.isValidTimeZone(tz));
     }
 
     /**
@@ -306,7 +306,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidTimeZone3() {
         String tz = "15";
-        assertFalse(Validate.isValidTimeZone(tz));
+        Assert.assertFalse(Validate.isValidTimeZone(tz));
     }
 
     /**
@@ -315,7 +315,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidTimeZone4() {
         String tz = "3";
-        assertTrue(Validate.isValidTimeZone(tz));
+        Assert.assertTrue(Validate.isValidTimeZone(tz));
     }
 
     /**
@@ -324,7 +324,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidTimeZone5() {
         String tz = null;
-        assertFalse(Validate.isValidTimeZone(tz));
+        Assert.assertFalse(Validate.isValidTimeZone(tz));
     }
 
     /**
@@ -333,7 +333,7 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsValidAlphaMulti() {
         String alpha = "Hornafjörður";
-        assertTrue(Validate.isAlphaMultiLanguage(alpha));
+        Assert.assertTrue(Validate.isAlphaMultiLanguage(alpha));
     }
 
     /**
@@ -342,6 +342,6 @@ public class ValidateTest extends TestCase {
     @Test
     public void testIsAscii() {
         String str = "Dfs%#:)";
-        assertTrue(Validate.isAsciiOrNull(str));
+        Assert.assertTrue(Validate.isAsciiOrNull(str));
     }
 }

@@ -1,6 +1,7 @@
 package seng202.team4.model;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * Setters and getters are not tested.
  */
 
-public class RouteTest extends TestCase {
+public class RouteTest {
 
     /**
      * Tests whether getInsertStatement returns the correct statement
@@ -20,7 +21,7 @@ public class RouteTest extends TestCase {
     public void testInsertStatement() {
         Route route = new Route("BA","SIN","MEL",true,0,"744");
         String statement = route.getInsertStatement(10);
-        assertEquals("INSERT INTO Route ('Airline', 'SourceAirport', 'DestinationAirport', 'Codeshare', 'Stops', 'Equipment', 'Distance', 'SetID') " +
+        Assert.assertEquals("INSERT INTO Route ('Airline', 'SourceAirport', 'DestinationAirport', 'Codeshare', 'Stops', 'Equipment', 'Distance', 'SetID') " +
                 "VALUES ('BA', 'SIN', 'MEL', 'true', '0', '744', '0.0', '10');", statement);
     }
 
@@ -30,7 +31,7 @@ public class RouteTest extends TestCase {
     @Test
     public void testGetValidAirline() {
         Route route = Route.getValid("BA~","SIN","MEL","Y","0","744", new ArrayList<>());
-        assertEquals(null, route);
+        Assert.assertEquals(null, route);
     }
 
     /**
@@ -39,7 +40,7 @@ public class RouteTest extends TestCase {
     @Test
     public void testGetValidSrc() {
         Route route = Route.getValid("BA","SIN!!","MEL","Y","0","744", new ArrayList<>());
-        assertEquals(null, route);
+        Assert.assertEquals(null, route);
     }
 
     /**
@@ -48,7 +49,7 @@ public class RouteTest extends TestCase {
     @Test
     public void testGetValidDest() {
         Route route = Route.getValid("BA","SIN","MEL!!","Y","0","744", new ArrayList<>());
-        assertEquals(null, route);
+        Assert.assertEquals(null, route);
     }
 
     /**
@@ -57,7 +58,7 @@ public class RouteTest extends TestCase {
     @Test
     public void testGetValidCodeShare() {
         Route route = Route.getValid("BA","SIN","MEL","S","0","744", new ArrayList<>());
-        assertEquals(null, route);
+        Assert.assertEquals(null, route);
     }
 
     /**
@@ -66,7 +67,7 @@ public class RouteTest extends TestCase {
     @Test
     public void testGetValidStops() {
         Route route = Route.getValid("BA","SIN","MEL","Y","0a","744", new ArrayList<>());
-        assertEquals(null, route);
+        Assert.assertEquals(null, route);
     }
 
     /**
@@ -75,7 +76,7 @@ public class RouteTest extends TestCase {
     @Test
     public void testGetValidEquipment() {
         Route route = Route.getValid("BA","SIN","MEL","Y","0","744@", new ArrayList<>());
-        assertEquals(null, route);
+        Assert.assertEquals(null, route);
     }
 
     /**
@@ -86,7 +87,7 @@ public class RouteTest extends TestCase {
     public void testGetValid() {
         Route route = new Route();
         Route newroute = (Route) route.getValid(new String[]{"BA","SIN","MEL","Y","0","744"}, new ArrayList<>());
-        assertTrue(newroute.equalsTest(new Route("BA","SIN","MEL",true,0,"744")));
+        Assert.assertTrue(newroute.equalsTest(new Route("BA", "SIN", "MEL", true, 0, "744")));
     }
 
 }

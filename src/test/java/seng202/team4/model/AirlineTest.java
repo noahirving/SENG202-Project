@@ -1,6 +1,7 @@
 package seng202.team4.model;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * Setters and getters are not tested.
  */
 
-public class AirlineTest extends TestCase {
+public class AirlineTest {
 
     /**
      * Tests whether getInsertStatement returns the correct statement
@@ -20,7 +21,7 @@ public class AirlineTest extends TestCase {
     public void testInsertStatement() {
         Airline airline = new Airline("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada",true);
         String statement = airline.getInsertStatement(10);
-        assertEquals("INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') " +
+        Assert.assertEquals("INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') " +
                 "VALUES ('Rainbow Air Canada', 'Rainbow Air CAN', 'RY', 'RAY', 'Rainbow CAN', 'Canada', 'true', '10');", statement);
     }
 
@@ -30,7 +31,7 @@ public class AirlineTest extends TestCase {
     @Test
     public void testGetValidName() {
         Airline airline = Airline.getValid("~","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada","Y", new ArrayList<>());
-        assertEquals(null, airline);
+        Assert.assertEquals(null, airline);
     }
 
     /**
@@ -39,7 +40,7 @@ public class AirlineTest extends TestCase {
     @Test
     public void testGetValidCode() {
         Airline airline = Airline.getValid("Rainbow Air Canada","r@inb0w 4!r~","RY","RAY","Rainbow CAN","Canada","Y", new ArrayList<>());
-        assertEquals(null, airline);
+        Assert.assertEquals(null, airline);
     }
 
     /**
@@ -48,7 +49,7 @@ public class AirlineTest extends TestCase {
     @Test
     public void testGetValidIATA() {
         Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RYAN~","RAY","Rainbow CAN","Canada","Y", new ArrayList<>());
-        assertEquals(null, airline);
+        Assert.assertEquals(null, airline);
     }
 
     /**
@@ -57,7 +58,7 @@ public class AirlineTest extends TestCase {
     @Test
     public void testGetValidICAO() {
         Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RY","RAYAB~","Rainbow CAN","Canada","Y", new ArrayList<>());
-        assertEquals(null, airline);
+        Assert.assertEquals(null, airline);
     }
 
     /**
@@ -66,7 +67,7 @@ public class AirlineTest extends TestCase {
     @Test
     public void testGetValidCallSign() {
         Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Ra!nbow C4N~","Canada","Y", new ArrayList<>());
-        assertEquals(null, airline);
+        Assert.assertEquals(null, airline);
     }
 
     /**
@@ -75,7 +76,7 @@ public class AirlineTest extends TestCase {
     @Test
     public void testGetValidCountry() {
         Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","C4nada~","Y", new ArrayList<>());
-        assertEquals(null, airline);
+        Assert.assertEquals(null, airline);
     }
 
     /**
@@ -85,7 +86,7 @@ public class AirlineTest extends TestCase {
     @Test
     public void testGetValidActivity() {
         Airline airline = Airline.getValid("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada","S", new ArrayList<>());
-        assertEquals(null, airline);
+        Assert.assertEquals(null, airline);
     }
 
     /**
@@ -96,6 +97,6 @@ public class AirlineTest extends TestCase {
     public void testGetValid() {
         Airline airline = new Airline();
         Airline newline = (Airline) airline.getValid(new String[]{"Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada","Y"}, new ArrayList<>());
-        assertTrue(newline.equalsTest(new Airline("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada",true)));
+        Assert.assertTrue(newline.equalsTest(new Airline("Rainbow Air Canada", "Rainbow Air CAN", "RY", "RAY", "Rainbow CAN", "Canada", true)));
     }
 }

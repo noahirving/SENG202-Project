@@ -1,6 +1,7 @@
 package seng202.team4.model;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * Simple setters and getters are not tested.
  */
 
-public class AirportTest extends TestCase {
+public class AirportTest {
 
     /**
      * Test whether setCoordinates sets the latitude and longitude in the
@@ -21,7 +22,7 @@ public class AirportTest extends TestCase {
         Airport airport = new Airport();
         airport.setCoordinates(42.0, 13.5);
         String coordinates = airport.getCoordinates();
-        assertEquals("42.00, 13.50", coordinates);
+        Assert.assertEquals("42.00, 13.50", coordinates);
     }
 
     /**
@@ -32,7 +33,7 @@ public class AirportTest extends TestCase {
     public void testInsertStatement() {
         Airport airport = new Airport("Thule Air Base","Thule","Greenland","THU","BGTL",76.531203,-68.703161,251,-4,'E',"America/Thule");
         String statement = airport.getInsertStatement(5);
-        assertEquals("INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME', 'SETID') " +
+        Assert.assertEquals("INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME', 'SETID') " +
                 "VALUES ('Thule Air Base', 'Thule', 'Greenland', 'THU', 'BGTL', '76.531203', '-68.703161', '251.0', '-4.0', 'E', 'America/Thule', '5');", statement);
     }
 
@@ -42,7 +43,7 @@ public class AirportTest extends TestCase {
     @Test
     public void testGetValidName() {
         Airport airport = Airport.getValid("~","Thule","Greenland","THU","BGTL","76.531203","-68.703161","251","-4","E","America/Thule", new ArrayList<>());
-        assertEquals(null, airport);
+        Assert.assertEquals(null, airport);
     }
 
     /**
@@ -51,7 +52,7 @@ public class AirportTest extends TestCase {
     @Test
     public void testGetValidCity() {
         Airport airport = Airport.getValid("Thule Air Base","~","Greenland","THU","BGTL","76.531203","-68.703161","251","-4","E","America/Thule", new ArrayList<>());
-        assertEquals(null, airport);
+        Assert.assertEquals(null, airport);
     }
 
     /**
@@ -60,7 +61,7 @@ public class AirportTest extends TestCase {
     @Test
     public void testGetValidCountry() {
         Airport airport = Airport.getValid("Thule Air Base","Thule","~","THU","BGTL","76.531203","-68.703161","251","-4","E","America/Thule", new ArrayList<>());
-        assertEquals(null, airport);
+        Assert.assertEquals(null, airport);
     }
 
     /**
@@ -69,7 +70,7 @@ public class AirportTest extends TestCase {
     @Test
     public void testGetValidIATA() {
         Airport airport = Airport.getValid("Thule Air Base","Thule","Greenland","T","BGTL","76.531203","-68.703161","251","-4","E","America/Thule", new ArrayList<>());
-        assertEquals(null, airport);
+        Assert.assertEquals(null, airport);
     }
 
     /**
@@ -78,7 +79,7 @@ public class AirportTest extends TestCase {
     @Test
     public void testGetValid5ICAO() {
         Airport airport = Airport.getValid("Thule Air Base","Thule","Greenland","THU","B","76.531203","-68.703161","251","-4","E","America/Thule", new ArrayList<>());
-        assertEquals(null, airport);
+        Assert.assertEquals(null, airport);
     }
 
     /**
@@ -87,7 +88,7 @@ public class AirportTest extends TestCase {
     @Test
     public void testGetValidLatitude() {
         Airport airport = Airport.getValid("Thule Air Base","Thule","Greenland","THU","BGTL","76.a","-68.703161","251","-4","E","America/Thule", new ArrayList<>());
-        assertEquals(null, airport);
+        Assert.assertEquals(null, airport);
     }
 
     /**
@@ -96,7 +97,7 @@ public class AirportTest extends TestCase {
     @Test
     public void testGetValidLongitude() {
         Airport airport = Airport.getValid("Thule Air Base","Thule","Greenland","THU","BGTL","76.531203","-68fb","251","-4","E","America/Thule", new ArrayList<>());
-        assertEquals(null, airport);
+        Assert.assertEquals(null, airport);
     }
 
     /**
@@ -105,7 +106,7 @@ public class AirportTest extends TestCase {
     @Test
     public void testGetValidAltitude() {
         Airport airport = Airport.getValid("Thule Air Base","Thule","Greenland","THU","BGTL","76.531203","-68.703161","1d","-4","E","America/Thule", new ArrayList<>());
-        assertEquals(null, airport);
+        Assert.assertEquals(null, airport);
     }
 
     /**
@@ -114,7 +115,7 @@ public class AirportTest extends TestCase {
     @Test
     public void testGetValidTimeZone() {
         Airport airport = Airport.getValid("Thule Air Base","Thule","Greenland","THU","BGTL","76.531203","-68.703161","251","-u","E","America/Thule", new ArrayList<>());
-        assertEquals(null, airport);
+        Assert.assertEquals(null, airport);
     }
 
     /**
@@ -123,7 +124,7 @@ public class AirportTest extends TestCase {
     @Test
     public void testGetValidDST() {
         Airport airport = Airport.getValid("Thule Air Base","Thule","Greenland","THU","BGTL","76.531203","-68.703161","251","-4","h","America/Thule", new ArrayList<>());
-        assertEquals(null, airport);
+        Assert.assertEquals(null, airport);
     }
 
     /**
@@ -132,7 +133,7 @@ public class AirportTest extends TestCase {
     @Test
     public void testGetValidTZDB() {
         Airport airport = Airport.getValid("Thule Air Base","Thule","Greenland","THU","BGTL","76.531203","-68.703161","251","-4","h","America", new ArrayList<>());
-        assertEquals(null, airport);
+        Assert.assertEquals(null, airport);
     }
 
     /**
@@ -143,7 +144,7 @@ public class AirportTest extends TestCase {
     public void testGetValid() {
         Airport airport = new Airport();
         Airport newport = (Airport) airport.getValid(new String[]{"Thule Air Base","Thule","Greenland","THU","BGTL","76.531203","-68.703161","251","-4","E","America/Thule"}, new ArrayList<>());
-        assertTrue(newport.equalsTest(new Airport("Thule Air Base","Thule","Greenland","THU","BGTL",76.531203,-68.703161,251,-4,'E',"America/Thule")));
+        Assert.assertTrue(newport.equalsTest(new Airport("Thule Air Base", "Thule", "Greenland", "THU", "BGTL", 76.531203, -68.703161, 251, -4, 'E', "America/Thule")));
     }
 
 }

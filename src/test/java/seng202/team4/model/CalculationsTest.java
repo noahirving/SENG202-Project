@@ -35,10 +35,9 @@ public class CalculationsTest {
 
     /**
      * Set up the database to be used for the test.
-     * @throws Exception exception when database connection is not established properly.
      */
     @BeforeClass
-    public static void setup() throws Exception {
+    public static void setup() {
         DatabaseManager.setUp();
         Main m = new Main();
         m.loadDefaultData();
