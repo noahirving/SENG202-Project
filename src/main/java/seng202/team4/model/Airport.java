@@ -66,11 +66,7 @@ public class Airport extends DataType {
     /**
      * Time zone in 'tz' (Olson) format
      */
-    private String tzDatabase;/**
-    /**
-     *
-     */
-    private int routeNum;
+    private String tzDatabase;
     /**
      *  Type of the airport
      */
@@ -329,7 +325,6 @@ public class Airport extends DataType {
                 Double.compare(airport.getAltitude(), getAltitude()) == 0 &&
                 Float.compare(airport.getTimezone(), getTimezone()) == 0 &&
                 getDst() == airport.getDst() &&
-                getRouteNum() == airport.getRouteNum() &&
                 getName().equals(airport.getName()) &&
                 getCity().equals(airport.getCity()) &&
                 getCountry().equals(airport.getCountry()) &&
@@ -435,14 +430,6 @@ public class Airport extends DataType {
 
     public void setTzDatabase(String tzDatabase) {
         this.tzDatabase = tzDatabase;
-    }
-
-    public int getRouteNum() {
-        return routeNum;
-    }
-
-    public void setRouteNum(int routeNum) {
-        this.routeNum = routeNum;
     }
 
     public String getType() {

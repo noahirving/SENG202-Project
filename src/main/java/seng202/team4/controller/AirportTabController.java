@@ -277,8 +277,6 @@ public class AirportTabController extends DataController {
                         return true;
                     } else if (airport.getCity().toLowerCase().contains(lower)) {
                         return true;
-                    } else if (Integer.toString(airport.getRouteNum()).toLowerCase().contains(lower)) {
-                        return true;
                     }
                     return false;
                 }));
