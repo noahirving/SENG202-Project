@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import seng202.team4.model.Airline;
 import seng202.team4.model.DataType;
 import seng202.team4.model.DatabaseManager;
 import seng202.team4.model.Path;
@@ -43,7 +42,7 @@ public abstract class DataController {
     /**
      * TableView of the raw data table.
      */
-    @FXML private TableView<Airline> generalDataTable;
+    @FXML private TableView<DataType> dataTable;
 
     @FXML
     private ComboBox dataSetComboBox;
@@ -248,7 +247,7 @@ public abstract class DataController {
     @FXML
     public void tableClicked(MouseEvent click) {
         if (click.getClickCount() > 1) {
-            DataType data = generalDataTable.getSelectionModel().getSelectedItem();
+            DataType data = dataTable.getSelectionModel().getSelectedItem();
             if (data != null) {
                 showDetails(data);
             }
