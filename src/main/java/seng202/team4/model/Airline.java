@@ -3,15 +3,45 @@ package seng202.team4.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Airline model class with attributes representing
+ * the aspects of airlines. These attributes were chosen
+ * from the open flights sample data. Objects of this class
+ * are created to display in the table on the Airline tab.
+ */
 public class Airline extends DataType {
 
+    /**
+     * Unique open flights identifier for this airline.
+     */
     private int id;
+    /**
+     * Name of the airline.
+     */
     private String name;
+    /**
+     * Alias of the airline, a code.
+     */
     private String alias;
+    /**
+     * 2-letter IATA code.
+     */
     private String iata;
+    /**
+     * 3-letter ICAO code.
+     */
     private String icao;
+    /**
+     * Airline callsign.
+     */
     private String callSign;
+    /**
+     * Country or territory where airport is located.
+     */
     private String country;
+    /**
+     * 'Y' if airline is or has been recently operational, 'N' otherwise.
+     */
     private boolean recentlyActive;
 
 
@@ -22,8 +52,8 @@ public class Airline extends DataType {
 
     /**
      * Creates a full airline object.
-     * @param name Name
-     * @param alias Code
+     * @param name Name of the airline
+     * @param alias Alias
      * @param iata IATA
      * @param icao ICAO
      * @param callSign CallSign

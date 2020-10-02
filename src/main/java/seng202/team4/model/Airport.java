@@ -7,24 +7,81 @@ import org.apache.commons.math3.util.Precision;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Airport model class with attributes representing
+ * the aspects of airports. These attributes were chosen
+ * from the open flights sample data. Objects of this class
+ * are created to display in the table on the Airport tab.
+ */
 public class Airport extends DataType {
 
+    /**
+     *  Unique open flights identifier for this airport.
+     */
     private int id;
+    /**
+     * name of airport.
+     */
     private String name;
+    /**
+     * Main city server by airport.
+     */
     private String city;
+    /**
+     * Country or territory where airport is located
+     */
     private String country;
+    /**
+     * 3-letter IATA code
+     */
     private String iata;
+    /**
+     * 4-letter ICAO code
+     */
     private String icao;
+    /**
+     * Decimal degrees for latitude of airprot to six significant figures, Negative is south, positive is north
+     */
     private double latitude;
+    /**
+     * Decimal degrees for longitude of airprot to six significant figures, Negative is west, positive is east
+     */
     private double longitude;
+    /**
+     * String representing latitude and longitude together
+     */
     private String coordinates;
+    /**
+     * altitude of airport in feet
+     */
     private double altitude;
+    /**
+     * Time zone representing hours offset from UTC
+     */
     private float timezone;
+    /**
+     * Daylight savings time
+     */
     private char dst;
-    private String tzDatabase;
+    /**
+     * Time zone in 'tz' (Olson) format
+     */
+    private String tzDatabase;/**
+    /**
+     *
+     */
     private int routeNum;
+    /**
+     *  Type of the airport
+     */
     private String type;
+    /**
+     * Source of this data, Open flights
+     */
     private String source;
+    /**
+     * Booleean property that is true if the airport has been selected with the checkbox and false otherwise
+     */
     private BooleanProperty select = new SimpleBooleanProperty(false);
 
     /**
@@ -281,6 +338,7 @@ public class Airport extends DataType {
                 getTzDatabase().equals(airport.getTzDatabase());
     }
 
+    //getters and setters
     public int getId() {
         return id;
     }
