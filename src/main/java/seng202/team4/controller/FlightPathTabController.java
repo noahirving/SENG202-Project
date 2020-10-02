@@ -90,7 +90,7 @@ public class FlightPathTabController extends DataController {
     @FXML
     public void initialize() {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("flightPathId"));
         altitudeColumn.setCellValueFactory(new PropertyValueFactory<>("altitude"));
         latitudeColumn.setCellValueFactory(new PropertyValueFactory<>("latitude"));
         longitudeColumn.setCellValueFactory(new PropertyValueFactory<>("longitude"));
