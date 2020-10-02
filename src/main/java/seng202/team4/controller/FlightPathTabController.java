@@ -122,11 +122,6 @@ public class FlightPathTabController extends DataController {
      */
     @Override
     public void setTableData(ResultSet rs) throws Exception{
-        types = FXCollections.observableArrayList();
-        ids = FXCollections.observableArrayList();
-        altitudes = FXCollections.observableArrayList();
-        latitudes = FXCollections.observableArrayList();
-        longitudes = FXCollections.observableArrayList();
         while (rs.next()) {
             int id = rs.getInt("ID");
             String type = rs.getString("Type");

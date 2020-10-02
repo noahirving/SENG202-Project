@@ -73,15 +73,15 @@ public class AirportTabController extends DataController {
     /**
      * Initialization of FilteredList for the search text field.
      */
-    private ObservableList<Airport> airports = FXCollections.observableArrayList();
+    private ObservableList<Airport> airports;
     /**
      * Initialization of FilteredList for the countries ComboBox.
      */
-    private ObservableList<String> countries = FXCollections.observableArrayList();
+    private ObservableList<String> countries;
     /**
      * Initialization of FilteredList for the cities ComboBox.
      */
-    private ObservableList<String> cities = FXCollections.observableArrayList();
+    private ObservableList<String> cities;
 
 
     /**

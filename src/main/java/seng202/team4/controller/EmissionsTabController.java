@@ -39,10 +39,6 @@ import java.util.ArrayList;
 public class EmissionsTabController extends DataController {
 
     /**
-     * Mutable ObservableList containing Route objects
-     */
-    private ObservableList<Route> selectedRoutes;
-    /**
      * Initialization of users total emissions
      */
     private Double sumEmissions = 0.0;
@@ -92,8 +88,10 @@ public class EmissionsTabController extends DataController {
      * all routes in the data table
      */
     @FXML private Label currentEmissionsValue;
-
-    @FXML private Button contributionsGraphButton;
+    /**
+     * Mutable ObservableList containing Route objects
+     */
+    private ObservableList<Route> selectedRoutes;
 
     /**
      *  On Action method for the 'Environmental Donation' button
@@ -200,7 +198,6 @@ public class EmissionsTabController extends DataController {
         }
         dollarOffset = sumEmissions * 0.01479;
         treeOffset = Math.ceil(dollarOffset);
-        //String emissionsLabel = Double.toString();
         currentEmissionsValue.setText(String.format("%.2f", sumEmissions) + "kg C02");
     }
 
