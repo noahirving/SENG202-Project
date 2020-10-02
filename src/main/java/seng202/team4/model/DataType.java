@@ -15,8 +15,8 @@ public abstract class DataType implements Validate {
 
     /**
      * Gets the database insert statement.
-     * @param setID the ID of the set the that will be inserted into.
-     * @return the insert statement.
+     * @param setID int the ID of the set the that will be inserted into.
+     * @return String the insert statement.
      */
     public abstract String getInsertStatement(int setID);
 
@@ -24,31 +24,31 @@ public abstract class DataType implements Validate {
 
     /**
      * Gets the name of data type.
-     * @return name of data type.
+     * @return String name of data type.
      */
     public abstract String getTypeName();
 
     /**
      * Gets the name of data type set.
-     * @return name of data type set.
+     * @return String name of data type set.
      */
     public abstract String getSetName();
 
     /**
      * Gets a valid data type from the array of strings, or returns null with
      * reasons for being invalid in the error message.
-     * @param record        array of strings constituting the record.
-     * @param errorMessage  arrayList where the error messages will be stored.
-     * @return a valid new dataType, 'null' if invalid.
+     * @param record String[] array of strings constituting the record.
+     * @param errorMessage ArrayList<String> where the error messages will be stored.
+     * @return DataType a valid new dataType, 'null' if invalid.
      */
     public abstract DataType getValid(String[] record, ArrayList<String> errorMessage);
 
     /**
      * Gets a valid data type from the array of strings, or returns null with
      * reasons for being invalid in the error message.
-     * @param record string constituting the record.
-     * @param errorMessage arrayList where the error messages will be stored.
-     * @return a valid new dataType, 'null' if invalid.
+     * @param record String constituting the record.
+     * @param errorMessage ArrayList<String> where the error messages will be stored.
+     * @return DataType a valid new dataType, 'null' if invalid.
      */
     public abstract DataType getValid(String record, ArrayList<String> errorMessage);
 

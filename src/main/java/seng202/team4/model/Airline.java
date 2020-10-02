@@ -52,13 +52,13 @@ public class Airline extends DataType {
 
     /**
      * Creates a full airline object.
-     * @param name Name of the airline
-     * @param alias Alias
-     * @param iata IATA
-     * @param icao ICAO
-     * @param callSign CallSign
-     * @param country Country
-     * @param recentlyActive Recently Active
+     * @param name String Name of the airline
+     * @param alias String Alias
+     * @param iata String IATA
+     * @param icao String ICAO
+     * @param callSign String CallSign
+     * @param country String Country
+     * @param recentlyActive boolean Recently Active
      */
     public Airline(String name, String alias, String iata, String icao, String callSign, String country, boolean recentlyActive) {
         this.name = name;
@@ -72,8 +72,8 @@ public class Airline extends DataType {
 
     /**
      * Gets the airline insert statement for the database.
-     * @param setID the ID of the set the that will be inserted into.
-     * @return the insert statement of a given ID statement.
+     * @param setID int the ID of the set the that will be inserted into.
+     * @return String the insert statement of a given ID statement.
      */
     @Override
     public String getInsertStatement(int setID){
@@ -92,7 +92,7 @@ public class Airline extends DataType {
 
     /**
      * Gets the datatype name.
-     * @return datatype name.
+     * @return String datatype name.
      */
     @Override
     public String getTypeName() {
@@ -101,7 +101,7 @@ public class Airline extends DataType {
 
     /**
      * Gets the datatype set name.
-     * @return the datatype set name.
+     * @return String the datatype set name.
      */
     @Override
     public String getSetName() {
@@ -111,15 +111,15 @@ public class Airline extends DataType {
     /**
      * Gets a valid airline from the given strings. Fills
      * the error message list if any errors are encountered.
-     * @param name Name
-     * @param code Code
-     * @param iata IATA
-     * @param icao ICAO
-     * @param callSign CallSign
-     * @param country Country
-     * @param recentlyActive Recently Active
-     * @param errorMessage list of errors.
-     * @return the airline if valid, otherwise null.
+     * @param name String Name
+     * @param code String Code
+     * @param iata String IATA
+     * @param icao String ICAO
+     * @param callSign String CallSign
+     * @param country String Country
+     * @param recentlyActive String Recently Active
+     * @param errorMessage ArrayList<String> list of errors.
+     * @return Airline the airline if valid, otherwise null.
      */
     public static Airline getValid(String name, String code, String iata, String icao, String callSign, String country, String recentlyActive, ArrayList<String> errorMessage) {
         boolean valid = true;
@@ -163,9 +163,9 @@ public class Airline extends DataType {
 
     /**
      * Converts record array into individual strings and calls get valid.
-     * @param record        array of strings constituting the record.
-     * @param errorMessage  arrayList where the error messages will be stored.
-     * @return the airline if valid, otherwise null.
+     * @param record String[] array of strings constituting the record.
+     * @param errorMessage ArrayList<String> arrayList where the error messages will be stored.
+     * @return Airline the airline if valid, otherwise null.
      */
     @Override
     public Airline getValid(String[] record, ArrayList<String> errorMessage) {
@@ -181,9 +181,9 @@ public class Airline extends DataType {
 
     /**
      * Converts a string record into individual strings and calls get valid.
-     * @param record string constituting the record.
-     * @param errorMessage arrayList where the error messages will be stored.
-     * @return the airline if valid, otherwise null.
+     * @param record String constituting the record.
+     * @param errorMessage ArrayList<String> where the error messages will be stored.
+     * @return DataType the airline if valid, otherwise null.
      */
     @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {

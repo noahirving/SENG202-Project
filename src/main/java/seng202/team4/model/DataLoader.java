@@ -10,16 +10,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * Handles loading data into the database.
+ * Handles loading data into the database. The data can be loaded from either:
+ * the default data, the user uploading a file or the user adding a new record
  */
 public abstract class DataLoader {
 
     /**
      * Uploads data to the database from a file of a specific dataType with a name for the new set of data.
-     * @param setName   the name of the new set of data.
-     * @param file      the file that's being uploaded to the database.
-     * @param dataType  the data type of new data that's being uploaded.
-     * @return an ArrayList of erroneous lines
+     * @param setName String the name of the new set of data.
+     * @param file File the file that's being uploaded to the database.
+     * @param dataType DataType the data type of new data that's being uploaded.
+     * @return ArrayList<String> an ArrayList of erroneous lines
      */
     public static ArrayList<String> uploadData(String setName, File file, DataType dataType) {
         Connection c = DatabaseManager.connect(); // TODO: throw connection error
@@ -74,8 +75,8 @@ public abstract class DataLoader {
 
     /**
      * Adds a new record to the database.
-     * @param dataType  the type of data the new record is.
-     * @param setName   the name of the set the data will be added to.
+     * @param dataType DataType the type of data the new record is.
+     * @param setName String the name of the set the data will be added to.
      * @return 'true' if record was successfully inserted into the database, 'false' otherwise
      */
     public static boolean addNewRecord(DataType dataType, String setName){
@@ -104,10 +105,10 @@ public abstract class DataLoader {
 
     /**
      * Gets the ID of a set given the sets name and what data type it is.
-     * @param setName the name of the set.
-     * @param dataType the data type of the set.
-     * @param stmt the statement used to to execute the query.
-     * @return the ID of the set.
+     * @param setName String the name of the set.
+     * @param dataType DataType the data type of the set.
+     * @param stmt Statement the statement used to to execute the query.
+     * @return int the ID of the set.
      * @throws SQLException SQL Exception
      */
     private static int getSetID(String setName, DataType dataType, Statement stmt) throws SQLException{
@@ -117,6 +118,15 @@ public abstract class DataLoader {
         return rs.getInt("ID");
     }
 
+    /**
+     * Adds a route to the RoutesSelected database table
+     * when the user clicks on its corresponding checkbox
+     * The distance is also calculated via the Calculations
+     * class before the route is inserted.
+     *
+     * @param route Route the route that has been selected
+     *              with a checkbox
+     */
     public static void addToRoutesSelectedDatabase(Route route) {
         Connection con = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(con);
@@ -128,7 +138,6 @@ public abstract class DataLoader {
         try {
             distance = Calculations.calculateDistance(sourceAirport, destAirport, con);
             route.setDistance(distance);
-            //System.out.println(routes.get(index).getDistance());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -152,6 +161,12 @@ public abstract class DataLoader {
         DatabaseManager.disconnect(con);
     }
 
+    /**
+     *  Removes a route from the RoutesSelected database table
+     *  when its corresponding checkbox is unselected
+     *
+     * @param route Route the route to be removed
+     */
     public static void removeFromRoutesSelectedDatabase(Route route) {
         Connection con = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(con);
@@ -173,6 +188,13 @@ public abstract class DataLoader {
         DatabaseManager.disconnect(con);
     }
 
+    /**
+     * Adds a route to the AirportsSelected database table
+     * when the user clicks on its corresponding checkbox
+     *
+     * @param airport Airport the airport that has been selected
+     *              with a checkbox
+     */
     public static void addToAirportsSelectedDatabase(Airport airport) {
         Connection con = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(con);
@@ -195,6 +217,12 @@ public abstract class DataLoader {
 
     }
 
+    /**
+     *  Removes an airport from the AirportsSelected database table
+     *  when its corresponding checkbox is unselected
+     *
+     * @param airport Airport the airport to be removed
+     */
     public static void removeFromAirportsSelectedDatabase(Airport airport) {
         Connection con = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(con);
@@ -216,6 +244,17 @@ public abstract class DataLoader {
         DatabaseManager.disconnect(con);
     }
 
+    /**
+     * Deletes a selected row from its corresponding database table
+     * and the table view when the corresponding 'Delete' button
+     * is clicked
+     *
+     * @param id int id of the object and record to be removed
+     *           from the database table
+     * @param table String the name of the database table where the record
+     *              will be removed from
+     * @return boolean true if delete successful, false otherwise
+     */
     public static boolean deleteRecord(int id, String table) {
         String query = "Delete from " + table + " Where ID = " + id;
 

@@ -87,17 +87,17 @@ public class Airport extends DataType {
 
     /**
      * Creates a full airport object.
-     * @param name Name
-     * @param city City
-     * @param country Country
-     * @param iata IATA
-     * @param icao ICAO
-     * @param latitude Latitude
-     * @param longitude Longitude
-     * @param altitude Altitude
-     * @param timeZone TimeZone
-     * @param dst DST
-     * @param tzDatabase TimeZone Database
+     * @param name String Name
+     * @param city String City
+     * @param country String Country
+     * @param iata String IATA
+     * @param icao String ICAO
+     * @param latitude double Latitude
+     * @param longitude double Longitude
+     * @param altitude double Altitude
+     * @param timeZone float TimeZone
+     * @param dst char DST
+     * @param tzDatabase String TimeZone Database
      */
     public Airport (String name, String city, String country, String iata, String icao, double latitude, double longitude, double altitude, float timeZone, char dst, String tzDatabase) {
         this.name = name;
@@ -140,7 +140,7 @@ public class Airport extends DataType {
 
     /**
      * Gets the datatype name.
-     * @return datatype name.
+     * @return String datatype name.
      */
     @Override
     public String getTypeName() {
@@ -149,7 +149,7 @@ public class Airport extends DataType {
 
     /**
      * Gets the datatype set name.
-     * @return the datatype set name.
+     * @return String datatype set name.
      */
     @Override
     public String getSetName() {
@@ -159,18 +159,18 @@ public class Airport extends DataType {
     /**
      * Gets a valid airline from the given strings. Fills
      * the error message list if any errors are encountered.
-     * @param name Name
-     * @param city City
-     * @param country Country
-     * @param iata IATA
-     * @param icao ICAO
-     * @param latitude Latitude
-     * @param longitude Longitude
-     * @param altitude Altitude
-     * @param timeZone TimeZone
-     * @param dst DST
-     * @param tzDatabase TimeZone Database
-     * @param errorMessage list of errors.
+     * @param name String Name
+     * @param city String City
+     * @param country String Country
+     * @param iata String IATA
+     * @param icao String ICAO
+     * @param latitude String Latitude
+     * @param longitude String Longitude
+     * @param altitude String Altitude
+     * @param timeZone String TimeZone
+     * @param dst String DST
+     * @param tzDatabase String TimeZone Database
+     * @param errorMessage ArrayList<String> list of errors.
      * @return the airport if valid, otherwise null.
      */
     public static Airport getValid(String name, String city, String country, String iata, String icao, String latitude, String longitude, String altitude, String timeZone, String dst, String tzDatabase, ArrayList<String> errorMessage) {
@@ -248,9 +248,9 @@ public class Airport extends DataType {
 
     /**
      * Converts record array into individual strings and calls get valid.
-     * @param record        array of strings constituting the record.
-     * @param errorMessage  arrayList where the error messages will be stored.
-     * @return the airport if valid, otherwise null.
+     * @param record String[] array of strings constituting the record.
+     * @param errorMessage ArrayList<String> arrayList where the error messages will be stored.
+     * @return DataType the airport if valid, otherwise null.
      */
     @Override
     public DataType getValid(String[] record, ArrayList<String> errorMessage) {
@@ -271,9 +271,9 @@ public class Airport extends DataType {
 
     /**
      * Converts a string record into individual strings and calls get valid.
-     * @param record string constituting the record.
-     * @param errorMessage arrayList where the error messages will be stored.
-     * @return the airline if valid, otherwise null.
+     * @param record String constituting the record.
+     * @param errorMessage ArrayList<String> where the error messages will be stored.
+     * @return DataType the airline if valid, otherwise null.
      */
     @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {
