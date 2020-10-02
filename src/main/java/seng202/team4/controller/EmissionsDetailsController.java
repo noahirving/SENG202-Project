@@ -5,6 +5,10 @@ import javafx.scene.text.Text;
 import seng202.team4.model.DataType;
 import seng202.team4.model.Route;
 
+/**
+ * Performs all operations done in the emissions details window
+ * that is opened when an emission data row from the tableview is double clicked.
+ */
 public class EmissionsDetailsController extends Details {
 
     @FXML private Text airlineText;
@@ -14,7 +18,10 @@ public class EmissionsDetailsController extends Details {
     @FXML private Text distanceText;
     @FXML private Text CO2Text;
 
-
+    /**
+     * Sets the values of the emissions data in their corresponding text attribute.
+     * @param data data that will be displayed.
+     */
     @Override
     public void setData(DataType data) {
         Route route = (Route) data;

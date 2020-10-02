@@ -5,6 +5,10 @@ import javafx.scene.text.Text;
 import seng202.team4.model.Airport;
 import seng202.team4.model.DataType;
 
+/**
+ * Performs all operations done in the airport details window
+ * that is opened when an airport data row from the tableview is double clicked.
+ */
 public class AirportDetailsController extends Details {
 
     @FXML private Text nameText;
@@ -19,6 +23,11 @@ public class AirportDetailsController extends Details {
     @FXML private Text dstText;
     @FXML private Text tzText;
 
+    /**
+     * Sets the values of the airport data in their corresponding text attribute.
+     * @param data data that will be displayed.
+     */
+    @Override
     public void setData(DataType data) {
         Airport airport = (Airport) data;
         nameText.setText(airport.getName());

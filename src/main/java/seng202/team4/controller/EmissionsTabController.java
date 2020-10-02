@@ -36,15 +36,11 @@ import java.util.ArrayList;
 public class EmissionsTabController extends DataController {
 
     /**
-     * Initialization of users total emissions
-     */
-    private Double sumEmissions = 0.0;
-    /**
      * Initialization of users suggested dollar offset amount
      */
     private Double totalDonation = 0.0;
     /**
-     * Initializaion of the trees the user could plant with dollarOffset
+     * Initialization of the trees the user could plant with dollarOffset
      */
     private Double totalTrees = 0.0;
 
@@ -189,7 +185,7 @@ public class EmissionsTabController extends DataController {
      * figure is calculated using this figure.
      */
     private void setTotalEmissions() {
-        sumEmissions = 0.0;
+        double sumEmissions = 0.0;
         totalDonation = 0.0;
         totalTrees = 0.0;
         for(Route route: selectedRoutes){
@@ -205,11 +201,10 @@ public class EmissionsTabController extends DataController {
      * On action method for the 'Load Selected Routes' button
      * updates the table to display the routes selected by the user
      * on the 'Routes' tab, throws an IOException if this fails
-     * @param buttonPress ActionEvent triggered when the user clicks the buton
-     * @throws IOException if the setTable() method call results in an exception
+     * @param buttonPress ActionEvent triggered when the user clicks the button
      */
     @FXML
-    public void updateTable(ActionEvent buttonPress) throws IOException{
+    public void updateTable(ActionEvent buttonPress) {
         try {
             setTable();
             setTotalEmissions();
@@ -369,7 +364,7 @@ public class EmissionsTabController extends DataController {
      * Gets the path to the details FXML file
      * for the editing and viewing of selected
      * route info
-     * @return
+     * @return the path to emissions details fxml
      */
     @Override
     public String getDetailsFXML() {

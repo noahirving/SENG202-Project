@@ -5,6 +5,10 @@ import javafx.scene.text.Text;
 import seng202.team4.model.DataType;
 import seng202.team4.model.Route;
 
+/**
+ * Performs all operations done in the route details window
+ * that is opened when an route data row from the tableview is double clicked.
+ */
 public class RouteDetailsController extends Details {
 
     @FXML private Text airlineText;
@@ -14,6 +18,10 @@ public class RouteDetailsController extends Details {
     @FXML private Text stopsText;
     @FXML private Text equipmentText;
 
+    /**
+     * Sets the values of the route data in their corresponding text attribute.
+     * @param data data that will be displayed.
+     */
     @Override
     public void setData(DataType data) {
         Route route = (Route) data;

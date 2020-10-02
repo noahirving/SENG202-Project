@@ -85,11 +85,23 @@ public class Calculations {
         return(r * c);
     }
 
+    /**
+     * Calculates the amount of money required to offset the amount of carbon emissions
+     * from the selected route.
+     * @param route the route to calculate the equivalent dollar donations from
+     * @return      the dollar donations required to offset flight carbon emissions
+     */
     public static double calculateDollarOffset(Route route) {
         Double emission = route.getCarbonEmissions();
         return emission * 0.01479;
     }
 
+    /**
+     * Calculates the equivalent number of trees required to offset the flight carbon emission
+     * of the selected route.
+     * @param route the route to calculate the equivalent trees required from
+     * @return      the number of trees to offset flight carbon emissions
+     */
     public static int calculateTreesEquivalent(Route route) {
         Double dollars = route.getDollarOffset();
         return (int) Math.ceil(dollars);
