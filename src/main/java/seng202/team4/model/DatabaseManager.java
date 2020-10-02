@@ -8,10 +8,17 @@ import java.sql.Statement;
 
 /**
  * Performs basic interaction with the database that bypasses
- * the errors thrown by the database.
+ * the errors thrown by the database. Creation of database tables,
+ * connection and disconnection to the database and the set up of a
+ * database directory on the users machine are performed by
+ * the DatabaseManager class.
  */
 public abstract class DatabaseManager {
 
+    /**
+     * General DDL statement for creation of
+     * each data types set table
+     */
     private static final String SET_TABLE =
             "(" +
             "\"ID\" INTEGER NOT NULL UNIQUE," +
@@ -19,7 +26,13 @@ public abstract class DatabaseManager {
             "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
             ")";
 
+    /**
+     * String for creating the Airline set table.
+     */
     private static final String AIRLINE_SET_TABLE = "CREATE TABLE \"AirlineSet\" " + SET_TABLE;
+    /**
+     * String with DDL statement for creating the Airline table in SQLite.
+     */
     private static final String AIRLINE_TABLE =
             "CREATE TABLE \"Airline\" (" +
             "\"ID\" INTEGER NOT NULL UNIQUE," +
@@ -35,7 +48,13 @@ public abstract class DatabaseManager {
             "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
             ")";
 
+    /**
+     * String for creating the Airport set table.
+     */
     private static final String AIRPORT_SET_TABLE = "CREATE TABLE \"AirportSet\" " + SET_TABLE;
+    /**
+     * String with DDL statement for creating the Airport table in SQLite.
+     */
     private static final String AIRPORT_TABLE =
             "CREATE TABLE \"Airport\" (" +
             "\"ID\" INTEGER NOT NULL UNIQUE," +
@@ -55,7 +74,13 @@ public abstract class DatabaseManager {
             "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
             ")";
 
+    /**
+     * String for creating the Route set table.
+     */
     private static final String ROUTE_SET_TABLE = "CREATE TABLE \"RouteSet\" " + SET_TABLE;
+    /**
+     * String with DDL statement for creating the Route table in SQLite.
+     */
     private static final String ROUTE_TABLE =
             "CREATE TABLE \"Route\" (" +
             "\"ID\" INTEGER NOT NULL UNIQUE," +
@@ -71,7 +96,13 @@ public abstract class DatabaseManager {
             "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
             ")";
 
+    /**
+     * String for creating the Flight path set table.
+     */
     private static final String FLIGHT_PATH_SET_TABLE = "CREATE TABLE \"FlightPathSet\" " + SET_TABLE;
+    /**
+     * String with DDL statement for creating the Flight path table in SQLite.
+     */
     private static final String FLIGHT_PATH_TABLE =
             "CREATE TABLE \"FlightPath\" (" +
             "\"ID\"\tINTEGER NOT NULL UNIQUE," +
@@ -85,6 +116,9 @@ public abstract class DatabaseManager {
             "PRIMARY KEY(\"ID\" AUTOINCREMENT)" +
             ")";
 
+    /**
+     * String with DDL statement for creating the Routes selected table in SQLite.
+     */
     private static final String ROUTES_SELECTED_TABLE =
             "CREATE TABLE \"RoutesSelected\" (" +
             "\"ID\"\tINTEGER NOT NULL UNIQUE," +
@@ -97,6 +131,9 @@ public abstract class DatabaseManager {
             "PRIMARY KEY(\"ID\")" +
             ")";
 
+    /**
+     * String with DDL statement for creating the Airports selected table in SQLite.
+     */
     private static final String AIRPORTS_SELECTED_TABLE =
             "CREATE TABLE \"AirportsSelected\" (" +
             "\"ID\"\tINTEGER NOT NULL UNIQUE," +
