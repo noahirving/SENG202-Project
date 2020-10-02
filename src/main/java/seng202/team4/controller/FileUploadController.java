@@ -89,8 +89,8 @@ public class FileUploadController {
      * upload file and closes stage.
      */
     public void confirm() {
-        String name = getName();
-        if (name == null) {
+        String confirmName = getName();
+        if (confirmName == null) {
             errorText.setText("*Pick a name");
         } else if (file == null) {
             errorText.setText("*Pick a file");
@@ -98,8 +98,8 @@ public class FileUploadController {
             errorText.setText("*Dataset name already chosen");
         } else {
             System.out.println("Confirmed");
-            uploadData(name);
-            controller.newData(name);
+            uploadData(confirmName);
+            controller.newData(confirmName);
         }
     }
 

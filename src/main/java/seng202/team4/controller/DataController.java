@@ -43,7 +43,7 @@ public abstract class DataController {
     /**
      * TableView of the raw data table.
      */
-    @FXML private TableView<Airline> dataTable;
+    @FXML private TableView<Airline> generalDataTable;
 
     @FXML
     private ComboBox dataSetComboBox;
@@ -248,7 +248,7 @@ public abstract class DataController {
     @FXML
     public void tableClicked(MouseEvent click) {
         if (click.getClickCount() > 1) {
-            DataType data = dataTable.getSelectionModel().getSelectedItem();
+            DataType data = generalDataTable.getSelectionModel().getSelectedItem();
             if (data != null) {
                 showDetails(data);
             }

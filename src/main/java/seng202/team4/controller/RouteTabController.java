@@ -82,23 +82,23 @@ public class RouteTabController extends DataController {
     /**
      * Mutable ObservableList containing Route objects.
      */
-    private ObservableList<Route> routes;
+    private ObservableList<Route> routes = FXCollections.observableArrayList();
     /**
      * Mutable ObservableList containing a list of airline codes for the airlineFilterCombobox.
      */
-    private ObservableList<String> airlineCodes;
+    private ObservableList<String> airlineCodes = FXCollections.observableArrayList();
     /**
      * Mutable ObservableList containing a list of departure country IATAs for the departureFilterCombobox.
      */
-    private ObservableList<String> departureCountries;
+    private ObservableList<String> departureCountries = FXCollections.observableArrayList();
     /**
      * Mutable ObservableList containing a list of destination country IATAs for the destinationFilterCombobox.
      */
-    private ObservableList<String> destinationCountries;
+    private ObservableList<String> destinationCountries = FXCollections.observableArrayList();
     /**
      * Mutable ObservableList containing a list of plane types for the planeTypeFilterCombobox.
      */
-    private ObservableList<String> planeTypes;
+    private ObservableList<String> planeTypes = FXCollections.observableArrayList();
 
     /**
      * Initialization of SortedList of routes that will be used by the filters
@@ -183,12 +183,6 @@ public class RouteTabController extends DataController {
      */
     @Override
     public void setTableData(ResultSet rs) {
-        routes = FXCollections.observableArrayList();
-        airlineCodes = FXCollections.observableArrayList();
-        departureCountries = FXCollections.observableArrayList();
-        destinationCountries = FXCollections.observableArrayList();
-        planeTypes = FXCollections.observableArrayList();
-        routes = FXCollections.observableArrayList();
         try {
             while (rs.next()) {
                 int id = rs.getInt("Id");
