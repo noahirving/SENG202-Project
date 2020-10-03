@@ -100,6 +100,30 @@ public abstract class DataLoader {
         return false;
     }
 
+    public static boolean updateRecord(DataType dataType, String setName){
+        Connection c = DatabaseManager.connect(); // TODO: throw connection error
+        if (c != null) {
+            Statement stmt = DatabaseManager.getStatement(c);
+            try {
+                int setID = getSetID(setName, dataType, stmt);
+
+                // Inserts the new record into the database
+                stmt.executeUpdate(dataType.getUpdateStatement(setID));
+                stmt.close();
+                c.commit();
+                return true;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+
+            } finally {
+                DatabaseManager.disconnect(c);
+            }
+        }
+        return false;
+    }
+
     /**
      * Gets the ID of a set given the sets name and what data type it is.
      * @param setName String the name of the set.
