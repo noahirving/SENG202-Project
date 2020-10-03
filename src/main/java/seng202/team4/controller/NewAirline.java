@@ -11,49 +11,38 @@ import seng202.team4.model.Path;
  * a new airline record.
  */
 public class NewAirline extends NewRecord {
-    @FXML
-    private TextField nameField;
-    @FXML
-    private TextField codeField;
-    @FXML
-    private TextField iataField;
-    @FXML
-    private TextField icaoField;
-    @FXML
-    private TextField callSignField;
-    @FXML
-    private TextField countryField;
-    @FXML
-    private CheckBox recentlyActiveField;
+    @FXML private TextField nameField;
+    @FXML private TextField codeField;
+    @FXML private TextField iataField;
+    @FXML private TextField icaoField;
+    @FXML private TextField callSignField;
+    @FXML private TextField countryField;
+    @FXML private CheckBox recentlyActiveField;
 
 
-    @FXML
-    private Label aliasToolTip;
-    @FXML
-    private Label iataToolTip;
-    @FXML
-    private Label icaoToolTip;
-    @FXML
-    private Label callSignToolTip;
+    @FXML private Label aliasToolTip;
+    @FXML private Label iataToolTip;
+    @FXML private Label icaoToolTip;
+    @FXML private Label callSignToolTip;
 
+    /**
+     * Initialises the tool tips for the new airline popup
+     */
     @FXML
     public void initialize() {
-        createToolTip(aliasToolTip, "For example, All Nippon Airways is commonly known as \"ANA\"");
+        initialiseToolTips();
     }
 
-    private void createToolTip(Label imageHolder, String tooltip) {
-        Image image = new Image(getClass().getResourceAsStream(Path.INFO_ICON));
-        ImageView imageView = new ImageView();
-        imageView.setImage(image);
-        imageView.setFitHeight(30);
-        imageView.setFitWidth(30);
-        imageView.setPreserveRatio(true);
-        imageView.setPickOnBounds(true);
-
-        imageHolder.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-        imageHolder.setGraphic(imageView);
-        imageHolder.setTooltip(new Tooltip(tooltip));
+    /**
+     * Uses the CreateToolTip method from NewRecord to set the tool tips for the different entry fields
+     */
+    private void initialiseToolTips() {
+        createToolTip(aliasToolTip, "For example, All Nippon Airways is commonly known as \"ANA\"", false);
+        createToolTip(iataToolTip, "International Air Transport Association number, usually a 3-letter code", false);
+        createToolTip(icaoToolTip, "International Civil Aviation Organization, usually a 4-letter code", false);
+        createToolTip(callSignToolTip, "Usually smaller, more recognisable version of Airline name", false);
     }
+
 
     /**
      * Gets the content of the text fields in the scene.

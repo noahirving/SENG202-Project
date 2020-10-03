@@ -1,6 +1,7 @@
 package seng202.team4.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -9,28 +10,42 @@ import javafx.scene.control.TextField;
  */
 public class NewAirport extends NewRecord {
 
+    @FXML private TextField nameField;
+    @FXML private TextField cityField;
+    @FXML private TextField countryField;
+    @FXML private TextField iataField;
+    @FXML private TextField icaoField;
+    @FXML private TextField latitudeField;
+    @FXML private TextField longitudeField;
+    @FXML private TextField altitudeField;
+    @FXML private TextField timeZoneField;
+    @FXML private TextField dstField;
+    @FXML private TextField tzDatabaseField;
+    @FXML private Label iataToolTip;
+    @FXML private Label icaoToolTip;
+    @FXML private Label timeZoneToolTip;
+    @FXML private Label dsToolTip;
+    @FXML private Label tzDatabaseToolTip;
+
+    /**
+     * Initialises the tool tips for the new airline popup
+     */
     @FXML
-    private TextField nameField;
-    @FXML
-    private TextField cityField;
-    @FXML
-    private TextField countryField;
-    @FXML
-    private TextField iataField;
-    @FXML
-    private TextField icaoField;
-    @FXML
-    private TextField latitudeField;
-    @FXML
-    private TextField longitudeField;
-    @FXML
-    private TextField altitudeField;
-    @FXML
-    private TextField timeZoneField;
-    @FXML
-    private TextField dstField;
-    @FXML
-    private TextField tzDatabaseField;
+    public void initialize() {
+        initialiseToolTips();
+    }
+
+    /**
+     * Uses the CreateToolTip method from NewRecord to set the tool tips for the different entry fields
+     */
+    private void initialiseToolTips() {
+        createToolTip(iataToolTip, "International Air Transport Association number, usually a 3-letter code", false);
+        createToolTip(icaoToolTip, "International Civil Aviation Organization, usually a 4-letter code", false);
+        createToolTip(timeZoneToolTip, "Hours offset from UTC. Fractional hours are expressed as decimals, eg. India is 5.5", false);
+        createToolTip(dsToolTip, "Daylight savings time. One of E (Europe), A (US/Canada), " +
+                "S (South America), O (Australia), Z (New Zealand), N (None) or U (Unknown)", false);
+        createToolTip(tzDatabaseToolTip, "Timezone in \"tz\" (Olson) format, eg. \"America/Los_Angeles\"", false);
+    }
 
     /**
      * Gets the content of the text fields in the scene.

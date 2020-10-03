@@ -32,6 +32,7 @@ public abstract class Path {
     public static final String DELETE_RECORD_BUTTON_PNG = VIEW + "/images/delete_record_image.png";
     public static final String APP_ICON = VIEW + "/images/logo_icon.png";
     public static final String INFO_ICON = VIEW + "/images/info_icon.png";
+    public static final String FLIGHTPATH_TYPE = VIEW + "/images/flight_path_type.PNG";
 
     public static final String STYLE_SHEET = VIEW + USER_INTERFACES + "/styles.css";
 
