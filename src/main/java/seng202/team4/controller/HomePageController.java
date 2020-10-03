@@ -1,16 +1,20 @@
 package seng202.team4.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import seng202.team4.model.Main;
+import seng202.team4.model.Path;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.file.StandardCopyOption;
 
 /**
  * Performs logic for the 'Home' tab of the application
@@ -80,4 +84,33 @@ public class HomePageController {
         }
     }
 
+    public void userManual() {
+        Boolean success = true;
+
+        InputStream initialStream = (this.getClass().getResourceAsStream(Path.USER_MANUAL));
+        File targetFile = new File(Path.DIRECTORY + Path.USER_MANUAL);
+
+        try {
+            java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
+            success = false;
+        }
+
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().open(targetFile);
+            } catch (IOException ex) {
+                success = false;
+            }
+        } else {
+            success = false;
+        }
+
+        if (!success) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error: Opening user manual PDF file is not supported by your device.");
+            alert.show();
+        }
+    }
 }

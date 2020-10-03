@@ -33,14 +33,13 @@ public abstract class Path {
     public static final String APP_ICON = VIEW + "/images/logo_icon.png";
     public static final String INFO_ICON = VIEW + "/images/info_icon.png";
 
-
-
     public static final String STYLE_SHEET = VIEW + USER_INTERFACES + "/styles.css";
 
     public static final String AIRLINE_RSC = "/airlines.dat";
     public static final String AIRPORT_RSC = "/airports.dat";
     public static final String ROUTE_RSC = "/routes.dat";
     public static final String FLIGHT_PATH_RSC = "/NZCH-WSSS.csv";
+    public static final String USER_MANUAL = "/greenflights_user_manual.pdf";
     public static final String MAP_RSC = "/seng202.team4/user_interfaces/map.html";
 
 }
