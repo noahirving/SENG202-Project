@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -78,10 +79,16 @@ public abstract class DataController {
      * Sets the images of buttons
      */
     void initialiseButtons() {
-        Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
-        newRecordButton.setGraphic(new ImageView(addRecordImage));
-        Image deleteRecordImage = new Image(getClass().getResourceAsStream(Path.DELETE_RECORD_BUTTON_PNG));
-        deleteRecordButton.setGraphic(new ImageView(deleteRecordImage));
+        if (newRecordButton != null) {
+            Image addRecordImage = new Image(getClass().getResourceAsStream(Path.ADD_RECORD_BUTTON_PNG));
+            newRecordButton.setGraphic(new ImageView(addRecordImage));
+            newRecordButton.setTooltip(new Tooltip("Add a new individual record"));
+        }
+        if (deleteRecordButton != null) {
+            Image deleteRecordImage = new Image(getClass().getResourceAsStream(Path.DELETE_RECORD_BUTTON_PNG));
+            deleteRecordButton.setGraphic(new ImageView(deleteRecordImage));
+            deleteRecordButton.setTooltip(new Tooltip("Delete the selected record(s)"));
+        }
     }
 
     /**

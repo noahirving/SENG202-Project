@@ -325,13 +325,6 @@ public class EmissionsTabController extends DataController {
         return null;
     }
 
-    /**
-     * Sets the images of buttons
-     */
-    void initialiseButtons() {
-        javafx.scene.image.Image deleteRecordImage = new Image(getClass().getResourceAsStream(Path.DELETE_RECORD_BUTTON_PNG));
-        deleteRecordButton.setGraphic(new ImageView(deleteRecordImage));
-    }
 
     /**
      * Delete each row selected in the table view
@@ -352,7 +345,7 @@ public class EmissionsTabController extends DataController {
     }
 
     /**
-     * Clear filter method
+     * Clear filter method, not used in the emissions tab as there are no filters
      */
     @Override
     public void clearFilters() {
