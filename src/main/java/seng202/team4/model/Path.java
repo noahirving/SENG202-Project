@@ -42,5 +42,7 @@ public abstract class Path {
     public static final String FLIGHT_PATH_RSC = "/NZCH-WSSS.csv";
     public static final String USER_MANUAL = "/greenflights_user_manual.pdf";
     public static final String MAP_RSC = "/seng202.team4/user_interfaces/map.html";
+    public static final String AIRLINE_TEST_RSC_VALID = "/airlineValid.dat";
+    public static final String AIRLINE_TEST_RSC_INVALID = "/airlineInvalid.dat";
 
 }
