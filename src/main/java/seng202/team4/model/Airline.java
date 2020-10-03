@@ -11,10 +11,7 @@ import java.util.Arrays;
  */
 public class Airline extends DataType {
 
-    /**
-     * Unique open flights identifier for this airline.
-     */
-    private int id;
+
     /**
      * Name of the airline.
      */
@@ -217,10 +214,6 @@ public class Airline extends DataType {
     }
 
     // getters
-    public int getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
@@ -250,10 +243,6 @@ public class Airline extends DataType {
     }
 
     //setters
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }

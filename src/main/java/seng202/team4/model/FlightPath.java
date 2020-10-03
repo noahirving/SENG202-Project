@@ -14,11 +14,6 @@ import java.util.ArrayList;
 public class FlightPath extends DataType {
 
     /**
-     * unique ID for flightpath, as there can be multiple flightPaths with the
-     * same flightPathId this was required to satisfy the primary key constraint.
-     */
-    private int id;
-    /**
      * Type of flight path.
      */
     private String type;
@@ -186,10 +181,6 @@ public class FlightPath extends DataType {
                 getFlightPathId().equals(that.getFlightPathId());
     }
 
-    public int getId() {
-        return id;
-    }
-
     public String getType() {
         return type;
     }
@@ -208,10 +199,6 @@ public class FlightPath extends DataType {
 
     public double getLongitude() {
         return longitude;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setType(String type) {

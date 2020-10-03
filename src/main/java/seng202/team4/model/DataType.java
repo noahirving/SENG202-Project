@@ -9,6 +9,21 @@ import java.util.ArrayList;
 public abstract class DataType implements Validate {
 
     /**
+     * Unique open flights identifier for this airline.
+     */
+    private int id;
+
+
+    public int getId() {
+        return id;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
      * The string required between attributes of the insert statement.
      */
     public static final String BETWEEN = "', '";

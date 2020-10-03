@@ -14,12 +14,6 @@ import java.util.ArrayList;
 public class Route extends DataType {
 
     /**
-     * unique ID for route, as there can be multiple routes with the
-     * same airline, source and destination airport.
-     * This was required to satisfy the primary key constraint.
-     */
-    private int id;
-    /**
      * Unique open flights Airline ID
      */
     private String airlineCode;
@@ -233,10 +227,6 @@ public class Route extends DataType {
         this.carbonEmissions = emissions;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public double getCarbonEmissions() {
         return carbonEmissions;
     }
@@ -275,10 +265,6 @@ public class Route extends DataType {
 
     public int getTreeEquivalent() {
         return treeEquivalent;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setDistance(double distance) {

@@ -16,10 +16,6 @@ import java.util.Arrays;
 public class Airport extends DataType {
 
     /**
-     *  Unique open flights identifier for this airport.
-     */
-    private int id;
-    /**
      * name of airport.
      */
     private String name;
@@ -334,14 +330,6 @@ public class Airport extends DataType {
     }
 
     //getters and setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
