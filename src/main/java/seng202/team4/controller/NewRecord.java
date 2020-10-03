@@ -19,6 +19,7 @@ import seng202.team4.model.Path;
 import javax.tools.Tool;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -65,19 +66,20 @@ abstract class NewRecord {
      * @throws Exception SQL Exception
      */
     //TODO: Essentially the same as the function from DataController, a more efficient implementation would be preferred
-    private void setDataSetComboBox(ComboBox comboBox) throws Exception{
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
-        ResultSet rs = stmt.executeQuery("Select Name from " + controller.getDataType().getSetName());
+    private void setDataSetComboBox(ComboBox comboBox) {
         ObservableList<String> dataSetNames = FXCollections.observableArrayList();
-        while (rs.next()) {
-            dataSetNames.add(rs.getString("Name"));
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("Select Name from " + controller.getDataType().getSetName());
+        ) {
+            while (rs.next()) {
+                dataSetNames.add(rs.getString("Name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO
         }
         comboBox.setItems(dataSetNames);
-        //comboBox.setValue(dataSetNames.get(0)); // TODO: Reimplement later
-        rs.close();
-        stmt.close();
-        DatabaseManager.disconnect(c);
     }
 
     /**

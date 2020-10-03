@@ -1,5 +1,7 @@
 package seng202.team4.model;
 
+import seng202.team4.controller.ErrorController;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -23,51 +25,46 @@ public abstract class DataLoader {
      * @return ArrayList<String> an ArrayList of erroneous lines
      */
     public static ArrayList<String> uploadData(String setName, File file, DataType dataType) {
-        Connection c = DatabaseManager.connect(); // TODO: throw connection error
-        if (c != null) {
-            Statement stmt = DatabaseManager.getStatement(c);
-            try {
-                // Inserts a new set into the related dataType's set table
-                String setInsertStatement = "INSERT INTO " + dataType.getSetName() + " ('NAME') VALUES ('" + setName + "');";
-                stmt.executeUpdate(setInsertStatement);
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+            ) {
+            // Inserts a new set into the related dataType's set table
+            String setInsertStatement = "INSERT INTO " + dataType.getSetName() + " ('NAME') VALUES ('" + setName + "');";
+            stmt.executeUpdate(setInsertStatement);
 
-                int setID = getSetID(setName, dataType, stmt);
+            int setID = getSetID(setName, dataType, stmt);
 
-                // Stores the invalid lines in the file
-                ArrayList<String> invalidLines = new ArrayList<>();
+            // Stores the invalid lines in the file
+            ArrayList<String> invalidLines = new ArrayList<>();
 
-                // Reads lines from file and adds valid lines to statement batch
-                BufferedReader buffer = new BufferedReader(new FileReader(file));
-                String line = buffer.readLine();
-                while (line != null && line.trim().length() > 0) {
-                    ArrayList<String> errorMessage = new ArrayList<>();
-                    DataType data = dataType.getValid(line, errorMessage);
-                    if (data != null) {
-                        stmt.addBatch(data.getInsertStatement(setID)); // Add to database
-                    }
-                    else {
-                        if (errorMessage.size() > 0) {
-                            invalidLines.add(line + " (" + errorMessage.get(0) + ")");
-                        }
-                    }
-                    line = buffer.readLine();
+            // Reads lines from file and adds valid lines to statement batch
+            BufferedReader buffer = new BufferedReader(new FileReader(file));
+            String line = buffer.readLine();
+            while (line != null && line.trim().length() > 0) {
+                ArrayList<String> errorMessage = new ArrayList<>();
+                DataType data = dataType.getValid(line, errorMessage);
+                if (data != null) {
+                    stmt.addBatch(data.getInsertStatement(setID)); // Add to database
                 }
-
-                // Commits changes to database
-                stmt.executeBatch();
-                stmt.close();
-                c.commit();
-                return invalidLines;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-
-            } finally {
-                DatabaseManager.disconnect(c);
+                else {
+                    if (errorMessage.size() > 0) {
+                        invalidLines.add(line + " (" + errorMessage.get(0) + ")");
+                    }
+                }
+                line = buffer.readLine();
             }
+
+            stmt.executeBatch();
+            connection.commit();
+            return invalidLines;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            String message = "Failed uploading data.";
+            ErrorController.createErrorMessage(message, false);
+            return null;
+
         }
-        return null;
     }
 
     /**
@@ -77,51 +74,40 @@ public abstract class DataLoader {
      * @return 'true' if record was successfully inserted into the database, 'false' otherwise
      */
     public static boolean addNewRecord(DataType dataType, String setName){
-        Connection c = DatabaseManager.connect(); // TODO: throw connection error
-        if (c != null) {
-            Statement stmt = DatabaseManager.getStatement(c);
-            try {
-                int setID = getSetID(setName, dataType, stmt);
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+        ) {
+            int setID = getSetID(setName, dataType, stmt);
+            // Inserts the new record into the database
+            stmt.executeUpdate(dataType.getInsertStatement(setID));
+            connection.commit();
+            return true;
 
-                // Inserts the new record into the database
-                stmt.executeUpdate(dataType.getInsertStatement(setID));
-                stmt.close();
-                c.commit();
-                return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            String message = "Unable to add new record.";
+            ErrorController.createErrorMessage(message, false);
+            return false;
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-
-            } finally {
-                DatabaseManager.disconnect(c);
-            }
         }
-        return false;
     }
 
-    public static boolean updateRecord(DataType dataType, String setName){
-        Connection c = DatabaseManager.connect(); // TODO: throw connection error
-        if (c != null) {
-            Statement stmt = DatabaseManager.getStatement(c);
-            try {
-                int setID = getSetID(setName, dataType, stmt);
+    public static boolean updateRecord(DataType dataType, String setName) {
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ) {
+            int setID = getSetID(setName, dataType, stmt);
+            // Inserts the new record into the database
+            stmt.executeUpdate(dataType.getUpdateStatement(setID));
+            connection.commit();
+            return true;
 
-                // Inserts the new record into the database
-                stmt.executeUpdate(dataType.getUpdateStatement(setID));
-                stmt.close();
-                c.commit();
-                return true;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-
-            } finally {
-                DatabaseManager.disconnect(c);
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            String message = "Unable to edit record.";
+            ErrorController.createErrorMessage(message, false);
+            return false;
         }
-        return false;
     }
 
     /**
@@ -149,37 +135,38 @@ public abstract class DataLoader {
      *              with a checkbox
      */
     public static void addToRoutesSelectedDatabase(Route route) {
-        Connection con = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(con);
-        String between = "', '";
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+            ) {
+            String between = "', '";
 
-        Double distance = 0.0;
-        String sourceAirport = route.getSourceAirportCode();
-        String destAirport = route.getDestinationAirportCode();
-        try {
-            distance = Calculations.calculateDistance(sourceAirport, destAirport, con);
-            route.setDistance(distance);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Double carbonEmitted = Calculations.calculateEmissions(route);
-        String query = "INSERT INTO RoutesSelected ('Airline', 'SourceAirport', 'DestinationAirport', 'Equipment', 'Distance', 'CarbonEmissions') "
-                + "VALUES ('"
-                + route.getAirlineCode().replaceAll("'", "''") + between
-                + route.getSourceAirportCode().replaceAll("'", "''") + between
-                + route.getDestinationAirportCode().replaceAll("'", "''") + between
-                + route.getPlaneTypeCode().replaceAll("'", "''") + between
-                + route.getDistance() + between
-                + carbonEmitted
-                + "');";
-        try {
+            Double distance = 0.0;
+            String sourceAirport = route.getSourceAirportCode();
+            String destAirport = route.getDestinationAirportCode();
+            try {
+                distance = Calculations.calculateDistance(sourceAirport, destAirport, stmt);
+                route.setDistance(distance);
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.printStackTrace(); // TODO
+            }
+            Double carbonEmitted = Calculations.calculateEmissions(route);
+            String query = "INSERT INTO RoutesSelected ('Airline', 'SourceAirport', 'DestinationAirport', 'Equipment', 'Distance', 'CarbonEmissions') "
+                    + "VALUES ('"
+                    + route.getAirlineCode().replaceAll("'", "''") + between
+                    + route.getSourceAirportCode().replaceAll("'", "''") + between
+                    + route.getDestinationAirportCode().replaceAll("'", "''") + between
+                    + route.getPlaneTypeCode().replaceAll("'", "''") + between
+                    + route.getDistance() + between
+                    + carbonEmitted
+                    + "');";
             stmt.executeUpdate(query);
-            con.commit();
-            stmt.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            connection.commit();
         }
-        DatabaseManager.disconnect(con);
+        catch (SQLException e) {
+            e.printStackTrace();
+            // TODO
+        }
     }
 
     /**
@@ -189,8 +176,9 @@ public abstract class DataLoader {
      * @param route Route the route to be removed
      */
     public static boolean removeFromRoutesSelectedDatabase(Route route) {
-        Connection con = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(con);
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+            ) {
         final String AND = "' and ";
 
         String query = "DELETE FROM RoutesSelected WHERE "
@@ -198,17 +186,13 @@ public abstract class DataLoader {
                 + "SourceAirport = '" + route.getSourceAirportCode().replaceAll("'", "''") + AND
                 + "DestinationAirport = '" + route.getDestinationAirportCode().replaceAll("'", "''") + AND
                 + "Equipment = '" + route.getPlaneTypeCode().replaceAll("'", "''") + "'";
-        try {
             stmt.executeUpdate(query);
-            con.commit();
-            stmt.close();
+            connection.commit();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            // TODO
             return false;
-        }
-        finally {
-            DatabaseManager.disconnect(con);
         }
     }
 
@@ -220,25 +204,23 @@ public abstract class DataLoader {
      *              with a checkbox
      */
     public static void addToAirportsSelectedDatabase(Airport airport) {
-        Connection con = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(con);
-        final String BETWEEN = "', '";
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+            ) {
+            final String BETWEEN = "', '";
 
-        String query = "INSERT INTO AirportsSelected ('Name', 'Longitude', 'Latitude') "
-                + "VALUES ('"
-                + airport.getName().replaceAll("'", "''") + BETWEEN
-                + airport.getLongitude() + BETWEEN
-                + airport.getLatitude()
-                + "');";
-        try {
+            String query = "INSERT INTO AirportsSelected ('Name', 'Longitude', 'Latitude') "
+                    + "VALUES ('"
+                    + airport.getName().replaceAll("'", "''") + BETWEEN
+                    + airport.getLongitude() + BETWEEN
+                    + airport.getLatitude()
+                    + "');";
             stmt.executeUpdate(query);
-            con.commit();
-            stmt.close();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            // TODO
         }
-        DatabaseManager.disconnect(con);
-
     }
 
     /**
@@ -248,25 +230,22 @@ public abstract class DataLoader {
      * @param airport Airport the airport to be removed
      */
     public static boolean removeFromAirportsSelectedDatabase(Airport airport) {
-        Connection con = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(con);
-        final String AND = "' and ";
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+            ) {
+            final String AND = "' and ";
 
-        String query = "DELETE FROM AirportsSelected WHERE "
-                + "Name = '" + airport.getName() + AND
-                + "Longitude = '" + airport.getLongitude() + AND
-                + "Latitude = '" + airport.getLatitude() + "'";
-        try {
+            String query = "DELETE FROM AirportsSelected WHERE "
+                    + "Name = '" + airport.getName() + AND
+                    + "Longitude = '" + airport.getLongitude() + AND
+                    + "Latitude = '" + airport.getLatitude() + "'";
             stmt.executeUpdate(query);
-            con.commit();
-            stmt.close();
+            connection.commit();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            // TODO
             return false;
-        }
-        finally {
-            DatabaseManager.disconnect(con);
         }
     }
 
@@ -283,20 +262,17 @@ public abstract class DataLoader {
      */
     public static boolean deleteRecord(int id, String table) {
         String query = "Delete from " + table + " Where ID = " + id;
-
-        Connection con = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(con);
-        try {
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+            ) {
             stmt.executeUpdate(query);
-            con.commit();
-            stmt.close();
+            connection.commit();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            String message = "Could not delete record with ID " + id + ".";
+            ErrorController.createErrorMessage(message, false);
             return false;
-        }
-        finally {
-            DatabaseManager.disconnect(con);
         }
     }
 }

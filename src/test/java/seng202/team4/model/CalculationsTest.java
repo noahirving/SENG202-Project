@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Test whether the calculations class gives the expected result
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 public class CalculationsTest {
 
     private static Connection con;
+    private static Statement stmt;
     private static ResultSet rs;
 
     String query1 = "SELECT Latitude,Longitude from Airport WHERE IATA = 'GKA'";
@@ -37,12 +39,13 @@ public class CalculationsTest {
      * Set up the database to be used for the test.
      */
     @BeforeClass
-    public static void setup() {
+    public static void setup() throws SQLException{
         DatabaseManager.setUp();
         Main m = new Main();
         m.loadDefaultData();
 
         con = DatabaseManager.connect();
+        stmt = con.createStatement();
     }
 
     /**
@@ -52,8 +55,9 @@ public class CalculationsTest {
     @AfterClass
     public static void teardown() throws Exception {
         rs.close();
+        stmt.close();
+        con.close();
         Main.deleteDatabase();
-        DatabaseManager.disconnect(con);
     }
 
     /**
@@ -100,7 +104,7 @@ public class CalculationsTest {
      */
     @Test
     public void testCalculateDistance() throws Exception {
-        double distance = Calculations.calculateDistance("GKA", "MAG", con);
+        double distance = Calculations.calculateDistance("GKA", "MAG", stmt);
         Assert.assertEquals(106.705, distance, 0.001);
     }
 

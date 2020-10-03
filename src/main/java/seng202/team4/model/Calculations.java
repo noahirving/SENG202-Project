@@ -40,7 +40,7 @@ public class Calculations {
      * @return double the calculated distance between two given airports
      * @throws SQLException SQL Exception
      */
-    public static double calculateDistance(String airportCodeOne, String airportCodeTwo, Connection con) throws SQLException {
+    public static double calculateDistance(String airportCodeOne, String airportCodeTwo, Statement stmt) throws SQLException {
         double lat1;
         double lat2;
         double long1;
@@ -48,17 +48,20 @@ public class Calculations {
 
         //Sets up query required for accessing the provided airports in the Airport database table
         String query = "SELECT Latitude,Longitude from Airport WHERE IATA = '" + airportCodeOne + "' OR IATA = '" + airportCodeTwo + "'";
-        Statement stmt = DatabaseManager.getStatement(con);
-        //Execute query, store results in result set
-        ResultSet result = stmt.executeQuery(query);
         ArrayList<Double> lats = new ArrayList<>();
         ArrayList<Double> longs = new ArrayList<>();
-        //Store latitude and longitudes of airports
-        while (result.next()){
-            lats.add(result.getDouble("Latitude"));
-            longs.add(result.getDouble("Longitude"));
+        //Execute query, store results in result set
+        try (ResultSet result = stmt.executeQuery(query);
+            ) {
+            //Store latitude and longitudes of airports
+            while (result.next()) {
+                lats.add(result.getDouble("Latitude"));
+                longs.add(result.getDouble("Longitude"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO
         }
-        stmt.close();
         //Convert latitude and longitude of airports to radians
         try{
             lat1 = Math.toRadians(lats.get(0));

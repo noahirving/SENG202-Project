@@ -13,6 +13,7 @@ import seng202.team4.model.Route;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -43,11 +44,11 @@ public class NewRoute extends NewRecord{
     }
 
     private void initialiseComboBoxes() {
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
         String query = "SELECT DISTINCT ICAO, IATA FROM Airport";
-        try {
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+            ) {
             while (rs.next()) {
                 String iata = rs.getString("IATA");
                 String icao = rs.getString("ICAO");
@@ -59,10 +60,9 @@ public class NewRoute extends NewRecord{
             TextFields.bindAutoCompletion(depAirportCombo.getEditor(), depAirportCombo.getItems());
             TextFields.bindAutoCompletion(dstAirportCombo.getEditor(), dstAirportCombo.getItems());
 
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch(SQLException e) {
+            e.printStackTrace(); // TODO
         }
-        DatabaseManager.disconnect(c);
     }
 
     /**
