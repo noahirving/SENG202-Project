@@ -2,9 +2,9 @@ package seng202.team4.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import seng202.team4.model.Path;
+import seng202.team4.model.Airline;
+import seng202.team4.model.DataType;
+
 
 /**
  * Describes the functionality required for getting
@@ -64,5 +64,17 @@ public class NewAirline extends NewRecord {
         }
         String[] recordData = {name, code, iata, icao, callSign, country, recentlyActive};
         return recordData;
+    }
+
+    @Override
+    public void setRecordData(DataType data) {
+        Airline airline = (Airline) data;
+        nameField.setText(airline.getName());
+        codeField.setText(airline.getAlias());
+        iataField.setText(airline.getIata());
+        icaoField.setText(airline.getIcao());
+        callSignField.setText(airline.getCallSign());
+        countryField.setText(airline.getCountry());
+        recentlyActiveField.setSelected(airline.isRecentlyActive());
     }
 }

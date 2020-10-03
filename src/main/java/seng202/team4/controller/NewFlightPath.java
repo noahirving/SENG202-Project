@@ -3,6 +3,8 @@ package seng202.team4.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import seng202.team4.model.DataType;
+import seng202.team4.model.FlightPath;
 import seng202.team4.model.Path;
 
 /**
@@ -13,7 +15,7 @@ public class NewFlightPath extends NewRecord {
     @FXML
     private TextField typeField;
     @FXML
-    private TextField idField;
+    private TextField flightPathIdField;
     @FXML
     private TextField altitudeField;
     @FXML
@@ -45,11 +47,33 @@ public class NewFlightPath extends NewRecord {
     @Override
     String[] getRecordData() {
         String type = typeField.getText().trim();
-        String id = idField.getText().trim();
+        String id = flightPathIdField.getText().trim();
         String altitude = altitudeField.getText().trim();
         String latitude = latitudeField.getText().trim();
         String longitude = longitudeField.getText().trim();
         String[] recordData = {type, id, altitude, latitude, longitude};
         return recordData;
+    }
+
+    @Override
+    public void setRecordData(DataType data) {
+        FlightPath path = (FlightPath) data;
+        typeField.setText(path.getType());
+        flightPathIdField.setText(path.getFlightPathId());
+        latitudeField.setText(Double.toString(path.getLatitude()));
+        longitudeField.setText(Double.toString(path.getLongitude()));
+        altitudeField.setText(Double.toString(path.getAltitude()));
+
+        /*
+        switch (path.getType()) {
+            case "APT": typeText.setText("Airport"); break;
+            case "NDB": typeText.setText("Non-directional beacon"); break;
+            case "VOR": typeText.setText("VHF omni-directional range"); break;
+            case "FIX": typeText.setText("Navigational fix"); break;
+            case "DME": typeText.setText("Distance measuring equipment"); break;
+            case "LATLON": typeText.setText("Latitude/Longitude point"); break;
+            default: typeText.setText("Unknown"); break;
+        }
+        */
     }
 }

@@ -7,7 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.controlsfx.control.textfield.TextFields;
+import seng202.team4.model.DataType;
 import seng202.team4.model.DatabaseManager;
+import seng202.team4.model.Route;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -83,5 +85,20 @@ public class NewRoute extends NewRecord{
 
         String[] recordData = {airline, srcAirport, dstAirport, codeshare, stops, equipment};
         return recordData;
+    }
+
+    /**
+     * Sets the values of the route data in their corresponding text attribute.
+     * @param data data that will be displayed.
+     */
+    @Override
+    public void setRecordData(DataType data) {
+        Route route = (Route) data;
+        airlineField.setText(route.getAirlineCode());
+        //depAirportCombo.setText(route.getSourceAirportCode()); // TODO: fix
+        //dstAirportCombo.setText(route.getDestinationAirportCode()); // TODO: fix
+        codeshareField.setSelected(route.isCodeshare());
+        stopsField.setText(Integer.toString(route.getNumStops()));
+        equipmentField.setText(route.getPlaneTypeCode());
     }
 }

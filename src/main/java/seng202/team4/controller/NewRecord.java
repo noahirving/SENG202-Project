@@ -34,9 +34,10 @@ abstract class NewRecord {
     private Text errorText;
     private Stage stage;
     private DataController controller;
+    private DataType dataType;
 
     abstract String[] getRecordData();
-
+    public abstract void setRecordData(DataType data);
     /**
      * Initial set up for the controller, declares the stage
      * the controller is running on and the controller that
@@ -44,9 +45,13 @@ abstract class NewRecord {
      * @param stage stage the controller is running on.
      * @param controller controller that called it.
      */
-    void setUp(Stage stage, DataController controller) {
+    void setUp(Stage stage, DataController controller, DataType dataType) {
         this.controller = controller;
         this.stage = stage;
+        this.dataType = dataType;
+        if (dataType != null) {
+            setRecordData(dataType);
+        }
         try {
             setDataSetComboBox(setComboBox);
         } catch (Exception e) {
@@ -99,7 +104,13 @@ abstract class NewRecord {
             }
             else {
                 String setName = setComboBox.getValue().toString();
-                DataLoader.addNewRecord(record, setName);
+                if (dataType == null) { // If new record
+                    DataLoader.addNewRecord(record, setName);
+                }
+                else { // If updating record
+                    record.setId(dataType.getId());
+                    DataLoader.updateRecord(record, setName);
+                }
                 controller.setTable();
                 stage.close();
             }

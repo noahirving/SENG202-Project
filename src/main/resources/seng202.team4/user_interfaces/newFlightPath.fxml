@@ -38,7 +38,7 @@
             <Insets left="150.0" right="150.0" />
          </GridPane.margin>
       </JFXTextField>
-      <JFXTextField fx:id="idField" focusColor="#298326" labelFloat="true" promptText="ID" GridPane.rowIndex="2">
+      <JFXTextField fx:id="flightPathIdField" focusColor="#298326" labelFloat="true" promptText="ID" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="150.0" right="150.0" />
          </GridPane.margin>

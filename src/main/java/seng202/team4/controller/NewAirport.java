@@ -3,6 +3,8 @@ package seng202.team4.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import seng202.team4.model.Airport;
+import seng202.team4.model.DataType;
 
 /**
  * Describes the functionality required for getting
@@ -66,5 +68,25 @@ public class NewAirport extends NewRecord {
         String tzDatabase = tzDatabaseField.getText().trim();
         String[] recordData = {name, city, country, iata, icao, latitude, longitude, altitude, timeZone, dst, tzDatabase};
         return recordData;
+    }
+
+    /**
+     * Sets the values of the airport data in their corresponding text attribute.
+     * @param data data that will be displayed.
+     */
+    @Override
+    public void setRecordData(DataType data) {
+        Airport airport = (Airport) data;
+        nameField.setText(airport.getName());
+        cityField.setText(airport.getCity());
+        countryField.setText(airport.getCountry());
+        iataField.setText(airport.getIata());
+        icaoField.setText(airport.getIcao());
+        latitudeField.setText(Double.toString(airport.getLatitude()));
+        longitudeField.setText(Double.toString(airport.getLongitude()));
+        altitudeField.setText(Double.toString(airport.getAltitude()));
+        timeZoneField.setText(Double.toString(airport.getTimezone()));
+        dstField.setText(Character.toString(airport.getDst()));
+        tzDatabaseField.setText(airport.getTzDatabase());
     }
 }

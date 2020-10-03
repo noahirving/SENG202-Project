@@ -211,14 +211,14 @@ public abstract class DataController {
      */
     public void newRecord() throws IOException {
         Stage stage = new Stage();
-        stage.setTitle("New Record");
+        stage.setTitle("New " + getDataType().getSetName() + " Record");
 
         stage.getIcons().add(new Image(getClass().getResourceAsStream(Path.APP_ICON)));
         FXMLLoader loader = new FXMLLoader(getClass().getResource(getNewRecordFXML()));
         stage.setScene(new Scene(loader.load()));
         stage.initModality(Modality.APPLICATION_MODAL);
         NewRecord controller = loader.getController();
-        controller.setUp(stage, this);
+        controller.setUp(stage, this, null);
         stage.showAndWait();
     }
 
@@ -231,24 +231,24 @@ public abstract class DataController {
     }
 
     /**
-     * Show all attributes of the selected row in the table
+     * Show all attributes of the selected row in the table // TODO: update description
      * @param data record to show attributes of
      */
-    public void showDetails(DataType data) {
+    public void editRecord(DataType data) {
         Stage stage = new Stage();
-        stage.setTitle("Airline details");
-        stage.setMinHeight(500);
-        stage.setMinWidth(720);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(getDetailsFXML()));
+        stage.setTitle("Edit " + getDataType().getTypeName() + " Record");
+
+        stage.getIcons().add(new Image(getClass().getResourceAsStream(Path.APP_ICON)));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(getNewRecordFXML()));
         try {
-            stage.setScene(new Scene(loader.load(), 700, 400));
+            stage.setScene(new Scene(loader.load()));
         } catch (IOException e) {
             e.printStackTrace();
         }
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-        Details details = loader.getController();
-        details.setUp(stage, data);
+        NewRecord controller = loader.getController();
+        controller.setUp(stage, this, data);
+        stage.showAndWait();
     }
 
     @FXML
@@ -256,7 +256,7 @@ public abstract class DataController {
         if (click.getClickCount() > 1) {
             DataType data = dataTable.getSelectionModel().getSelectedItem();
             if (data != null) {
-                showDetails(data);
+                editRecord(data);
             }
         }
     }
