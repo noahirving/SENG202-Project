@@ -185,15 +185,12 @@ public class Airport extends DataType {
         }
         if (!Validate.isAirportIATA(iata)) {
             errorMessage.add("Invalid IATA");
-            System.out.println(iata);
             valid = false;
         }
         if (!Validate.isAirportICAO(icao)) {
-            System.out.println(icao);
             errorMessage.add("Invalid ICAO");
             valid = false;
         }
-
         if (!Validate.isFloat(latitude)) {
             errorMessage.add("Invalid latitude");
             valid = false;

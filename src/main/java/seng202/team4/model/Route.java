@@ -133,7 +133,6 @@ public class Route extends DataType {
         // TODO: Finish validating, get IDs
         boolean valid = true;
         if (!Validate.isAirlineIATA(airline) && !Validate.isAirlineICAO(airline)) {
-            System.out.println("test: " + airline);
             errorMessage.add("Invalid airline");
             valid = false;
         }

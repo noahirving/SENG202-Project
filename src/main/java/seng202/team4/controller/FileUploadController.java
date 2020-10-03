@@ -97,7 +97,6 @@ public class FileUploadController {
         } else if (controller.getDataSetComboBox().getItems().contains(nameField.getText())) {
             errorText.setText("*Dataset name already chosen");
         } else {
-            System.out.println("Confirmed");
             uploadData(confirmName);
             controller.newData(confirmName);
         }

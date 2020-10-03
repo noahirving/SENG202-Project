@@ -242,7 +242,6 @@ public class AirlineTabController extends DataController {
                 airlines.remove(row);
             }
             else {
-                System.out.println("Can't delete record (AirlineTabController)");
                 // TODO: Error message
             }
         }

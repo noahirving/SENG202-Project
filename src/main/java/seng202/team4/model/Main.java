@@ -54,15 +54,15 @@ public class Main {
         {
             File file = new File(Path.DATABASE);
             if(file.delete()) {
-                System.out.println("Database deleted");
+                // Database deleted
             }
             else {
-                System.out.println("Delete failed");
+                // Delete failed
             }
         }
         catch(Exception e)
         {
-            System.out.println("Invalid File to delete");
+            // Invalid File to delete
             e.printStackTrace();
         }
     }

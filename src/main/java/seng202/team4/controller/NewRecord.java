@@ -91,9 +91,6 @@ abstract class NewRecord {
                 errorText.setText(errorMessage.get(0));
                 errorText.setVisible(true);
             }
-            for (String s: errorMessage) {
-                System.out.println(s);
-            }
         }
         else { // Otherwise add the new record to the database
             if (setComboBox.getValue() == null) {
