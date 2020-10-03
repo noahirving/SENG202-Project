@@ -12,7 +12,9 @@ target/
 
 # Database
 *.db*
-/databases/
+
+# GreenFlights Resources
+/GreenFlights_Resources/
 
 # POM
 dependency-reduced-pom.xml

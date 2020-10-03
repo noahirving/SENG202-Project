@@ -1,7 +1,7 @@
 package seng202.team4.model;
 
 public abstract class Path {
-    public static final String DIRECTORY = System.getProperty("user.dir") + "/databases";
+    public static final String DIRECTORY = System.getProperty("user.dir") + "/GreenFlights_Resources";
     public static final String DATABASE = DIRECTORY + "/DATABASE.db";
     public static final String DATABASE_CONNECTION = "jdbc:sqlite:" + DATABASE;
 

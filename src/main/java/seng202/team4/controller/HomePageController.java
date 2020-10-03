@@ -24,6 +24,7 @@ import java.nio.file.StandardCopyOption;
  */
 public class HomePageController {
 
+    private static final String OS = "";
     /**
      * Label indicating internet and therefore maps is inaccessible
      */
@@ -86,6 +87,7 @@ public class HomePageController {
 
     public void userManual() {
         Boolean success = true;
+        String operatingSystem = System.getProperty("os.name");
 
         InputStream initialStream = (this.getClass().getResourceAsStream(Path.USER_MANUAL));
         File targetFile = new File(Path.DIRECTORY + Path.USER_MANUAL);
@@ -96,20 +98,28 @@ public class HomePageController {
             success = false;
         }
 
-        if (Desktop.isDesktopSupported()) {
-            try {
-                Desktop.getDesktop().open(targetFile);
-            } catch (IOException ex) {
+        if (operatingSystem.startsWith("Windows")) {
+            if (Desktop.isDesktopSupported()) {
+                try {
+                    Desktop.getDesktop().open(targetFile);
+                } catch (IOException ex) {
+                    success = false;
+                }
+            } else {
                 success = false;
             }
-        } else {
-            success = false;
-        }
 
-        if (!success) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error: Opening user manual PDF file is not supported by your device.");
+            if (!success) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error: Opening user manual PDF file is not supported by your device.");
+                alert.show();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information");
+            alert.setHeaderText("PDF file has been copied to the \"GreenFlights_Resources\" folder in the same " +
+                    "location as the running JAR or the current directory.");
             alert.show();
         }
     }
