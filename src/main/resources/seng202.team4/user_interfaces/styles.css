@@ -38,8 +38,3 @@
     -fx-cursor: HAND;
 
 }
-#gridPane {
-    -fx-background-image: url("/seng202.team4/images/homepage.png");
-    -fx-background-size: cover, auto;
-    -fx-background-position: center center;
-}

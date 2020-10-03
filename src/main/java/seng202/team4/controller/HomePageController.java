@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import seng202.team4.model.Path;
@@ -24,7 +25,6 @@ import java.nio.file.StandardCopyOption;
  */
 public class HomePageController {
 
-    private static final String OS = "";
     /**
      * Label indicating internet and therefore maps is inaccessible
      */
@@ -122,5 +122,21 @@ public class HomePageController {
                     "location as the running JAR or the current directory.");
             alert.show();
         }
+    }
+
+    public void howItsDone() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("How It's Done");
+        alert.setHeaderText("The following sources are used in the emission calculations of GreenFlights.");
+
+        FlowPane fp = new FlowPane();
+        Label explainText = new Label("Source of $10 per tonne: https://www.mercycorps.org/blog/how-much-offset-your-carbon\n" +
+                "Calculating how much carbon a tree obsorbs: https://www.carbonindependent.org/22.html\n" +
+                "CO2 per car: https://www.lightfoot.co.uk/news/2017/10/04/how-much-co2-does-a-car-emit-per-year/\n" +
+                "Fuel economy in automobiles: https://en.wikipedia.org/wiki/Fuel_economy_in_automobiles\n" +
+                "Fuel consumption and CO2: https://www.nrcan.gc.ca/sites/www.nrcan.gc.ca/files/oee/pdf/transportation/fuel-efficient-technologies/autosmart_factsheet_6_e.pdf");
+        fp.getChildren().addAll(explainText);
+        alert.getDialogPane().contentProperty().set( fp );
+        alert.show();
     }
 }

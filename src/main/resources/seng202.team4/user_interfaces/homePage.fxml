@@ -18,11 +18,14 @@
       <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" percentHeight="25.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ImageView pickOnBounds="true" preserveRatio="true" scaleX="4000.0" scaleY="2200.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <image>
-            <Image url="@../images/homepage.png" />
-         </image>
-      </ImageView>
+      <GridPane style="-fx-background-color: #39B549;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
       <GridPane style="-fx-background-color: green;" GridPane.rowIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,7 +36,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton prefHeight="40.0" prefWidth="150.0" stylesheets="@styles.css" text="How It's Done" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <JFXButton onAction="#howItsDone" prefHeight="40.0" prefWidth="150.0" stylesheets="@styles.css" text="How It's Done" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <JFXButton onAction="#userManual" prefHeight="40.0" prefWidth="150.0" stylesheets="@styles.css" text="User Manual" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <JFXButton onAction="#exit" prefHeight="40.0" prefWidth="125.0" stylesheets="@styles.css" text="Exit" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <GridPane.margin>
@@ -42,7 +45,7 @@
             </JFXButton>
          </children>
       </GridPane>
-      <ImageView pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <ImageView pickOnBounds="true" preserveRatio="true" style="-fx-background-color: green;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <image>
             <Image url="@../images/logo_no_background.png" />
          </image>

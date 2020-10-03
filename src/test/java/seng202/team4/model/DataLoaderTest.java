@@ -88,7 +88,7 @@ public class DataLoaderTest {
         Assert.assertEquals(invalidLines.size(), 1);
     }
 
-    @Test
+    /*@Test
     public void addNewAirport() throws SQLException {
         Airport toInsert = new Airport("12","Egilsstadir","Iceland","EGS","BIEG",65.283333,-14.401389,Double.parseDouble("76"),Float.parseFloat("0"),"N".charAt(0),"Atlantic/Reykjavik");
         DataLoader.addNewRecord(toInsert, "TestSet");
@@ -110,7 +110,7 @@ public class DataLoaderTest {
         int count = rs.getInt("count(*)");
         Assert.assertEquals(count, 1);
         rs.close();
-    }
+    }*/
 
     @Test
     public void deleteRouteFromSelectedTest() throws SQLException {
@@ -126,7 +126,7 @@ public class DataLoaderTest {
         rs.close();
     }
 
-    @Test
+    /*@Test
     public void addAirportToSelectedTest() throws SQLException {
         Airport toAdd = new Airport("12","Egilsstadir","Iceland","EGS","BIEG",65.283333,-14.401389,Double.parseDouble("76"),Float.parseFloat("0"),"N".charAt(0),"Atlantic/Reykjavik");
         DataLoader.addToAirportsSelectedDatabase(toAdd);
@@ -149,13 +149,10 @@ public class DataLoaderTest {
         int count = rs.getInt("count(*)");
         Assert.assertEquals(count, 0);
         rs.close();
-    }
+    }*/
 
 //    @Test
 //    public void deleteRowTest() throws SQLException {
 //
 //    }
-
-
-
 }
