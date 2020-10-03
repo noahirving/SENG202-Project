@@ -325,23 +325,23 @@ public class EmissionsTabController extends DataController {
         return null;
     }
 
-
     /**
-     * Delete each row selected in the table view
+     * Delete each row selected in the table view and database
      */
     @FXML
     @Override
-    public void deleteRow() {
-        ObservableList<Route> routes = dataTable.getSelectionModel().getSelectedItems();
-        ArrayList<Route> rows = new ArrayList<>(routes);
-        rows.forEach(row -> {
-                    row.setSelect(false);
-                    selectedRoutes.remove(row);
-                    DataLoader.removeFromRoutesSelectedDatabase(row);
-                }
-        );
-        setTotalEmissions();
-
+    public void deleteRows() {
+        DataType rows[] = dataTable.getSelectionModel().getSelectedItems().toArray(new DataType[0]);
+        for(DataType row : rows) {
+            boolean deleted = DataLoader.removeFromRoutesSelectedDatabase((Route) row);
+            if (deleted) {
+                selectedRoutes.remove(row);
+            }
+            else {
+                System.out.println("Can't delete record (EmissionsTabController)");
+                // TODO: Error message
+            }
+        }
     }
 
     /**

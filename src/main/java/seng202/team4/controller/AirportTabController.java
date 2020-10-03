@@ -298,15 +298,22 @@ public class AirportTabController extends DataController {
     public String getTableQuery() { return "SELECT * FROM Airport"; }
 
     /**
-     * Delete each row selected in the table view
+     * Delete each row selected in the table view and database
      */
     @FXML
     @Override
-    public void deleteRow() {
-        ObservableList<Airport> selectedAirports = dataTable.getSelectionModel().getSelectedItems();
-        ArrayList<Airport> rows = new ArrayList<>(selectedAirports);
-        rows.forEach(row -> airports.remove(row));
-        rows.forEach(DataLoader::removeFromAirportsSelectedDatabase);
+    public void deleteRows() {
+        DataType rows[] = dataTable.getSelectionModel().getSelectedItems().toArray(new DataType[0]);
+        for(DataType row : rows) {
+            boolean deleted = DataLoader.deleteRecord(row.getId(), getDataType().getTypeName());
+            if (deleted) {
+                airports.remove(row);
+            }
+            else {
+                System.out.println("Can't delete record (AirlineTabController)");
+                // TODO: Error message
+            }
+        }
     }
 
     @Override
@@ -319,5 +326,4 @@ public class AirportTabController extends DataController {
     public String getDetailsFXML() {
         return Path.AIRPORT_DETAILS;
     }
-
 }

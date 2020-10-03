@@ -60,7 +60,7 @@
                </rowConstraints>
                <children>
                   <JFXButton fx:id="uploadDataBtn" buttonType="RAISED" onAction="#uploadData" styleClass="button-upload" stylesheets="@styles.css" text="Upload Airport Data" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
-                  <JFXButton fx:id="deleteRecordButton" buttonType="RAISED" onAction="#deleteRow" prefWidth="26.4" style="-fx-background-color: #f2f2f3;" GridPane.halignment="CENTER">
+                  <JFXButton fx:id="deleteRecordButton" buttonType="RAISED" onAction="#deleteRows" prefWidth="26.4" style="-fx-background-color: #f2f2f3;" GridPane.halignment="CENTER">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>

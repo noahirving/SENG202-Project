@@ -164,7 +164,7 @@ public abstract class DataLoader {
      *
      * @param route Route the route to be removed
      */
-    public static void removeFromRoutesSelectedDatabase(Route route) {
+    public static boolean removeFromRoutesSelectedDatabase(Route route) {
         Connection con = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(con);
         final String AND = "' and ";
@@ -178,11 +178,14 @@ public abstract class DataLoader {
             stmt.executeUpdate(query);
             con.commit();
             stmt.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-
-        DatabaseManager.disconnect(con);
+        finally {
+            DatabaseManager.disconnect(con);
+        }
     }
 
     /**
@@ -220,7 +223,7 @@ public abstract class DataLoader {
      *
      * @param airport Airport the airport to be removed
      */
-    public static void removeFromAirportsSelectedDatabase(Airport airport) {
+    public static boolean removeFromAirportsSelectedDatabase(Airport airport) {
         Connection con = DatabaseManager.connect();
         Statement stmt = DatabaseManager.getStatement(con);
         final String AND = "' and ";
@@ -233,12 +236,14 @@ public abstract class DataLoader {
             stmt.executeUpdate(query);
             con.commit();
             stmt.close();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-
-
-        DatabaseManager.disconnect(con);
+        finally {
+            DatabaseManager.disconnect(con);
+        }
     }
 
     /**

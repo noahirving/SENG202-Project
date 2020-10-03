@@ -376,15 +376,22 @@ public class RouteTabController extends DataController {
     }
 
     /**
-     * Delete each row selected in the table view
+     * Delete each row selected in the table view and database
      */
     @FXML
     @Override
-    public void deleteRow() {
-        ObservableList<Route> selectedRoutes = dataTable.getSelectionModel().getSelectedItems();
-        ArrayList<Route> rows = new ArrayList<>(selectedRoutes);
-        rows.forEach(row -> routes.remove(row));
-        rows.forEach(DataLoader::removeFromRoutesSelectedDatabase);
+    public void deleteRows() {
+        DataType rows[] = dataTable.getSelectionModel().getSelectedItems().toArray(new DataType[0]);
+        for(DataType row : rows) {
+            boolean deleted = DataLoader.deleteRecord(row.getId(), getDataType().getTypeName());
+            if (deleted) {
+                routes.remove(row);
+            }
+            else {
+                System.out.println("Can't delete record (AirlineTabController)");
+                // TODO: Error message
+            }
+        }
     }
 
     @Override

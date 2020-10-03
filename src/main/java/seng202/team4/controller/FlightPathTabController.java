@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import seng202.team4.model.Airline;
+import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
 import seng202.team4.model.FlightPath;
 import seng202.team4.model.Path;
@@ -202,14 +203,22 @@ public class FlightPathTabController extends DataController {
     }
 
     /**
-     * Delete each row selected in the table view
+     * Delete each row selected in the table view and database
      */
     @FXML
     @Override
-    public void deleteRow() {
-        ObservableList<FlightPath> selectedFlightPaths = dataTable.getSelectionModel().getSelectedItems();
-        ArrayList<FlightPath> rows = new ArrayList<>(selectedFlightPaths);
-        rows.forEach(row -> flightPaths.remove(row));
+    public void deleteRows() {
+        DataType rows[] = dataTable.getSelectionModel().getSelectedItems().toArray(new DataType[0]);
+        for(DataType row : rows) {
+            boolean deleted = DataLoader.deleteRecord(row.getId(), getDataType().getTypeName());
+            if (deleted) {
+                flightPaths.remove(row);
+            }
+            else {
+                System.out.println("Can't delete record (AirlineTabController)");
+                // TODO: Error message
+            }
+        }
     }
 
     @Override

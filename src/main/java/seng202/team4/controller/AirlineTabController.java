@@ -14,7 +14,6 @@ import seng202.team4.model.DataType;
 import seng202.team4.model.Path;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Airline' tab of the application
@@ -233,10 +232,9 @@ public class AirlineTabController extends DataController {
      */
     @FXML
     @Override
-    public void deleteRow() {
-        ObservableList<Airline> selectedAirlines = dataTable.getSelectionModel().getSelectedItems();
-        ArrayList<Airline> rows = new ArrayList<>(selectedAirlines);
-        for(Airline row : rows) {
+    public void deleteRows() {
+        DataType rows[] = dataTable.getSelectionModel().getSelectedItems().toArray(new DataType[0]);
+        for(DataType row : rows) {
             boolean deleted = DataLoader.deleteRecord(row.getId(), getDataType().getTypeName());
             if (deleted) {
                 airlines.remove(row);

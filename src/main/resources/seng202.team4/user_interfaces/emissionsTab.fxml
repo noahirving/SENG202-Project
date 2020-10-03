@@ -62,7 +62,7 @@
                                     </GridPane.margin>
                                 </JFXTextField>
                                 <JFXButton fx:id="loadRoutesBtn" onAction="#updateTable" styleClass="button-filters" stylesheets="@styles.css" text="Load Selected Routes" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
-                                <JFXButton fx:id="deleteRecordButton" buttonType="RAISED" onAction="#deleteRow" prefWidth="26.4" style="-fx-background-color: #f2f2f3;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                                <JFXButton fx:id="deleteRecordButton" buttonType="RAISED" onAction="#deleteRows" prefWidth="26.4" style="-fx-background-color: #f2f2f3;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
                             </children>
                         </GridPane>
                     </children>
