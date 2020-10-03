@@ -14,16 +14,16 @@ import java.nio.file.StandardCopyOption;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-//        deleteDatabase();
+        Main main = new Main();
+
         DatabaseManager.setUp();
 
-        //Main m = new Main();
-        //m.loadDefaultData();
+        main.copyToFolder(Path.AIRPORT_RSC);
+        main.copyToFolder(Path.AIRLINE_RSC);
+        main.copyToFolder(Path.ROUTE_RSC);
+        main.copyToFolder(Path.FLIGHT_PATH_RSC);
 
         MainApplication.main(args);
-
-        //FlightPlanner fp = new FlightPlanner();
-        //fp.searchFlight();
     }
 
     /**
@@ -50,8 +50,7 @@ public class Main {
      * Deletes the database from the users database directory
      */
     public static void deleteDatabase() {
-        try
-        {
+        try {
             File file = new File(Path.DATABASE);
             if(file.delete()) {
                 // Database deleted
@@ -74,14 +73,17 @@ public class Main {
      * @return File the final file with the source files contents
      * @throws IOException if an exception occurs during the copy operation
      */
-    public File copyToFolder(String fileName) throws IOException {
+    public File copyToFolder(String fileName) {
+        File targetFile = null;
+        try {
+            InputStream initialStream = (this.getClass().getResourceAsStream(fileName));
+            targetFile = new File(Path.DIRECTORY + fileName);
 
-        InputStream initialStream = (this.getClass().getResourceAsStream(fileName));
-        File targetFile = new File(Path.DIRECTORY + fileName);
-
-        java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         return targetFile;
     }
-
-
 }
