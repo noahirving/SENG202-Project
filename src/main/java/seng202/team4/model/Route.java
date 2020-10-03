@@ -86,8 +86,8 @@ public class Route extends DataType {
      */
     @Override
     public String getInsertStatement(int setID) {
-        return "INSERT INTO Route ('Airline', 'SourceAirport', 'DestinationAirport', 'Codeshare', 'Stops', 'Equipment', 'Distance', 'SetID') "
-                + "VALUES ('"
+        return "Insert into  " + getTypeName() + " ('Airline', 'SourceAirport', 'DestinationAirport', 'Codeshare', 'Stops', 'Equipment', 'Distance', 'SetID') "
+                + "Values ('"
                 + getAirlineCode().replaceAll("'", "''") + BETWEEN
                 + getSourceAirportCode().replaceAll("'", "''") + BETWEEN
                 + getDestinationAirportCode().replaceAll("'", "''") + BETWEEN
@@ -97,6 +97,21 @@ public class Route extends DataType {
                 + getDistance() + BETWEEN
                 + setID
                 + "');";
+    }
+
+
+    @Override
+    public String getUpdateStatement(int setID) {
+        return "Update " + getTypeName() + " set "
+                + "Airline='" + getAirlineCode().replaceAll("'", "''") + BETWEEN
+                + "sourceAirport='" + getSourceAirportCode().replaceAll("'", "''") + BETWEEN
+                + "DestinationAirport='" + getDestinationAirportCode().replaceAll("'", "''") + BETWEEN
+                + "Codeshare='" + isCodeshare() + BETWEEN
+                + "Stops='" + getNumStops() + BETWEEN
+                + "Equipment='" + getPlaneTypeCode().replaceAll("'", "''") + BETWEEN
+                + "Distance='" + getDistance() + BETWEEN
+                + "SetId=" + setID
+                + " where id=" + getId();
     }
 
     /**

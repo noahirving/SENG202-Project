@@ -13,6 +13,10 @@ public abstract class DataType implements Validate {
      */
     private int id;
 
+    /**
+     * The string required between attributes of the insert statement.
+     */
+    public static final String BETWEEN = "', '";
 
     public int getId() {
         return id;
@@ -24,17 +28,13 @@ public abstract class DataType implements Validate {
     }
 
     /**
-     * The string required between attributes of the insert statement.
-     */
-    public static final String BETWEEN = "', '";
-
-    /**
      * Gets the database insert statement.
      * @param setID int the ID of the set the that will be inserted into.
      * @return String the insert statement.
      */
     public abstract String getInsertStatement(int setID);
 
+    public abstract String getUpdateStatement(int setID);
 
     /**
      * Gets the name of data type.

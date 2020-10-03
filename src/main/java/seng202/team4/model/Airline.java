@@ -74,8 +74,8 @@ public class Airline extends DataType {
      */
     @Override
     public String getInsertStatement(int setID){
-        return "INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') "
-                + "VALUES ('"
+        return "Insert into  " + getTypeName() + " ('Name', 'Alias', 'IATA', 'ICAO', 'CallSign', 'Country', 'RecentlyActive', 'SetId') "
+                + "Values ('"
                 + getName().replaceAll("'", "''") + BETWEEN
                 + getAlias().replaceAll("'", "''") + BETWEEN
                 + getIata().replaceAll("'", "''") + BETWEEN
@@ -85,6 +85,20 @@ public class Airline extends DataType {
                 + isRecentlyActive() + BETWEEN
                 + setID
                 + "');";
+    }
+
+    @Override
+    public String getUpdateStatement(int setID) {
+        return "Update " + getTypeName() + " set "
+                + "Name='" + getName().replaceAll("'", "''") + BETWEEN
+                + "Alias='" + getAlias().replaceAll("'", "''") + BETWEEN
+                + "IATA='" + getIata().replaceAll("'", "''") + BETWEEN
+                + "ICAO='" + getIcao().replaceAll("'", "''") + BETWEEN
+                + "CallSign='" + getCallSign().replaceAll("'", "''") + BETWEEN
+                + "Country='" + getCountry().replaceAll("'", "''") + BETWEEN
+                + "RecentlyActive='" + isRecentlyActive() + BETWEEN
+                + "SetId=" + setID
+                + " where id=" + getId();
     }
 
     /**

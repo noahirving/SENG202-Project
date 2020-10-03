@@ -117,8 +117,8 @@ public class Airport extends DataType {
      */
     @Override
     public String getInsertStatement(int setID) {
-        return "INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME', 'SETID') "
-                + "VALUES ('"
+        return "Insert into  " + getTypeName() + " ('Name', 'City', 'Country', 'IATA', 'ICAO', 'Latitude', 'Longitude', 'Altitude', 'TimeZone', 'DST', 'TzDatabaseTime', 'SetId') "
+                + "Values ('"
                 + getName().replaceAll("'", "''''") + BETWEEN
                 + getCity().replaceAll("'", "''") + BETWEEN
                 + getCountry().replaceAll("'", "''") + BETWEEN
@@ -132,6 +132,24 @@ public class Airport extends DataType {
                 + getTzDatabase().replaceAll("'", "''") + BETWEEN
                 + setID
                 + "');";
+    }
+
+    @Override
+    public String getUpdateStatement(int setID) {
+        return "Update " + getTypeName() + " set "
+                + "Name='" + getName().replaceAll("'", "''''") + BETWEEN
+                + "City='" + getCity().replaceAll("'", "''") + BETWEEN
+                + "Country='" + getCountry().replaceAll("'", "''") + BETWEEN
+                + "IATA='" + getIata().replaceAll("'", "''") + BETWEEN
+                + "ICAO='" + getIcao().replaceAll("'", "''") + BETWEEN
+                + "Latitude='" + getLatitude() + BETWEEN
+                + "Longitude='" + getLongitude() + BETWEEN
+                + "Altitude='" + getAltitude() + BETWEEN
+                + "TimeZone='" + getTimezone() + BETWEEN
+                + "DST='" + getDst() + BETWEEN
+                + "TzDatabaseTime='" + getTzDatabase().replaceAll("'", "''") + BETWEEN
+                + "SetId=" + setID
+                + " where id=" + getId();
     }
 
     /**

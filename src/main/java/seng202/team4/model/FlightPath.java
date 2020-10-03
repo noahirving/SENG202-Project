@@ -62,8 +62,8 @@ public class FlightPath extends DataType {
      */
     @Override
     public String getInsertStatement(int setID) {
-            return "INSERT INTO FlightPath ('TYPE', 'FLIGHTPATHID', 'ALTITUDE', 'LATITUDE', 'LONGITUDE', 'SETID') "
-                + "VALUES ('"
+            return "Insert into  " + getTypeName() + " ('Type', 'FlightPathId', 'Altitude', 'Latitude', 'Longitude', 'SetId') "
+                + "Values ('"
                 + getType().replaceAll("'", "''") + BETWEEN
                 + getFlightPathId() + BETWEEN
                 + getAltitude() + BETWEEN
@@ -71,6 +71,18 @@ public class FlightPath extends DataType {
                 + getLongitude() + BETWEEN
                 + setID
                 + "');";
+    }
+
+    @Override
+    public String getUpdateStatement(int setID) {
+        return "Update " + getTypeName() + " set "
+                + "Type='" + getType().replaceAll("'", "''") + BETWEEN
+                + "FlightPathId='" + getFlightPathId() + BETWEEN
+                + "Altitude='" + getAltitude() + BETWEEN
+                + "Latitude='" + getLatitude() + BETWEEN
+                + "Longitude='" + getLongitude() + BETWEEN
+                + "SetId=" + setID
+                + " where id=" + getId();
     }
 
     /**
