@@ -4,12 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
 import seng202.team4.model.DatabaseManager;
+import seng202.team4.model.Path;
 
+import javax.tools.Tool;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -99,6 +106,31 @@ abstract class NewRecord {
                 controller.setTable();
                 stage.close();
             }
+        }
+    }
+
+    /**
+     * Creates a tooltip for a label that shows information about the entry field when adding a new record
+     * @param imageHolderLabel Label that holds the info icon image
+     * @param tooltip String that holds the tooltip information
+     */
+    protected void createToolTip(Label imageHolderLabel, String tooltip, boolean isImage) {
+        Image image = new Image(getClass().getResourceAsStream(Path.INFO_ICON));
+        ImageView imageView = new ImageView();
+        imageView.setImage(image);
+        imageView.setFitHeight(30);
+        imageView.setFitWidth(30);
+        imageView.setPreserveRatio(true);
+        imageView.setPickOnBounds(true);
+        imageHolderLabel.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        imageHolderLabel.setGraphic(imageView);
+
+        if (isImage) {
+            Tooltip imageToolTip = new Tooltip();
+            imageToolTip.setGraphic(new ImageView(new Image(tooltip)));
+            imageHolderLabel.setTooltip(imageToolTip);
+        } else {
+            imageHolderLabel.setTooltip(new Tooltip(tooltip));
         }
     }
 
