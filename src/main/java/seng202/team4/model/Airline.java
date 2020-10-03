@@ -90,13 +90,13 @@ public class Airline extends DataType {
     @Override
     public String getUpdateStatement(int setID) {
         return "Update " + getTypeName() + " set "
-                + "Name='" + getName().replaceAll("'", "''") + BETWEEN
-                + "Alias='" + getAlias().replaceAll("'", "''") + BETWEEN
-                + "IATA='" + getIata().replaceAll("'", "''") + BETWEEN
-                + "ICAO='" + getIcao().replaceAll("'", "''") + BETWEEN
-                + "CallSign='" + getCallSign().replaceAll("'", "''") + BETWEEN
-                + "Country='" + getCountry().replaceAll("'", "''") + BETWEEN
-                + "RecentlyActive='" + isRecentlyActive() + BETWEEN
+                + "Name='" + getName().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "Alias='" + getAlias().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "IATA='" + getIata().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "ICAO='" + getIcao().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "CallSign='" + getCallSign().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "Country='" + getCountry().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "RecentlyActive='" + isRecentlyActive() + UPDATE_BETWEEN
                 + "SetId=" + setID
                 + " where id=" + getId();
     }

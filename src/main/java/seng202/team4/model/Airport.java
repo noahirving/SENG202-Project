@@ -137,17 +137,17 @@ public class Airport extends DataType {
     @Override
     public String getUpdateStatement(int setID) {
         return "Update " + getTypeName() + " set "
-                + "Name='" + getName().replaceAll("'", "''''") + BETWEEN
-                + "City='" + getCity().replaceAll("'", "''") + BETWEEN
-                + "Country='" + getCountry().replaceAll("'", "''") + BETWEEN
-                + "IATA='" + getIata().replaceAll("'", "''") + BETWEEN
-                + "ICAO='" + getIcao().replaceAll("'", "''") + BETWEEN
-                + "Latitude='" + getLatitude() + BETWEEN
-                + "Longitude='" + getLongitude() + BETWEEN
-                + "Altitude='" + getAltitude() + BETWEEN
-                + "TimeZone='" + getTimezone() + BETWEEN
-                + "DST='" + getDst() + BETWEEN
-                + "TzDatabaseTime='" + getTzDatabase().replaceAll("'", "''") + BETWEEN
+                + "Name='" + getName().replaceAll("'", "''''") + UPDATE_BETWEEN
+                + "City='" + getCity().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "Country='" + getCountry().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "IATA='" + getIata().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "ICAO='" + getIcao().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "Latitude='" + getLatitude() + UPDATE_BETWEEN
+                + "Longitude='" + getLongitude() + UPDATE_BETWEEN
+                + "Altitude='" + getAltitude() + UPDATE_BETWEEN
+                + "TimeZone='" + getTimezone() + UPDATE_BETWEEN
+                + "DST='" + getDst() + UPDATE_BETWEEN
+                + "TzDatabaseTime='" + getTzDatabase().replaceAll("'", "''") + UPDATE_BETWEEN
                 + "SetId=" + setID
                 + " where id=" + getId();
     }

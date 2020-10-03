@@ -103,13 +103,13 @@ public class Route extends DataType {
     @Override
     public String getUpdateStatement(int setID) {
         return "Update " + getTypeName() + " set "
-                + "Airline='" + getAirlineCode().replaceAll("'", "''") + BETWEEN
-                + "sourceAirport='" + getSourceAirportCode().replaceAll("'", "''") + BETWEEN
-                + "DestinationAirport='" + getDestinationAirportCode().replaceAll("'", "''") + BETWEEN
-                + "Codeshare='" + isCodeshare() + BETWEEN
-                + "Stops='" + getNumStops() + BETWEEN
-                + "Equipment='" + getPlaneTypeCode().replaceAll("'", "''") + BETWEEN
-                + "Distance='" + getDistance() + BETWEEN
+                + "Airline='" + getAirlineCode().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "sourceAirport='" + getSourceAirportCode().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "DestinationAirport='" + getDestinationAirportCode().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "Codeshare='" + isCodeshare() + UPDATE_BETWEEN
+                + "Stops='" + getNumStops() + UPDATE_BETWEEN
+                + "Equipment='" + getPlaneTypeCode().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "Distance='" + getDistance() + UPDATE_BETWEEN
                 + "SetId=" + setID
                 + " where id=" + getId();
     }

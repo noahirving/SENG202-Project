@@ -16,7 +16,8 @@ public abstract class DataType implements Validate {
     /**
      * The string required between attributes of the insert statement.
      */
-    public static final String BETWEEN = "', '";
+    static final String BETWEEN = "', '";
+    static final String UPDATE_BETWEEN = "', ";
 
     public int getId() {
         return id;

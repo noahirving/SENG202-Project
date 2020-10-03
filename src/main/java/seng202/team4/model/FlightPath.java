@@ -76,11 +76,11 @@ public class FlightPath extends DataType {
     @Override
     public String getUpdateStatement(int setID) {
         return "Update " + getTypeName() + " set "
-                + "Type='" + getType().replaceAll("'", "''") + BETWEEN
-                + "FlightPathId='" + getFlightPathId() + BETWEEN
-                + "Altitude='" + getAltitude() + BETWEEN
-                + "Latitude='" + getLatitude() + BETWEEN
-                + "Longitude='" + getLongitude() + BETWEEN
+                + "Type='" + getType().replaceAll("'", "''") + UPDATE_BETWEEN
+                + "FlightPathId='" + getFlightPathId() + UPDATE_BETWEEN
+                + "Altitude='" + getAltitude() + UPDATE_BETWEEN
+                + "Latitude='" + getLatitude() + UPDATE_BETWEEN
+                + "Longitude='" + getLongitude() + UPDATE_BETWEEN
                 + "SetId=" + setID
                 + " where id=" + getId();
     }
