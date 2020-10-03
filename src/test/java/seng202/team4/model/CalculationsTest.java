@@ -115,4 +115,28 @@ public class CalculationsTest {
         double emissions = Calculations.calculateEmissions(route);
         Assert.assertEquals(115.0, emissions, 0.001);
     }
+
+    /**
+     * Test whether the calculateDollarOffset function calculates the correct
+     * amount of money to offset the flight carbon emission of a given route
+     * up to 3 decimal places.
+     */
+    @Test
+    public void testCalculateDollarOffset() {
+        Route route = new Route();
+        route.setCarbonEmissions(100);
+        double dollars = Calculations.calculateDollarOffset(route);
+        Assert.assertEquals(1.479, dollars, 0.001);
+    }
+
+    /**
+     * Test whether the calculated trees equivalent is correct.
+     */
+    @Test
+    public void testCalculateTreesEquivalent() {
+        Route route = new Route();
+        route.setDollarOffset(3.6);
+        int trees = Calculations.calculateTreesEquivalent(route);
+        Assert.assertEquals(4, trees);
+    }
 }
