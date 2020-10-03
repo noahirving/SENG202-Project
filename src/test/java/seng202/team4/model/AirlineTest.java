@@ -20,8 +20,8 @@ public class AirlineTest {
     public void testInsertStatement() {
         Airline airline = new Airline("Rainbow Air Canada","Rainbow Air CAN","RY","RAY","Rainbow CAN","Canada",true);
         String statement = airline.getInsertStatement(10);
-        Assert.assertEquals("INSERT INTO Airline ('NAME', 'ALIAS', 'IATA', 'ICAO', 'CALLSIGN', 'COUNTRY', 'RECENTLYACTIVE', 'SETID') " +
-                "VALUES ('Rainbow Air Canada', 'Rainbow Air CAN', 'RY', 'RAY', 'Rainbow CAN', 'Canada', 'true', '10');", statement);
+        Assert.assertEquals("Insert into  " + airline.getTypeName() + " ('Name', 'Alias', 'IATA', 'ICAO', 'CallSign', 'Country', 'RecentlyActive', 'SetId') "
+                + "Values ('Rainbow Air Canada', 'Rainbow Air CAN', 'RY', 'RAY', 'Rainbow CAN', 'Canada', 'true', '10');", statement);
     }
 
     /**

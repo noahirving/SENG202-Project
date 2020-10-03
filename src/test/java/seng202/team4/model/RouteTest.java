@@ -20,8 +20,8 @@ public class RouteTest {
     public void testInsertStatement() {
         Route route = new Route("BA","SIN","MEL",true,0,"744");
         String statement = route.getInsertStatement(10);
-        Assert.assertEquals("INSERT INTO Route ('Airline', 'SourceAirport', 'DestinationAirport', 'Codeshare', 'Stops', 'Equipment', 'Distance', 'SetID') " +
-                "VALUES ('BA', 'SIN', 'MEL', 'true', '0', '744', '0.0', '10');", statement);
+        Assert.assertEquals("Insert into  " + route.getTypeName() + " ('Airline', 'SourceAirport', 'DestinationAirport', 'Codeshare', 'Stops', 'Equipment', 'Distance', 'SetID') "
+                + "Values ('BA', 'SIN', 'MEL', 'true', '0', '744', '0.0', '10');", statement);
     }
 
     /**

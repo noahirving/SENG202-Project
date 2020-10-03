@@ -18,9 +18,10 @@ public class FlightPathTest {
      */
     @Test
     public void testInsertStatement() {
-        FlightPath path = new FlightPath("FIX","ATMAP",35000,-12,118.255);
-        String statement = path.getInsertStatement(10);
-        Assert.assertEquals("INSERT INTO FlightPath ('TYPE', 'FLIGHTPATHID', 'ALTITUDE', 'LATITUDE', 'LONGITUDE', 'SETID') VALUES ('FIX', 'ATMAP', '35000', '-12.0', '118.26', '10');", statement);
+        FlightPath flightPath = new FlightPath("FIX","ATMAP",35000,-12,118.255);
+        String statement = flightPath.getInsertStatement(10);
+        Assert.assertEquals("Insert into  " + flightPath.getTypeName() + " ('Type', 'FlightPathId', 'Altitude', 'Latitude', 'Longitude', 'SetId') "
+                + "Values ('FIX', 'ATMAP', '35000', '-12.0', '118.26', '10');", statement);
     }
 
     /**

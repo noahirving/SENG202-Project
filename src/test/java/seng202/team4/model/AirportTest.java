@@ -32,8 +32,8 @@ public class AirportTest {
     public void testInsertStatement() {
         Airport airport = new Airport("Thule Air Base","Thule","Greenland","THU","BGTL",76.531203,-68.703161,251,-4,'E',"America/Thule");
         String statement = airport.getInsertStatement(5);
-        Assert.assertEquals("INSERT INTO AIRPORT ('NAME', 'CITY', 'COUNTRY', 'IATA', 'ICAO', 'LATITUDE', 'LONGITUDE', 'ALTITUDE', 'TIMEZONE', 'DST', 'TZDATABASETIME', 'SETID') " +
-                "VALUES ('Thule Air Base', 'Thule', 'Greenland', 'THU', 'BGTL', '76.531203', '-68.703161', '251.0', '-4.0', 'E', 'America/Thule', '5');", statement);
+        Assert.assertEquals("Insert into  " + airport.getTypeName() + " ('Name', 'City', 'Country', 'IATA', 'ICAO', 'Latitude', 'Longitude', 'Altitude', 'TimeZone', 'DST', 'TzDatabaseTime', 'SetId') "
+                + "Values ('Thule Air Base', 'Thule', 'Greenland', 'THU', 'BGTL', '76.531203', '-68.703161', '251.0', '-4.0', 'E', 'America/Thule', '5');", statement);
     }
 
     /**
