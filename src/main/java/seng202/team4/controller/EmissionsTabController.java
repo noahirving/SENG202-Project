@@ -334,8 +334,7 @@ public class EmissionsTabController extends DataController {
                 selectedRoutes.remove(row);
             }
             else {
-                System.out.println("Can't delete record (EmissionsTabController)");
-                // TODO: Error message
+                ErrorController.createErrorMessage("Can't delete record: \n" + row.toString(), false);
             }
         }
     }

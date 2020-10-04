@@ -110,9 +110,8 @@ public abstract class DataController {
             dataSetComboBox.setItems(dataSetNames); // Sets the names into the combo box
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            String message = "Failed loading data set combo box; will exit application.";
-            //ErrorController.createErrorMessage(message, true); todo
+            String message = "Failed loading " + getDataType().getTypeName() + " data set combo box, will exit application.";
+            ErrorController.createErrorMessage(message, true);
         }
     }
 
@@ -131,8 +130,7 @@ public abstract class DataController {
                 rs.next();
                 query += "WHERE SetID = '" + rs.getInt("ID") + "'";
             } catch (SQLException e) {
-                e.printStackTrace();
-                // TODO
+                ErrorController.createErrorMessage("Could not show data set.", false);
             }
         }
         setTable(query);
@@ -156,8 +154,7 @@ public abstract class DataController {
 
             setTableData(rs);
         } catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            ErrorController.createErrorMessage("Could not load " + getDataType().getTypeName() + "table data.", false);
         }
 
         initialiseComboBoxes();
@@ -233,7 +230,7 @@ public abstract class DataController {
     }
 
     /**
-     * Show all attributes of the selected row in the table // TODO: update description
+     * Show all attributes of the selected row that can be edited.
      * @param data record to show attributes of
      */
     public void editRecord(DataType data) {

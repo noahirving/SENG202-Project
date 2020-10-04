@@ -211,9 +211,8 @@ public abstract class DatabaseManager {
             connection.commit();
 
         } catch (SQLException e) {
-            e.printStackTrace();
             String message = "Unable to connect to create database, application will exit.";
-            //ErrorController.createErrorMessage(message, true); todo
+            ErrorController.createErrorMessage(message, true);
         }
     }
 }

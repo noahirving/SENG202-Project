@@ -29,7 +29,7 @@ public class ErrorController {
             stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(0); // TODO
+            System.out.println(message);
         }
     }
 

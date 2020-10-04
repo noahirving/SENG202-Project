@@ -83,8 +83,7 @@ public class AirlineTabController extends DataController {
             setDataSetListener();
             setTable();
         } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(0); // TODO: Remove, error message.
+            ErrorController.createErrorMessage("Error loading airline table.", false);
         }
 
     }
@@ -241,7 +240,7 @@ public class AirlineTabController extends DataController {
                 airlines.remove(row);
             }
             else {
-                // TODO: Error message
+                ErrorController.createErrorMessage("Can't delete record: \n" + row.toString(), false);
             }
         }
     }

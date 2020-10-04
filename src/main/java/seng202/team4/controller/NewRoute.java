@@ -66,7 +66,7 @@ public class NewRoute extends NewRecord{
             TextFields.bindAutoCompletion(dstAirportCombo.getEditor(), dstAirportCombo.getItems());
 
         } catch(SQLException e) {
-            e.printStackTrace(); // TODO
+            ErrorController.createErrorMessage("Could not initialize airport combo boxes.", false);
         }
     }
 

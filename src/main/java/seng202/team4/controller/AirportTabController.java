@@ -310,8 +310,7 @@ public class AirportTabController extends DataController {
                 airports.remove(row);
             }
             else {
-                System.out.println("Can't delete record (AirlineTabController)");
-                // TODO: Error message
+                ErrorController.createErrorMessage("Can't delete record: \n" + row.toString(), false);
             }
         }
     }

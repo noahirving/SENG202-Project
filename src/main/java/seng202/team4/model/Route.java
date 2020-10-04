@@ -155,7 +155,6 @@ public class Route extends DataType {
      * @return the airline if valid, otherwise null.
      */
     public static Route getValid(String airline, String srcAirport, String dstAirport, String codeshare, String stops, String equipment, ArrayList<String> errorMessage) {
-        // TODO: Finish validating, get IDs
         boolean valid = true;
         if (!Validate.isAirlineIATA(airline) && !Validate.isAirlineICAO(airline)) {
             errorMessage.add("Invalid airline");

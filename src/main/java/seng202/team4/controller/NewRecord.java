@@ -77,8 +77,7 @@ abstract class NewRecord {
                 dataSetNames.add(rs.getString("Name"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            ErrorController.createErrorMessage("Could not initialize data set combo boxes.", false);
         }
         comboBox.setItems(dataSetNames);
     }

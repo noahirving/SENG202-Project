@@ -26,6 +26,7 @@ import java.sql.Statement;
  */
 public class RouteTabController extends DataController {
 
+    private final int DEFAULT_MAX_STOPS = 2;
     /**
      * TableView of the route raw data table.
      */
@@ -343,7 +344,8 @@ public class RouteTabController extends DataController {
             stopsFilterSlider.setMax(maxStop);
 
         } catch (SQLException e) {
-            e.printStackTrace(); // TODO
+            stopsFilterSlider.setMax(DEFAULT_MAX_STOPS);
+            ErrorController.createErrorMessage("Could not set maximum stops. Set to default max stops of " + DEFAULT_MAX_STOPS + ".", false);
         }
     }
 
@@ -385,8 +387,7 @@ public class RouteTabController extends DataController {
                 routes.remove(row);
             }
             else {
-                System.out.println("Can't delete record (AirlineTabController)");
-                // TODO: Error message
+                ErrorController.createErrorMessage("Can't delete record: \n" + row.toString(), false);
             }
         }
     }
