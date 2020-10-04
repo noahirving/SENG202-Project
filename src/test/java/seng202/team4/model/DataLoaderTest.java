@@ -106,32 +106,6 @@ public class DataLoaderTest {
     }
 
     /**
-     * Test whether a route object can be added to
-     * the RoutesSelected table. The RoutesSelected
-     * table is queried after the addToRoutesSelectedDatabase
-     * method is called. Count should be 1
-     *
-     * @throws SQLException exception to catch database errors
-     */
-    @Test
-    public void addRouteToSelectedTest() throws SQLException {
-        Route toAdd = new Route("CZ","AKL","CAN",false,0,"787");
-        DataLoader.addToRoutesSelectedDatabase(toAdd);
-        String countCheck = "SELECT count(*) from RoutesSelected where Airline = '" + toAdd.getAirlineCode() +
-                "' and SourceAirport = '" + toAdd.getSourceAirportCode() + "' and DestinationAirport = '" +
-                toAdd.getDestinationAirportCode() + "';";
-        try (Connection connection = DatabaseManager.connect();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(countCheck)) {
-            int count = rs.getInt("count(*)");
-            Assert.assertEquals(count, 1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(false);
-        }
-    }
-
-    /**
      * Test whether a route object can be deleted from
      * the RoutesSelected table. The RoutesSelected
      * table is queried after the addToRoutesSelectedDatabase
