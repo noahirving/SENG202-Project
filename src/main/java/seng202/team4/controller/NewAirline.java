@@ -36,7 +36,8 @@ public class NewAirline extends NewRecord {
     /**
      * Uses the CreateToolTip method from NewRecord to set the tool tips for the different entry fields
      */
-    private void initialiseToolTips() {
+    @Override
+    public void initialiseToolTips() {
         createToolTip(aliasToolTip, "For example, All Nippon Airways is commonly known as \"ANA\"", false);
         createToolTip(iataToolTip, "International Air Transport Association number, usually a 3-letter code", false);
         createToolTip(icaoToolTip, "International Civil Aviation Organization, usually a 4-letter code", false);

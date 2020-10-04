@@ -72,7 +72,7 @@ public class Airport extends DataType {
      */
     private String source;
     /**
-     * Booleean property that is true if the airport has been selected with the checkbox and false otherwise
+     * Boolean property that is true if the airport has been selected with the checkbox and false otherwise
      */
     private BooleanProperty select = new SimpleBooleanProperty(false);
     /**

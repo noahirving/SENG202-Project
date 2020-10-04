@@ -107,6 +107,7 @@ public class RouteTabController extends DataController {
      * Holds the high level logic (set of instructions) for initialisation.
      * Initialisation order: New Record Button, Sliders, Table Columns, Dataset Chooser ComboBox, Set Table
      */
+    @FXML
     public void initialize() {
         // Multiple rows can be selected
         dataTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -123,7 +124,6 @@ public class RouteTabController extends DataController {
         }
 
     }
-
 
     /**
      * Connect table columns to their respective Airport class attribute.
@@ -391,6 +391,9 @@ public class RouteTabController extends DataController {
         }
     }
 
+    /**
+     * Clears all combobox filters
+     */
     @Override
     public void clearFilters() {
         airlineFilterCombobox.setValue("");

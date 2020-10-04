@@ -5,9 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import seng202.team4.model.Airline;
 import seng202.team4.model.DataLoader;
 import seng202.team4.model.DataType;
 import seng202.team4.model.FlightPath;
@@ -54,30 +56,6 @@ public class FlightPathTabController extends DataController {
      * Text field used to search data table.
      */
     @FXML private TextField searchField;
-    /**
-     * Button that opens window to add new record.
-     */
-    @FXML private Button newRecordButton;
-    /**
-     * Mutable ObservableLst containing a list of types.
-     */
-    private ObservableList<Airline> types = FXCollections.observableArrayList();
-    /**
-     * Mutable ObservableLst containing a list of IDs.
-     */
-    private ObservableList<Airline> ids = FXCollections.observableArrayList();
-    /**
-     * Mutable ObservableLst containing a list of altitudes.
-     */
-    private ObservableList<Airline> altitudes = FXCollections.observableArrayList();
-    /**
-     * Mutable ObservableLst containing a list of latitudes.
-     */
-    private ObservableList<Airline> latitudes = FXCollections.observableArrayList();
-    /**
-     * Mutable ObservableLst containing a list of longitudes.
-     */
-    private ObservableList<Airline> longitudes = FXCollections.observableArrayList();
     /**
      * Mutable ObservableLst containing a list of flight paths.
      */

@@ -101,4 +101,7 @@ public class NewRoute extends NewRecord{
         stopsField.setText(Integer.toString(route.getNumStops()));
         equipmentField.setText(route.getPlaneTypeCode());
     }
+
+    @Override
+    public void initialiseToolTips() {}
 }

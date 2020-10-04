@@ -60,10 +60,6 @@ public class AirportTabController extends DataController {
      */
     @FXML private TextField searchField;
     /**
-     * Initialization of the SortedList to be used by filters and the checkboxes.
-     */
-    private SortedList<Airport> sortedAirport;
-    /**
      * Button that opens window to add new record.
      */
     @FXML private Button newRecordButton;
@@ -83,7 +79,10 @@ public class AirportTabController extends DataController {
      * Initialization of FilteredList for the cities ComboBox.
      */
     private ObservableList<String> cities;
-
+    /**
+     * Initialization of the SortedList to be used by filters and the checkboxes.
+     */
+    private SortedList<Airport> sortedAirport;
 
     /**
      * Holds the high level logic (set of instructions) for initialisation.

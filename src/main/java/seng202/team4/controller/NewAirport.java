@@ -40,7 +40,8 @@ public class NewAirport extends NewRecord {
     /**
      * Uses the CreateToolTip method from NewRecord to set the tool tips for the different entry fields
      */
-    private void initialiseToolTips() {
+    @Override
+    public void initialiseToolTips() {
         createToolTip(iataToolTip, "International Air Transport Association number, usually a 3-letter code", false);
         createToolTip(icaoToolTip, "International Civil Aviation Organization, usually a 4-letter code", false);
         createToolTip(timeZoneToolTip, "Hours offset from UTC. Fractional hours are expressed as decimals, eg. India is 5.5", false);

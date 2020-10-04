@@ -39,6 +39,7 @@ abstract class NewRecord {
 
     abstract String[] getRecordData();
     public abstract void setRecordData(DataType data);
+    public abstract void initialiseToolTips();
     /**
      * Initial set up for the controller, declares the stage
      * the controller is running on and the controller that

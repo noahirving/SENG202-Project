@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -92,10 +91,9 @@ public class EmissionsTabController extends DataController {
      *  Gets the calculated donation amount and displays this
      *  in a new Alert window
      *
-     * @param buttonPress ActionEvent triggered when button is clicked
      */
     @FXML
-    public void pressEnvironmentalDonationButton(ActionEvent buttonPress) {
+    public void pressEnvironmentalDonationButton() {
         String donationDollarsCents = String.format("%.2f", totalDonation);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Environmental Donation Equivalent");
@@ -112,10 +110,9 @@ public class EmissionsTabController extends DataController {
      * On Action method for the 'Trees Equivalent' button
      * Gets how many trees the user could plant with the donation amount
      * and displays this in a new Alert window
-     * @param buttonPress ActionEvent triggered when button is clicked
      */
     @FXML
-    public void pressTreesEquivalentButton(ActionEvent buttonPress) {
+    public void pressTreesEquivalentButton() {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Trees Equivalent");
@@ -133,10 +130,9 @@ public class EmissionsTabController extends DataController {
      * Creates a bar chart that visualizes the contribution
      * of each selected route to the users overall carbon footprint
      * and shows it in a new modal stage
-     * @param buttonPress ActionEvent triggered when the button is clicked
      */
     @FXML
-    public void pressContributionsGraphButton(ActionEvent buttonPress) {
+    public void pressContributionsGraphButton() {
         Stage stage = new Stage();
         stage.setTitle("Route Contributions To Carbon Footprint");
         stage.setMinHeight(417);
@@ -202,10 +198,9 @@ public class EmissionsTabController extends DataController {
      * On action method for the 'Load Selected Routes' button
      * updates the table to display the routes selected by the user
      * on the 'Routes' tab, throws an IOException if this fails
-     * @param buttonPress ActionEvent triggered when the user clicks the button
      */
     @FXML
-    public void updateTable(ActionEvent buttonPress) {
+    public void updateTable() {
         try {
             setTable();
             setTotalEmissions();

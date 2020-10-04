@@ -19,14 +19,6 @@ public abstract class DataType implements Validate {
     static final String BETWEEN = "', '";
     static final String UPDATE_BETWEEN = "', ";
 
-    public int getId() {
-        return id;
-    }
-
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     /**
      * Gets the database insert statement.
@@ -74,4 +66,12 @@ public abstract class DataType implements Validate {
      */
     public abstract boolean equalsTest(Object o);
 
+    public int getId() {
+        return id;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

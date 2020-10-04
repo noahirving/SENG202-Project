@@ -37,7 +37,8 @@ public class NewFlightPath extends NewRecord {
     /**
      * Uses the CreateToolTip method from NewRecord to set the tool tips for the different entry fields
      */
-    private void initialiseToolTips() {
+    @Override
+    public void initialiseToolTips() {
         createToolTip(typeToolTip, Path.FLIGHTPATH_TYPE, true);
     }
     /**
