@@ -13,6 +13,9 @@ import java.util.ArrayList;
  */
 public class Calculations {
 
+    private static final double AVG_PASSENGER_C02_EMITTED_KM = 0.115;
+    private static final double EARTH_RADIUS_KM = 6371;
+    private static final double C02_COST_TO_OFFSET_PER_KG = 0.01479;
     /**
      * Calculates the estimated carbon footprint of a passenger on the
      * provided route. This assumes each plane is a Boeing 737 at 65% capacity
@@ -25,7 +28,7 @@ public class Calculations {
      */
     public static double calculateEmissions(Route route) {
         double distance = route.getDistance();
-        return distance * 0.115;
+        return distance * AVG_PASSENGER_C02_EMITTED_KM;
     }
 
     /**
@@ -60,7 +63,6 @@ public class Calculations {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // TODO
         }
         //Convert latitude and longitude of airports to radians
         try{
@@ -77,15 +79,14 @@ public class Calculations {
         // Using the Haversine formula
         double dlon = long2 - long1;
         double dlat = lat2 - lat1;
-        double a = Math.pow(Math.sin(dlat / 2), 2)
+        double arcInverse = Math.pow(Math.sin(dlat / 2), 2)
                 + Math.cos(lat1) * Math.cos(lat2)
                 * Math.pow(Math.sin(dlon / 2),2);
 
-        double c = 2 * Math.asin(Math.sqrt(a));
+        double twiceArcInverse = 2 * Math.asin(Math.sqrt(arcInverse));
         // Radius of earth in kilometers.
-        double r = 6371;
         //return distance to be stored in DB
-        return(r * c);
+        return(EARTH_RADIUS_KM * twiceArcInverse);
     }
 
     /**
@@ -96,7 +97,7 @@ public class Calculations {
      */
     public static double calculateDollarOffset(Route route) {
         double emission = route.getCarbonEmissions();
-        return emission * 0.01479;
+        return emission * C02_COST_TO_OFFSET_PER_KG;
     }
 
     /**
