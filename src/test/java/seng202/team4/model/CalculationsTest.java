@@ -37,6 +37,7 @@ public class CalculationsTest {
 
     /**
      * Set up the database to be used for the test.
+     * @throws SQLException exception to catch database access errors.
      */
     @BeforeClass
     public static void setup() throws SQLException{

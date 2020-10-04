@@ -317,6 +317,7 @@ public class MapTabController {
      * Shows one route on the Google Map by querying the Airport table for coordinates then
      * using the WebEngine to execute a javascript script from map.html.
      * @param routesResultSet JDBC ResultSet of all routes that need to be shown (only top one is shown here).
+     * @param connection The database connection.
      * @throws SQLException When there is an error when interacting with the SQL database using JDBC.
      */
     private void showOneRoute(ResultSet routesResultSet, Connection connection) throws SQLException {

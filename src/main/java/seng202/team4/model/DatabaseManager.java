@@ -148,6 +148,7 @@ public abstract class DatabaseManager {
 
     /**
      * Gets a new {@link java.sql.Connection Connection}
+     * @throws SQLException exception to catch database access errors.
      * @return a new {@link java.sql.Connection Connection} if connection does not throw an error, otherwise 'null'
      */
     public static Connection connect() throws SQLException {

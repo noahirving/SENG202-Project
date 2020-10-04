@@ -151,7 +151,7 @@ public class Route extends DataType {
      * @param codeshare String Codeshare
      * @param stops String Stops
      * @param equipment String Equipment
-     * @param errorMessage ArrayList<String> list of errors.
+     * @param errorMessage ArrayList list of errors.
      * @return the airline if valid, otherwise null.
      */
     public static Route getValid(String airline, String srcAirport, String dstAirport, String codeshare, String stops, String equipment, ArrayList<String> errorMessage) {
@@ -192,7 +192,7 @@ public class Route extends DataType {
     /**
      * Converts record array into individual strings and calls get valid.
      * @param record String[] array of strings constituting the record.
-     * @param errorMessage ArrayList<String> arrayList where the error messages will be stored.
+     * @param errorMessage ArrayList arrayList where the error messages will be stored.
      * @return the airline if valid, otherwise null.
      */
     @Override
@@ -209,7 +209,7 @@ public class Route extends DataType {
     /**
      * Converts a string record into individual strings and calls get valid.
      * @param record String constituting the record.
-     * @param errorMessage ArrayList<String> where the error messages will be stored.
+     * @param errorMessage ArrayList where the error messages will be stored.
      * @return DataType the airline if valid, otherwise null.
      */
     @Override

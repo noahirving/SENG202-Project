@@ -34,7 +34,7 @@ public class ContributionsGraphController {
      * Sets up the BarChart by creating an XYChart data object for each
      * route selected by the user and adding them to the contributionChart
      *
-     * @param selectedRoutes ObservableList<Route> the routes the user has currently selected
+     * @param selectedRoutes ObservableList the routes the user has currently selected
      *                       via the routes tab
      */
     public void setUp(ObservableList<Route> selectedRoutes) {

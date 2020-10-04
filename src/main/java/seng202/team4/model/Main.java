@@ -71,7 +71,6 @@ public class Main {
      *
      * @param fileName String name of source file
      * @return File the final file with the source files contents
-     * @throws IOException if an exception occurs during the copy operation
      */
     public File copyToFolder(String fileName) {
         File targetFile = null;

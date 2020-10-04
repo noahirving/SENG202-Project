@@ -22,7 +22,7 @@ public abstract class DataLoader {
      * @param setName String the name of the new set of data.
      * @param file File the file that's being uploaded to the database.
      * @param dataType DataType the data type of new data that's being uploaded.
-     * @return ArrayList<String> an ArrayList of erroneous lines
+     * @return ArrayList an ArrayList of erroneous lines
      */
     public static ArrayList<String> uploadData(String setName, File file, DataType dataType) {
         try (Connection connection = DatabaseManager.connect();
@@ -174,6 +174,7 @@ public abstract class DataLoader {
      *  when its corresponding checkbox is unselected
      *
      * @param route Route the route to be removed
+     * @return True if it passed
      */
     public static boolean removeFromRoutesSelectedDatabase(Route route) {
         try (Connection connection = DatabaseManager.connect();
@@ -228,6 +229,7 @@ public abstract class DataLoader {
      *  when its corresponding checkbox is unselected
      *
      * @param airport Airport the airport to be removed
+     * @return True if it passed
      */
     public static boolean removeFromAirportsSelectedDatabase(Airport airport) {
         try (Connection connection = DatabaseManager.connect();

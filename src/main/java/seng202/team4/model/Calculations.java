@@ -53,7 +53,7 @@ public class Calculations {
      *
      * @param airportCodeOne String representing code of the departure airport
      * @param airportCodeTwo String representing code of the destination airport
-     * @param con connection to the SQLite database
+     * @param stmt The given statement
      * @return double the calculated distance between two given airports
      * @throws SQLException SQL Exception
      */

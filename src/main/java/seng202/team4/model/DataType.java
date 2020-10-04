@@ -45,7 +45,7 @@ public abstract class DataType implements Validate {
      * Gets a valid data type from the array of strings, or returns null with
      * reasons for being invalid in the error message.
      * @param record String[] array of strings constituting the record.
-     * @param errorMessage ArrayList<String> where the error messages will be stored.
+     * @param errorMessage ArrayList where the error messages will be stored.
      * @return DataType a valid new dataType, 'null' if invalid.
      */
     public abstract DataType getValid(String[] record, ArrayList<String> errorMessage);
@@ -54,7 +54,7 @@ public abstract class DataType implements Validate {
      * Gets a valid data type from the array of strings, or returns null with
      * reasons for being invalid in the error message.
      * @param record String constituting the record.
-     * @param errorMessage ArrayList<String> where the error messages will be stored.
+     * @param errorMessage ArrayList where the error messages will be stored.
      * @return DataType a valid new dataType, 'null' if invalid.
      */
     public abstract DataType getValid(String record, ArrayList<String> errorMessage);

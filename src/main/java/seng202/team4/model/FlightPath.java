@@ -115,8 +115,8 @@ public class FlightPath extends DataType {
      * @param altitude String altitude
      * @param latitude String latitude
      * @param longitude String longitude
-     * @param errorMessage ArrayList<String> errorMessage list of errors
-     * @return
+     * @param errorMessage ArrayList errorMessage list of errors
+     * @return Returns datatype
      */
     public static DataType getValid(String type, String id, String altitude, String latitude, String longitude, ArrayList<String> errorMessage) {
         boolean valid = true;
@@ -151,8 +151,8 @@ public class FlightPath extends DataType {
     /**
      *
      * @param record String[] array of strings constituting the record.
-     * @param errorMessage ArrayList<String> arrayList where the error messages will be stored.
-     * @return
+     * @param errorMessage ArrayList arrayList where the error messages will be stored.
+     * @return Returns get valid
      */
     @Override
     public DataType getValid(String[] record, ArrayList<String> errorMessage) {
@@ -167,8 +167,8 @@ public class FlightPath extends DataType {
     /**
      *
      * @param record String constituting the record.
-     * @param errorMessage ArrayList<String> where the error messages will be stored.
-     * @return
+     * @param errorMessage ArrayList where the error messages will be stored.
+     * @return Returns get valid
      */
     @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {

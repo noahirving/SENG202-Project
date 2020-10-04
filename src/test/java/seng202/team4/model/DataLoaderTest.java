@@ -151,8 +151,8 @@ public class DataLoaderTest {
         try (Connection connection = DatabaseManager.connect();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(countCheck)) {
-                int count = rs.getInt("count(*)");
-                Assert.assertEquals(count, 0);
+            int count = rs.getInt("count(*)");
+            Assert.assertEquals(count, 0);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(false);
@@ -221,12 +221,12 @@ public class DataLoaderTest {
      * in copyToFolder
      */
     @Test
-   public void deleteRecordTest() throws IOException {
+    public void deleteRecordTest() throws IOException {
         File testData = copyToFolder(Path.AIRLINE_TEST_RSC_VALID);
         DataLoader.uploadData("Default", testData, new Airline());
         boolean deleteResult = DataLoader.deleteRecord(10, "Airline");
         Assert.assertEquals(deleteResult, true);
-   }
+    }
 
     /**
      * Tests that a record can be updated for the

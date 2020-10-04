@@ -94,7 +94,6 @@ public abstract class DataController {
     /**
      * Displays the data set names in the data set
      * combo box.
-     * @throws Exception SQL Exception
      */
     public void setDataSetComboBox() {
         // Connects to the database and gets the names of the data sets.
@@ -120,7 +119,6 @@ public abstract class DataController {
     /**
      * Sets the dataset displayed in the table.
      * @param dataSetName name of the dataset.
-     * @throws Exception SQL Exception
      */
     public void setDataSet(String dataSetName) {
         String query = "Select * from " + getDataType().getTypeName() + " ";
@@ -142,7 +140,6 @@ public abstract class DataController {
 
     /**
      * Sets the table with all data of the table's datatype.
-     * @throws Exception SQL Exception
      */
     public void setTable() {
         setTable(getTableQuery());
@@ -151,7 +148,6 @@ public abstract class DataController {
     /**
      * Sets the table using the query provided.
      * @param query specifications for the content of the table.
-     * @throws Exception SQL Exception
      */
     public void setTable(String query) {
         try (Connection connection = DatabaseManager.connect();

@@ -46,6 +46,7 @@ abstract class NewRecord {
      * called it.
      * @param stage stage the controller is running on.
      * @param controller controller that called it.
+     * @param dataType The type of data
      */
     void setUp(Stage stage, DataController controller, DataType dataType) {
         this.controller = controller;
@@ -64,7 +65,6 @@ abstract class NewRecord {
     /**
      * Sets the data set names int the dataset comboBox.
      * @param comboBox the comboBox the names are set in.
-     * @throws Exception SQL Exception
      */
     //TODO: Essentially the same as the function from DataController, a more efficient implementation would be preferred
     private void setDataSetComboBox(ComboBox comboBox) {
@@ -124,6 +124,7 @@ abstract class NewRecord {
      * Creates a tooltip for a label that shows information about the entry field when adding a new record
      * @param imageHolderLabel Label that holds the info icon image
      * @param tooltip String that holds the tooltip information
+     * @param isImage True if it is an image
      */
     protected void createToolTip(Label imageHolderLabel, String tooltip, boolean isImage) {
         Image image = new Image(getClass().getResourceAsStream(Path.INFO_ICON));

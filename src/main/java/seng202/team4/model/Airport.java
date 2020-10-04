@@ -188,7 +188,7 @@ public class Airport extends DataType {
      * @param timeZone String TimeZone
      * @param dst String DST
      * @param tzDatabase String TimeZone Database
-     * @param errorMessage ArrayList<String> list of errors.
+     * @param errorMessage ArrayList list of errors.
      * @return the airport if valid, otherwise null.
      */
     public static Airport getValid(String name, String city, String country, String iata, String icao, String latitude, String longitude, String altitude, String timeZone, String dst, String tzDatabase, ArrayList<String> errorMessage) {
@@ -264,7 +264,7 @@ public class Airport extends DataType {
     /**
      * Converts record array into individual strings and calls get valid.
      * @param record String[] array of strings constituting the record.
-     * @param errorMessage ArrayList<String> arrayList where the error messages will be stored.
+     * @param errorMessage ArrayList arrayList where the error messages will be stored.
      * @return DataType the airport if valid, otherwise null.
      */
     @Override
@@ -287,7 +287,7 @@ public class Airport extends DataType {
     /**
      * Converts a string record into individual strings and calls get valid.
      * @param record String constituting the record.
-     * @param errorMessage ArrayList<String> where the error messages will be stored.
+     * @param errorMessage ArrayList where the error messages will be stored.
      * @return DataType the airline if valid, otherwise null.
      */
     @Override
