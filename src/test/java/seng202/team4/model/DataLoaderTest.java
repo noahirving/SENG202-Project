@@ -9,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -29,9 +30,15 @@ public class DataLoaderTest {
      * @return      returns the values in the database that matches the query.
      * @throws SQLException exception to catch database access errors.
      */
-    public ResultSet getResultSet(String query) throws SQLException {
-        ResultSet rs = con.createStatement().executeQuery(query);
-        return rs;
+    public ResultSet getResultSet(String query) {
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+                return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -56,8 +63,7 @@ public class DataLoaderTest {
     public static void setup() throws SQLException {
         DatabaseManager.setUp();
         Main m = new Main();
-
-        con = DatabaseManager.connect();
+        //con = DatabaseManager.connect();
     }
 
     /**
@@ -67,7 +73,7 @@ public class DataLoaderTest {
     @AfterClass
     public static void teardown() throws Exception {
         //rs.close();
-        con.close();
+        //con.close();
         Main.deleteDatabase();
     }
 
@@ -88,15 +94,13 @@ public class DataLoaderTest {
         Assert.assertEquals(invalidLines.size(), 1);
     }
 
-    /*@Test
-    public void addNewAirport() throws SQLException {
-        Airport toInsert = new Airport("12","Egilsstadir","Iceland","EGS","BIEG",65.283333,-14.401389,Double.parseDouble("76"),Float.parseFloat("0"),"N".charAt(0),"Atlantic/Reykjavik");
-        DataLoader.addNewRecord(toInsert, "TestSet");
-        String countCheck = "SELECT count(*) from Airport where id = '" + toInsert.getId() + "';";
-        ResultSet rs = getResultSet(countCheck);
-        int count = rs.getInt("count(*)");
-        Assert.assertEquals(count, 1);
-        rs.close();
+    @Test
+    public void addNewAirline() throws IOException {
+        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_VALID);
+        DataLoader.uploadData("Default", testData, new Airline());
+        Airline toInsert = new Airline("213 Flight Unit","test","","TFU","","Russia",false);
+        boolean insertResult = DataLoader.addNewRecord(toInsert, "Default");
+        Assert.assertEquals(insertResult, true);
     }
 
     @Test
@@ -106,11 +110,16 @@ public class DataLoaderTest {
         String countCheck = "SELECT count(*) from RoutesSelected where Airline = '" + toAdd.getAirlineCode() +
                 "' and SourceAirport = '" + toAdd.getSourceAirportCode() + "' and DestinationAirport = '" +
                 toAdd.getDestinationAirportCode() + "';";
-        ResultSet rs = getResultSet(countCheck);
-        int count = rs.getInt("count(*)");
-        Assert.assertEquals(count, 1);
-        rs.close();
-    }*/
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(countCheck)) {
+            int count = rs.getInt("count(*)");
+            Assert.assertEquals(count, 1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(false);
+        }
+    }
 
     @Test
     public void deleteRouteFromSelectedTest() throws SQLException {
@@ -120,39 +129,65 @@ public class DataLoaderTest {
         String countCheck = "SELECT count(*) from RoutesSelected where Airline = '" + toAdd.getAirlineCode() +
                 "' and SourceAirport = '" + toAdd.getSourceAirportCode() + "' and DestinationAirport = '" +
                 toAdd.getDestinationAirportCode() + "';";
-        ResultSet rs = getResultSet(countCheck);
-        int count = rs.getInt("count(*)");
-        Assert.assertEquals(count, 0);
-        rs.close();
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(countCheck)) {
+                int count = rs.getInt("count(*)");
+                Assert.assertEquals(count, 0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(false);
+        }
     }
 
-    /*@Test
+    @Test
     public void addAirportToSelectedTest() throws SQLException {
-        Airport toAdd = new Airport("12","Egilsstadir","Iceland","EGS","BIEG",65.283333,-14.401389,Double.parseDouble("76"),Float.parseFloat("0"),"N".charAt(0),"Atlantic/Reykjavik");
+        Airport toAdd = new Airport("Egilsstadir","Egilsstadir","Iceland","EGS","BIEG",65.283333,-14.401389,Double.parseDouble("76"),Float.parseFloat("0"),"N".charAt(0),"Atlantic/Reykjavik");
         DataLoader.addToAirportsSelectedDatabase(toAdd);
-        String countCheck = "SELECT count(*) from AirportsSelected where id = '" + toAdd.getId() +
-                ";'";
-        ResultSet rs = getResultSet(countCheck);
-        int count = rs.getInt("count(*)");
-        Assert.assertEquals(count, 1);
-        rs.close();
+        String countCheck = "SELECT count(*) from AirportsSelected where name = '" + toAdd.getName() +
+                "';";
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(countCheck)) {
+            int count = rs.getInt("count(*)");
+            Assert.assertEquals(count, 1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(false);
+        }
     }
 
     @Test
     public void deleteAirportFromSelectedTest() throws SQLException {
-        Airport toAdd = new Airport("12","Egilsstadir","Iceland","EGS","BIEG",65.283333,-14.401389,Double.parseDouble("76"),Float.parseFloat("0"),"N".charAt(0),"Atlantic/Reykjavik");
+        Airport toAdd = new Airport("Egilsstadir","Egilsstadir","Iceland","EGS","BIEG",65.283333,-14.401389,Double.parseDouble("76"),Float.parseFloat("0"),"N".charAt(0),"Atlantic/Reykjavik");
         DataLoader.addToAirportsSelectedDatabase(toAdd);
         DataLoader.removeFromAirportsSelectedDatabase(toAdd);
-        String countCheck = "SELECT count(*) from AirportsSelected where id = '" + toAdd.getId() +
-                ";'";
-        ResultSet rs = getResultSet(countCheck);
-        int count = rs.getInt("count(*)");
-        Assert.assertEquals(count, 0);
-        rs.close();
-    }*/
+        String countCheck = "SELECT count(*) from AirportsSelected where name = '" + toAdd.getName() +
+                "';";
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(countCheck)) {
+            int count = rs.getInt("count(*)");
+            Assert.assertEquals(count, 0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(false);
+        }
+    }
+    @Test
+   public void deleteRecordTest() throws IOException {
+        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_VALID);
+        DataLoader.uploadData("Default", testData, new Airline());
+        boolean deleteResult = DataLoader.deleteRecord(10, "Airline");
+        Assert.assertEquals(deleteResult, true);
+   }
 
-//    @Test
-//    public void deleteRowTest() throws SQLException {
-//
-//    }
+    @Test
+    public void updateRecordTest() throws IOException {
+        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_VALID);
+        DataLoader.uploadData("Default", testData, new Airline());
+        Airline toUpdate = new Airline("213 Flight Unit","test","","TFU","","Russia",false);
+        boolean updateResult = DataLoader.updateRecord(toUpdate, "Default");
+        Assert.assertEquals(updateResult, true);
+    }
 }
