@@ -156,12 +156,12 @@ public class FlightPath extends DataType {
      */
     @Override
     public DataType getValid(String[] record, ArrayList<String> errorMessage) {
-        String type = record[0];
-        String id = record[1];
-        String altitude = record[2];
-        String latitude = record[3];
-        String longitude = record[4];
-        return getValid(type, id, altitude, latitude, longitude, errorMessage);
+        String newType = record[0];
+        String newId = record[1];
+        String newAltitude = record[2];
+        String newLatitude = record[3];
+        String newLongitude = record[4];
+        return getValid(newType, newId, newAltitude, newLatitude, newLongitude, errorMessage);
     }
 
     /**
