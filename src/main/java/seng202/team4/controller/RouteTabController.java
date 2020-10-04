@@ -81,23 +81,23 @@ public class RouteTabController extends DataController {
     /**
      * Mutable ObservableList containing Route objects.
      */
-    private ObservableList<Route> routes = FXCollections.observableArrayList();
+    private ObservableList<Route> routes;
     /**
      * Mutable ObservableList containing a list of airline codes for the airlineFilterCombobox.
      */
-    private ObservableList<String> airlineCodes = FXCollections.observableArrayList();
+    private ObservableList<String> airlineCodes;
     /**
      * Mutable ObservableList containing a list of departure country IATAs for the departureFilterCombobox.
      */
-    private ObservableList<String> departureCountries = FXCollections.observableArrayList();
+    private ObservableList<String> departureCountries;
     /**
      * Mutable ObservableList containing a list of destination country IATAs for the destinationFilterCombobox.
      */
-    private ObservableList<String> destinationCountries = FXCollections.observableArrayList();
+    private ObservableList<String> destinationCountries;
     /**
      * Mutable ObservableList containing a list of plane types for the planeTypeFilterCombobox.
      */
-    private ObservableList<String> planeTypes = FXCollections.observableArrayList();
+    private ObservableList<String> planeTypes;
 
     /**
      * Initialization of SortedList of routes that will be used by the filters
@@ -183,6 +183,12 @@ public class RouteTabController extends DataController {
      */
     @Override
     public void setTableData(ResultSet rs) throws SQLException {
+        routes = FXCollections.observableArrayList();
+        airlineCodes = FXCollections.observableArrayList();
+        departureCountries = FXCollections.observableArrayList();
+        destinationCountries = FXCollections.observableArrayList();
+        planeTypes = FXCollections.observableArrayList();
+        routes = FXCollections.observableArrayList();
         while (rs.next()) {
             int id = rs.getInt("Id");
             String airline = rs.getString("Airline");
