@@ -26,6 +26,7 @@ public abstract class Path {
     public static final String FLIGHTPATH_DETAILS = VIEW + USER_INTERFACES + "/flightPathDetails.fxml";
     public static final String EMISSIONS_DETAILS = VIEW + USER_INTERFACES + "/emissionsDetails.fxml";
     public static final String CONTRIBUTIONS_GRAPH = VIEW + USER_INTERFACES + "/emissionsContributionsGraph.fxml";
+    public static final String ERROR_FXML = VIEW + USER_INTERFACES + "/error.fxml";
 
     public static final String REFRESH_BUTTON_PNG = VIEW + "/images/refresh_icon.png";
     public static final String ADD_RECORD_BUTTON_PNG = VIEW + "/images/add_record_image.png";

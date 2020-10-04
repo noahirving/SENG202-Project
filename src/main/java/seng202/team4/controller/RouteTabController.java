@@ -179,36 +179,32 @@ public class RouteTabController extends DataController {
      * Sets the JavaFX Route table with rows from the 'Routes' table from the database.
      * @param rs JDBC ResultSet obtained from querying the Database Route table and is used to set the rows
      *           of the JavaFX airport table by creating N Route objects from the query that results in N tuples.
+     * @throws SQLException if the query fails, throws an exception
      */
     @Override
-    public void setTableData(ResultSet rs) {
-        try {
-            while (rs.next()) {
-                int id = rs.getInt("Id");
-                String airline = rs.getString("Airline");
-                String sourceAirport = rs.getString("SourceAirport");
-                String destinationAirport = rs.getString("DestinationAirport");
-                boolean codeshare = rs.getString("Codeshare").equals("true");
-                int stops = rs.getInt("Stops");
-                String planeType = rs.getString("Equipment");
+    public void setTableData(ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            int id = rs.getInt("Id");
+            String airline = rs.getString("Airline");
+            String sourceAirport = rs.getString("SourceAirport");
+            String destinationAirport = rs.getString("DestinationAirport");
+            boolean codeshare = rs.getString("Codeshare").equals("true");
+            int stops = rs.getInt("Stops");
+            String planeType = rs.getString("Equipment");
 
-                Route route = new Route(airline, sourceAirport, destinationAirport, codeshare, stops, planeType);
-                route.setId(id);
-                route.setDistance(0);
-                routes.add(route);
+            Route route = new Route(airline, sourceAirport, destinationAirport, codeshare, stops, planeType);
+            route.setId(id);
+            route.setDistance(0);
+            routes.add(route);
 
-                addToComboBoxList(airlineCodes, airline);
-                addToComboBoxList(departureCountries, sourceAirport);
-                addToComboBoxList(destinationCountries, destinationAirport);
-                addToComboBoxList(planeTypes, planeType);
+            addToComboBoxList(airlineCodes, airline);
+            addToComboBoxList(departureCountries, sourceAirport);
+            addToComboBoxList(destinationCountries, destinationAirport);
+            addToComboBoxList(planeTypes, planeType);
 
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         dataTable.setItems(routes);
         initialiseSliders();
-
     }
 
     /**
@@ -333,20 +329,17 @@ public class RouteTabController extends DataController {
      */
     public void setSliderMaxStops() {
         String query = "SELECT max(STOPS) FROM Route";
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
-        ResultSet result;
-        try {
-            result = stmt.executeQuery(query);
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ResultSet result = stmt.executeQuery(query);
+            ) {
             Integer maxStop = result.getInt("max(STOPS)");
             stopsFilterSlider.setMax(maxStop);
             stmt.close();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace(); // TODO
         }
-
-        DatabaseManager.disconnect(c);
     }
 
     /**

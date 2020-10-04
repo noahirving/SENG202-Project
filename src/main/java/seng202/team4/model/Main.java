@@ -18,7 +18,7 @@ public class Main {
         DatabaseManager.setUp();
 
         Main m = new Main();
-        m.loadDefaultData();
+        //m.loadDefaultData();
 
         MainApplication.main(args);
 
@@ -78,10 +78,9 @@ public class Main {
 
         InputStream initialStream = (this.getClass().getResourceAsStream(fileName));
         File targetFile = new File(Path.DIRECTORY + fileName);
+        System.out.println(targetFile.getPath().toString());
 
         java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return targetFile;
     }
-
-
 }

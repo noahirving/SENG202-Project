@@ -1,5 +1,8 @@
 package seng202.team4.model;
 
+import com.google.gson.internal.bind.SqlDateTypeAdapter;
+import seng202.team4.controller.ErrorController;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -147,47 +150,16 @@ public abstract class DatabaseManager {
      * Gets a new {@link java.sql.Connection Connection}
      * @return a new {@link java.sql.Connection Connection} if connection does not throw an error, otherwise 'null'
      */
-    public static Connection connect() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection(Path.DATABASE_CONNECTION);
-            c.setAutoCommit(false);
-            return c;
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    public static Connection connect() throws SQLException {
 
-    /**
-     * Disconnects from a given connection.
-     * @param c the connection to disconnect from.
-     * @return 'true' if disconnected successfully, 'false' otherwise.
-     */
-    public static boolean disconnect(Connection c) {
         try {
-            c.close();
-            return true;
-        } catch (SQLException e) {
+            Class.forName("org.sqlite.JDBC"); // TODO: Is this needed?
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            return false;
         }
-    }
-
-    /**
-     * Creates a statement for a given connection.
-     * @param c the connection the statement is made for.
-     * @return the new statement, 'null' if failed to make a statement.
-     */
-    public static Statement getStatement(Connection c) {
-        try {
-            Statement stmt = c.createStatement();
-            return stmt;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-
+        Connection connection= DriverManager.getConnection(Path.DATABASE_CONNECTION);
+        connection.setAutoCommit(false);
+        return connection;
     }
 
     /**
@@ -219,32 +191,28 @@ public abstract class DatabaseManager {
      * required for the database.
      */
     private static void newDatabase () {
-        Connection c = DatabaseManager.connect();
-        if (c != null) {
-            try {
-                Statement stmt = c.createStatement();
-                stmt.addBatch(AIRLINE_SET_TABLE);
-                stmt.addBatch(AIRPORT_SET_TABLE);
-                stmt.addBatch(ROUTE_SET_TABLE);
-                stmt.addBatch(FLIGHT_PATH_SET_TABLE);
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ) {
+            stmt.addBatch(AIRLINE_SET_TABLE);
+            stmt.addBatch(AIRPORT_SET_TABLE);
+            stmt.addBatch(ROUTE_SET_TABLE);
+            stmt.addBatch(FLIGHT_PATH_SET_TABLE);
 
-                stmt.addBatch(AIRLINE_TABLE);
-                stmt.addBatch(AIRPORT_TABLE);
-                stmt.addBatch(ROUTE_TABLE);
-                stmt.addBatch(FLIGHT_PATH_TABLE);
+            stmt.addBatch(AIRLINE_TABLE);
+            stmt.addBatch(AIRPORT_TABLE);
+            stmt.addBatch(ROUTE_TABLE);
+            stmt.addBatch(FLIGHT_PATH_TABLE);
 
-                stmt.addBatch(ROUTES_SELECTED_TABLE);
-                stmt.addBatch(AIRPORTS_SELECTED_TABLE);
-                stmt.executeBatch();
-                stmt.close();
-                c.commit();
+            stmt.addBatch(ROUTES_SELECTED_TABLE);
+            stmt.addBatch(AIRPORTS_SELECTED_TABLE);
+            stmt.executeBatch();
+            connection.commit();
 
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                DatabaseManager.disconnect(c);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            String message = "Unable to connect to create database, application will exit.";
+            //ErrorController.createErrorMessage(message, true); todo
         }
     }
 }

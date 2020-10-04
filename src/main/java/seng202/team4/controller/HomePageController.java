@@ -91,7 +91,7 @@ public class HomePageController {
 
         try {
             java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException ex) {
+        } catch (IOException e) {
             success = false;
         }
 
@@ -99,7 +99,7 @@ public class HomePageController {
             if (Desktop.isDesktopSupported()) {
                 try {
                     Desktop.getDesktop().open(targetFile);
-                } catch (IOException ex) {
+                } catch (IOException e) {
                     success = false;
                 }
             } else {

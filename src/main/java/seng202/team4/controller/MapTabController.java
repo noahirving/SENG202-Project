@@ -167,8 +167,8 @@ public class MapTabController {
         try {
             initialiseRouteComboBoxes();
             initialiseAirportComboBoxes();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
 
@@ -180,16 +180,20 @@ public class MapTabController {
      * @throws SQLException thrown if there is an error querying the SQL database
      */
     private void initialiseAirportComboBoxes() throws SQLException {
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
-        ResultSet airportResultSet = stmt.executeQuery("SELECT Country FROM Airport");
-        while (airportResultSet.next()) {
-            String country = airportResultSet.getString("Country");
-            if (!airportCountries.contains(country)) {
-                airportCountries.add(country);
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+            ResultSet airportResultSet = stmt.executeQuery("SELECT Country FROM Airport");
+        ) {
+            while (airportResultSet.next()) {
+                String country = airportResultSet.getString("Country");
+                if (!airportCountries.contains(country)) {
+                    airportCountries.add(country);
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO
         }
-        DatabaseManager.disconnect(c);
         FXCollections.sort(airportCountries); airportCountryFilterCombobox.setItems(airportCountries);
         TextFields.bindAutoCompletion(airportCountryFilterCombobox.getEditor(), airportCountryFilterCombobox.getItems());
     }
@@ -200,25 +204,29 @@ public class MapTabController {
      * @throws SQLException thrown if there is an error querying the SQL database
      */
     private void initialiseRouteComboBoxes() throws SQLException {
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
-        ResultSet routesResultSet = stmt.executeQuery("SELECT Airline, SourceAirport, Equipment FROM Route");
-        while (routesResultSet.next()) {
-            String airline = routesResultSet.getString("Airline");
-            String sourceAirport = routesResultSet.getString("SourceAirport");
-            String planeType = routesResultSet.getString("Equipment");
+        try (Connection connection = DatabaseManager.connect();
+            Statement stmt = connection.createStatement();
+            ResultSet routesResultSet = stmt.executeQuery("SELECT Airline, SourceAirport, Equipment FROM Route");
+        ) {
+            while (routesResultSet.next()) {
+                String airline = routesResultSet.getString("Airline");
+                String sourceAirport = routesResultSet.getString("SourceAirport");
+                String planeType = routesResultSet.getString("Equipment");
 
-            if (!airlineCodes.contains(airline)) {
-                airlineCodes.add(airline);
+                if (!airlineCodes.contains(airline)) {
+                    airlineCodes.add(airline);
+                }
+                if (!departureCountries.contains(sourceAirport)) {
+                    departureCountries.add(sourceAirport);
+                }
+                if (!planeTypes.contains(planeType)) {
+                    planeTypes.add(planeType);
+                }
             }
-            if (!departureCountries.contains(sourceAirport)) {
-                departureCountries.add(sourceAirport);
-            }
-            if (!planeTypes.contains(planeType)) {
-                planeTypes.add(planeType);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO
         }
-        DatabaseManager.disconnect(c);
         FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
         FXCollections.sort(departureCountries); routeAirportFilterCombobox.setItems(departureCountries);
         FXCollections.sort(planeTypes); routePlaneTypeFilterCombobox.setItems(planeTypes);
@@ -255,21 +263,18 @@ public class MapTabController {
     @FXML
     private void showSelectedRoutes() {
         clearMap();
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
         int count = 0;
-        try {
-            ResultSet routesResultSet = stmt.executeQuery("SELECT SourceAirport, DestinationAirport FROM RoutesSelected");
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ResultSet routesResultSet = stmt.executeQuery("SELECT SourceAirport, DestinationAirport FROM RoutesSelected");
+        ) {
             while (routesResultSet.next() && count <= ROUTELIMIT) {
-                showOneRoute(routesResultSet);
+                showOneRoute(routesResultSet, stmt);
                 count++;
             }
-            stmt.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        DatabaseManager.disconnect(c);
-
         repositionMap("Routes");
 
     }
@@ -293,22 +298,19 @@ public class MapTabController {
         String query = String.format("SELECT SourceAirport, DestinationAirport FROM Route WHERE Airline is %s and SourceAirport is %s and Equipment is %s",
                 airline, airport, planeType);
 
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
-        int count = 0;
-        try {
-            ResultSet filteredResultSet = stmt.executeQuery(query);
-            while (filteredResultSet.next() && count < ROUTELIMIT) {
-                showOneRoute(filteredResultSet);
-                count++;
+
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ResultSet filteredResultSet = stmt.executeQuery(query);
+        ) {
+            for (int count = 0; filteredResultSet.next() && count < ROUTELIMIT; count++) {
+                showOneRoute(filteredResultSet, stmt);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO
         }
-        DatabaseManager.disconnect(c);
-
         repositionMap("Routes");
-
     }
 
 
@@ -318,35 +320,36 @@ public class MapTabController {
      * @param routesResultSet JDBC ResultSet of all routes that need to be shown (only top one is shown here).
      * @throws SQLException When there is an error when interacting with the SQL database using JDBC.
      */
-    private void showOneRoute(ResultSet routesResultSet) throws SQLException {
-        Connection c = DatabaseManager.connect();
-
+    private void showOneRoute(ResultSet routesResultSet, Statement stmt) throws SQLException {
         String sourceAirportIATA = routesResultSet.getString("SourceAirport");
         String destinationAirportIATA = routesResultSet.getString("DestinationAirport");
-        ResultSet sourceAirportQuery = c.createStatement().executeQuery(String.format(airportCoordQuery, sourceAirportIATA));
-        ResultSet destAirportQuery = c.createStatement().executeQuery(String.format(airportCoordQuery, destinationAirportIATA));
+        try (ResultSet sourceAirportQuery = stmt.executeQuery(String.format(airportCoordQuery, sourceAirportIATA));
+             ResultSet destAirportQuery = stmt.executeQuery(String.format(airportCoordQuery, destinationAirportIATA));
+             ) {
 
-        if (sourceAirportQuery.next() && destAirportQuery.next()) {
+            if (sourceAirportQuery.next() && destAirportQuery.next()) {
 
-            double sourceLatitude = (sourceAirportQuery.getDouble("Latitude"));
-            double sourceLongitude = (sourceAirportQuery.getDouble("Longitude"));
-            String sourceName = (sourceAirportQuery.getString("Name"));
+                double sourceLatitude = (sourceAirportQuery.getDouble("Latitude"));
+                double sourceLongitude = (sourceAirportQuery.getDouble("Longitude"));
+                String sourceName = (sourceAirportQuery.getString("Name"));
 
-            double destLatitude = (destAirportQuery.getDouble("Latitude"));
-            double destLongitude = (destAirportQuery.getDouble("Longitude"));
-            String destName = (destAirportQuery.getString("Name"));
+                double destLatitude = (destAirportQuery.getDouble("Latitude"));
+                double destLongitude = (destAirportQuery.getDouble("Longitude"));
+                String destName = (destAirportQuery.getString("Name"));
 
-            String routePoints = String.format("[{lat: %f, lng: %f}, {lat: %f, lng: %f}, ]",
-                    sourceLatitude, sourceLongitude, destLatitude, destLongitude);
+                String routePoints = String.format("[{lat: %f, lng: %f}, {lat: %f, lng: %f}, ]",
+                        sourceLatitude, sourceLongitude, destLatitude, destLongitude);
 
-            sourceName = sourceName.replaceAll("'", "");
-            destName = destName.replaceAll("'", "");
+                sourceName = sourceName.replaceAll("'", "");
+                destName = destName.replaceAll("'", "");
 
-            String scriptToExecute = "addRoute(" + routePoints + ", '" + sourceName + "', '" + destName + "');";
-            executeScript(scriptToExecute);
-
+                String scriptToExecute = "addRoute(" + routePoints + ", '" + sourceName + "', '" + destName + "');";
+                executeScript(scriptToExecute);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO
         }
-        DatabaseManager.disconnect(c);
     }
 
     /**
@@ -357,19 +360,15 @@ public class MapTabController {
     @FXML
     public void showSelectedAirports() {
         clearMap();
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
-        try {
-            ResultSet airportResultSet = stmt.executeQuery("SELECT Name, Longitude, Latitude FROM AirportsSelected");
-
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+             ResultSet airportResultSet = stmt.executeQuery("SELECT Name, Longitude, Latitude FROM AirportsSelected");
+            ) {
             showAirportsOnMap(airportResultSet);
-            stmt.close();
-        } catch (SQLException throwables) {
-            DatabaseManager.disconnect(c);
-
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO
         }
-        DatabaseManager.disconnect(c);
         repositionMap("Airports");
 
     }
@@ -412,17 +411,16 @@ public class MapTabController {
         String country = (String) airportCountryFilterCombobox.getValue();
         country = getValidInput(country);
         String query = String.format("SELECT Longitude, Latitude, Name FROM Airport WHERE Country is %s", country);
-        Connection c = DatabaseManager.connect();
-        Statement stmt = DatabaseManager.getStatement(c);
-        try {
-            ResultSet airportResultSet = stmt.executeQuery(query);
-            showAirportsOnMap(airportResultSet);
-        } catch (SQLException throwables) {
-            DatabaseManager.disconnect(c);
-            throwables.printStackTrace();
-        }
-        DatabaseManager.disconnect(c);
 
+        try (Connection connection = DatabaseManager.connect();
+             Statement stmt = connection.createStatement();
+            ResultSet airportResultSet = stmt.executeQuery(query);
+            ) {
+            showAirportsOnMap(airportResultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO
+        }
         // Reposition map only if there is a filter input
         if (!country.equals("not null")) {
             repositionMap("Airports");

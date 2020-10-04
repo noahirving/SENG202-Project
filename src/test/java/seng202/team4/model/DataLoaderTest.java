@@ -53,7 +53,7 @@ public class DataLoaderTest {
      * Set up the database to be used for the test.
      */
     @BeforeClass
-    public static void setup() {
+    public static void setup() throws SQLException {
         DatabaseManager.setUp();
         Main m = new Main();
 
@@ -67,8 +67,8 @@ public class DataLoaderTest {
     @AfterClass
     public static void teardown() throws Exception {
         //rs.close();
+        con.close();
         Main.deleteDatabase();
-        DatabaseManager.disconnect(con);
     }
 
     @Test

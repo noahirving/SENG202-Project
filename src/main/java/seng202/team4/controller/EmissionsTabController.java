@@ -11,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,6 +21,8 @@ import seng202.team4.model.*;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Emissions' tab of the application
@@ -233,10 +237,10 @@ public class EmissionsTabController extends DataController {
      * This is done using the table query and assigning each record to a row in the table
      * @param rs JDBC ResultSet obtained from querying the Database RoutesSelected table and is used to set the rows
      *           of the JavaFX data table by creating N Route objects from the query that results in N tuples.
-     * @throws Exception if the query fails, throws an exception
+     * @throws SQLException if the query fails, throws an exception
      */
     @Override
-    public void setTableData(ResultSet rs) throws Exception {
+    public void setTableData(ResultSet rs) throws SQLException {
         selectedRoutes = FXCollections.observableArrayList();
         while (rs.next()) {
             Route route = new Route();
