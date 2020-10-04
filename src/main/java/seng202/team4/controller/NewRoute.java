@@ -52,7 +52,12 @@ public class NewRoute extends NewRecord{
             while (rs.next()) {
                 String iata = rs.getString("IATA");
                 String icao = rs.getString("ICAO");
-                airports.addAll(iata, icao);
+                if (!(airports.contains(iata))) {
+                    airports.add(iata);
+                }
+                if (!(airports.contains(icao))) {
+                    airports.add(icao);
+                }
             }
             FXCollections.sort(airports);
             depAirportCombo.setItems(airports);
