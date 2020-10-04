@@ -197,13 +197,13 @@ public class Route extends DataType {
      */
     @Override
     public DataType getValid(String[] record, ArrayList<String> errorMessage) {
-        String airline = record[0];
-        String srcAirport = record[1];
-        String dstAirport = record[2];
-        String codeshare = record[3];
-        String stops = record[4];
-        String equipment = record[5];
-        return getValid(airline, srcAirport, dstAirport, codeshare, stops, equipment, errorMessage);
+        String newAirline = record[0];
+        String newSrcAirport = record[1];
+        String newDstAirport = record[2];
+        String newCodeshare = record[3];
+        String newStops = record[4];
+        String newEquipment = record[5];
+        return getValid(newAirline, newSrcAirport, newDstAirport, newCodeshare, newStops, newEquipment, errorMessage);
     }
 
     /**

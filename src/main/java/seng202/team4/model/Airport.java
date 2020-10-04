@@ -269,19 +269,19 @@ public class Airport extends DataType {
      */
     @Override
     public DataType getValid(String[] record, ArrayList<String> errorMessage) {
-        String name = record[0];
-        String city = record[1];
-        String country = record[2];
-        String iata = record[3];
-        String icao = record[4];
-        String latitude = record[5];
-        String longitude = record[6];
-        String altitude = record[7];
-        String timeZone = record[8];
-        String dst = record[9];
-        String tzDatabase = record[10];
+        String newName = record[0];
+        String newCity = record[1];
+        String newCountry = record[2];
+        String newIata = record[3];
+        String newIcao = record[4];
+        String newLatitude = record[5];
+        String newLongitude = record[6];
+        String newAltitude = record[7];
+        String newTimeZone = record[8];
+        String newDst = record[9];
+        String newTzDatabase = record[10];
 
-        return getValid(name, city, country, iata, icao, latitude, longitude, altitude, timeZone, dst, tzDatabase, errorMessage);
+        return getValid(newName, newCity, newCountry, newIata, newIcao, newLatitude, newLongitude, newAltitude, newTimeZone, newDst, newTzDatabase, errorMessage);
     }
 
     /**
