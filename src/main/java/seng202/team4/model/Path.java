@@ -45,5 +45,6 @@ public abstract class Path {
     public static final String MAP_RSC = "/seng202.team4/user_interfaces/map.html";
     public static final String AIRLINE_TEST_RSC_VALID = "/airlineValid.dat";
     public static final String AIRLINE_TEST_RSC_INVALID = "/airlineInvalid.dat";
+    public static final String AIRPORT_TEST_RSC_VALID = "/airportValid.dat";
 
 }

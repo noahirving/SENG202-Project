@@ -18,7 +18,6 @@ import java.util.ArrayList;
  */
 
 public class DataLoaderTest {
-
     /**
      * Copies the provided file to a target file.
      *
@@ -41,7 +40,6 @@ public class DataLoaderTest {
     @BeforeClass
     public static void setup() {
         DatabaseManager.setUp();
-        Main m = new Main();
     }
 
     /**
@@ -109,12 +107,14 @@ public class DataLoaderTest {
      * Test whether a route object can be added to
      * the RoutesSelected table. The RoutesSelected
      * table is queried after the addToRoutesSelectedDatabase
-     * method is called. Count should be 1
+     * method is called. Returns true if add is succesful
      *
      * @throws SQLException exception to catch database errors
      */
     @Test
-    public void addRouteToSelectedTest() throws SQLException {
+    public void addRouteToSelectedTest() throws IOException {
+        File airport = copyToFolder(Path.AIRPORT_TEST_RSC_VALID);
+        DataLoader.uploadData("Default", airport, new Airport());
         Route toAdd = new Route("CZ","AKL","CAN",false,0,"787");
         boolean addResult = DataLoader.addToRoutesSelectedDatabase(toAdd);
         Assert.assertEquals(addResult, true);
