@@ -35,6 +35,10 @@ public class AirportTabController extends DataController {
      */
     @FXML private TableColumn<Airport, String> airportColumn;
     /**
+     * IATA column of raw data table.
+     */
+    @FXML private TableColumn<Airport, String> iataColumn;
+    /**
      * City column of the raw data table.
      */
     @FXML private TableColumn<Airport, String> cityColumn;
@@ -55,17 +59,9 @@ public class AirportTabController extends DataController {
      */
     @FXML private ComboBox<String> countryCombobox;
     /**
-     * Text field used to serach raw data table.
+     * Text field used to search raw data table.
      */
     @FXML private TextField searchField;
-    /**
-     * Button that opens window to add new record.
-     */
-    @FXML private Button newRecordButton;
-    /**
-     * Button that deletes the selected record.
-     */
-    @FXML private Button deleteRecordButton;
     /**
      * Initialization of FilteredList for the search text field.
      */
@@ -95,6 +91,7 @@ public class AirportTabController extends DataController {
         cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
         countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
         coordinatesColumn.setCellValueFactory(new PropertyValueFactory<>("coordinates"));
+        iataColumn.setCellValueFactory(new PropertyValueFactory<>("iata"));
 
         // Multiple rows can be selected
         dataTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -272,7 +269,7 @@ public class AirportTabController extends DataController {
                         return true;
                     } else if (airport.getCountry().toLowerCase().contains(lower)) {
                         return true;
-                    } else if (airport.getCountry().toLowerCase().contains(lower)) {
+                    } else if (airport.getIata().toLowerCase().contains(lower)) {
                         return true;
                     } else if (airport.getCity().toLowerCase().contains(lower)) {
                         return true;

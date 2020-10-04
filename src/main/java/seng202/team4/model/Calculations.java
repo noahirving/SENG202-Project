@@ -1,6 +1,5 @@
 package seng202.team4.model;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

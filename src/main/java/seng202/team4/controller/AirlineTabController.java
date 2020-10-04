@@ -38,6 +38,10 @@ public class AirlineTabController extends DataController {
      */
     @FXML private TableColumn<Airline, String> countryColumn;
     /**
+     * Airline code column of the raw data table.
+     */
+    @FXML private TableColumn<Airline, String> iataColumn;
+    /**
      * Searchable combobox for filtering by country.
      */
     @FXML private ComboBox<String> countryCombobox;
@@ -73,6 +77,8 @@ public class AirlineTabController extends DataController {
     public void initialize() {
         airlineColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
+        iataColumn.setCellValueFactory(new PropertyValueFactory<>("iata"));
+
 
         // Multiple rows can be selected
         dataTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -102,6 +108,9 @@ public class AirlineTabController extends DataController {
             String name = rs.getString("Name");
             String country = rs.getString("Country");
             String alias = rs.getString("Alias");
+            if (alias.equals("\\N")) {
+                alias = "N/A";
+            }
             String iata = rs.getString("Iata");
             String icao = rs.getString("Icao");
             String callSign = rs.getString("Callsign");
@@ -204,6 +213,8 @@ public class AirlineTabController extends DataController {
                     if (airline.getName().toLowerCase().contains(lower)) {
                         return true;
                     } else if (airline.getCountry().toLowerCase().contains(lower)) {
+                        return true;
+                    } else if (airline.getIata().toLowerCase().contains(lower)) {
                         return true;
                     }
                     return false;
