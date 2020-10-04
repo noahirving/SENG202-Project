@@ -3,10 +3,7 @@ package seng202.team4.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import seng202.team4.model.Path;
 
 import java.awt.*;
@@ -25,10 +22,6 @@ import java.nio.file.StandardCopyOption;
  */
 public class HomePageController {
 
-    /**
-     * Label indicating internet and therefore maps is inaccessible
-     */
-    @FXML private Label internetWarningLabel;
 
     /**
      * Initialise the homepage by testing internet connection and displaying error message is internet is not available
@@ -36,7 +29,7 @@ public class HomePageController {
     @FXML
     public void initialize() {
         if (!getInternetAccess()) {
-            internetWarningLabel.setVisible(true);
+            ErrorController.createErrorMessage("No internet connection available, the map feature will not work!", false);
         }
     }
 

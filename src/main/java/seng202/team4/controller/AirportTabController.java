@@ -16,7 +16,6 @@ import seng202.team4.model.Path;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Airport' tab of the application
@@ -164,7 +163,7 @@ public class AirportTabController extends DataController {
             String icao = rs.getString("Icao");
             double longitude = rs.getDouble("Longitude");
             double latitude = rs.getDouble("Latitude");
-            double altitude = rs.getDouble("Altitude");
+            int altitude = rs.getInt("Altitude");
             float timezone = rs.getFloat("TimeZone");
             char dst = rs.getString("Dst").charAt(0);
             String tz = rs.getString("TzDatabaseTime");
