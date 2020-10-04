@@ -11,6 +11,9 @@ import seng202.team4.model.Path;
 
 import java.io.IOException;
 
+/**
+ * Called by Main, loads and shows the main scene FXML.
+ */
 public class MainApplication extends Application {
 
     @Override

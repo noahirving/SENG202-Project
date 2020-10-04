@@ -85,7 +85,7 @@ public class NewAirport extends NewRecord {
         icaoField.setText(airport.getIcao());
         latitudeField.setText(Double.toString(airport.getLatitude()));
         longitudeField.setText(Double.toString(airport.getLongitude()));
-        altitudeField.setText(Double.toString(airport.getAltitude()));
+        altitudeField.setText(Integer.toString(airport.getAltitude()));
         timeZoneField.setText(Double.toString(airport.getTimezone()));
         dstField.setText(Character.toString(airport.getDst()));
         tzDatabaseField.setText(airport.getTzDatabase());

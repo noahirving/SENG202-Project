@@ -160,6 +160,8 @@ public abstract class DataLoader {
             connection.commit();
             return true;
         } catch (Exception e) {
+            ErrorController.createErrorMessage("This route has no associated airports so some key features " +
+                    "such as map visualisation and emissions calculations cannot be done!", false);
             route.setSelect(false); // TODO: fix (don't use show instead of show and wait)
             return false;
         }

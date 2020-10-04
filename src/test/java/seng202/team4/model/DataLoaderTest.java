@@ -1,6 +1,9 @@
 package seng202.team4.model;
 
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -158,7 +161,7 @@ public class DataLoaderTest {
      */
     @Test
     public void addAirportToSelectedTest() throws SQLException {
-        Airport toAdd = new Airport("Egilsstadir","Egilsstadir","Iceland","EGS","BIEG",65.283333,-14.401389,Double.parseDouble("76"),Float.parseFloat("0"),"N".charAt(0),"Atlantic/Reykjavik");
+        Airport toAdd = new Airport("Egilsstadir","Egilsstadir","Iceland","EGS","BIEG",65.283333,-14.401389,Integer.parseInt("76"),Float.parseFloat("0"),"N".charAt(0),"Atlantic/Reykjavik");
         DataLoader.addToAirportsSelectedDatabase(toAdd);
         String countCheck = "SELECT count(*) from AirportsSelected where name = '" + toAdd.getName() +
                 "';";
@@ -184,7 +187,7 @@ public class DataLoaderTest {
      */
     @Test
     public void deleteAirportFromSelectedTest() throws SQLException {
-        Airport toAdd = new Airport("Egilsstadir","Egilsstadir","Iceland","EGS","BIEG",65.283333,-14.401389,Double.parseDouble("76"),Float.parseFloat("0"),"N".charAt(0),"Atlantic/Reykjavik");
+        Airport toAdd = new Airport("Egilsstadir","Egilsstadir","Iceland","EGS","BIEG",65.283333,-14.401389,Integer.parseInt("76"),Float.parseFloat("0"),"N".charAt(0),"Atlantic/Reykjavik");
         DataLoader.addToAirportsSelectedDatabase(toAdd);
         DataLoader.removeFromAirportsSelectedDatabase(toAdd);
         String countCheck = "SELECT count(*) from AirportsSelected where name = '" + toAdd.getName() +

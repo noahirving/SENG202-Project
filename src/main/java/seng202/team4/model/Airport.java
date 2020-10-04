@@ -50,7 +50,7 @@ public class Airport extends DataType {
     /**
      * altitude of airport in feet
      */
-    private double altitude;
+    private int altitude;
     /**
      * Time zone representing hours offset from UTC
      */
@@ -99,7 +99,7 @@ public class Airport extends DataType {
      * @param dst char DST
      * @param tzDatabase String TimeZone Database
      */
-    public Airport (String name, String city, String country, String iata, String icao, double latitude, double longitude, double altitude, float timeZone, char dst, String tzDatabase) {
+    public Airport (String name, String city, String country, String iata, String icao, double latitude, double longitude, int altitude, float timeZone, char dst, String tzDatabase) {
         this.name = name;
         this.city = city;
         this.country = country;
@@ -253,7 +253,7 @@ public class Airport extends DataType {
         }
 
         if (valid) {
-            return new Airport(name, city, country, iata, icao, Double.parseDouble(latitude), Double.parseDouble(longitude), Double.parseDouble(altitude), Float.parseFloat(timeZone), dstChar, tzDatabase);
+            return new Airport(name, city, country, iata, icao, Double.parseDouble(latitude), Double.parseDouble(longitude), Integer.parseInt(altitude), Float.parseFloat(timeZone), dstChar, tzDatabase);
         }
         else {
             return null;
@@ -407,11 +407,11 @@ public class Airport extends DataType {
         setCoordinates(this.longitude, this.latitude);
     }
 
-    public double getAltitude() {
+    public int getAltitude() {
         return altitude;
     }
 
-    public void setAltitude(double altitude) {
+    public void setAltitude(int altitude) {
         this.altitude = altitude;
     }
 

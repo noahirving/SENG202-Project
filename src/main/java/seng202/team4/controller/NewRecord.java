@@ -16,7 +16,6 @@ import seng202.team4.model.DataType;
 import seng202.team4.model.DatabaseManager;
 import seng202.team4.model.Path;
 
-import javax.tools.Tool;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

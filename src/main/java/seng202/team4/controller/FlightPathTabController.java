@@ -17,7 +17,6 @@ import seng202.team4.model.Path;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Flight Path' tab of the application

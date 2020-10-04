@@ -1,6 +1,5 @@
 package seng202.team4.model;
 
-import com.google.gson.internal.bind.SqlDateTypeAdapter;
 import seng202.team4.controller.ErrorController;
 
 import java.io.File;

@@ -1,5 +1,8 @@
 package seng202.team4.model;
 
+/**
+ * Holds static string values for resources and directories used throughout the application, e.g. FXML files.
+ */
 public abstract class Path {
     public static final String DIRECTORY = System.getProperty("user.dir") + "/GreenFlights_Resources";
     public static final String DATABASE = DIRECTORY + "/DATABASE.db";

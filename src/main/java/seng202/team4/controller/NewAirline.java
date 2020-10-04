@@ -1,7 +1,9 @@
 package seng202.team4.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import seng202.team4.model.Airline;
 import seng202.team4.model.DataType;
 
