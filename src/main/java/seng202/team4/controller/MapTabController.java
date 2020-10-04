@@ -263,15 +263,14 @@ public class MapTabController {
     @FXML
     private void showSelectedRoutes() {
         clearMap();
-        int count = 0;
         try (Connection connection = DatabaseManager.connect();
              Statement stmt = connection.createStatement();
              ResultSet routesResultSet = stmt.executeQuery("SELECT SourceAirport, DestinationAirport FROM RoutesSelected");
         ) {
-            while (routesResultSet.next() && count <= ROUTELIMIT) {
-                showOneRoute(routesResultSet, stmt);
-                count++;
+            for (int count = 0; routesResultSet.next() && count < ROUTELIMIT; count++) {
+                showOneRoute(routesResultSet, connection);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -304,7 +303,7 @@ public class MapTabController {
              ResultSet filteredResultSet = stmt.executeQuery(query);
         ) {
             for (int count = 0; filteredResultSet.next() && count < ROUTELIMIT; count++) {
-                showOneRoute(filteredResultSet, stmt);
+                showOneRoute(filteredResultSet, connection);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -320,11 +319,11 @@ public class MapTabController {
      * @param routesResultSet JDBC ResultSet of all routes that need to be shown (only top one is shown here).
      * @throws SQLException When there is an error when interacting with the SQL database using JDBC.
      */
-    private void showOneRoute(ResultSet routesResultSet, Statement stmt) throws SQLException {
+    private void showOneRoute(ResultSet routesResultSet, Connection connection) throws SQLException {
         String sourceAirportIATA = routesResultSet.getString("SourceAirport");
         String destinationAirportIATA = routesResultSet.getString("DestinationAirport");
-        try (ResultSet sourceAirportQuery = stmt.executeQuery(String.format(airportCoordQuery, sourceAirportIATA));
-             ResultSet destAirportQuery = stmt.executeQuery(String.format(airportCoordQuery, destinationAirportIATA));
+        try (ResultSet sourceAirportQuery = connection.createStatement().executeQuery(String.format(airportCoordQuery, sourceAirportIATA));
+             ResultSet destAirportQuery = connection.createStatement().executeQuery(String.format(airportCoordQuery, destinationAirportIATA));
              ) {
 
             if (sourceAirportQuery.next() && destAirportQuery.next()) {

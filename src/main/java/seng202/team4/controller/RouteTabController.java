@@ -339,9 +339,8 @@ public class RouteTabController extends DataController {
              Statement stmt = connection.createStatement();
              ResultSet result = stmt.executeQuery(query);
             ) {
-            Integer maxStop = result.getInt("max(STOPS)");
+            int maxStop = result.getInt("max(STOPS)");
             stopsFilterSlider.setMax(maxStop);
-            stmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace(); // TODO
