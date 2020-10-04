@@ -75,7 +75,11 @@ public class Airport extends DataType {
      * Booleean property that is true if the airport has been selected with the checkbox and false otherwise
      */
     private BooleanProperty select = new SimpleBooleanProperty(false);
-
+    /**
+     * Constant for length of an airport record
+     * used in the validation of data input
+     */
+    private static final int AIRPORT_RECORD_LENGTH = 13;
     /**
      * Creates an empty object of airport.
      */
@@ -289,9 +293,9 @@ public class Airport extends DataType {
     @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {
         String[] recordList = record.replaceAll("\"", "").split(",");
-        String[] newRecordList = new String[12];
+        String[] newRecordList = new String[AIRPORT_RECORD_LENGTH - 1];
         boolean containsComma = false;
-        if (recordList.length == 13) {
+        if (recordList.length == AIRPORT_RECORD_LENGTH) {
             containsComma = true;
             newRecordList[0] = recordList[0];
             newRecordList[1] = recordList[1];
@@ -306,16 +310,16 @@ public class Airport extends DataType {
             newRecordList[10] = recordList[11];
             newRecordList[11] = recordList[12];
         }
-        if (recordList.length != 12 && recordList.length != 13) {
+        if (recordList.length != (AIRPORT_RECORD_LENGTH - 1) && recordList.length != AIRPORT_RECORD_LENGTH) {
             errorMessage.add("Invalid number of attributes");
             return null;
         }
         if (containsComma) {
-            newRecordList = Arrays.copyOfRange(newRecordList, 1, 12);
+            newRecordList = Arrays.copyOfRange(newRecordList, 1, AIRPORT_RECORD_LENGTH - 1);
             return getValid(newRecordList, errorMessage);
         }
         else {
-            recordList = Arrays.copyOfRange(recordList, 1, 12);
+            recordList = Arrays.copyOfRange(recordList, 1, AIRPORT_RECORD_LENGTH - 1);
             return getValid(recordList, errorMessage);
         }
     }

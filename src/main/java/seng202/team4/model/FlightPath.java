@@ -33,7 +33,11 @@ public class FlightPath extends DataType {
      * longitude at waypoint or airport in decimal degrees.
      */
     private double longitude;
-
+    /**
+     * Constant for length of an flightpath record
+     * used in the validation of data input
+     */
+    private static final int FLIGHTPATH_RECORD_LENGTH = 5;
     /**
      * Creates an empty object of flightpath.
      */
@@ -169,7 +173,7 @@ public class FlightPath extends DataType {
     @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {
         String[] recordList = record.replaceAll("\"", "").split(",");
-        if (recordList.length != 5) {
+        if (recordList.length != FLIGHTPATH_RECORD_LENGTH) {
             errorMessage.add("Invalid number of attributes");
             return null;
         }

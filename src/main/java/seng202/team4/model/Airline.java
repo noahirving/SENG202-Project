@@ -40,8 +40,11 @@ public class Airline extends DataType {
      * 'Y' if airline is or has been recently operational, 'N' otherwise.
      */
     private boolean recentlyActive;
-
-
+    /**
+     * Constant for length of an airline record
+     * used in the validation of data input
+     */
+    private static final int AIRLINE_RECORD_LENGTH = 8;
     /**
      * Creates an empty object of airline.
      */
@@ -199,11 +202,11 @@ public class Airline extends DataType {
     @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {
         String[] recordList = record.replaceAll("\"", "").split(",");
-        if (recordList.length != 8) {
+        if (recordList.length != AIRLINE_RECORD_LENGTH) {
             errorMessage.add("Invalid number of attributes");
             return null;
         }
-        recordList = Arrays.copyOfRange(recordList, 1, 8);
+        recordList = Arrays.copyOfRange(recordList, 1, AIRLINE_RECORD_LENGTH);
         return getValid(recordList, errorMessage);
     }
 

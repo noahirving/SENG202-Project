@@ -13,8 +13,22 @@ import java.util.ArrayList;
  */
 public class Calculations {
 
+    /**
+     * Constant for the figure used as the Average Carbon emitted
+     * per passenger per kilometre on a flight. This baseline figure
+     * assumes the passenger is on a 65% capacity Boeing 737 with a fuel
+     * use of 36.6g per passenger km.
+     */
     private static final double AVG_PASSENGER_C02_EMITTED_KM = 0.115;
+    /**
+     * Constant for the radius of the earth in KM
+     */
     private static final double EARTH_RADIUS_KM = 6371;
+    /**
+     * Constant for the cost to offset 1km of flying per
+     * passenger. Assumes an offset payment of $14.79 NZD
+     * per tonne of C02
+     */
     private static final double C02_COST_TO_OFFSET_PER_KG = 0.01479;
     /**
      * Calculates the estimated carbon footprint of a passenger on the

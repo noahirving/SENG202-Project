@@ -52,10 +52,20 @@ public class Route extends DataType {
      * Also only calculated for selected routes.
      */
     private double carbonEmissions;
-
+    /**
+     * Donation amount to offset the users carbon footprint
+     * from selected routes in NZD
+     */
     private double dollarOffset;
+    /**
+     * Number of trees user could plant via teamtrees.org
+     */
     private int treeEquivalent;
-
+    /**
+     * Constant for length of an route record
+     * used in the validation of data input
+     */
+    private static final int ROUTE_RECORD_LENGTH = 9;
     /**
      * Creates an empty object of route.
      */
@@ -205,11 +215,11 @@ public class Route extends DataType {
     @Override
     public DataType getValid(String record, ArrayList<String> errorMessage) {
         String[] recordList = record.replaceAll("\"", "").split(",");
-        if (recordList.length == 9) {
+        if (recordList.length == ROUTE_RECORD_LENGTH) {
             recordList = new String[] {recordList[0], recordList[2], recordList[4], recordList[6], recordList[7], recordList[8]};
             return getValid(recordList, errorMessage);
         }
-        else if (recordList.length == 8) {
+        else if (recordList.length == (ROUTE_RECORD_LENGTH - 1)) {
             recordList = new String[]{recordList[0], recordList[2], recordList[4], recordList[6], recordList[7], ""};
             return getValid(recordList, errorMessage);
         }
