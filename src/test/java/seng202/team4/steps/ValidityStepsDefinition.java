@@ -53,12 +53,37 @@ public class ValidityStepsDefinition {
 
     @Given("I am adding new airport data")
     public void iAmAddingNewAirportData() {
-        testAirport = new String[]{"Thule Air Base","Thule","Greenland","THU","BGTL","76.531203","-68.703161","251","-4","E","America/Thule"};
+        testAirport = new String[]{"Name","City","Country","IAT","ICAO","76.53","-68.70","251","-4","E","Area/Location"};
     }
 
     @When("I enter {string} airport IATA")
     public void iEnterAirportIATA(String iata) {
         testAirport[3] = iata;
+    }
+
+    @When("I enter {string} airport name")
+    public void iEnterAirportName(String name) {
+        testAirport[0] = name;
+    }
+
+    @When("I enter {string} airport latitude")
+    public void iEnterAirportLatitude(String lat) {
+        testAirport[5] = lat;
+    }
+
+    @When("I enter {string} airport timezone")
+    public void iEnterAirportTimezone(String timezone) {
+        testAirport[8] = timezone;
+    }
+
+    @When("I enter {string} airport DST")
+    public void iEnterAirportDST(String dst) {
+        testAirport[9] = dst;
+    }
+
+    @When("I enter {string} airport Tz database time")
+    public void iEnterAirportTzDatabaseTime(String tzdb) {
+        testAirport[10] = tzdb;
     }
 
     @Then("airport should be valid")
@@ -91,5 +116,25 @@ public class ValidityStepsDefinition {
     @Then("route should not be valid")
     public void routeShouldNotBeValid() {
         Assert.assertNull(new Route().getValid(testRoute, new ArrayList<>()));
+    }
+
+    @When("I enter {string} route source")
+    public void iEnterRouteSource(String src) {
+        testRoute[1] = src;
+    }
+
+    @When("I enter {string} route destination")
+    public void iEnterRouteDestination(String dst) {
+        testRoute[2] = dst;
+    }
+
+    @When("I enter {string} route code share")
+    public void iEnterRouteCodeShare(String cs) {
+        testRoute[3] = cs;
+    }
+
+    @When("I enter {string} route stops")
+    public void iEnterRouteStops(String stops) {
+        testRoute[4] = stops;
     }
 }
