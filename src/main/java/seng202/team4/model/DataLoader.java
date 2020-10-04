@@ -158,14 +158,8 @@ public abstract class DataLoader {
                     + "');";
             stmt.executeUpdate(query);
             connection.commit();
-        }
-        catch (SQLException e) {
-            route.setSelect(false);
-            ErrorController.createErrorMessage("Could not select route:\n" + route.toString(), false);
         } catch (Exception e) {
             route.setSelect(false); // TODO: fix (don't use show instead of show and wait)
-            ErrorController.createErrorMessage("Could not select route:\n" + route.toString() +
-                    "\nMay be due to missing source or destination airport.", false);
         }
     }
 
