@@ -95,8 +95,8 @@ public class NewRoute extends NewRecord{
     public void setRecordData(DataType data) {
         Route route = (Route) data;
         airlineField.setText(route.getAirlineCode());
-        //depAirportCombo.setText(route.getSourceAirportCode()); // TODO: fix
-        //dstAirportCombo.setText(route.getDestinationAirportCode()); // TODO: fix
+        depAirportCombo.setValue(route.getSourceAirportCode());
+        dstAirportCombo.setValue(route.getDestinationAirportCode());
         codeshareField.setSelected(route.isCodeshare());
         stopsField.setText(Integer.toString(route.getNumStops()));
         equipmentField.setText(route.getPlaneTypeCode());
