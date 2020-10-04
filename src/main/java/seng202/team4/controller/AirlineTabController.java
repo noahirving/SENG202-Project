@@ -250,10 +250,5 @@ public class AirlineTabController extends DataController {
         countryCombobox.setValue("");
     }
 
-    @Override
-    public String getDetailsFXML() {
-        return Path.AIRLINE_DETAILS;
-    }
-
 
 }

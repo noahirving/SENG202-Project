@@ -36,7 +36,7 @@ public abstract class DataController {
     public abstract void initialiseComboBoxes();
     public abstract void filterData();
     public abstract String getNewRecordFXML();
-    public abstract String getDetailsFXML();
+
     public abstract void deleteRows();
     public abstract void clearFilters();
 

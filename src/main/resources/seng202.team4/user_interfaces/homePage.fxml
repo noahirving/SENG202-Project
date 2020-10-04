@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -53,5 +54,6 @@
             <Rectangle2D />
          </viewport>
       </ImageView>
+      <Label fx:id="internetWarningLabel" text="*No internet available, maps will not work!" textFill="#d51313" visible="false" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
    </children>
 </GridPane>

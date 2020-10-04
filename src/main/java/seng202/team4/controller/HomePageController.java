@@ -29,15 +29,6 @@ public class HomePageController {
      * Label indicating internet and therefore maps is inaccessible
      */
     @FXML private Label internetWarningLabel;
-    /**
-     * ImageView that stores the home page image
-     */
-    @FXML private ImageView homeImage;
-    /**
-     * GridPane that holds all the controls for the homepage
-     */
-    @FXML private GridPane gridPane;
-    @FXML private VBox vBox;
 
     /**
      * Initialise the homepage by testing internet connection and displaying error message is internet is not available
@@ -47,9 +38,11 @@ public class HomePageController {
         if (!getInternetAccess()) {
             internetWarningLabel.setVisible(true);
         }
-
     }
 
+    /**
+     * Exits the application after user clicks 'Exit' button
+     */
     @FXML
     private void exit() {
         System.exit(0);
@@ -85,6 +78,10 @@ public class HomePageController {
         }
     }
 
+    /**
+     * Opens the user manual as a pdf if the operating system is windows, otherwise informs the user of where
+     * the pdf file is located
+     */
     public void userManual() {
         Boolean success = true;
         String operatingSystem = System.getProperty("os.name");
@@ -124,6 +121,9 @@ public class HomePageController {
         }
     }
 
+    /**
+     * Shows the user information in the form of an alert of how calculations are done and the references used.
+     */
     public void howItsDone() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("How It's Done");

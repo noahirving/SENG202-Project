@@ -11,8 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -21,7 +19,6 @@ import seng202.team4.model.*;
 
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Emissions' tab of the application
@@ -322,7 +319,7 @@ public class EmissionsTabController extends DataController {
      */
     @Override
     public String getNewRecordFXML() {
-        return null;
+        return Path.NEW_ROUTE_FXML;
     }
 
     /**
@@ -352,16 +349,5 @@ public class EmissionsTabController extends DataController {
 
     }
 
-
-    /**
-     * Gets the path to the details FXML file
-     * for the editing and viewing of selected
-     * route info
-     * @return the path to emissions details fxml
-     */
-    @Override
-    public String getDetailsFXML() {
-        return Path.EMISSIONS_DETAILS;
-    }
 
 }

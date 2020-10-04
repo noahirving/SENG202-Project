@@ -16,7 +16,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Routes' tab of the application; extends the DataController Class.
@@ -402,8 +401,4 @@ public class RouteTabController extends DataController {
         planeTypeFilterCombobox.setValue("");
     }
 
-    @Override
-    public String getDetailsFXML() {
-        return Path.ROUTE_DETAILS;
-    }
 }

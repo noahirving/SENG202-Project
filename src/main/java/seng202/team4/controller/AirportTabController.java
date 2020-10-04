@@ -15,7 +15,6 @@ import seng202.team4.model.DataType;
 import seng202.team4.model.Path;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Airport' tab of the application
@@ -322,8 +321,4 @@ public class AirportTabController extends DataController {
         countryCombobox.setValue("");
     }
 
-    @Override
-    public String getDetailsFXML() {
-        return Path.AIRPORT_DETAILS;
-    }
 }

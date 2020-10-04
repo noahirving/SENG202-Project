@@ -14,7 +14,6 @@ import seng202.team4.model.FlightPath;
 import seng202.team4.model.Path;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 /**
  * Performs logic for the 'Flight Path' tab of the application
@@ -226,8 +225,4 @@ public class FlightPathTabController extends DataController {
 
     }
 
-    @Override
-    public String getDetailsFXML() {
-        return Path.FLIGHTPATH_DETAILS;
-    }
 }
