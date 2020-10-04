@@ -183,14 +183,14 @@ public class Airline extends DataType {
      */
     @Override
     public Airline getValid(String[] record, ArrayList<String> errorMessage) {
-        String name = record[0];
-        String code = record[1];
-        String iata = record[2];
-        String icao = record[3];
-        String callSign = record[4];
-        String country = record[5];
-        String recentlyActive = record[6];
-        return getValid(name, code, iata, icao, callSign, country, recentlyActive, errorMessage);
+        String newName = record[0];
+        String newCode = record[1];
+        String newIata = record[2];
+        String newIcao = record[3];
+        String newCallSign = record[4];
+        String newCountry = record[5];
+        String newRecentlyActive = record[6];
+        return getValid(newName, newCode, newIata, newIcao, newCallSign, newCountry, newRecentlyActive, errorMessage);
     }
 
     /**
