@@ -55,9 +55,9 @@ public class Calculations {
      * @param airportCodeTwo String representing code of the destination airport
      * @param stmt The given statement
      * @return double the calculated distance between two given airports
-     * @throws SQLException SQL Exception
+     * @throws Exception Exception
      */
-    public static double calculateDistance(String airportCodeOne, String airportCodeTwo, Statement stmt) throws SQLException {
+    public static double calculateDistance(String airportCodeOne, String airportCodeTwo, Statement stmt) throws Exception {
         double lat1;
         double lat2;
         double long1;
@@ -79,14 +79,10 @@ public class Calculations {
             e.printStackTrace();
         }
         //Convert latitude and longitude of airports to radians
-        try{
-            lat1 = Math.toRadians(lats.get(0));
-            lat2 = Math.toRadians(lats.get(1));
-            long1 = Math.toRadians(longs.get(0));
-            long2 = Math.toRadians(longs.get(1));
-        } catch(Exception e){
-            return 0.0;
-        }
+        lat1 = Math.toRadians(lats.get(0));
+        lat2 = Math.toRadians(lats.get(1));
+        long1 = Math.toRadians(longs.get(0));
+        long2 = Math.toRadians(longs.get(1));
 
 
         // Calculate distance between airports
@@ -100,7 +96,7 @@ public class Calculations {
         double twiceArcInverse = 2 * Math.asin(Math.sqrt(arcInverse));
         // Radius of earth in kilometers.
         //return distance to be stored in DB
-        return(EARTH_RADIUS_KM * twiceArcInverse);
+        return (EARTH_RADIUS_KM * twiceArcInverse);
     }
 
     /**

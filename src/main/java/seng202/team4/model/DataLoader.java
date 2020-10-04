@@ -140,17 +140,13 @@ public abstract class DataLoader {
             ) {
             String between = "', '";
 
-            Double distance = 0.0;
             String sourceAirport = route.getSourceAirportCode();
             String destAirport = route.getDestinationAirportCode();
-            try {
-                distance = Calculations.calculateDistance(sourceAirport, destAirport, stmt);
-                route.setDistance(distance);
-            } catch (Exception e) {
-                e.printStackTrace();
-                e.printStackTrace(); // TODO
-            }
-            Double carbonEmitted = Calculations.calculateEmissions(route);
+
+            double distance = Calculations.calculateDistance(sourceAirport, destAirport, stmt);
+            route.setDistance(distance);
+
+            double carbonEmitted = Calculations.calculateEmissions(route);
             String query = "INSERT INTO RoutesSelected ('Airline', 'SourceAirport', 'DestinationAirport', 'Equipment', 'Distance', 'CarbonEmissions') "
                     + "VALUES ('"
                     + route.getAirlineCode().replaceAll("'", "''") + between
@@ -164,8 +160,12 @@ public abstract class DataLoader {
             connection.commit();
         }
         catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            route.setSelect(false);
+            ErrorController.createErrorMessage("Could not select route:\n" + route.toString(), false);
+        } catch (Exception e) {
+            route.setSelect(false); // TODO: fix (don't use show instead of show and wait)
+            ErrorController.createErrorMessage("Could not select route:\n" + route.toString() +
+                    "\nMay be due to missing source or destination airport.", false);
         }
     }
 
@@ -191,8 +191,7 @@ public abstract class DataLoader {
             connection.commit();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            ErrorController.createErrorMessage("Could not delete route:\n" + route.toString(), false);
             return false;
         }
     }
@@ -219,8 +218,8 @@ public abstract class DataLoader {
             stmt.executeUpdate(query);
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            ErrorController.createErrorMessage("Could not select airport:\n" + airport.toString(), false);
+            airport.setSelect(false);
         }
     }
 
@@ -245,8 +244,7 @@ public abstract class DataLoader {
             connection.commit();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            ErrorController.createErrorMessage("Could not delete route:\n" + airport.toString(), false);
             return false;
         }
     }

@@ -164,14 +164,8 @@ public class MapTabController {
      * Catches exceptions caused by SQL errors.
      */
     private void initialiseComboBoxes() {
-        try {
-            initialiseRouteComboBoxes();
-            initialiseAirportComboBoxes();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
+        initialiseRouteComboBoxes();
+        initialiseAirportComboBoxes();
     }
 
     /**
@@ -179,7 +173,7 @@ public class MapTabController {
      * the SQL database.
      * @throws SQLException thrown if there is an error querying the SQL database
      */
-    private void initialiseAirportComboBoxes() throws SQLException {
+    private void initialiseAirportComboBoxes() {
         try (Connection connection = DatabaseManager.connect();
              Statement stmt = connection.createStatement();
             ResultSet airportResultSet = stmt.executeQuery("SELECT Country FROM Airport");
@@ -191,8 +185,7 @@ public class MapTabController {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            ErrorController.createErrorMessage("Could not initialize airline combo boxes.", false);
         }
         FXCollections.sort(airportCountries); airportCountryFilterCombobox.setItems(airportCountries);
         TextFields.bindAutoCompletion(airportCountryFilterCombobox.getEditor(), airportCountryFilterCombobox.getItems());
@@ -201,9 +194,8 @@ public class MapTabController {
     /**
      * Specifically initialises/populates the route filtering comboboxes by querying
      * the SQL database.
-     * @throws SQLException thrown if there is an error querying the SQL database
      */
-    private void initialiseRouteComboBoxes() throws SQLException {
+    private void initialiseRouteComboBoxes() {
         try (Connection connection = DatabaseManager.connect();
             Statement stmt = connection.createStatement();
             ResultSet routesResultSet = stmt.executeQuery("SELECT Airline, SourceAirport, Equipment FROM Route");
@@ -224,8 +216,7 @@ public class MapTabController {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            ErrorController.createErrorMessage("Could not initialize route combo boxes.", false);
         }
         FXCollections.sort(airlineCodes); routeAirlineFilterCombobox.setItems(airlineCodes);
         FXCollections.sort(departureCountries); routeAirportFilterCombobox.setItems(departureCountries);
@@ -306,8 +297,7 @@ public class MapTabController {
                 showOneRoute(filteredResultSet, connection);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            ErrorController.createErrorMessage("Could not apply route filter.", false);
         }
         repositionMap("Routes");
     }
@@ -327,28 +317,26 @@ public class MapTabController {
              ResultSet destAirportQuery = connection.createStatement().executeQuery(String.format(airportCoordQuery, destinationAirportIATA));
              ) {
 
-            if (sourceAirportQuery.next() && destAirportQuery.next()) {
+            sourceAirportQuery.next();
+            destAirportQuery.next();
+            double sourceLatitude = (sourceAirportQuery.getDouble("Latitude"));
+            double sourceLongitude = (sourceAirportQuery.getDouble("Longitude"));
+            String sourceName = (sourceAirportQuery.getString("Name"));
 
-                double sourceLatitude = (sourceAirportQuery.getDouble("Latitude"));
-                double sourceLongitude = (sourceAirportQuery.getDouble("Longitude"));
-                String sourceName = (sourceAirportQuery.getString("Name"));
+            double destLatitude = (destAirportQuery.getDouble("Latitude"));
+            double destLongitude = (destAirportQuery.getDouble("Longitude"));
+            String destName = (destAirportQuery.getString("Name"));
 
-                double destLatitude = (destAirportQuery.getDouble("Latitude"));
-                double destLongitude = (destAirportQuery.getDouble("Longitude"));
-                String destName = (destAirportQuery.getString("Name"));
+            String routePoints = String.format("[{lat: %f, lng: %f}, {lat: %f, lng: %f}, ]",
+                    sourceLatitude, sourceLongitude, destLatitude, destLongitude);
 
-                String routePoints = String.format("[{lat: %f, lng: %f}, {lat: %f, lng: %f}, ]",
-                        sourceLatitude, sourceLongitude, destLatitude, destLongitude);
+            sourceName = sourceName.replaceAll("'", "");
+            destName = destName.replaceAll("'", "");
 
-                sourceName = sourceName.replaceAll("'", "");
-                destName = destName.replaceAll("'", "");
-
-                String scriptToExecute = "addRoute(" + routePoints + ", '" + sourceName + "', '" + destName + "');";
-                executeScript(scriptToExecute);
-            }
+            String scriptToExecute = "addRoute(" + routePoints + ", '" + sourceName + "', '" + destName + "');";
+            executeScript(scriptToExecute);
         } catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            ErrorController.createErrorMessage("Could not show route from '" + sourceAirportIATA + "' to '" + destinationAirportIATA + "'.", false);
         }
     }
 
@@ -366,8 +354,7 @@ public class MapTabController {
             ) {
             showAirportsOnMap(airportResultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            ErrorController.createErrorMessage("Could not show selected airports.", false);
         }
         repositionMap("Airports");
 
@@ -418,8 +405,7 @@ public class MapTabController {
             ) {
             showAirportsOnMap(airportResultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
-            // TODO
+            ErrorController.createErrorMessage("Could not apply airport filter.", false);
         }
         // Reposition map only if there is a filter input
         if (!country.equals("not null")) {
