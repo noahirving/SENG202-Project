@@ -106,6 +106,21 @@ public class DataLoaderTest {
     }
 
     /**
+     * Test whether a route object can be added to
+     * the RoutesSelected table. The RoutesSelected
+     * table is queried after the addToRoutesSelectedDatabase
+     * method is called. Count should be 1
+     *
+     * @throws SQLException exception to catch database errors
+     */
+    @Test
+    public void addRouteToSelectedTest() throws SQLException {
+        Route toAdd = new Route("CZ","AKL","CAN",false,0,"787");
+        boolean addResult = DataLoader.addToRoutesSelectedDatabase(toAdd);
+        Assert.assertEquals(addResult, true);
+    }
+
+    /**
      * Test whether a route object can be deleted from
      * the RoutesSelected table. The RoutesSelected
      * table is queried after the addToRoutesSelectedDatabase

@@ -134,7 +134,7 @@ public abstract class DataLoader {
      * @param route Route the route that has been selected
      *              with a checkbox
      */
-    public static void addToRoutesSelectedDatabase(Route route) {
+    public static boolean addToRoutesSelectedDatabase(Route route) {
         try (Connection connection = DatabaseManager.connect();
              Statement stmt = connection.createStatement();
             ) {
@@ -158,8 +158,10 @@ public abstract class DataLoader {
                     + "');";
             stmt.executeUpdate(query);
             connection.commit();
+            return true;
         } catch (Exception e) {
             route.setSelect(false); // TODO: fix (don't use show instead of show and wait)
+            return false;
         }
     }
 
