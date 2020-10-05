@@ -1,5 +1,7 @@
 package seng202.team4.model;
 
+import seng202.team4.controller.ErrorController;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -75,7 +77,8 @@ public class Calculations {
                 longs.add(result.getDouble("Longitude"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            String message = "Airports with selected IATA's do not exist";
+            ErrorController.createErrorMessage(message, false);
         }
         //Convert latitude and longitude of airports to radians
         lat1 = Math.toRadians(lats.get(0));

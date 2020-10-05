@@ -59,7 +59,6 @@ public abstract class DataLoader {
             return invalidLines;
 
         } catch (Exception e) {
-            e.printStackTrace();
             String message = "Failed uploading data.";
             ErrorController.createErrorMessage(message, false);
             return null;
@@ -84,7 +83,6 @@ public abstract class DataLoader {
             return true;
 
         } catch (Exception e) {
-            e.printStackTrace();
             String message = "Unable to add new record.";
             ErrorController.createErrorMessage(message, false);
             return false;
@@ -109,7 +107,6 @@ public abstract class DataLoader {
             return true;
 
         } catch (Exception e) {
-            e.printStackTrace();
             String message = "Unable to edit record.";
             ErrorController.createErrorMessage(message, false);
             return false;
@@ -168,7 +165,7 @@ public abstract class DataLoader {
         } catch (Exception e) {
             ErrorController.createErrorMessage("This route has no associated airports so some key features " +
                     "such as map visualisation and emissions calculations cannot be done!", false);
-            route.setSelect(false); // TODO: fix (don't use show instead of show and wait)
+            route.setSelect(false);
             return false;
         }
     }
@@ -273,7 +270,6 @@ public abstract class DataLoader {
             connection.commit();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
             String message = "Could not delete record with ID " + id + ".";
             ErrorController.createErrorMessage(message, false);
             return false;

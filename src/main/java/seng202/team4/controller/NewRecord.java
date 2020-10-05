@@ -74,7 +74,8 @@ abstract class NewRecord {
         try {
             setDataSetComboBox(setComboBox);
         } catch (Exception e) {
-            e.printStackTrace();
+            String message = "Unable to populate the Data Set combobox";
+            ErrorController.createErrorMessage(message, false);
         }
     }
 
@@ -82,7 +83,6 @@ abstract class NewRecord {
      * Sets the data set names int the dataset comboBox.
      * @param comboBox the comboBox the names are set in.
      */
-    //TODO: Essentially the same as the function from DataController, a more efficient implementation would be preferred
     private void setDataSetComboBox(ComboBox comboBox) {
         ObservableList<String> dataSetNames = FXCollections.observableArrayList();
         try (Connection connection = DatabaseManager.connect();

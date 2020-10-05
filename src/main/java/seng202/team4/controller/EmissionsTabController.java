@@ -194,7 +194,7 @@ public class EmissionsTabController extends DataController {
     /**
      * On action method for the 'Load Selected Routes' button
      * updates the table to display the routes selected by the user
-     * on the 'Routes' tab, throws an IOException if this fails
+     * on the 'Routes' tab.
      */
     @FXML
     public void updateTable() {
@@ -202,7 +202,8 @@ public class EmissionsTabController extends DataController {
             setTable();
             setTotalEmissions();
         } catch (Exception e) {
-            e.printStackTrace();
+            String message = "Error on table update";
+            ErrorController.createErrorMessage(message, false);
         }
     }
 

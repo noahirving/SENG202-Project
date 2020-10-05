@@ -263,7 +263,8 @@ public class MapTabController {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            String message = "Unable to connect to SQLite database";
+            ErrorController.createErrorMessage(message, false);
         }
         repositionMap("Routes");
 

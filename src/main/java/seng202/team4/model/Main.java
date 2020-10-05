@@ -1,5 +1,6 @@
 package seng202.team4.model;
 
+import seng202.team4.controller.ErrorController;
 import seng202.team4.view.MainApplication;
 
 import java.io.File;
@@ -30,7 +31,6 @@ public class Main {
      * Loads the default data into the database if it has not already been loaded in
      */
     public void loadDefaultData() {
-        // TODO: Check that default data is not already in database (temporary fix is deleting the database everytime).
         try {
             File airport = copyToFolder(Path.AIRPORT_RSC);
             File airline = copyToFolder(Path.AIRLINE_RSC);
@@ -42,7 +42,8 @@ public class Main {
             DataLoader.uploadData("Default", route, new Route());
             DataLoader.uploadData("Default", flightPath, new FlightPath());
         } catch (Exception e) {
-            e.printStackTrace();
+            String message = "Could not load default data";
+            ErrorController.createErrorMessage(message, false);
         }
     }
 
@@ -52,17 +53,12 @@ public class Main {
     public static void deleteDatabase() {
         try {
             File file = new File(Path.DATABASE);
-            if(file.delete()) {
-                // Database deleted
-            }
-            else {
-                // Delete failed
-            }
         }
         catch(Exception e)
         {
             // Invalid File to delete
-            e.printStackTrace();
+            String message = "Could not delete database";
+            ErrorController.createErrorMessage(message, false);
         }
     }
 
@@ -81,7 +77,8 @@ public class Main {
             java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
         catch (IOException e) {
-            e.printStackTrace();
+            String message = "Error while copying file to directory";
+            ErrorController.createErrorMessage(message, false);
         }
         return targetFile;
     }

@@ -163,7 +163,8 @@ public class FileUploadController {
             errorController.setUp(errorStage, this.stage);
             errorController.addErrorLines(invalidLines);
         } catch (IOException e) {
-            e.printStackTrace();
+            String message = "Malfunction while loading error controller";
+            ErrorController.createErrorMessage(message, false);
         }
         errorStage.show();
     }

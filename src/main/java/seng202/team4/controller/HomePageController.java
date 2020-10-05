@@ -123,11 +123,11 @@ public class HomePageController {
         alert.setHeaderText("The following sources are used in the emission calculations of GreenFlights.");
 
         FlowPane fp = new FlowPane();
-        Label explainText = new Label("Source of $10 per tonne: https://www.mercycorps.org/blog/how-much-offset-your-carbon\n" +
-                "Calculating how much carbon a tree obsorbs: https://www.carbonindependent.org/22.html\n" +
-                "CO2 per car: https://www.lightfoot.co.uk/news/2017/10/04/how-much-co2-does-a-car-emit-per-year/\n" +
-                "Fuel economy in automobiles: https://en.wikipedia.org/wiki/Fuel_economy_in_automobiles\n" +
-                "Fuel consumption and CO2: https://www.nrcan.gc.ca/sites/www.nrcan.gc.ca/files/oee/pdf/transportation/fuel-efficient-technologies/autosmart_factsheet_6_e.pdf");
+        Label explainText = new Label("The distance calculation was done using the haversine formula \n" +
+                "Emissions calculations are based on a single passenger on a 65% capacity Boeing 737\n" +
+                "Dollar offset rate of $14.79NZD per tonne - Source: https://www.mercycorps.org/blog/how-much-offset-your-carbon\n" +
+                "Carbon per passenger - Source: https://www.carbonindependent.org/22.html\n"
+                );
         fp.getChildren().addAll(explainText);
         alert.getDialogPane().contentProperty().set( fp );
         alert.show();

@@ -250,6 +250,12 @@ public abstract class DataController {
         stage.showAndWait();
     }
 
+    /**
+     * Method for getting a record in a data table
+     * when it is clicked
+     *
+     * @param click MouseClick when table is clicked
+     */
     @FXML
     public void tableClicked(MouseEvent click) {
         if (click.getClickCount() > 1) {

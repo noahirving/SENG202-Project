@@ -64,17 +64,5 @@ public class NewFlightPath extends NewRecord {
         latitudeField.setText(Double.toString(path.getLatitude()));
         longitudeField.setText(Double.toString(path.getLongitude()));
         altitudeField.setText(Double.toString(path.getAltitude()));
-
-        /*
-        switch (path.getType()) {
-            case "APT": typeText.setText("Airport"); break;
-            case "NDB": typeText.setText("Non-directional beacon"); break;
-            case "VOR": typeText.setText("VHF omni-directional range"); break;
-            case "FIX": typeText.setText("Navigational fix"); break;
-            case "DME": typeText.setText("Distance measuring equipment"); break;
-            case "LATLON": typeText.setText("Latitude/Longitude point"); break;
-            default: typeText.setText("Unknown"); break;
-        }
-        */
     }
 }

@@ -173,7 +173,6 @@ public abstract class DatabaseManager {
         if (!directory.exists()) {
             directory.mkdir();
             newDatabase();
-//            new Main().loadDefaultData();
         }
 
         else {
@@ -181,7 +180,6 @@ public abstract class DatabaseManager {
             File database = new File(Path.DATABASE);
             if (!database.exists()) {
                 newDatabase();
-//                new Main().loadDefaultData();
             }
         }
     }
