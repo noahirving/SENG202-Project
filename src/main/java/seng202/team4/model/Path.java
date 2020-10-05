@@ -10,6 +10,7 @@ public abstract class Path {
 
     public static final String VIEW = "/seng202.team4";
     public static final String USER_INTERFACES = "/user_interfaces";
+    public static final String TEST_DATA = "/test_data";
     public static final String MAIN_SCENE_FXML = VIEW + USER_INTERFACES + "/mainFlightTrackerScene.fxml";
     public static final String HOME_SCENE_FXML = VIEW + USER_INTERFACES + "/homePage.fxml";
     public static final String AIRLINE_SCENE_FXML = VIEW + USER_INTERFACES + "/airlineTab.fxml";
@@ -47,8 +48,9 @@ public abstract class Path {
     public static final String USER_MANUAL = "/greenflights_user_manual.pdf";
     public static final String MAP_RSC = "/seng202.team4/user_interfaces/map.html";
     public static final String AIRLINE_TEST_RSC_VALID = "/airlineValid.dat";
-    public static final String AIRLINE_TEST_RSC_VALID2 = "/airlineValid2.dat";
-    public static final String AIRLINE_TEST_RSC_VALID3 = "/airlineValid3.dat";
+    public static final String AIRLINE_TEST_RSC_RECORD = "/airlineRecord.dat";
+    public static final String AIRLINE_TEST_RSC_DELETE = "/airlineDelete.dat";
+    public static final String AIRLINE_TEST_RSC_UPDATE = "/airlineUpdate.dat";
     public static final String AIRLINE_TEST_RSC_INVALID = "/airlineInvalid.dat";
     public static final String AIRPORT_TEST_RSC_VALID = "/airportValid.dat";
 
