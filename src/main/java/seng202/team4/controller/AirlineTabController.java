@@ -103,6 +103,8 @@ public class AirlineTabController extends DataController {
      */
     @Override
     public void setTableData(ResultSet rs) throws SQLException {
+        airlines = FXCollections.observableArrayList();
+        countries = FXCollections.observableArrayList();
         while (rs.next()) {
             int id = rs.getInt("Id");
             String name = rs.getString("Name");
