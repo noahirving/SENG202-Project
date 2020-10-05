@@ -214,7 +214,7 @@ public class DataLoaderTest {
      */
     @Test
     public void deleteRecordTest() throws IOException {
-        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_VALID);
+        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_VALID2);
         DataLoader.uploadData("Default", testData, new Airline());
         boolean deleteResult = DataLoader.deleteRecord(10, "Airline");
         Assert.assertEquals(deleteResult, true);
@@ -231,7 +231,7 @@ public class DataLoaderTest {
      */
     @Test
     public void updateRecordTest() throws IOException {
-        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_VALID);
+        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_VALID3);
         DataLoader.uploadData("Default", testData, new Airline());
         Airline toUpdate = new Airline("213 Flight Unit","test","","TFU","","Russia",false);
         boolean updateResult = DataLoader.updateRecord(toUpdate, "Default");

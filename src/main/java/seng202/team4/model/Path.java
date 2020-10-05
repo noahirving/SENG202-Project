@@ -47,6 +47,8 @@ public abstract class Path {
     public static final String USER_MANUAL = "/greenflights_user_manual.pdf";
     public static final String MAP_RSC = "/seng202.team4/user_interfaces/map.html";
     public static final String AIRLINE_TEST_RSC_VALID = "/airlineValid.dat";
+    public static final String AIRLINE_TEST_RSC_VALID2 = "/airlineValid2.dat";
+    public static final String AIRLINE_TEST_RSC_VALID3 = "/airlineValid3.dat";
     public static final String AIRLINE_TEST_RSC_INVALID = "/airlineInvalid.dat";
     public static final String AIRPORT_TEST_RSC_VALID = "/airportValid.dat";
 
