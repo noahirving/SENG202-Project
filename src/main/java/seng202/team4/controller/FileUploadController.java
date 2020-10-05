@@ -3,15 +3,17 @@ package seng202.team4.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import seng202.team4.model.DataLoader;
-import seng202.team4.model.Path;
+import seng202.team4.model.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +28,7 @@ public class FileUploadController {
     @FXML private TextField nameField;
     @FXML private Text filePath;
     @FXML private Label errorText;
+    @FXML private Label imageHolderLabel;
     private File file;
     private DataController controller;
     private Stage stage;
@@ -39,6 +42,35 @@ public class FileUploadController {
     public void setUp(DataController controller, Stage stage) {
         this.controller = controller;
         this.stage = stage;
+        showInsertInfo();
+    }
+
+    /**
+     * Shows the info icon of the expected (general) file format
+     */
+    private void showInsertInfo() {
+        Image image = new Image(getClass().getResourceAsStream(Path.INFO_ICON));
+        ImageView imageView = new ImageView();
+        imageView.setImage(image);
+        imageView.setFitHeight(30);
+        imageView.setFitWidth(30);
+        imageView.setPreserveRatio(true);
+        imageView.setPickOnBounds(true);
+        imageHolderLabel.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        imageHolderLabel.setGraphic(imageView);
+        Tooltip imageToolTip = new Tooltip();
+        if (controller.getDataType() instanceof Airline) {
+            imageToolTip.setGraphic(new ImageView(new Image(Path.AIRLINE_FORMAT)));
+            imageHolderLabel.setTooltip(imageToolTip);
+        } else if (controller.getDataType() instanceof Airport) {
+            imageToolTip.setGraphic(new ImageView(new Image(Path.AIRPORT_FORMAT)));
+            imageHolderLabel.setTooltip(imageToolTip);
+        } else if (controller.getDataType() instanceof Route) {
+            imageToolTip.setGraphic(new ImageView(new Image(Path.ROUTE_FORMAT)));
+            imageHolderLabel.setTooltip(imageToolTip);
+        } else {
+            imageHolderLabel.setTooltip(new Tooltip("See Flightplandatabase.org for file format"));
+        }
     }
 
     /**

@@ -38,6 +38,10 @@ public abstract class Path {
     public static final String APP_ICON = VIEW + "/images/logo_icon.png";
     public static final String INFO_ICON = VIEW + "/images/info_icon.png";
     public static final String FLIGHTPATH_TYPE = VIEW + "/images/flight_path_type.PNG";
+    public static final String AIRLINE_FORMAT = VIEW + "/images/airline_format.PNG";
+    public static final String AIRPORT_FORMAT = VIEW + "/images/airport_format.PNG";
+    public static final String ROUTE_FORMAT = VIEW + "/images/route_format.PNG";
+
 
     public static final String STYLE_SHEET = VIEW + USER_INTERFACES + "/styles.css";
 

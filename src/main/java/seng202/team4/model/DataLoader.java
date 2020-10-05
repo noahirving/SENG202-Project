@@ -92,6 +92,12 @@ public abstract class DataLoader {
         }
     }
 
+    /**
+     * Updates a given record in the database
+     * @param dataType datatype to update, one of Airline, Airport, Route, FlightPath
+     * @param setName set in which the record sits
+     * @return true of record is updated successfully, false otherwise
+     */
     public static boolean updateRecord(DataType dataType, String setName) {
         try (Connection connection = DatabaseManager.connect();
              Statement stmt = connection.createStatement();
