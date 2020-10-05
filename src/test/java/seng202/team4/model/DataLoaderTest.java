@@ -21,6 +21,7 @@ import java.util.ArrayList;
  */
 
 public class DataLoaderTest {
+
     /**
      * Copies the provided file to a target file.
      *
@@ -29,10 +30,8 @@ public class DataLoaderTest {
      * @throws IOException if an exception occurs during the copy operation
      */
     public File copyToFolder(String fileName) throws IOException {
-
         InputStream initialStream = (this.getClass().getResourceAsStream(fileName));
         File targetFile = new File(Path.DIRECTORY + fileName);
-
         java.nio.file.Files.copy(initialStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return targetFile;
     }
@@ -99,7 +98,7 @@ public class DataLoaderTest {
      */
     @Test
     public void addNewRecordTest() throws IOException {
-        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_VALID);
+        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_RECORD);
         DataLoader.uploadData("Default", testData, new Airline());
         Airline toInsert = new Airline("213 Flight Unit","test","","TFU","","Russia",false);
         boolean insertResult = DataLoader.addNewRecord(toInsert, "Default");
@@ -214,7 +213,7 @@ public class DataLoaderTest {
      */
     @Test
     public void deleteRecordTest() throws IOException {
-        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_VALID2);
+        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_DELETE);
         DataLoader.uploadData("Default", testData, new Airline());
         boolean deleteResult = DataLoader.deleteRecord(10, "Airline");
         Assert.assertEquals(deleteResult, true);
@@ -231,7 +230,7 @@ public class DataLoaderTest {
      */
     @Test
     public void updateRecordTest() throws IOException {
-        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_VALID3);
+        File testData = copyToFolder(Path.AIRLINE_TEST_RSC_UPDATE);
         DataLoader.uploadData("Default", testData, new Airline());
         Airline toUpdate = new Airline("213 Flight Unit","test","","TFU","","Russia",false);
         boolean updateResult = DataLoader.updateRecord(toUpdate, "Default");
