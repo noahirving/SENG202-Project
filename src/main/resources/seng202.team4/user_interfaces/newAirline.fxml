@@ -71,7 +71,7 @@
             <Insets left="150.0" right="150.0" />
          </GridPane.margin>
       </JFXComboBox>
-      <Label text="New Airline Record" GridPane.halignment="CENTER">
+      <Label fx:id="editAddAirline" text="New Airline Record" GridPane.halignment="CENTER">
          <font>
             <Font size="25.0" />
          </font>

@@ -58,7 +58,7 @@
             <Insets left="150.0" right="150.0" />
          </GridPane.margin>
       </JFXComboBox>
-      <Label text="New Flight Path" GridPane.halignment="CENTER">
+      <Label fx:id="editAddFlightPath" text="New Flight Path" GridPane.halignment="CENTER">
          <font>
             <Font size="25.0" />
          </font>

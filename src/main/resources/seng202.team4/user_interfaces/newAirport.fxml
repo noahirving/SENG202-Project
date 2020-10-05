@@ -114,7 +114,7 @@
             </JFXButton>
          </children>
       </GridPane>
-      <Label text="New Airport Record" GridPane.halignment="CENTER">
+      <Label fx:id="editAddAirport" text="New Airport Record" GridPane.halignment="CENTER">
          <font>
             <Font size="25.0" />
          </font>

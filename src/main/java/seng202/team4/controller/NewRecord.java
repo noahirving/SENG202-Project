@@ -27,6 +27,14 @@ import java.util.ArrayList;
  * the controllers used for adding new records.
  */
 abstract class NewRecord {
+    @FXML
+    public Label editAddAirline;
+    @FXML
+    public Label editAddAirport;
+    @FXML
+    public Label editAddRoute;
+    @FXML
+    public Label editAddFlightPath;
 
     @FXML
     private ComboBox setComboBox;
@@ -53,6 +61,15 @@ abstract class NewRecord {
         this.dataType = dataType;
         if (dataType != null) {
             setRecordData(dataType);
+            if (dataType.getTypeName() == "Airline") {
+                editAddAirline.setText("Edit Airline Record");
+            } else if (dataType.getTypeName() == "Airport") {
+                editAddAirport.setText("Edit Airport Record");
+            } else if (dataType.getTypeName() == "Route") {
+                editAddRoute.setText("Edit Route Record");
+            } else if (dataType.getTypeName() == "FlightPath") {
+                editAddFlightPath.setText("Edit Flight Path Record");
+            }
         }
         try {
             setDataSetComboBox(setComboBox);
